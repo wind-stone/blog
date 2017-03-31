@@ -7,8 +7,6 @@
 
 解决方法：
 
-解决办法如下：
-
 1. $ ping sublime.wbond.net，可以获得IP地址50.116.34.243
 2. $ sudo vi /etc/hosts，输入系统密码，按i进入insert模式，输入下面内容
 ```
