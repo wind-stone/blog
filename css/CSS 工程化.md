@@ -10,3 +10,37 @@
 - 另外，如果包含 content 属性，应放在最前面。
 
 Reference：[百度-CSS 编码规范](https://github.com/fex-team/styleguide/blob/master/css.md)
+
+
+## 清除浮动-最小副作用
+
+```css
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+```
+
+Reference: [A new micro clearfix hack](http://nicolasgallagher.com/micro-clearfix-hack/)
