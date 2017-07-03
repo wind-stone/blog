@@ -12,7 +12,6 @@
 
 
 ```js
-
 // 执行顺序的示例
 
 async function asyncFn() {
@@ -53,10 +52,71 @@ console.log(4)
 
 ## result = await promise 里 result 的值
 - 正常情况下，await 命令后面是一个 Promise 对象。如果不是，会被转成一个立即 resolve 的 Promise 对象
+- await 是运算符，await promise 是表达式，该表达式返回的是 promise 异步操作的结果，即 resolve
 - promise 的状态变为 resolve 时，result 的值即为 resolve 时传递的参数值
-- promise 的状态变为 reject 时，则执行不到赋值就已经提前退出
-    - promise 有错误处理，则错误处理
-    - promise 无错误处理，则会直接改变 returnPromise 的状态为 reject
+- promise 的状态变为 reject 时
+    - promise 有错误处理，进行错误处理
+        - 处理方式一 try...catch：promise reject 后直接 catch 处理，无法执行到赋值操作及 await 后面的代码，result 保持原值
+        - 处理方式二 promise.then/catch：result 的值为 [ catch 方法里的回调函数 / then 方法里 reject 回调函数 ] return 的值
+        【此处涉及到的知识点：promise.then/catch 返回一个新的 Prpmise 实例】
+    - promise 无错误处理，则会结束 async 函数的执行，改变 returnPromise 的状态为 reject
+
+```js
+// promise 状态变为 reject 且通过 then/catch 的方式进行错误处理
+
+async function asyncFn() {
+  // 通过 catch 进行错误处理
+  let a = await new Promise((resolve, reject) => {
+    reject('错误')
+  }).catch(err => {
+    console.log('err: ' + err)
+    return 'catch 返回的值'
+  })
+  // 通过 then 的 reject 回调进行错误处理
+  // let a = await new Promise((resolve, reject) => {
+  //   reject('错误')
+  // }).then(
+  //   data => data,
+  //   err => { // reject 回调
+  //     console.log('err: ' + err)
+  //     return 'catch 返回的值'
+  //   }
+  // )
+
+  console.log('a: ' + a)
+
+  // 通过 then/catch 处理，执行结果都是：
+  // err: 错误
+  // a: catch 返回的值
+}
+
+let pro = asyncFn()
+```
+
+
+```js
+// promise 状态变为 reject 且通过 try...catch 的方式进行错误处理
+
+async function asyncFn() {
+  let a
+  try {
+    let a = await new Promise((resolve, reject) => {
+      reject('错误')
+    })
+    console.log('这里打印出来了吗？并没有！')
+  } catch(err) {
+    console.log('err: ' + err)
+  }
+  console.log('a: ' + a)
+
+  // 执行结果
+  // err: 错误
+  // a: undefined
+}
+
+let pro = asyncFn()
+```
+
 ## returnPromise 的状态改变
 - async 函数内部执行完不抛错，则 returnPromise 变为 resolve 状态
     - 有 return 语句，resolve 的参数即为 return 返回的值
