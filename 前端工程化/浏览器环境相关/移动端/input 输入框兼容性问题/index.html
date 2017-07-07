@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <meta name="x5-cache" content="disable">
+  <title>方框输入框</title>
+  <style>
+    .input-wrapper {
+      position: relative;
+      width: 230px;
+      margin: 200px auto;
+    }
+    .displayed-input-ctn {
+      font-size: 0
+    }
+    .displayed-input-ctn > .square {
+      display: inline-block;
+      width: 48px;
+      height: 48px;
+      margin-right: 10px;
+      border: 1px solid #e5e5e5;
+      border-radius: 2px;
+      font-size: 30px;
+      line-height: 50px;
+      vertical-align: middle;
+      color: red;
+      text-align: center;
+    }
+    .displayed-input-ctn > .square:last-child {
+      margin-right: 0
+    }
+    .hidden-input-ctn {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .hidden-input-ctn > .hidden-input {
+      transform: scale(0)
+    }
+
+  </style>
+</head>
+<body>
+  <div class="input-wrapper">
+    <div class="hidden-input-ctn">
+      <input class="hidden-input" type="tel" maxLength="4">
+    </div>
+    <div class="displayed-input-ctn">
+      <span class="square"></span>
+      <span class="square"></span>
+      <span class="square"></span>
+      <span class="square"></span>
+    </div>
+  </div>
+
+  <script>
+    var inputWrapper = document.querySelector('.input-wrapper')
+    var hiddenInput = document.querySelector('.hidden-input')
+    var squares = document.querySelectorAll('.displayed-input-ctn .square')
+    var squaresLen = squares.length
+
+    inputWrapper.addEventListener('click', function () {
+      hiddenInput.focus()
+    }, false)
+    hiddenInput.addEventListener('input', function () {
+      var value = this.value
+      for (var i = 0; i < squaresLen; i++) {
+        squares[i].textContent = value[i] || ''
+      }
+    }, false)
+  </script>
+</body>
+</html>
