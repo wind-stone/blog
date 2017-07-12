@@ -4,81 +4,95 @@
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>CPF 格式测试</title>
+    <style>
+      #phone {
+        border: 1px solid red
+      }
+    </style>
   </head>
   <body>
-    <input type="text" id="phone">
+    <input type="tel" id="phone">
     <script>
-let phone = document.querySelector('#phone')
 
-phone.addEventListener('input', formatPhone('***.***.***-**', phone))
+      phone.addEventListener('input', formatPhone('***.***.***-**', phone))
 
-/**
-  * 格式化 cpf 输入格式
-  * @param {String} formatString cpf 格式，形如 '***.***.***-**'
-  * @param {HTMLInputElement} 输入框dom节点
-  * @return {Function} input 事件监听函数
-  */
-function formatPhone(formatString, input) {
-  // 仅键入 数字键、删除键、左右箭头键 有效
-  const digitReg = /^\d$/
-  const validKeyList = {
-    '8': true,   // BackSpace
-    '37': true,  // Left Arrow
-    '39': true   // Right Arrow
-  }
-  input.addEventListener('keydown', function (event) {
-    if (!digitReg.test(event.key) && !validKeyList[event.keyCode]) {
-      return event.preventDefault()
-    }
-  })
+      /**
+        * 格式化 cpf 输入格式
+        * @param {String} formatString cpf 格式，形如 '***.***.***-**'
+        * @param {HTMLInputElement} 输入框dom节点
+        * @return {Function} input 事件监听函数
+        */
+      function formatPhone(formatString, input) {
+        const ua = navigator.userAgent
+        const isAndroid = /Android/i.test(ua)
 
-  input.maxLength = formatString.length       // 设置输入框的最大长度
-  const spaceIndexArray = []                  // 存放格式化字符串里空格的下标
-  const formatArray = formatString.split('')  // 将格式化字符串分割成格式化数组
+        input.maxLength = formatString.length  // 设置输入框的最大长度
+        const separatorIndexArray = []  // 存放格式化字符串里分隔符的下标
+        const formatArray = formatString.split('')  // 将格式化字符串分割成格式化数组
 
-  formatArray.forEach(function (item, index) {
-    if (item === '.' || item === '-') {
-      spaceIndexArray.push({
-        index: index,
-        value: item
-      })
-    }
-  })
+        formatArray.forEach(function (item, index) {
+          if (item === ' ') {
+            separatorIndexArray.push({
+              index: index,
+              value: item
+            })
+          }
+        })
 
-  let lastInputLength = 0  // 上次输入的长度，包含空格
-  const reg = /[\.\-]/g
+        let lastInputLength = 0  // 上次输入的长度，包含分隔符
+        const reg = /\s/g
 
-  return function () {
-    const isDeleted = lastInputLength > input.value.length     // 是否是删除文字
-    let selectionStart = input.selectionStart                  // 输入后的光标位置
-    const valueArray = input.value.replace(reg, '').split('')  // 去除空白符后的数字数组
+        return function () {
+          const inputLength = input.value.length
+          const isDeleted = lastInputLength > inputLength     // 是否是删除文字
+          const valueArray = input.value.replace(reg, '').split('')  // 去除后的数字数组
+          let selectionStart = input.selectionStart                  // 输入后的光标位置
 
-    spaceIndexArray.forEach(function (spaceObject, index) {
-      // 处理光标位置
-      if (isDeleted) {
-        // 如果是删除字符，且删除的是空格，则将空格前的数字一并删除，光标位置前移一位
-        if (selectionStart === spaceObject.index) {
-          valueArray.splice(spaceObject.index - 1, 1)
-          selectionStart -= 1
-        }
-      } else {
-        // 如果是添加数字，且数字添加后要添加空格进行分隔，则（添加空格后）光标位置后移一位
-        if (selectionStart === spaceObject.index + 1) {
-          selectionStart += 1
+          separatorIndexArray.forEach(function (separatorObject, index) {
+            if (inputLength <= separatorObject.index) {
+              return
+            }
+            // 处理光标位置
+            if (isDeleted) {
+              // 如果是删除字符，且删除的是分隔符，则将分隔符前的数字一并删除，光标位置前移一位
+              if (selectionStart === separatorObject.index) {
+                valueArray.splice(separatorObject.index - 1, 1)
+                selectionStart--
+              }
+            } else {
+              // 如果是添加数字，且数字添加后要添加分隔符进行分隔，则（添加分隔符后）光标位置后移一位
+              let newIndex = separatorObject.index
+
+              // 此处 Android 有兼容性问题，将非 Android 处理成 Android 形式，再统一按 Android 处理
+              if (!isAndroid) {
+                newIndex++
+              }
+
+              if (selectionStart === newIndex) {
+                selectionStart++
+              }
+            }
+
+            // 添加 分隔符
+            if (separatorObject.index < valueArray.length) {
+              valueArray.splice(separatorObject.index, 0, separatorObject.value)
+            }
+          })
+
+          input.value = valueArray.join('')
+          lastInputLength = valueArray.length
+
+          // Android && 增加字符
+          if (isAndroid && !isDeleted) {
+            selectionStart++
+          }
+
+          // 异步处理，解决 Android 兼容问题
+          setTimeout(function () {
+            input.setSelectionRange(selectionStart, selectionStart)
+          }, 0)
         }
       }
-
-      // 添加 空格
-      if (spaceObject.index < valueArray.length) {
-        valueArray.splice(spaceObject.index, 0, spaceObject.value)
-      }
-    })
-
-    input.value = valueArray.join('')
-    lastInputLength = valueArray.length
-    input.setSelectionRange(selectionStart, selectionStart)
-  }
-}
     </script>
   </body>
 </html>
