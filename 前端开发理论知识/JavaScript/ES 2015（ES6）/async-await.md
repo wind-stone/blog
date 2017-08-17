@@ -52,7 +52,7 @@ console.log(4)
 
 ## result = await promise 里 result 的值
 - 正常情况下，await 命令后面是一个 Promise 对象。如果不是，会被转成一个立即 resolve 的 Promise 对象
-- await 是运算符，await promise 是表达式，该表达式返回的是 promise 异步操作的结果，即 resolve
+- await 是运算符，await promise 是表达式，该表达式返回的是 promise 异步操作的结果，即 resolve 的值
 - promise 的状态变为 resolve 时，result 的值即为 resolve 时传递的参数值
 - promise 的状态变为 reject 时
     - promise 有错误处理，进行错误处理
@@ -119,9 +119,9 @@ let pro = asyncFn()
 
 ## returnPromise 的状态改变
 - async 函数内部执行完不抛错，则 returnPromise 变为 resolve 状态
-    - 有 return 语句，resolve 的参数即为 return 返回的值
-    - 无 return 语句，resolve 的参数则为 undefined
-- 抛错且未被处理，则 returnPromise 变为 reject 状态，reject 的参数错误对象
+    - 有 return 语句，returnPromise 的 resolve 回调函数的参数即为 return 返回的值
+    - 无 return 语句，returnPromise 的 resolve 回调函数的参数则为 undefined
+- 抛错且未被处理，则 returnPromise 变为 reject 状态，reject 的参数为 async 函数内部抛错的错误对象
 
 
 ## returnPromise 状态改变的时机
