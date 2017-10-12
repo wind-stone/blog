@@ -33,7 +33,7 @@ $ git checkout dev-branch
 ```
 git merge dev-branch
 ```
-将 dev-branch 合并到当前所在分支
+将 dev-branch 合并到当前所在分支（合并以后，当前分支指向新的提交，dev-branch 指向的提交不变）
 
 
 ### 删除分支
