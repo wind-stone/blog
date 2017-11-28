@@ -1,5 +1,30 @@
 # git 命令
 
+## 设置账号信息
+
+全局配置
+```
+// 设置
+$ git config --global user.name wind-stone
+$ git config --global user.email wind-stone@qq.com
+
+// 查看
+$ git config --global user.name
+$ git config --global user.email
+```
+
+本地（项目）
+```
+// 设置
+$ git config user.name wind-stone
+$ git config user.email wind-stone@qq.com
+
+// 查看
+$ git config user.name
+$ git config user.email
+```
+
+
 ## 分支
 
 ### 创建分支
