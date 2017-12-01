@@ -367,3 +367,123 @@ git clean -n -d -x
 默认情况下，git clean 命令只会移除没有忽略的未跟踪文件。 任何与 .gitiignore 或其他忽略文件中的模式匹配的文件都不会被移除。 如果你也想要移除那些文件，例如为了做一次完全干净的构建而移除所有由构建生成的 .o 文件，可以给 clean 命令增加一个 -x 选项。
 
 如果不知道 git clean 命令将会做什么，在将 -n 改为 -f 来真正做之前总是先用 -n 来运行它做双重检查。
+
+
+
+## 检查修改、撤销操作
+
+执行撤销操作之前，先了解下如何检查已经做出的修改。
+
+### 检查修改
+
+ 【已修改，未暂存】检查已修改文件与该文件未修改时的差异，即检查`工作区`文件与`本地仓库`文件之间的差异
+```
+// 查看全部
+git diff
+git diff .
+// 查看单个文件
+git diff xxx.md
+```
+- 【已暂存，未提交】检查已暂存文件与该文件之前已提交时文件的差异，即检查`暂存区`文件与`本地仓库`文件之间的差异
+```
+// 查看全部
+git diff --cached
+git diff --cached .
+// 查看单个文件
+git diff --cached xxx.md
+```
+- 【已提交，未推送】检查已提交文件与远程仓库里该文件的差异，即检查`本地仓库`文件与`远程仓库`文件之间的差异
+```
+// 查看全部
+git diff master origin/master --cached
+git diff master origin/master --cached .
+// 查看单个文件
+git diff master origin/master --cached xxx.md
+```
+
+提示：执行 git diff 命令后，按键入 q 返回
+
+
+### 撤销操作
+
+#### 已修改，未暂存
+```
+// 全部撤销
+git checkout .
+// 单个撤销
+git checkout xxx.md
+```
+或者
+```
+// 全部撤销
+git reset --hard
+```
+
+#### 已暂存，未提交
+```
+git reset
+git checkout .
+```
+或
+```
+git reset --hard
+```
+
+`git reset`将暂存区的文件重置到 git add 之前的状态，即文件本身还处于`已修改`但未暂存的状态，如果需要退回到`未修改`状态，还需要执行`git checkout`命令。
+
+`git reset`的使用方法：
+```
+// 全部
+git reset
+git reset .
+// 单个
+git reset xxx.md
+```
+
+此外， `git reset -—hard`这个命令，可以一步到位地把`已暂存`文件完全恢复到`未修改`的状态。
+
+
+#### 已提交，未推送
+
+```
+git reset --hard origin/master
+```
+
+#### 已推送
+
+```
+git reset --hard HEAD^
+git push -f
+```
+
+#### git reset 命令
+
+假设当前所在提交为`currentCommit`
+
+```
+git reset --hard
+git reset --hard 某次提交A的hash值
+```
+将 head 重置到某一次的提交`A`，则
+- 工作目录改变：当前工作目录里所有已暂存（包括修改后暂存和删除后暂存）文件、已删除（但未暂存）文件、已修改（但未暂存）文件将全部丢失，但是新增（但未暂存）的文件保留下来不会丢失
+- 自提交`A`到提交`currentCommit`里所有的提交都将丢失，工作目录恢复到提交`A`
+
+```
+git reset --soft
+git reset --soft 某次提交A的hash值
+```
+将 head 重置到某一次的提交`A`，且：
+- 工作目录不变：原先在暂存区的还在暂存区，在工作区的还在工作区
+- 自提交`A`到提交`currentCommit`里所有的文件修改都放在暂存区（已暂存），不会丢失
+
+```
+git reset --mixed
+git reset --mixed 某次提交A的hash值
+```
+将 head 重置到某一次的提交`A`，且：
+- 工作目录不变：原先在暂存区的还在暂存区，在工作区的还在工作区
+- 自提交`A`到提交`currentCommit`里所有的文件修改都放在工作区（未暂存），不会丢失
+
+Reference: 
+- [前端早读课-【第1119期】Git的4个阶段的撤销更改](https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&mid=2651227335&idx=1&sn=54bbf426f7b8358fddcb4a3901255eb3&chksm=bd495d438a3ed45517ce21f33cdd457fb9201ba34d6723a1104df8a9bc0a934737f0df92f9a7&scene=21#wechat_redirect)
+-[Git reset命令的使用](http://www.jianshu.com/p/cbd5cd504f14)
