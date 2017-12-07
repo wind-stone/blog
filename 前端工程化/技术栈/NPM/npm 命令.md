@@ -1,3 +1,25 @@
+## npm config
+
+### registry
+
+获取/设置 npm 镜像源
+```
+npm config get registry
+npm config set registry https://registry.npm.taobao.org
+```
+
+## 发布
+
+```
+npm init
+npm adduser --registry=https://registry.npmjs.org/
+npm publish --registry=https://registry.npmjs.org/
+```
+如果本地设置的 registry 是公司的镜像源的话，命令后面添加 `--registry=https://registry.npmjs.org/`
+
+
+
+
 ## version
 
 ### 升级版本
