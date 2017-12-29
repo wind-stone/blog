@@ -22,12 +22,16 @@ export function loadScript(url, {crossOrigin = false} = {}) {
         || /^(loaded|complete)$/.test(this.readyState)  // IE
       ) {
         resolve()
+
+        // avoid mem leaks in IE.
         script.onload = script.onreadystatechange = null
       }
     }
 
     script.onerror = function () {
       reject(new Error(`script load error: ${url}`))
+
+      // avoid mem leaks in IE.
       script.onerror = null
     }
 
