@@ -1,0 +1,10 @@
+<div class="vue-searchbox">
+    <input v-model="keyword"
+           class="v-search-input"
+           type="text"
+           :placeholder="placeholder" @keydown="handleEnterKey($event)">
+    <a class="v-search-btn"
+        :class="{'v-search-img-btn': btnType === 'icon'}"
+        v-text="btnType === 'text' ? '搜索' : '' "
+        @click="search" ></a>
+</div>

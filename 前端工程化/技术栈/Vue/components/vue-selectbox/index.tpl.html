@@ -1,0 +1,8 @@
+<div class="vue-selectbox" :class="{'disabled': disabled || options.length === 0, 'opened': isShowOptionsArea}">
+    <div class="v-text-ctn" @click="toggleOptionsArea">
+        <span class="v-text" v-text="placeholder"></span>
+    </div>
+    <ul class="v-option-list" v-show="isShowOptionsArea">
+        <li class="v-option-item" v-for="option in options" @click="selectOption(option)">{{option[keys.label]}}</li>
+    </ul>
+</div>
