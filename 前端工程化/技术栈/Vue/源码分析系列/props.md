@@ -9,6 +9,10 @@ Vue.js 版本：2.5.13
 - `initProps`解析
 - `observerState.shouldConvert`的作用
 
+注意事项
+- 处理`props`时，如果是在`production`环境，将不对`key`及`value`进行验证
+
+
 ### `initProps`解析
 
 `initState`是初始化组件各个状态数据的，其首先处理的就是组件的`props`。
@@ -147,6 +151,7 @@ export function validateProp (
     // skip validation for weex recycle-list child component props
     !(__WEEX__ && isObject(value) && ('@binding' in value))
   ) {
+    // 注意：production 环境，将不对 key-value 进行验证
     assertProp(prop, key, value, vm, absent)
   }
   return value
