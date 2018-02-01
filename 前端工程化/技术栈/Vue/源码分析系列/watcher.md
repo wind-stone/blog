@@ -1,12 +1,30 @@
-# watcher 源码学习收获
+# watcher 源码学习及收获
 
 Vue.js 版本：2.5.13
+
+## background
+
+在 Vue 的整个生命周期当中，会有 4 类地方会实例化`Watcher`：
+
+- Vue 实例化的过程中有`watch`选项
+- Vue 实例化的过程中有`computed`计算属性选项
+- Vue 原型上有挂载`Vue.prototype.$watch`方法，或者通过实例调用`this.$watch`方法
+- Vue 模板/`render`函数内有对数据进行依赖时
+
 
 ## 分析
 
 主要内容
 - deep 的实现
 - 数组元素是原始值的情况
+
+注意事项
+- 两处地方进行了依赖收集
+    - 在对 watch 的表达式求值时，会收集表达式的所有依赖
+    - 如果`deep: true`，则将对表达式的返回值进行深度遍历，收集所有`key`/`value`的依赖
+- 跨级依赖收集
+    - 假设 A 依赖于 B，B 依赖于 C、D，则在计算 B 的值以后（计算过程中 B 收集到了依赖 C、D）会将依赖 C、D 添加到 A 的依赖里去，可见实际上
+        - C、D 的改变会直接导致 A 的重新求值，而不是 C、D 的改变先导致 B 重新求值，B 的改变导致 A 的重新求值
 
 
 ### deep 的实现
@@ -141,6 +159,9 @@ export default {
 
 
 ## 源码
+
+### watcher.js
+
 ```js
 /* @flow */
 
@@ -222,6 +243,7 @@ export default class Watcher {
     } else {
       this.getter = parsePath(expOrFn)
       if (!this.getter) {
+        // 如果 expOrFn 里检测到包含了除了 字母、小数点、$ 以外的字符，将视为无效，并报错
         this.getter = function () {}
         process.env.NODE_ENV !== 'production' && warn(
           `Failed watching path: "${expOrFn}" ` +
@@ -244,6 +266,7 @@ export default class Watcher {
     let value
     const vm = this.vm
     try {
+      // 此处，会收集计算过程中的依赖
       value = this.getter.call(vm, vm)
     } catch (e) {
       if (this.user) {
@@ -255,6 +278,7 @@ export default class Watcher {
       // "touch" every property so they are all tracked as
       // dependencies for deep watching
       if (this.deep) {
+        // 此处，如果是深度 watch，将对计算的返回值的所有下属 key-value 收集依赖
         traverse(value)
       }
       popTarget()
@@ -357,6 +381,7 @@ export default class Watcher {
 
   /**
    * Depend on all deps collected by this watcher.
+   * 跨级收集依赖
    */
   depend () {
     let i = this.deps.length
@@ -382,6 +407,27 @@ export default class Watcher {
       }
       this.active = false
     }
+  }
+}
+```
+
+```js
+/**
+ * Parse simple path.
+ */
+const bailRE = /[^\w.$]/
+export function parsePath (path: string): any {
+  if (bailRE.test(path)) {
+    // 检测到 path 里包含了除了 字母、小数点、$ 以外的字符，将视为无效 path
+    return
+  }
+  const segments = path.split('.')
+  return function (obj) {
+    for (let i = 0; i < segments.length; i++) {
+      if (!obj) return
+      obj = obj[segments[i]]
+    }
+    return obj
   }
 }
 ```
