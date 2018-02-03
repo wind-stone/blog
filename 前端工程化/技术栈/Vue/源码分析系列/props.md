@@ -7,6 +7,7 @@ Vue.js 版本：2.5.13
 
 主要内容
 - `initProps`解析
+- 如何验证`prop`的类型
 - `observerState.shouldConvert`的作用
 
 注意事项
@@ -29,7 +30,129 @@ Vue.js 版本：2.5.13
 - `proxy`：在`vm`上增加`key`属性并将对其的访问代理到`vm._props`上，从而简化对`props`的访问
 
 
+### 如何验证`prop`的类型
+
+字组件定义时，显示地用`props`选项来声明它预期的数据，我们可以为组件的`prop`指定规则，其中一项就是指定`prop`的类型`type`，其值可以是下面的原生构造器，或者由这些原生构造器构成的数组。
+
+- `String`
+- `Number`
+- `Boolean`
+- `Function`
+- `Object`
+- `Array`
+- `Symbol`
+
+那么我们如何验证`prop`的值符合指定的`type`类型呢？请见下面的`assertType`函数，分为四类：
+
+- 第一类：通过`typeof`判断的类型，如`String`、`Number`、`Boolean`、`Function`、`Symbol`
+- 第二类：通过`Object.prototype.toString`判断`Object`
+- 第三类：通过`Array.isArray`判断`Array`
+- 第四类：通过`instanceof`判断自定义的引用类型
+
+`assertType`要判断给定的值是否是给定的构造函数类型，该函数调用时接受的第一个参数是要判断的值，第二个是给定的构造函数。
+
+在进行判断之前，我们会先通过`getType`获取到给定的构造函数的类型字符串，这里是调用构造函数的`toString`方法，该方法返回的是个字符串，其中包含了构造函数类型的字符串：
+
 ```js
+String.toString() // "function String() { [native code] }"
+Number.toString() // "function Number() { [native code] }"
+Boolean.toString() // "function Boolean() { [native code] }"
+Function.toString() // "function Function() { [native code] }"
+Object.toString()  // "function Object() { [native code] }"
+Array.toString() // "function Array() { [native code] }"
+Symbol.toString() // "function Symbol() { [native code] }"
+```
+
+通过返回的字符串，辅以一正则表达式，我们可以获取到对应的类型字符串了。
+
+```js
+const simpleCheckRE = /^(String|Number|Boolean|Function|Symbol)$/
+
+function assertType (value: any, type: Function): {
+  valid: boolean;
+  expectedType: string;
+} {
+  let valid
+  const expectedType = getType(type)
+  if (simpleCheckRE.test(expectedType)) {
+    const t = typeof value
+    valid = t === expectedType.toLowerCase()
+    // for primitive wrapper objects
+    // 原始包装对象，比如 value = new Number(2)
+    if (!valid && t === 'object') {
+      valid = value instanceof type
+    }
+  } else if (expectedType === 'Object') {
+    valid = isPlainObject(value)
+  } else if (expectedType === 'Array') {
+    valid = Array.isArray(value)
+  } else {
+    // 自定义类型
+    valid = value instanceof type
+  }
+  return {
+    valid,
+    expectedType
+  }
+}
+
+/**
+ * Use function string name to check built-in types,
+ * because a simple equality check will fail when running
+ * across different vms / iframes.
+ */
+function getType (fn) {
+  const match = fn && fn.toString().match(/^\s*function (\w+)/)
+  return match ? match[1] : ''
+}
+
+```
+
+```js
+const _toString = Object.prototype.toString
+/**
+ * Strict object type check. Only returns true
+ * for plain JavaScript objects.
+ */
+export function isPlainObject (obj: any): boolean {
+  return _toString.call(obj) === '[object Object]'
+}
+```
+
+
+### `observerState.shouldConvert`的作用
+
+在决定是否要给某个数据做响应式处理转换时，需要使用到`observerState.shouldConvert`，只有其中为`true`时，才进行响应式处理转换。（目前只遇到过为`true`的情况，别的地方有为`false`的情况，但源码还没读到）
+
+```js
+export function observe (value: any, asRootData: ?boolean): Observer | void {
+  if (!isObject(value) || value instanceof VNode) {
+    return
+  }
+  let ob: Observer | void
+  if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
+    ob = value.__ob__
+  } else if (
+    observerState.shouldConvert &&
+    !isServerRendering() &&
+    (Array.isArray(value) || isPlainObject(value)) &&
+    Object.isExtensible(value) &&
+    !value._isVue
+  ) {
+    ob = new Observer(value)
+  }
+  if (asRootData && ob) {
+    ob.vmCount++
+  }
+  return ob
+}
+```
+
+
+## 源码
+
+```js
+// src/core/instance/state.js
 function initProps (vm: Component, propsOptions: Object) {
   const propsData = vm.$options.propsData || {}
   const props = vm._props = {}
@@ -77,12 +200,8 @@ function initProps (vm: Component, propsOptions: Object) {
 }
 ```
 
-
-### props.js
-
 ```js
-/* @flow */
-
+// src/core/util/props.js
 import { warn } from './debug'
 import { observe, observerState } from '../observer/index'
 import {
@@ -305,33 +424,5 @@ function isType (type, fn) {
   }
   /* istanbul ignore next */
   return false
-}
-```
-
-### `observerState.shouldConvert`的作用
-
-在决定是否要给某个数据做响应式处理转换时，需要使用到`observerState.shouldConvert`，只有其中为`true`时，才进行响应式处理转换。（目前只遇到过为`true`的情况，别的地方有为`false`的情况，但源码还没读到）
-
-```js
-export function observe (value: any, asRootData: ?boolean): Observer | void {
-  if (!isObject(value) || value instanceof VNode) {
-    return
-  }
-  let ob: Observer | void
-  if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
-    ob = value.__ob__
-  } else if (
-    observerState.shouldConvert &&
-    !isServerRendering() &&
-    (Array.isArray(value) || isPlainObject(value)) &&
-    Object.isExtensible(value) &&
-    !value._isVue
-  ) {
-    ob = new Observer(value)
-  }
-  if (asRootData && ob) {
-    ob.vmCount++
-  }
-  return ob
 }
 ```
