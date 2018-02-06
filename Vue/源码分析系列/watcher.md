@@ -220,8 +220,13 @@ export default class Watcher {
     // options
     if (options) {
       this.deep = !!options.deep
+
+      // 是否是用户创造的 watcher，比如通过 $watch 调用或者组件对象的 watch 选项
       this.user = !!options.user
+
+      // 是否是惰性计算，如果是，初始化 watcher 时不进行求值计算
       this.lazy = !!options.lazy
+
       this.sync = !!options.sync
     } else {
       this.deep = this.user = this.lazy = this.sync = false
@@ -270,6 +275,7 @@ export default class Watcher {
       value = this.getter.call(vm, vm)
     } catch (e) {
       if (this.user) {
+        // 如果是用户创造的 watcher，计算出错的话需要报错
         handleError(e, vm, `getter for watcher "${this.expression}"`)
       } else {
         throw e
@@ -361,6 +367,7 @@ export default class Watcher {
           try {
             this.cb.call(this.vm, value, oldValue)
           } catch (e) {
+            // 如果是用户创造的 watcher，计算出错的话需要报错
             handleError(e, this.vm, `callback for watcher "${this.expression}"`)
           }
         } else {
