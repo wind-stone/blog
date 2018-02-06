@@ -1,4 +1,4 @@
-# methods 源码学习及收获
+# initMethods 源码学习及收获
 
 Vue.js 版本：2.5.13
 
@@ -16,9 +16,8 @@ Vue.js 版本：2.5.13
 
 ## 源码
 
-### src/core/instance/state.js
-
 ```js
+// @file src/core/instance/state.js
 function initMethods (vm: Component, methods: Object) {
   const props = vm.$options.props
   for (const key in methods) {
@@ -48,10 +47,8 @@ function initMethods (vm: Component, methods: Object) {
 }
 ```
 
-
-### src/shared/util.js
-
 ```js
+// @file src/shared/util.js
 /**
  * Simple bind, faster than native
  */

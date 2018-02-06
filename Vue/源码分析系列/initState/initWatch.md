@@ -59,7 +59,6 @@ Vue 实例化阶段初始化 watch 选项时，如果 watch 对象 key 对应的
 
 ```js
 // @file src/core/instance/state.js
-
 function initWatch (vm: Component, watch: Object) {
   for (const key in watch) {
     const handler = watch[key]

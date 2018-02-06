@@ -1,7 +1,6 @@
-# props 源码学习及收获
+# initProps 源码学习及收获
 
 Vue.js 版本：2.5.13
-
 
 ## 分析
 
@@ -66,6 +65,7 @@ Symbol.toString() // "function Symbol() { [native code] }"
 通过返回的字符串，辅以一正则表达式，我们可以获取到对应的类型字符串了。
 
 ```js
+// @file src/core/util/props.js
 const simpleCheckRE = /^(String|Number|Boolean|Function|Symbol)$/
 
 function assertType (value: any, type: Function): {
@@ -125,6 +125,7 @@ export function isPlainObject (obj: any): boolean {
 在决定是否要给某个数据做响应式处理转换时，需要使用到`observerState.shouldConvert`，只有其中为`true`时，才进行响应式处理转换。（目前只遇到过为`true`的情况，别的地方有为`false`的情况，但源码还没读到）
 
 ```js
+// @file src/core/observer/index.js
 export function observe (value: any, asRootData: ?boolean): Observer | void {
   if (!isObject(value) || value instanceof VNode) {
     return
@@ -152,7 +153,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
 ## 源码
 
 ```js
-// src/core/instance/state.js
+// @file src/core/instance/state.js
 function initProps (vm: Component, propsOptions: Object) {
   const propsData = vm.$options.propsData || {}
   const props = vm._props = {}
@@ -201,7 +202,7 @@ function initProps (vm: Component, propsOptions: Object) {
 ```
 
 ```js
-// src/core/util/props.js
+// @file src/core/util/props.js
 import { warn } from './debug'
 import { observe, observerState } from '../observer/index'
 import {

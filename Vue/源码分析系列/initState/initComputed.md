@@ -1,4 +1,4 @@
-# computed 源码学习及收获
+# initComputed 源码学习及收获
 
 Vue.js 版本：2.5.13
 
@@ -23,6 +23,8 @@ Vue.js 版本：2.5.13
 ## 源码
 
 ```js
+// @file src/core/instance/state.js
+
 // 默认设置计算属性是
 const computedWatcherOptions = { lazy: true }
 
