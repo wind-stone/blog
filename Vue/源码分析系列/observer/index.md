@@ -177,12 +177,10 @@ export const arrayMethods = Object.create(arrayProto)
 ```
 
 
-
-
-
 ## 源码
 
 ```js
+// @file src/core/observer/index.js
 import Dep from './dep'
 import VNode from '../vdom/vnode'
 import { arrayMethods } from './array'
@@ -224,14 +222,14 @@ export class Observer {
     this.value = value
 
     // ob 对象的 dep 属性，也是用来收集依赖，但只有在发生以下情况时，才会通知所有的 watcher
-    // 1. 对象添加删除属性
-    // 2. 数组执行了变异方法，导致数组增加、删除元素
+    // 1. 对象添加/删除属性
+    // 2. 数组执行了变异方法，导致数组增加、删除元素、重排序
     this.dep = new Dep()
 
     this.vmCount = 0
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
-      // 如果是数组，则重写数组的变异方法（变异方法执行后，将给新增的元素做响应式处理，并通知依赖方）
+      // 如果是数组，则重写数组的变异方法（变异方法执行后，将通知依赖方数组已经改变，如有必要，将给新增的元素做响应式处理）
       const augment = hasProto
         ? protoAugment
         : copyAugment
@@ -263,8 +261,6 @@ export class Observer {
     }
   }
 }
-
-// helpers
 
 /**
  * Augment an target Object or Array by intercepting
@@ -385,6 +381,7 @@ export function defineReactive (
 export function set (target: Array<any> | Object, key: any, val: any): any {
   if (Array.isArray(target) && isValidArrayIndex(key)) {
     target.length = Math.max(target.length, key)
+    // 调用数组的变异方法，会自动通知依赖方数组已经改变
     target.splice(key, 1, val)
     return val
   }
