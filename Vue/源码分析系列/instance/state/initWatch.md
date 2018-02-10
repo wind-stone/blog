@@ -7,6 +7,8 @@
 
 ### watch 对象 key 的 value 可以是数组
 
+主要应用场景：使用`Vue.extend`、`Vue.mixin`或组件`extends`选项、`mixins`选项合并`watch`选项时，会将同名的`watch`合并成一个数组。
+
 watch 对象 key 的 value 可以是数组，数组内的元素可以是函数、方法名、选项对象。
 
 Vue 实例化阶段初始化 watch 选项时，如果 watch 对象 key 对应的 value 为数组，将循环取出数组里的元素并进行 watch。
