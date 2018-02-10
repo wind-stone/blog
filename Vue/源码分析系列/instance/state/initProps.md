@@ -7,6 +7,7 @@ Vue.js 版本：2.5.13
 主要内容
 - `initProps`解析
 - 如何验证`prop`的类型
+- 实例共有的`props`的访问方式
 - `observerState.shouldConvert`的作用
 
 注意事项
@@ -120,6 +121,104 @@ export function isPlainObject (obj: any): boolean {
 ```
 
 
+### 实例共有的`props`的访问方式
+
+如果使用`const SubVue = Vue.extend(options)`等方式去扩展一个已有的组件选项对象`options`，将得到一个类似于`Vue`的构造函数`SubVue`。如果`options`对象里存在`props`选项，那么通过`SubVue`实例化的所有组件实例都将拥有对应的`prop`。那么这时候是怎么访问的呢？
+
+先来看一看组件自身独有的`prop`是如何访问的。
+
+```js
+function initProps (vm: Component, propsOptions: Object) {
+  const propsData = vm.$options.propsData || {}
+  const props = vm._props = {}
+  // cache prop keys so that future props updates can iterate using Array
+  // instead of dynamic object key enumeration.
+  const keys = vm.$options._propKeys = []
+  const isRoot = !vm.$parent
+  // root instance props should be converted
+  observerState.shouldConvert = isRoot
+  for (const key in propsOptions) {
+    keys.push(key)
+    const value = validateProp(key, propsOptions, propsData, vm)
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production') {
+      const hyphenatedKey = hyphenate(key)
+      if (isReservedAttribute(hyphenatedKey) ||
+          config.isReservedAttr(hyphenatedKey)) {
+        warn(
+          `"${hyphenatedKey}" is a reserved attribute and cannot be used as component prop.`,
+          vm
+        )
+      }
+      defineReactive(props, key, value, () => {
+        if (vm.$parent && !isUpdatingChildComponent) {
+          warn(
+            `Avoid mutating a prop directly since the value will be ` +
+            `overwritten whenever the parent component re-renders. ` +
+            `Instead, use a data or computed property based on the prop's ` +
+            `value. Prop being mutated: "${key}"`,
+            vm
+          )
+        }
+      })
+    } else {
+      defineReactive(props, key, value)
+    }
+    // static props are already proxied on the component's prototype
+    // during Vue.extend(). We only need to proxy props defined at
+    // instantiation here.
+
+    // 注意此处，in 操作符枚举出原型上的所有属性，所以这里只会把组件独有的 prop 的访问挂载在 vm 上，而共有的 prop 会自动通过 vm.constructor.prototype 访问，详情请查看 Vue.extend 的实现
+    if (!(key in vm)) {
+      proxy(vm, `_props`, key)
+    }
+  }
+  observerState.shouldConvert = true
+}
+```
+
+通过上面的代码，我们发现，如果`vm`及其原型链上没有对应的`key`，则会在`vm`上定义`key`的访问器属性。
+
+那么如果`vm`的原型链上存在`key`呢，我们如何访问得到呢？
+（注意，仅通过`Vue.extend`的组件选项对象的`props`才会挂载在原型链上）
+
+```js
+// @file src/core/global-api/extend.js
+function initProps (Comp) {
+  const props = Comp.options.props
+  for (const key in props) {
+    proxy(Comp.prototype, `_props`, key)
+  }
+}
+```
+
+```js
+// @file src/core/instance/state.js
+const sharedPropertyDefinition = {
+  enumerable: true,
+  configurable: true,
+  get: noop,
+  set: noop
+}
+
+export function proxy (target: Object, sourceKey: string, key: string) {
+  sharedPropertyDefinition.get = function proxyGetter () {
+    return this[sourceKey][key]
+  }
+  sharedPropertyDefinition.set = function proxySetter (val) {
+    this[sourceKey][key] = val
+  }
+  Object.defineProperty(target, key, sharedPropertyDefinition)
+}
+```
+
+上面的是`Vue.extend`源码的片段。如果是通过`Vue.extend`扩展得到的类`Vue`的构造函数如`SubVue`创建的实例组件，组件对所有继承而来的共有的`prop`的访问将挂载在`SubVue.prototype`上，而`SubVue.prototype`定义的访问器属性最终拿到的是实例的`this._props[key]`。
+
+因此，通过将组件继承而来的共有`prop`挂载在原型链上，而仅在`vm`上挂载组件特有的`prop`。如此这般设计，确实优化了对共有`prop`的访问性能。
+
+注意：如果是通过`new Vue(options)`得到的实例，所有的`props`都是挂载在`vm`上的。
+
+
 ### `observerState.shouldConvert`的作用
 
 在决定是否要给某个数据做响应式处理转换时，需要使用到`observerState.shouldConvert`，只有其中为`true`时，才进行响应式处理转换。（目前只遇到过为`true`的情况，别的地方有为`false`的情况，但源码还没读到）
@@ -193,6 +292,8 @@ function initProps (vm: Component, propsOptions: Object) {
     // static props are already proxied on the component's prototype
     // during Vue.extend(). We only need to proxy props defined at
     // instantiation here.
+
+    // 注意此处，in 操作符枚举出原型上的所有属性，所以这里只会把组件独有的 prop 的访问挂载在 vm 上，而共有的 prop 会自动通过 vm.constructor.prototype 访问，详情请查看 Vue.extend 的实现
     if (!(key in vm)) {
       proxy(vm, `_props`, key)
     }
