@@ -4,11 +4,10 @@
 
 主要内容
 
-- 引用增加/删除属性如何 watch
+- 对象增加/删除属性如何 watch
 
 
-
-### 引用增加/删除属性如何 watch
+### 对象增加/删除属性如何 watch
 
 `defineReactive`函数里对某个对象下的`key`及其`value`做响应式处理时，有一闭包变量`dep`，当`value`发生变化时（通过`newValue === value`来判断），会调用`dep.notify`来通知所有的依赖方。
 
@@ -111,6 +110,7 @@ export function del (target: Array<any> | Object, key: any) {
 - 数组发生改变，通知依赖方
 
 ```js
+// src/core/observer/index.js
 export class Observer {
   // ...
   constructor (value: any) {
