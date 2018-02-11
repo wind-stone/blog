@@ -1,4 +1,4 @@
-# Vue.extend 源码学习及收获
+# `Vue.extend`源码学习及收获
 
 `Vue.extend(options)`函数使用基础的 Vue 构造器，创建一个“子类”，参数是一个包含组件选项的对象
 
