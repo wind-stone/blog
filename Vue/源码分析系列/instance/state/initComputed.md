@@ -18,6 +18,7 @@ Vue.js 版本：2.5.13
     - 当计算属性的依赖 C 或 D 改变时，计算属性仅仅是设置其对应的`watcher`实例的`lazy`属性为`true`，而其自身的值不会重新进行计算，只有当外部重新调用了计算属性才会重新计算值（因为计算属性是惰性计算的）
     - 每次获取计算属性的值以后，都会将 B 的依赖 C、D 添加为 A 的依赖（之所以是每次计算都这么做，是因为 B 的依赖可能会变）
     - 因此，每次 C、D 改变不会导致计算属性 B 的值改变（这就是为什么计算属性是 lazy 的），但是会通知 A 进行重新计算
+- 如果是通过`Vue.extend(options)`扩展而来的构造函数如`SubVue`，如果`options`里有`computed`选项，则这些计算属性的访问将通过`SubVue.prototype`访问，仅有组件独有的计算属性是通过`vm`直接访问的。`props`也是如此，详情请参考`Vue.extend`的实现及`initProps`的分析文档。
 
 
 ## 源码
@@ -57,6 +58,8 @@ function initComputed (vm: Component, computed: Object) {
     // component-defined computed properties are already defined on the
     // component prototype. We only need to define computed properties defined
     // at instantiation here.
+
+    // 注意此处，in 操作符枚举出原型上的所有属性，所以这里只会把组件独有的计算属性的访问挂载在 vm 上，而共有的计算属性会自动通过 vm.constructor.prototype 访问，详情请查看 Vue.extend 的实现
     if (!(key in vm)) {
       defineComputed(vm, key, userDef)
     } else if (process.env.NODE_ENV !== 'production') {
