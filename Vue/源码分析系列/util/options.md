@@ -13,6 +13,8 @@ Vue 里，当我们使用到`Vue.extend`、`Vue.mixin`全局方法或组件对�
 - `props`、`methods`、`inject`、`computed`选项
 - `provide`选项
 
+注意：对于合并的每个`key`，基本上合并之后都是返回新的`value`引用对象。（方便后续比较`value`是否发生了变化）
+
 ```js
 /**
  * Merge two option objects into a new one.
