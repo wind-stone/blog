@@ -1,56 +1,63 @@
 class eventEmitter {
   constructor() {
-    this._eventsObject = {}
+    this._events = Object.create(null)
   }
 
-  on(eventName, listener, context = this, checkDupliate = true) {
-    if (!this._eventsObject[eventName]) {
-      this._eventsObject[eventName] = []
+  on(event, fn, context = this, checkDuplicated = true) {
+    if (!this._events[event]) {
+      this._events[event] = []
     }
-    const events = this._eventsObject[eventName]
-    const hasIn = checkDupliate && events.some(([evtFn, evtCtx]) => {
-      console.log('checkDupliate')
-      return listener === evtFn && context === evtCtx
+    const events = this._events[event]
+    const isDuplicated = checkDuplicated && events.some(([evtFn, evtCtx]) => {
+      return fn === evtFn && context === evtCtx
     })
-    if (!hasIn) {
-      events.push([listener, context])
+    if (!isDuplicated) {
+      events.push([fn, context])
     }
+    return this
   }
 
-  once(eventName, listener, context = this) {
-    const newListener = () => {
-      this.off(eventName, newListener)
-      listener.apply(context, arguments)
+  once(event, fn, context = this) {
+    const newFn = () => {
+      this.off(event, newFn)
+      fn.apply(context, arguments)
     }
-    this.on(eventName, newListener, context, false)
+    // 挂载原始的 fn，方便通过 $off 删除
+    newFn.fn = fn
+    this.on(event, newFn, context, false)
+    return this
   }
 
-  off(eventName, listener) {
-    const events = this._eventsObject[eventName]
+  off(event, fn) {
+    if (!arguments.length) {
+      this._events = Object.create(null)
+      return this
+    }
+    const events = this._events[event]
     if (!events) {
-      return
+      return this
     }
-    if (!listener) {
-      events.length = 0
-      return
+    if (!fn) {
+      this._events[event] = null
+      return this
     }
 
-    let len = events.length
-    while(len--) {
-      let event = events[len]
-      if (event[0] === listener) {
-        events.splice(len, 1)
+    let i = events.length
+    while(i--) {
+      let event = events[i]
+      if (event[0] === fn || event[0].fn === fn) {
+        events.splice(i, 1)
       }
     }
+    return this
   }
 
-  emit(eventName, ...arg) {
-    const events = this._eventsObject[eventName]
-    if (!events) {
-      return
+  emit(event, ...arg) {
+    const cbs = this._events[event]
+    if (cbs) {
+      cbs.forEach(([fn, context], idx) => {
+        fn.apply(context, arg)
+      })
     }
-    events.forEach(([listener, context], idx) => {
-      listener.apply(context, arg)
-    })
   }
 }
