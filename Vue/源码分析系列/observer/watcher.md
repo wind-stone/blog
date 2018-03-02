@@ -409,6 +409,8 @@ export default class Watcher {
       // this is a somewhat expensive operation so we skip it
       // if the vm is being destroyed.
       if (!this.vm._isBeingDestroyed) {
+        // 如果 vm 不是正在被销毁，则将该 watcher 从 vm._watchers 移除
+        // 因为 vm._watchers 可能有大量的 watcher，因此如果 vm 正在被销毁，就没必要从 vm._watchers 里移除 watcher（反正所有的 watcher 都没用了）
         remove(this.vm._watchers, this)
       }
       let i = this.deps.length
