@@ -109,39 +109,6 @@ objArr.sort(function (a, b) {
 ```
 
 
-## 正则表达式
-
-### 千分位表示法
-- 正则一
-```
-function thousandsFormat(str) {
-    return str.replace( /\B(?=(?:\d{3})+$)/g, ',' );
-};
-```
-说明：
-
-
-- 正则二
-```
-function thousandsFormat(str){
-    var re = /(?=(?!\b)(\d{3})+$)/g;
-    return str.replace(re,',');
-}
-```
-
-- 非正则方法
-```
-function formatCash(str) {
-    return str.split('').reverse().reduce((prev, next, index) => {
-        return ((index % 3) ? next : (next + ',')) + prev
-    })
-}
-console.log(formatCash('1234567890')) // 1,234,567,890
-```
-
-
-
-
 # 类型转换
 
 ## Boolean() 函数
