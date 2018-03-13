@@ -11,7 +11,8 @@ Babel 是处于构建时（也就是传统Java等语言的编译时），转译�
         - 它本身就是由 core-js 与 regenerator-runtime 库组成
         - 除了做简单的合并与映射外，并没有做任何额外的加工
         - 使用时需要手动引入需要的模块
-        - 不知道转换实例方法
+        - 不支持转换实例方法
+        - 支持转换静态方法，但是，只支持显示调用如：`Array.from`，不支持隐式调用如`Array['from']`
     - babel-plugin-transform-runtime 插件
         - 让 Babel 发现代码中使用到 Symbol、Promise、Map 等新类型时，自动且按需进行 polyfill
         - 不会污染全局变量
