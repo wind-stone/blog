@@ -42,6 +42,31 @@ if ([1][0] === undefined) {
 ```
 
 
+## Set 的解构赋值、具有 Iterator 接口的数据结构的解构赋值
+
+对于 Set 结构，也可以使用数组的解构赋值。
+
+```js
+let [x, y, z] = new Set(['a', 'b', 'c']);
+x // "a"
+```
+
+事实上，只要某种数据结构具有 Iterator 接口，都可以采用数组形式的解构赋值。
+
+```js
+function* fibs() {
+  let a = 0;
+  let b = 1;
+  while (true) {
+    yield a;
+    [a, b] = [b, a + b];
+  }
+}
+
+let [first, second, third, fourth, fifth, sixth] = fibs();
+sixth // 5
+```
+
 ## 对象的解构赋值
 
 - 对象的解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量。真正被赋值的是后者，而不是前者
