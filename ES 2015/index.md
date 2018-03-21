@@ -21,6 +21,21 @@
 `String.raw()` | ES6 | 返回一个斜杠都被转义（即斜杠前面再加一个斜杠）的字符串 |
 
 
+## 数值
+
+项目 | ECMAScript 版本 | 用途 | 说明
+--- | --- | --- | ---
+`Number.isFinite()` | ES2015 | 检查一个数值是否为有限的（finite），即不是`Infinity` | 如果参数类型不是数值，一律返回`false`
+`Number.isNaN()` | ES2015 | 检查一个值是否为`NaN` | 如果参数类型不是数值，一律返回`false`
+`Number.parseInt()` | ES2015 | 同全局方法`parseInt()` | 减少全局性方法，使得语言逐步模块化
+`Number.parseFloat()` | ES2015 | 同全局方法`parseFloat()` | 减少全局性方法，使得语言逐步模块化
+`Number.isInteger()` | ES2015 | 判断一个数值是否为整数 | 如果参数不是数值，返回`false`
+`Number.EPSILON` | ES2015 | 常量，JavaScript 能够表示的最小精度 | 对于 64 位浮点数来说，就等于 2 的 -52 次方
+`Number.MAX_SAFE_INTEGER` | ES2015 | 常量，最大安全整数 | 值为`Math.pow(2, 53) - 1`，即 9007199254740991
+`Number.MIN_SAFE_INTEGER` | ES2015 | 常量，最小安全整数 | 值为`-Math.pow(2, 53) + 1`，即 -9007199254740991
+`Number.Number.isSafeInteger()` | ES2015 | 判断整数是否在最大最小安全整数之间，即在`-2^53`到`2^53`之间（不含两个端点）之间 | 如果参数不是整数，一律返回`false`
+
+
 ### 数组
 
 项目 | ECMAScript 版本 | 用途 | 说明
