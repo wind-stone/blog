@@ -22,11 +22,11 @@ function Vue (options) {
   this._init(options)
 }
 
-initMixin(Vue)
-stateMixin(Vue)
-eventsMixin(Vue)
-lifecycleMixin(Vue)
-renderMixin(Vue)
+initMixin(Vue)  // 详见 ./init.md
+stateMixin(Vue)  // 详见 ./state/index.md
+eventsMixin(Vue)  // 详见 ./events.md
+lifecycleMixin(Vue)  // 详见 ./lifecycle.md
+renderMixin(Vue)  // 详见 ./render.md
 
 export default Vue
 ```

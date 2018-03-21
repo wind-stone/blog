@@ -47,6 +47,11 @@ export function initInjections (vm: Component) {
   }
 }
 
+
+/**
+ * 返回 inject 的 key-value 对象
+ * { key1: val1, key2: val2}
+ */
 export function resolveInject (inject: any, vm: Component): ?Object {
   if (inject) {
     // inject is :any because flow is not smart enough to figure out cached
@@ -70,6 +75,7 @@ export function resolveInject (inject: any, vm: Component): ?Object {
         }
         source = source.$parent
       }
+      // 在祖先组件里未找到对应的 key
       if (!source) {
         if ('default' in inject[key]) {
           const provideDefault = inject[key].default

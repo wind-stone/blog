@@ -2,9 +2,11 @@
 
 ## 分析
 
+- `options`合并
+  - 内部组件（跟 Vnode 有关，待后续学习）
+  - 非内部组件
 
-
-### `options`合并
+### 非内部组件`options`合并
 
 初始化 Vue 实例/组件时，需要将`Ctor.options`（考虑到继承，这里不只是`Vue.options`）与传入的`options`选项合并成新的`options`后，再做下一步处理。而在合并`options`前，需要做一些处理，比如获取最新的`Ctor.options`。
 
@@ -70,13 +72,13 @@ export function initMixin (Vue: Class<Component>) {
     }
     // expose real self
     vm._self = vm
-    initLifecycle(vm)
-    initEvents(vm)
+    initLifecycle(vm)  // 详见 ./lifecycle.md
+    initEvents(vm)  // 详见 ./events.md
     initRender(vm)
     callHook(vm, 'beforeCreate')
-    initInjections(vm) // resolve injections before data/props
-    initState(vm)
-    initProvide(vm) // resolve provide after data/props
+    initInjections(vm) // resolve injections before data/props，详见 ./inject.md
+    initState(vm)  // 详见 ./state/index.md
+    initProvide(vm) // resolve provide after data/props，详见 ./inject.md
     callHook(vm, 'created')
 
     /* istanbul ignore if */
