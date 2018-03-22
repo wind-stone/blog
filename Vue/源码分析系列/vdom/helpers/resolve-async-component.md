@@ -1,6 +1,20 @@
 # resolve-async-component 源码学习及收获
 
-该文件主要是处理异步组件
+该文件主要是处理异步组件，返回基于组件选项对象的构造函数。
+
+返回值有如下情况：
+
+- 如果是同步获取的组件，返回基于组件选项对象的构造函数
+- 如果是异步获取的组件
+    - 普通的异步组件（调用工厂函数后返回`Promise`实例），返回`Undefined`
+    - 高级异步组件（调用工厂函数后返回对象，对象的`component`是`Promise`实例）
+        - 工厂函数返回的对象有`loading`属性，
+            - `delay`为`0`，返回基于`loading`组件选项对象的构造函数
+            - `delay`不为`0`，返回`undefined`；在`delay`时间后，再调用`forceRender()`强制渲染出“加载中组件”
+        - 否则，返回`undefined`
+
+针对所有异步获取的组件，不管是返回`undefined`还是返回“加载中组件”，最终都会调用`forceRender()`方法，强制重新渲染出正确的异步组件（或者是“渲染出错组件”）
+
 
 ## 分析
 
@@ -29,6 +43,23 @@ Vue.component(
   // 该 `import` 函数返回一个 `Promise` 对象。
   () => import('./my-async-component')
 )
+```
+
+- 方式三：高级异步组件
+
+```js
+const AsyncComp = () => ({
+  // 需要加载的组件。应当是一个 Promise
+  component: import('./MyComp.vue'),
+  // 加载中应当渲染的组件
+  loading: LoadingComp,
+  // 出错时渲染的组件
+  error: ErrorComp,
+  // 渲染加载中组件前的等待时间。默认：200ms。
+  delay: 200,
+  // 最长等待时间。超出此时间则渲染错误组件。默认：Infinity
+  timeout: 3000
+})
 ```
 
 
@@ -82,15 +113,17 @@ export function resolveAsyncComponent (
   baseCtor: Class<Component>,
   context: Component
 ): Class<Component> | void {
+  // 高级异步组件：经过 timeout 时间后异步组件加载超时，强制渲染“渲染错误组件”
   if (isTrue(factory.error) && isDef(factory.errorComp)) {
     return factory.errorComp
   }
 
+  // 优先使用缓存：如果之前已经处理过该函数（处理后返回的是构造函数，挂在 factory.resolved 上）
   if (isDef(factory.resolved)) {
-    // 优先使用缓存：如果之前已经处理过该函数（处理后返回的是构造函数，挂在 factory.resolved 上）
     return factory.resolved
   }
 
+  // 高级异步组件：经过 delay 时间后，强制渲染“加载中组件”
   if (isTrue(factory.loading) && isDef(factory.loadingComp)) {
     return factory.loadingComp
   }
@@ -136,11 +169,12 @@ export function resolveAsyncComponent (
 
     if (isObject(res)) {
       if (typeof res.then === 'function') {
-        // 工厂函数调用后，返回 Promise，异步组件的方式二
+        // 方式二：工厂函数调用后，返回 Promise
         if (isUndef(factory.resolved)) {
           res.then(resolve, reject)
         }
       } else if (isDef(res.component) && typeof res.component.then === 'function') {
+        // 方式三：高级异步组件
         res.component.then(resolve, reject)
 
         if (isDef(res.error)) {
