@@ -8,11 +8,15 @@
 
 `render`函数里，`createElement`函数的第一个参数可以是 HTML 标签字符串、组件选项对象，或者是返回值类型为 String/Object 的函数。那么针对各个类型的参数，是如何处理的呢？
 
+
 #### HTML 标签字符串
 
 - 平台内置元素：解析平台标签后，创建 vnode 节点
 - 通过选项`components`局部定义的标签：获取该标签对应的组件选项对象，调用`createComponent`创建 vnode
-- 正常 HTML 标签：创建正常的 vnode 节点
+- 未知的或者未列出的具有命名空间的标签：创建 vnode 节点
+
+注意：web 平台下，平台内置元素包括 HTML 标签和 SVG 标签
+
 
 #### 组件选项对象/返回值类型为 String/Object 的函数
 
@@ -121,13 +125,14 @@ export function _createElement (
   }
   let vnode, ns
   if (typeof tag === 'string') {
-    // tag 为 HTML 标签字符串
+    // tag 为标签字符串
 
     let Ctor
     // 此时 context.$vnode 为 parentVnode，即先使用 parentVnode 的 ns
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
     if (config.isReservedTag(tag)) {
       // platform built-in elements
+      // 平台内置元素，web 平台下包括 HTML 标签和 SVG 标签
       vnode = new VNode(
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context

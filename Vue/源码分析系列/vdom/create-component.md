@@ -27,6 +27,40 @@
 需要注意的是，如果是通过工厂函数异步获取的组件选项对象，则会先返回一个空的 vnode 的节点，等到真正的组件选项对象返回时，会调用`context`即`vm`的`$forceUpdate()`方法重新获取 VNode Tree（重新获取时，异步组件已经 ready，会同步返回构造函数）
 
 
+### `Vue.prototype.$mount(el, hydrating)`中`hydrating`的作用
+
+组件 vnode 的 init 钩子里，调用`$mount`函数时，会传入`hydrating`参数
+
+```js
+// hooks to be invoked on component VNodes during patch
+const componentVNodeHooks = {
+  init (
+    vnode: VNodeWithData,
+    hydrating: boolean,
+    parentElm: ?Node,
+    refElm: ?Node
+  ): ?boolean {
+    if (
+      vnode.componentInstance &&
+      !vnode.componentInstance._isDestroyed &&
+      vnode.data.keepAlive
+    ) {
+      // kept-alive components, treat as a patch
+      const mountedNode: any = vnode // work around flow
+      componentVNodeHooks.prepatch(mountedNode, mountedNode)
+    } else {
+      const child = vnode.componentInstance = createComponentInstanceForVnode(
+        vnode,
+        activeInstance,
+        parentElm,
+        refElm
+      )
+      child.$mount(hydrating ? vnode.elm : undefined, hydrating)
+    }
+  }
+}
+```
+
 ### 将 v-model 信息转换到子组件的 prop、event
 
 ```js
@@ -251,7 +285,7 @@ export function createComponent (
   const vnode = new VNode(
     `vue-component-${Ctor.cid}${name ? `-${name}` : ''}`,
     data, undefined, undefined, undefined, context,
-    { Ctor, propsData, listeners, tag, children },
+    { Ctor, propsData, listeners, tag, children }, // vnode.componentOptions
     asyncFactory
   )
 
@@ -266,6 +300,9 @@ export function createComponent (
   return vnode
 }
 
+/**
+ * vnode patch 时，创建组件 vnode 的组件实例
+ */
 export function createComponentInstanceForVnode (
   vnode: any, // we know it's MountedComponentVNode but flow doesn't
   parent: any, // activeInstance in lifecycle state
