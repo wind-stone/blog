@@ -434,6 +434,8 @@ export function mountComponent (
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
+  // 手动调用 mounted 生命周期钩子函数
+  // （子组件已经在 Vnode 的 inserted 钩子里调用了 mounted 生命周期函数）
   if (vm.$vnode == null) {
     vm._isMounted = true
     callHook(vm, 'mounted')

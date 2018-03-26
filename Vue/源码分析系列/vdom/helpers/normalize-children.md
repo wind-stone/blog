@@ -83,7 +83,7 @@ function normalizeArrayChildren (children: any, nestedIndex?: string): Array<VNo
         res[lastIndex] = createTextVNode(last.text + c)
       } else if (c !== '') {
         // convert primitive to vnode
-        //  创建新的文本节点
+        // 创建新的文本节点
         res.push(createTextVNode(c))
       }
     } else {

@@ -72,12 +72,12 @@ export function initMixin (Vue: Class<Component>) {
     }
     // expose real self
     vm._self = vm
-    initLifecycle(vm)  // 详见 ./lifecycle.md
-    initEvents(vm)  // 详见 ./events.md
-    initRender(vm)
+    initLifecycle(vm) // 详见 ./lifecycle.md
+    initEvents(vm) // 详见 ./events.md
+    initRender(vm) // 详见 ./render.md
     callHook(vm, 'beforeCreate')
     initInjections(vm) // resolve injections before data/props，详见 ./inject.md
-    initState(vm)  // 详见 ./state/index.md
+    initState(vm) // 详见 ./state/index.md
     initProvide(vm) // resolve provide after data/props，详见 ./inject.md
     callHook(vm, 'created')
 
@@ -88,6 +88,7 @@ export function initMixin (Vue: Class<Component>) {
       measure(`vue ${vm._name} init`, startTag, endTag)
     }
 
+    // 只有存在 el 属性，才挂载到 el 上
     if (vm.$options.el) {
       vm.$mount(vm.$options.el)
     }
