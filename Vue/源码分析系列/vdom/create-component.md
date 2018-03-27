@@ -311,10 +311,10 @@ export function createComponentInstanceForVnode (
 ): Component {
   const options: InternalComponentOptions = {
     _isComponent: true,
-    parent,
-    _parentVnode: vnode,
-    _parentElm: parentElm || null,
-    _refElm: refElm || null
+    parent, // 活动的 Vue 实例
+    _parentVnode: vnode, // 组件实例对应的 vnode，其 tag 为 vue-component-${Ctor.cid}${name}`
+    _parentElm: parentElm || null, // 组件实例要插入到的父 DOM 元素
+    _refElm: refElm || null // 组件实例将插入到该元素之前
   }
   // check inline-template render functions
   const inlineTemplate = vnode.data.inlineTemplate
