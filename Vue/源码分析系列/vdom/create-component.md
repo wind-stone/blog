@@ -121,6 +121,10 @@ import {
 
 // hooks to be invoked on component VNodes during patch
 const componentVNodeHooks = {
+  /**
+   * patch 过程中，若是创建的是子组件，则调用该 init 钩子，
+   * 创建子组件的实例（及其所有的子元素、子组件），并挂载到父元素上
+   */
   init (
     vnode: VNodeWithData,
     hydrating: boolean,
@@ -154,6 +158,10 @@ const componentVNodeHooks = {
     )
   },
 
+  /**
+   * 子组件完成 patch 之后，调用该 insert 钩子
+   *（如果是子组件是首次挂载，会调用 mounted 钩子）
+   */
   insert (vnode: MountedComponentVNode) {
     const { context, componentInstance } = vnode
     if (!componentInstance._isMounted) {
@@ -281,6 +289,7 @@ export function createComponent (
   mergeHooks(data)
 
   // return a placeholder vnode
+  // 注意：针对所有的组件，返回的 vnode 都是占位的 vnode
   const name = Ctor.options.name || tag
   const vnode = new VNode(
     `vue-component-${Ctor.cid}${name ? `-${name}` : ''}`,

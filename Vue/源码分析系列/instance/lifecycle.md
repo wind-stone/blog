@@ -81,6 +81,8 @@ Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
   }
   // if parent is an HOC, update its $el as well
   if (vm.$vnode && vm.$parent && vm.$vnode === vm.$parent._vnode) {
+    // vm.$vnode 是 vm.$options._parentVnode，即是 vm 实例的占位 vnode
+    // vm.$parent 是 vm 的父组件实例
     vm.$parent.$el = vm.$el
   }
   // updated hook is called by the scheduler to ensure that children are
@@ -151,12 +153,16 @@ Vue.prototype.$destroy = function () {
 }
 ```
 
+需要注意，
+- `beforeDestroy`钩子函数的调用顺序是：先父组件、后子组件
+- `destroy`钩子函数的调用顺序是：先子组件、后父组件
+
 
 ### `mountComponent`
 
 该函数的主要功能是，将组件挂载到元素上，创建渲染`watcher`，一旦模板里依赖的数据有更改，将更新模板。
 
-挂载元素前后，需要执行对应的`beforeMount`、`mounted`生命周期钩子函数。
+注意，只有根实例调用`vm.$mount()`方法时，才会传入`el`参数，子组件的挂载都是直接挂载在父元素上（根实例不知道父元素是哪个，需要手动传入要挂载到的元素）
 
 ```js
 export function mountComponent (
@@ -220,6 +226,8 @@ export function mountComponent (
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
+  // Vue 根实例没有 $vnode 属性，需要手动调用 mounted 生命周期钩子函数
+  // （子组件会在 Vnode 的 inserted 钩子里调用 mounted 生命周期函数）
   if (vm.$vnode == null) {
     vm._isMounted = true
     callHook(vm, 'mounted')
@@ -294,6 +302,8 @@ export function lifecycleMixin (Vue: Class<Component>) {
     // based on the rendering backend used.
     if (!prevVnode) {
       // initial render
+      // 如果是根实例 patch，vm.$el 有值，vm.$options._parentElm 无值，最终会挂载在 vm.$el.parent 之下
+      // 如果是组件实例，vm.$el 为空，vm.$options._parentElm 有值，最终会挂载在 vm.$options._parentElm 之下
       vm.$el = vm.__patch__(
         vm.$el, vnode, hydrating, false /* removeOnly */,
         vm.$options._parentElm,
@@ -373,6 +383,8 @@ export function lifecycleMixin (Vue: Class<Component>) {
   }
 }
 
+
+
 export function mountComponent (
   vm: Component,
   el: ?Element,
@@ -434,8 +446,6 @@ export function mountComponent (
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
-  // 手动调用 mounted 生命周期钩子函数
-  // （子组件已经在 Vnode 的 inserted 钩子里调用了 mounted 生命周期函数）
   if (vm.$vnode == null) {
     vm._isMounted = true
     callHook(vm, 'mounted')
