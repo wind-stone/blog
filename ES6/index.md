@@ -92,6 +92,26 @@
 - 数组里避免使用[空位](http://es6.ruanyifeng.com/#docs/array#%E6%95%B0%E7%BB%84%E7%9A%84%E7%A9%BA%E4%BD%8D)
 
 
+### 正则表达式
+
+项目 | ECMAScript 版本 | 用途 | 说明
+--- | --- | --- | ---
+`new RegExp(/xyz/, 'i')` | ES6 | 构造函数第一个参数是一个正则对象，那么可以使用第二个参数指定修饰符 | 返回的正则表达式会忽略原有的正则表达式的修饰符，只使用新指定的修饰符（ES5 不允许第一个参数是正则对象时，存在第二个参数）
+`RegExp.prototype[Symbol.match]` | ES6 | 对应`String.prototype.match` |
+`RegExp.prototype[Symbol.replace]` | ES6 | 对应`String.prototype.replace` |
+`RegExp.prototype[Symbol.search]` | ES6 | 对应`String.prototype.search` |
+`RegExp.prototype[Symbol.split]` | ES6 | 对应`String.prototype.split` |
+`u`修饰符 | ES6 | 正确处理四个字节的 UTF-16 编码 |
+`y`修饰符 | ES6 | “粘连”（sticky）修饰符，也是全局匹配，后一次匹配都从上一次匹配成功的下一个位置开始 |
+`reg.sticky` | ES6 | 正则对象是否设置了`y`修饰符 |
+`reg.flags` | ES6 | 返回正则表达式的修饰符 |
+`s`修饰符 | ES6 | `s`修饰符，使得`.`可以匹配任意单个字符 |
+`(?<=)` | ES6 | 后行断言 |
+`(?<!)` | ES6 | 后行否定断言 |
+`\p{...}`/`\P{...}` | ES6 | 允许正则表达式匹配符合 Unicode 某种属性的所有字符 |
+具名组匹配 | ES6 | 允许为每一个组匹配指定一个名字，既便于阅读代码，又便于引用 |
+
+
 ### 对象
 
 

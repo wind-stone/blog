@@ -47,9 +47,9 @@
 
 ### `RegExp.prototype.test(str)`
 
-执行检索，查看正则表达式与指定的字符串是否匹配，返回 true 或 false。
+执行检索，查看正则表达式与指定的字符串是否匹配，返回`true`或`false`。
 
-如果正则表达式设置了全局标志，test() 的执行会改变正则表达式   lastIndex属性。连续的执行test()方法，后续的执行将会从 lastIndex 处开始匹配字符串。
+如果正则表达式设置了全局标志`g`，`test()`的执行会改变正则表达式`lastIndex`属性。连续的执行`test()`方法，后续的执行将会从`lastIndex`处开始匹配字符串。
 
 
 ### `RegExp.prototype.exec(str)`
@@ -59,7 +59,7 @@
     - 有匹配：返回`result`，结构同`String.prototype.match(reg)`方法正则无全局匹配的结果
         - `result[0]`：匹配的字符串
         - `result[1..n]`：正则表达式中用圆括号括起来的字表达式1...n
-        - `result.index`：发生匹配的字符在 str 中的开始位置
+        - `result.index`：发生匹配的字符在`str`中的开始位置
         - `result.input`：所检索的字符串
         - 如果设置了全局匹配，`reg.lastIndex`将是下一次匹配开始的位置（初始为0）
 
