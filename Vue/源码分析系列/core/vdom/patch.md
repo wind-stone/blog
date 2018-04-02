@@ -662,10 +662,14 @@ export function createPatchFunction (backend) {
     }
   }
 
+  /**
+   * 判断 vnode 是否是课可 patch 的
+   */
   function isPatchable (vnode) {
     while (vnode.componentInstance) {
       vnode = vnode.componentInstance._vnode
     }
+    // 经过 while 循环后，vnode 是除了组件 vnode 之外的 vnode（比如元素 vnode、注释 vnode）
     return isDef(vnode.tag)
   }
 
