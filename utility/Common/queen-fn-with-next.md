@@ -50,13 +50,13 @@ let sum = 0
  * 并根据函数执行结果，判断是否继续调用队列里的下一个函数
  *（可以在此过程中，给 queenFn 注入除了 next 之外的参数）
  * @param queenFn 队列里的每个函数
- * @param cb 若继续调用队列里的下一个函数，则执行该回调
+ * @param next 执行该函数，会继续调用队列里的下一个函数
  */
-function iterator(queenFn, cb) {
-  queenFn(sum, ifGoOn => {
-    if (ifGoOn !== false) {
-      sum += ifGoOn
-      cb()
+function iterator(queenFn, next) {
+  queenFn(sum, rst => {
+    if (rst !== false) {
+      sum += rst
+      next()
     }
   })
 }
