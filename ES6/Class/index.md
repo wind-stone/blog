@@ -494,6 +494,8 @@ var child = new Child();
 child.myMethod(2); // instance 2
 ```
 
+其中，`super`关键字还可以用在普通对象的方法之中，表示原型对象，详见“对象”一节。
+
 
 ## 显式指定`super`类型
 

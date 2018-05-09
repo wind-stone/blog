@@ -10,7 +10,7 @@
 `for (let ch of str)` | ES6 | 字符串的遍历器接口 |
 `str.at()` | 提案 | 返回对应位置的字符 | 可以识别 Unicode 编号大于`0xFFFF`的字符，
 `str.normalize()` | ES6 | 将字符的不同表示方法统一为同样的形式，这称为 Unicode 正规化 |
-`str.includes()` | ES6 | 返回布尔值，表示是否找到了参数字符串 | 支持第二个参数，表示开始搜索的位置
+`str.includes()` | ES6 | 返回布尔值，表示是否找到了参数字符串 | 支持第二个参数，表示开始搜索的位置，能识别出`NaN`
 `str.startsWith()` | ES6 | 返回布尔值，表示参数字符串是否在原字符串的头部 | 支持第二个参数，表示开始搜索的位置
 `str.endsWith()` | ES6 | 返回布尔值，表示参数字符串是否在原字符串的头部 | 支持第二个参数，表示开始搜索的位置，针对前 n 个字符
 `str.repeat()` | ES6 | 返回一个新字符串，表示将原字符串重复n次。 |
@@ -126,3 +126,20 @@
 
 
 ### 对象
+
+项目 | ECMAScript 版本 | 用途 | 说明
+--- | --- | --- | ---
+`...`扩展运算符 | | |
+属性名表达式 | ES6 | 允许字面量定义对象时，用表达式作为对象的属性名，即把表达式放在方括号内 | `let example = 'xxx'; const obj = { [example]: true }`
+方法的`name`属性 | ES6 | 对象方法也有`name`属性 | 需要注意`bind`方法创造的函数、Function 构造函数创造的函数
+`Object.is()` | ES6 | 比较两个值是否相等，采用“Same-value equality”（同值相等）算法 | 与严格比较运算符（===）的行为基本一致，不同之处只有两个：一是`+0`不等于`-0`，二是`NaN`等于自身。
+`Object.assign()` | ES6 | 将源对象（source）的所有可枚举且是自身的属性，复制到目标对象（target） | target source 只有对象和字符串可用，别的类型会忽略
+`Object.getOwnPropertyDescriptors()` | ES2017 | 获取指定对象所有自身属性（非继承属性）的描述对象。 | 包括不可枚举属性
+`__proto__` | ES6 | 读取或设置当前对象的`prototype`对象 | 只有浏览器必须部署这个属性，其他运行环境不一定需要部署
+`Object.setPrototypeOf()` | ES6 | 设置对象的`__proto__` | 这是 ES6 正式推荐的设置原型对象的方法
+`Object.getPrototypeOf()` | ES6 | 获取对象的`__proto__` |
+`super`关键字 | ES6 | 指向当前对象的原型对象 | `super`关键字表示原型对象时，只能用在对象的方法之中，用在其他地方都会报错；目前，只有对象方法的简写法可以让 JavaScript 引擎确认，定义的是对象的方法。
+`Object.keys()` | ES5 | 数组，对象自身的（不含继承的）所有可遍历（enumerable）属性的键名 |
+`Object.values()` | ES2017 | 数组，对象自身的（不含继承的）所有可遍历（enumerable）属性的键值 | 过滤属性名为 Symbol 值的属性
+`Object.entries()` | ES2017 | 数组，成员是对象自身的（不含继承的）所有可遍历（enumerable）属性的键值对数组 |
+
