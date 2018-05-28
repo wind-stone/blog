@@ -146,6 +146,14 @@ for (let item of iterable) {
 - 扩展运算符
 - yield*
 
+其他场合：由于数组的遍历会调用遍历器接口，所以任何接受数组作为参数的场合，其实都调用了遍历器接口。下面是一些例子。
+
+- `for...of`
+- `Array.from()`
+- `Map()`, `Set()`, `WeakMap()`, `WeakSet()`（比如`new Map([['a',1],['b',2]])`）
+- `Promise.all()`
+- `Promise.race()`
+
 #### 解构赋值
 
 对数组和 Set 结构进行解构赋值时，会默认调用`Symbol.iterator`方法。
@@ -198,16 +206,6 @@ iterator.next() // { value: 4, done: false }
 iterator.next() // { value: 5, done: false }
 iterator.next() // { value: undefined, done: true }
 ```
-
-#### 其他场合
-
-由于数组的遍历会调用遍历器接口，所以任何接受数组作为参数的场合，其实都调用了遍历器接口。下面是一些例子。
-
-- for...of
-- Array.from()
-- Map(), Set(), WeakMap(), WeakSet()（比如`new Map([['a',1],['b',2]])`）
-- Promise.all()
-- Promise.race()
 
 
 ## 字符串的 Iterator 接口
