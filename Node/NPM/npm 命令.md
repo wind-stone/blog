@@ -1,32 +1,46 @@
+# NPM
+
+## npm install 缩写
+
+```sh
+<!-- npm install xxx --save -->
+npm install xxx -S
+<!-- npm install xxx --save-dev -->
+npm install xxx -D
+```
+
+Reference:
+[Shorthands and Other CLI Niceties](https://docs.npmjs.com/misc/config#shorthands-and-other-cli-niceties)
+
 ## npm config
 
 ### registry
 
 获取/设置 npm 镜像源
-```
+
+```sh
 npm config get registry
 npm config set registry https://registry.npm.taobao.org
 ```
 
 ## 发布
 
-```
+```sh
 npm init
 npm adduser --registry=https://registry.npmjs.org/
 npm publish --registry=https://registry.npmjs.org/
 ```
+
 如果本地设置的 registry 是公司的镜像源的话，命令后面添加 `--registry=https://registry.npmjs.org/`
-
-
-
 
 ## version
 
 ### 升级版本
 
- ```
+ ```sh
  npm version [patch/minor/major]
  ```
+
  运行命令后，`package.json`中`的version`将被修改。
 
 - patch: bug的修复和小的修改
@@ -34,7 +48,6 @@ npm publish --registry=https://registry.npmjs.org/
 - major: 项目大的调整，修改了之前的特性。
 
 详情可参考：[http://semver.org/](http://semver.org/)
-
 
 ### package.json 里 version 使用说明
 
