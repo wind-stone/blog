@@ -6,6 +6,12 @@ sidebarDepth: 0
 
 [[toc]]
 
+## commonjs 与 commonjs2
+
+`commonjs`只定义了`exports`，`commonjs2`还定义了`module.exports`，而 Node.js 及许多`CommonJs`的实现都是`commonjs2`
+
+Reference: [What is commonjs2 ? #1114](https://github.com/webpack/webpack/issues/1114)
+
 ## process.cwd 与 __dirname 的区别
 
 - `process.cwd()`：是当前执行 node 命令时候的文件夹地址
