@@ -31,6 +31,7 @@ module.exports = {
       { text: 'Code Snippet', link: '/code-snippet/js/' },
       { text: '最佳实践', link: '/best-practice/css/' },
       { text: 'GitHub', link: 'https://github.com/wind-stone' },
+      { text: '随记', link: '/wander/house/' }
     ],
     sidebar: {
       '/knowledge/': [
@@ -275,6 +276,18 @@ module.exports = {
           collapsable: false,
           children: [
             'eslint/eslint-vue'
+          ]
+        }
+      ],
+
+      // 随记
+      '/wander/': [
+        {
+          title: 'House 相关',
+          collapsable: false,
+          children: [
+            'house/',
+            'house/tianya-post'
           ]
         }
       ]
