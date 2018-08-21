@@ -191,7 +191,13 @@ button {
 
 ## 最佳实践
 
-- 通用组件/基础组件，不要添加`scoped`，方便调用方覆盖样式
-- 业务组件，可以添加`scoped`，防止被全局样式覆盖
+- 通用组件/基础组件，不要添加`scoped`
+  - 方便调用方覆盖样式
+- 业务组件，可以添加`scoped`
+  - 防止被全局样式覆盖
+  - 防止组件内的样式影响子组件的样式
 
-参考：[vue-loader: 有作用域的 CSS](https://vue-loader.vuejs.org/zh-cn/features/scoped-css.html)
+参考：
+
+- [vue-loader: 有作用域的 CSS](https://vue-loader.vuejs.org/zh-cn/features/scoped-css.html)
+- [Vue.js 风格指南-为组件样式设置作用域](https://cn.vuejs.org/v2/style-guide/index.html#%E4%B8%BA%E7%BB%84%E4%BB%B6%E6%A0%B7%E5%BC%8F%E8%AE%BE%E7%BD%AE%E4%BD%9C%E7%94%A8%E5%9F%9F-%E5%BF%85%E8%A6%81)
