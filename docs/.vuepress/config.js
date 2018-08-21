@@ -13,7 +13,7 @@ module.exports = {
         text: '移动端',
         items: [
           { text: '独有特性', link: '/mobile/feature/' },
-          { text: '兼容性', link: '/mobile/compatibility/' },
+          { text: '兼容性', link: '/mobile/compatibility/general/' },
         ]
       },
       { text: '服务器端', link: '/server/node/' },
@@ -105,7 +105,8 @@ module.exports = {
           collapsable: false,
           children: [
             'general/',
-            'general/input-delay/'
+            'general/input-delay/',
+            'general/media'
           ]
         },
         {
