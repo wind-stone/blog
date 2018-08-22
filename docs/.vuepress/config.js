@@ -258,13 +258,6 @@ module.exports = {
           ]
         },
         {
-          title: 'NPM',
-          collapsable: false,
-          children: [
-            'npm/'
-          ]
-        },
-        {
           title: 'CLI',
           collapsable: false,
           children: [
