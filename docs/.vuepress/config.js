@@ -107,7 +107,8 @@ module.exports = {
           children: [
             'general/',
             'general/input-delay/',
-            'general/media'
+            'general/media',
+            'general/video'
           ]
         },
         {
