@@ -266,6 +266,13 @@ module.exports = {
           ]
         },
         {
+          title: 'Linux',
+          collapsable: false,
+          children: [
+            'linux/'
+          ]
+        },
+        {
           title: 'ESlint',
           collapsable: false,
           children: [
