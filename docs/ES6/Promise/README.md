@@ -36,6 +36,7 @@ promiseA.then(result => {
 ```
 
 注意，上述只是针对`resolve`函数的参数是 Promise 实例来说的，`reject`函数的参数是 Promise 实例时，无类似效果，会直接将`promiseA`的状态改变为 Rejected。
+
 ```js
 var promiseB = new Promise(function (resolve, reject) {
   setTimeout(() => resolve('promiseB resolved!'), 3000)
@@ -54,9 +55,6 @@ promiseA.then(result => {
 // 执行结果：
 // catch
 ```
-
-
-
 
 ## Promise.prototype.then/catch 方法
 
@@ -277,3 +275,50 @@ var promise = new Promise(function(resolve, reject) {
 ## Promise.race()
 
 ## Promise.resolve()
+
+## Promise 实现
+
+### Promises/A+ 规范
+
+Promises/A+ 规范文档
+
+- [英文原版](https://promisesaplus.com/)
+- [中文译版](http://www.ituring.com.cn/article/66566)
+
+代码实现参考
+
+- [解读Promise内部实现原理](https://juejin.im/post/5a30193051882503dc53af3c)
+
+### 重难点问题
+
+#### then 方法链式调用后为什么要返回新的 promise 实例？
+
+如我们理解，为保证`then`函数链式调用，`then`需要返回`promise`实例。但为什么返回新的`promise`，而不直接返回`this`当前对象呢？看下面示例代码：
+
+```js
+const promise2 = promise1.then(function (value) {
+  return Promise.reject(3);
+})
+```
+
+假如`then`函数执行返回`this`调用对象本身，那么`promise2 === promise1`，`promise2`状态也应该等于`promise1`同为`resolved`。而`onResolved`回调中返回状态为`rejected`对象。考虑到`Promise`状态一旦`resolved`或`rejected`就不能再迁移，所以这里`promise2`也没办法转为回调函数返回的`rejected`状态，产生矛盾。
+
+#### 通过 then 注册的回调函数为什么要异步执行？
+
+```js
+var a = 1;
+
+promise1.then(function (value) {
+  a = 2;
+})
+
+console.log(a)
+```
+
+`promise1`内部执行同步或异步操作未知。
+
+假如未规定`then`注册回调为异步执行，则这里打印`a`可能存在两种值。`promise1`内部同步执行操作时`a === 2`，相反执行异步操作时`a === 1`。为屏蔽依赖外部的不确定性，规范指定`onFulfilled`和`onRejected`方法异步执行。
+
+### 简单实现源码
+
+<<< @/docs/es6/promise/implement.js
