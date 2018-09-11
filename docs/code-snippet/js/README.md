@@ -40,6 +40,10 @@
 
 <<< @/docs/code-snippet/js/browser/storage.md
 
+### 复制内容到剪贴板
+
+<<< @/docs/code-snippet/js/browser/clipboard.js
+
 ## 服务器环境
 
 ### 获取本机 IPv4 地址
