@@ -55,6 +55,25 @@ require.resolve('a.js')
 
 Reference: [require() 源码解读](http://www.ruanyifeng.com/blog/2015/05/require.html)
 
+## 事件循环
+
+### 观察者
+
+- I/O 观察者
+  - 文件 I/O 观察者
+  - 网络 I/O 观察者
+- 定时器观察者
+  - `setTimeout`
+  - `setInterval`
+- idle 观察者
+  - `process.nextTick`
+- check 观察者
+  - `setImmediate`
+
+事件循环里对观察者的检查顺序为：
+
+idle 观察者 > I/O 观察者 > check 观察者
+
 ## Node 定时器
 
 - 同步任务
