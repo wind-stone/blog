@@ -28,20 +28,18 @@ sidebarDepth: 0
 转换结果：
 
 ```html
-<template>
-  <div data-v-469af010 class="hello">
-    <div data-v-469af010 class="world"></div>
-  </div>
-</template>
+<div data-v-469af010 class="hello">
+  <div data-v-469af010 class="world"></div>
+</div>
+```
 
-<style>
+```css
 .hello[data-v-469af010] {
   color: #333;
 }
 .hello > .world[data-v-469af010] {
   color: #444;
 }
-</style>
 ```
 
 ## 渲染规则
@@ -54,7 +52,7 @@ sidebarDepth: 0
 
 ### 问题的产生
 
-若是父组件的样式是`scoped`，如果在父组件里，覆盖子组件里 DOM 元素的样式呢？
+若是父组件的样式是`scoped`，如何在父组件里，覆盖子组件里 DOM 元素的样式呢？
 
 ```html
 <template>
@@ -151,6 +149,7 @@ button {
 针对以上的问题，`vue-loader`给出了解决方案，就是使用深度作用选择器。
 
 ```css
+<style lang="less" scoped>
 .hello {
   color: #333;
   > .world {
@@ -161,6 +160,7 @@ button {
     background-color: green;
   }
 }
+</style>
 ```
 
 父组件里在`button`元素选择器前添加`/deep/`深度作用选择器，最终生产的 CSS 如下所示。
@@ -188,6 +188,69 @@ button {
 注意：
 
 - `/deep/`这种写法是用在预处理器里的，常规的 CSS 里，可以使用`>>>`来替换掉`/deep/`
+
+### 其他情况
+
+上述示例是基于父组件有`scoped`、子组件无`scoped`来阐述的，我们顺便将另外几种情况也说明一下。
+
+#### 父子组件都有`scoped`
+
+```html
+<div data-v-469af010 class="hello"">
+  <div data-v-469af010 class="world"></div>
+  <div data-v-71c74cf1 data-v-469af010 class="child-component">
+    <button data-v-71c74cf1>你好</button>
+  </div>
+</div>
+```
+
+父子组件都使用`scoped`，渲染出的 HTML 如上所示。
+
+```css
+<style lang="less" scoped>
+.hello {
+  color: #333;
+  > .world {
+    color: #444;
+  }
+  /* button 元素选择器前添加 /deep/ 深度作用选择器 */
+  /deep/ button {
+    background-color: green;
+  }
+}
+</style>
+```
+
+我们依然在父组件里使用深度选择器，最终产出的 CSS 如下所示。
+
+```css
+<!-- 子组件样式 -->
+button[data-v-71c74cf1] {
+  background-color: red;
+}
+
+<!-- 父组件样式 -->
+.hello[data-v-469af010] {
+  color: #333;
+}
+.hello > .world[data-v-469af010] {
+  color: #444;
+}
+.hello[data-v-469af010] button {
+  background-color: green;
+}
+```
+
+可以看到，尽管父子组件都添加了`scoped`，但是使用深度选择器之后，父组件里的选择器`.hello[data-v-469af010] button`的优先级高于子组件里的选择器`button[data-v-71c74cf1]`，最终父组件成功改写子组件的样式。
+
+#### 父子组件都无`scoped`
+
+这种情况比较简单，无需使用深度选择器，只需要加大在父组件里选择器的优先级即可覆盖子组件里的样式。
+
+#### 父组件无`scoped`，子组件有`scoped`
+
+
+
 
 ## 最佳实践
 
