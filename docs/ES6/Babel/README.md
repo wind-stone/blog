@@ -10,6 +10,22 @@ Babel 是处于构建时（也就是传统Java等语言的编译时），转译�
 
 以下所有内容，都是基于 Babel 6。
 
+## babel 的三个阶段：解析，转换，生成
+
+Babel 本身不具有任何转化功能，它把转化的功能都分解到一个个 plugin 里面。因此当我们不配置任何插件时，经过 babel 的代码和输入是相同的。
+
+插件总共分为两种：语法插件和转译插件。
+
+当我们添加 语法插件 之后，在解析这一步就使得 babel 能够解析更多的语法。(顺带一提，babel 内部试用的解析类库叫做 babylon，并非 babel 自行开发)。举个简单的例子，当我们定义或者调用方法时，最后一个参数之后是不允许增加逗号的，如 callFoo(param1, param2,) 就是非法的。如果源码是这种写法，经过 babel 之后就会提示语法错误。
+
+但最近的 JS 提案中已经允许了这种新的写法(让代码 diff 更加清晰)。为了避免 babel 报错，就需要增加语法插件 babel-plugin-syntax-trailing-function-commas
+
+当我们添加 转译插件 之后，在转换这一步把源码转换并输出。这也是我们使用 babel 最本质的需求。
+
+比起语法插件，转译插件其实更好理解，比如箭头函数 (a) => a 就会转化为 function (a) {return a}。完成这个工作的插件叫做 babel-plugin-transform-es2015-arrow-functions。
+
+同一类语法可能同时存在语法插件版本和转译插件版本。如果我们使用了转译插件，就不用再使用语法插件了。
+
 ## 构建时
 
 构建时，是语法（比如箭头函数、const、let、块级作用域等）层次的编译，包括以下模块：
@@ -326,6 +342,7 @@ Babel 会在正在被转录的文件的当前目录中查找一个`.babelrc`文�
 
 Reference:
 
+- [前端早读课【第1378期】 一口(很长的)气了解 Babel](https://mp.weixin.qq.com/s/qetiJo47IyssYWAr455xHQ)
 - [babel到底该如何配置？](https://juejin.im/post/59ec657ef265da431b6c5b03)
 - [知乎——Babel 编译出来还是 ES 6？难道只能上 polyfill？](https://www.zhihu.com/question/49382420)
 - [import、require、export、module.exports 混合使用详解](https://github.com/ShowJoy-com/showjoy-blog/issues/39)
