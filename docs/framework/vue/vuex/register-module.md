@@ -132,8 +132,6 @@ function resetStoreVM (store, state, hot) {
     // use computed to leverage its lazy-caching mechanism
     computed[key] = () => fn(store)
     Object.defineProperty(store.getters, key, {
-      // 问题就是出在这，返回的是 store._vm（新的Vue实例）对应 key 的计算属性
-      // 而 store._vm 都被替换了，计算属性返回的引用值也就被替换了
       get: () => store._vm[key],
       enumerable: true // for local getters
     })
@@ -150,11 +148,29 @@ function resetStoreVM (store, state, hot) {
     },
     computed
   })
-  // ...
+  Vue.config.silent = silent
+
+  // enable strict mode for new vm
+  // 开启严格模式
+  if (store.strict) {
+    enableStrictMode(store)
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(() => {
+        // 问题就出在这，$$state 的改变，会导致监听 getter 的 watch 重新计算
+        oldVm._data.$$state = null
+      })
+    }
+    Vue.nextTick(() => oldVm.$destroy())
+  }
 }
 ```
 
-通过分析`resetStoreVM`的源码，我们知道，在`vuex`安装了新的子模块之后，需要重置`store._vm`为一新的 Vue 实例，而与`getters`绑定的`store._vm`都被替换成新的 Vue 实例了，那么`store._vm`的计算属性返回的引用也就是新的了。由此，我们就能知道，为什么调用`registerModule`之后，`store.getters`里的`getter`会返回新的引用。
+通过分析`resetStoreVM`的源码，我们知道，在`vuex`安装了新的子模块之后，需要重置`store._vm`为一新的 Vue 实例，而老的 Vue 实例`oldVm`上的数据`$$state`会置为`null`，此时会触发`watch`进行重新计算。（`watch`依赖`store._vm.computed.xxx`，而`store._vm.computed.xxx`依赖`store._vm._data.$$state`，因而`store._vm._data.$$state`置为`null`，会导致`watch`重新计算。）
 
 但是，我们不禁好奇，为什么`vuex`注册新的子模块之后，需要重置`store._vm`呢？
 
