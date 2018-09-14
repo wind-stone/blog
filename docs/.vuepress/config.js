@@ -8,7 +8,7 @@ module.exports = {
     lastUpdated: 'Last Updated',
     sidebarDepth: 2,
     nav: [
-      { text: '前端知识点', link: '/knowledge/js/data-structure' },
+      { text: '前端知识点', link: '/knowledge/js/' },
       {
         text: '移动端',
         items: [
@@ -16,20 +16,13 @@ module.exports = {
           { text: '兼容性', link: '/mobile/compatibility/general/' },
         ]
       },
-      { text: '服务器端', link: '/server/node/' },
       { text: 'ES6+', link: '/es6/' },
-      {
-        text: '开发框架',
-        items: [
-          { text: 'Vue', link: '/framework/vue/vue/' }
-          // { text: 'React', link: '/framework/react/' },
-          // { text: 'Koa', link: '/framework/koa/' },
-        ]
-      },
+      { text: 'Vue 系列', link: '/vue-series/vue/' },
       { text: '构建工具', link: '/bundler/webpack/' },
       { text: '开发环境/工具', link: '/tools/git/' },
       { text: 'Code Snippet', link: '/code-snippet/js/' },
-      { text: '最佳实践', link: '/best-practice/css/' },
+      { text: '算法', link: '/algorithm/sorting-algorithm/' },
+      { text: '服务器端', link: '/server/node/' },
       { text: 'GitHub', link: 'https://github.com/wind-stone' },
       { text: '随记', link: '/wander/house/' }
     ],
@@ -52,7 +45,8 @@ module.exports = {
           title: 'CSS',
           collapsable: true,
           children: [
-            'css/'
+            'css/',
+            'css/css-property-order'
           ]
         },
         {
@@ -160,7 +154,7 @@ module.exports = {
       ],
 
       // 前端框架
-      '/framework/vue/': [
+      '/vue-series/': [
         {
           title: 'Vue',
           collapsable: false,
@@ -231,12 +225,17 @@ module.exports = {
       ],
 
       // 最佳实践
-      '/best-practice/': [
+      '/algorithm/sorting-algorithm/': [
         {
-          title: 'CSS 最佳实践',
-          collapsable: false,
+          title: '排序算法',
+          collapsable: true,
           children: [
-            'css/'
+            '',
+            'bubble-sort/',
+            'selection-sort/',
+            'insertion-sort/',
+            'merge-sort/',
+            'quick-sort/'
           ]
         }
       ],
