@@ -135,13 +135,6 @@ module.exports = {
           children: [
             'unix/'
           ]
-        },
-        {
-          title: '工具',
-          collapsable: false,
-          children: [
-            'tools/rsync'
-          ]
         }
       ],
 
@@ -277,6 +270,13 @@ module.exports = {
           collapsable: false,
           children: [
             'eslint/eslint-vue'
+          ]
+        },
+        {
+          title: '其他',
+          collapsable: false,
+          children: [
+            'rsync'
           ]
         }
       ],
