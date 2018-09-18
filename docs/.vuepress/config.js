@@ -254,6 +254,7 @@ module.exports = {
           collapsable: false,
           children: [
             'git/',
+            'git/git-commond',
             'git/gitlab'
           ]
         },
