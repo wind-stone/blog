@@ -106,6 +106,13 @@ module.exports = {
           ]
         },
         {
+          title: 'JS 兼容性',
+          collapsable: false,
+          children: [
+            'js/fastclick'
+          ]
+        },
+        {
           title: 'CSS 兼容性',
           collapsable: false,
           children: [
