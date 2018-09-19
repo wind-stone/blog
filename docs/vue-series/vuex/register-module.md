@@ -170,7 +170,7 @@ function resetStoreVM (store, state, hot) {
 }
 ```
 
-通过分析`resetStoreVM`的源码，我们知道，在`vuex`安装了新的子模块之后，需要重置`store._vm`为一新的 Vue 实例，而老的 Vue 实例`oldVm`上的数据`$$state`会置为`null`，此时会触发`watch`进行重新计算。（`watch`依赖`store._vm.computed.xxx`，而`store._vm.computed.xxx`依赖`store._vm._data.$$state`，因而`store._vm._data.$$state`置为`null`，会导致`watch`重新计算。）
+通过分析`resetStoreVM`的源码，我们知道，在`vuex`安装了新的子模块之后，需要重置`store._vm`为一新的 Vue 实例，而老的 Vue 实例`oldVm`上的数据`$$state`会置为`null`，此时会触发`watch`进行重新计算。（`watch`依赖`store._vm.computed.xxx`，而`store._vm.computed.xxx`依赖`store._vm._data.$$state`，因而`store._vm._data.$$state`置为`null`，会通知`store._vm.computed.xxx`，导致`store._vm.computed.xxx`重新计算出新对象，进而`store._vm.computed.xxx`通知`watch`，会导致`watch`重新计算。）
 
 但是，我们不禁好奇，为什么`vuex`注册新的子模块之后，需要重置`store._vm`呢？
 

@@ -174,6 +174,7 @@ module.exports = {
           title: 'Vuex',
           collapsable: false,
           children: [
+            'vuex/source-study',
             'vuex/register-module'
           ]
         },
