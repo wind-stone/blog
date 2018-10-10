@@ -93,6 +93,91 @@ macrotask 按序执行，浏览器将在每个 macrotask 执行后进行 render�
 
 浏览器循环进行以上步骤。
 
+## 浏览器的独有的 Event Loop
+
+### requestAnimationFrame
+
+`requestAnimationFrame`函数的回调函数会加入到渲染这一边的队列中，它在渲染的三个步骤（S：？, L：layout，P：paint）之前被执行。通常用来处理渲染相关的工作。
+
+`requestAnimationFrame`只在渲染过程之前运行，因此严格遵守“执行一次渲染一次”。
+
+和渲染动画相关的，多用`requestAnimationFrame`，不会有掉帧的问题（即某一帧没有渲染，下一帧把两次的结果一起渲染了）
+
+#### 示例一
+
+```js
+box.style.transform = 'translateX(1000px)'
+requestAnimationFrame(() => {
+    box.style.tranition = 'transform 1s ease'
+    box.style.transform = 'translateX(500px)'
+})
+```
+
+上面这段代码的本意从让`box`元素的位置先从`0`瞬间移动到右边`1000px`处，然后再以动画形式缓慢移动到右边`500px`处。
+
+但是因为`requestAnimationFrame`是在渲染过程之前进行的，导致`box.style.transform = 'translateX(1000px)'`与`box.style.transform = 'translateX(500px)'`都在下一帧出现之前执行，也就是这两行代码合并了（或者说后者覆盖了前者），最终展现的结果是，`box`元素的位置从`0`以动画的形式缓慢移动到右边`500px`处。
+
+那如何实现原先代码的本意呢？
+
+- `requestAnimationFrame`回调里再调用一次`requestAnimationFrame`
+
+```js
+// 该行的代码是在下一帧渲染之前调用（主进程代码）
+box.style.transform = 'translateX(1000px)'
+requestAnimationFrame(() => {
+    // 该行的代码是在下一帧渲染之前调用（第一个 requestAnimationFrame 回调里）
+    requestAnimationFrame(() => {
+        // 该行的代码是在下一帧渲染之后，下下一帧渲染之前调用（第二个 requestAnimationFrame 回调里）
+        box.style.tranition = 'transform 1s ease'
+        box.style.transform = 'translateX(500px)'
+    })
+})
+```
+
+- 两次`transform`赋值之间获取一下当前的计算样式
+
+```js
+box.style.transform = 'translateX(1000px)'
+getComputedStyle(box) // 伪代码，只要获取一下当前的计算样式即可
+box.style.tranition = 'transform 1s ease'
+box.style.transform = 'translateX(500px)'
+```
+
+### 用户点击与代码触发点击
+
+```js
+button.addEventListener('click', () => {
+  Promise.resolve().then(() => console.log('microtask 1'))
+  console.log('listener 1')
+})
+button.addEventListener('click', () => {
+  Promise.resolve().then(() => console.log('microtask 2'))
+  console.log('listener 2')
+})
+```
+
+在浏览器上运行后，用户点击按钮，会按顺序打印：
+
+```js
+listener 1
+microtask 1
+listener 2
+microtask 2
+```
+
+但如果在上面代码的最后加上`button.click()`，打印顺序会有所区别：
+
+```js
+listener 1
+listener 2
+microtask 1
+microtask 2
+```
+
+用户点击按钮的打印结果很容易解释：`click`回调是一`macrotask`，`promise.then()`添加的回调是一`microtask`，每个`macrotask`执行完后都要先将所有的`microtask`都执行完才能继续执行下一个`macrotask`。
+
+但是对于在代码里主动调动`button.click()`，就稍微怪异一些，而这怪异的行为是由浏览器的内部实现造成的：使用`button.click()`时，浏览器的内部实现是把 2 个 listener 都同步执行。因此`listener 1`之后，执行队列还没空，还要继续执行`listener 2`之后才行。所以`listener 2`会早于`microtask 1`。重点在于浏览器的内部实现，`click`方法会先采集有哪些 listener，再依次触发。
+
 ## Node.js 的 Event Loop
 
 ### process.nextTick

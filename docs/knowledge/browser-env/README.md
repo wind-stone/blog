@@ -8,6 +8,10 @@ sidebarDepth: 0
 
 ## 浏览器 API
 
+### 判断页面是否可见
+
+[页面可见性 API](https://developer.mozilla.org/zh-CN/docs/Web/API/Page_Visibility_API)
+
 ### URLSearchParams
 
 URLSearchParams API 用于处理 URL 之中的查询字符串，即问号之后的部分。

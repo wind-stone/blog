@@ -105,6 +105,10 @@ theInput.defaultValue          // returns "Name"
 
 翻译自：[http://stackoverflow.com/questions/6003819/properties-and-attributes-in-html#answer-6004028](http://stackoverflow.com/questions/6003819/properties-and-attributes-in-html#answer-6004028)
 
+### iframe 元素
+
+若是将`src`不为空的`iframe`元素设置成`display: none;`，再次将`display`属性设置为非`none`属性值时，会导致`iframe`重新加载网页。
+
 ## 元素大小
 
 ![元素大小](./element-size.gif)

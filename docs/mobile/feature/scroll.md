@@ -99,6 +99,8 @@ observer.observe(element);
 
 `addEventListener(type, listener[, options ])`里`options`里的`passive`参数，设置为`true`时，表明注册的`listener`内不会调用`preventDefault()`，浏览器将同时执行`listener`和浏览器的默认行为（而不是等执行`listener`结束之后再执行默认行为），且会忽略`listener`里的`preventDefault()`，使得滚动更加流畅。
 
+Reference: [addEventListener 的第三个参数](https://github.com/justjavac/the-front-end-knowledge-you-may-not-know/issues/6#issuecomment-404205665)
+
 ## 性能优化
 
 ### 防抖动（Debouncing）

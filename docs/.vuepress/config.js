@@ -9,13 +9,7 @@ module.exports = {
     sidebarDepth: 2,
     nav: [
       { text: '前端知识点', link: '/knowledge/js/' },
-      {
-        text: '移动端',
-        items: [
-          { text: '独有特性', link: '/mobile/feature/' },
-          { text: '兼容性', link: '/mobile/compatibility/general/' },
-        ]
-      },
+      { text: '移动端', link: '/mobile/feature/' },
       { text: 'ES6+', link: '/es6/' },
       { text: 'Vue 系列', link: '/vue-series/vue/' },
       { text: '构建工具', link: '/bundler/webpack/' },
@@ -82,42 +76,48 @@ module.exports = {
         }
       ],
 
-      '/mobile/feature/': [
+      '/mobile/': [
         {
           title: '移动端 - 独有特性',
-          collapsable: false,
+          collapsable: true,
           children: [
-            '',
-            'click-delay',
-            'scroll',
+            'feature/',
+            'feature/click-delay',
+            'feature/scroll',
           ]
-        }
-      ],
+        },
 
-      '/mobile/compatibility/': [
         {
-          title: '移动端 - 兼容性',
-          collapsable: false,
+          title: '移动端 - Hybrid',
+          collapsable: true,
           children: [
-            'general/',
-            'general/input-delay/',
-            'general/media',
-            'general/video'
+            'hybrid/h52app',
+            'hybrid/deeplink'
           ]
         },
         {
-          title: 'JS 兼容性',
-          collapsable: false,
+          title: '移动端 - 通用兼容性',
+          collapsable: true,
           children: [
-            'js/fastclick'
+            'compatibility/general/',
+            'compatibility/general/input-delay/',
+            'compatibility/general/media',
+            'compatibility/general/video'
           ]
         },
         {
-          title: 'CSS 兼容性',
-          collapsable: false,
+          title: '移动端 - JS 兼容性',
+          collapsable: true,
           children: [
-            'css/ie',
-            'css/android-small-fontsize'
+            'compatibility/js/fastclick'
+          ]
+        },
+        {
+          title: '移动端 - CSS 兼容性',
+          collapsable: true,
+          children: [
+            'compatibility/css/ie',
+            'compatibility/css/android-small-fontsize'
           ]
         }
       ],
