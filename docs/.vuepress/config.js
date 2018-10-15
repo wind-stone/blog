@@ -160,19 +160,27 @@ module.exports = {
         }
       ],
 
-      // 前端框架
+      // Vue 系列
       '/vue-series/': [
         {
           title: 'Vue',
-          collapsable: false,
+          collapsable: true,
           children: [
             'vue/',
             'vue/scoped-css'
           ]
         },
         {
+          title: 'Vue 源码学习',
+          collapsable: true,
+          children: [
+            'vue/source-study/observer/watcher',
+            'vue/source-study/instance/computed'
+          ]
+        },
+        {
           title: 'Vuex',
-          collapsable: false,
+          collapsable: true,
           children: [
             'vuex/source-study',
             'vuex/register-module'
@@ -180,7 +188,7 @@ module.exports = {
         },
         {
           title: 'vue-router',
-          collapsable: false,
+          collapsable: true,
           children: [
             'vue-router/'
           ]
