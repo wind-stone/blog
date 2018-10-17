@@ -213,21 +213,9 @@ array.forEach(element => {
 
 ## 类型转换
 
-## Boolean() 函数
+### Boolean()/String()/Number() 函数
 
-`Boolean`类型是 ECMAScript 中使用得最多的一种类型，该类型只有两个字面值：`true`和`false`。
-
-一般在流控制语句里需要使用`Boolean`类型，所以在流控制语句里会自动执行相应的`Boolean`转换，将非`Boolean`类型的数据类型转换成`Boolean`类型，比如`if`语句、`while`语句里条件判断。
-
-下表给出各种数据类型及其对应的转换规则。
-
-数据类型 | 转换为`true`的值 | 转换为`false`的值
---|--|--
-`Boolean` | `true` | `false`
-`String` | 任何非空字符串 | "" （空字符串）
-`Number` | 任何非零数字值 | `0`和`NAN`
-`Object` | 任何对象 | `null`
-`undefined` | not application （不适用） | `undefined`
+当`Boolean()`作为函数调用（而不是作为构造函数）时，其作用是将传入的参数转换为布尔类型，返回的结果为布尔类型。而作为构造函数`new Boolean()`调用时，也是将参数的参数转为布尔类型，但是返回的结果是对象，即引用类型。`String()`/`Number()`也是如此。
 
 ### 逻辑非操作符（!）
 
@@ -322,155 +310,235 @@ null == 0 | false
 
 注意：这里，通过`valueOf`或`toString`返回的原始值将被直接使用，而不会被强制转化成字符串或数字
 
-## Number
+## 浅拷贝 VS 深拷贝
 
-### 精度
-
-#### parseInt(0.0000008) === 8
-
-`parseInt` 的第一个类型是字符串，所以会将传入的参数转换成字符串，但是小于`0.0000001（1e-7）`的数字转换成 String 时，会变成科学记号法，也就是`String(0.0000008)`的结果为`8e-7`。`parseInt`并没有将`e`视为一个数字，所以在转换到 8 后就停止了，最终 `parseInt(0.0000008) === 8`
-
-Referrence: [http://justjavac.com/javascript/2015/01/08/why-parseint-0-00000008-euqal-8-in-js.html](http://justjavac.com/javascript/2015/01/08/why-parseint-0-00000008-euqal-8-in-js.html)
-
-## Array
-
-### 如何消除一个数组里面重复的元素？
-
-- 方法一：`let newArray = new Set(array)`
-
-- 方法二：`indexOf` + `splice`
+### 浅拷贝
 
 ```js
-function deleteRepeat(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    if (arr.indexOf(arr[i]) !== i) {
-      arr.splice(i, 1)
+function shallowClone(source) {
+  const res = {}
+  for (const i in source) {
+    if (source.hasOwnProperty(i)) {
+      res[i] = source[i]
     }
   }
-  return arr
 }
 ```
 
-- 方法三：Hash Map
+### 最简单的深拷贝
 
 ```js
-function deleteRepeat(array){
-  let newArray = []
-  let obj = {}
-  let index = 0
-  let len = array.length
-  for(let i = 0; i < len; i++){
-    const type = typeof array[i]
-    const key = type + array[i]
-    if(obj[key] === undefined) {
-      obj[key] = true
-      newArray[index++] = array[i]
-    }
+function clone(source) {
+  if (!isObject(source) && !isArray(source)) {
+    return source
   }
-  return newArray
-}
-```
-
-以上几种方法，无法针对不同引用的对象去重。比如`array = [{a: 1}, {a: 1}]`
-
-## RegExp
-
-### 字符串的正则方法
-
-#### `String.prototype.match(reg)`
-
-- 参数
-  - regexp：正则表达式（如果参数不是正则表达式，通过`RegExp()`构造函数将其转换成正则表达式）
-- 返回
-  - 无匹配：返回`null`
-  - 正则表达式没有全局修饰符`g`，则不执行全局检索，返回数组`result`
-    - `result[0]`：匹配的字符串
-    - `result[1..n]`：正则表达式中用圆括号括起来的字表达式1...n
-    - `result.index`：发生匹配的字符在 str 中的开始位置
-    - `result.input`：所检索的字符串
-  - 正则表达式有全局修饰符`g`，则执行全局检索，返回有匹配结果组成的数组 result
-    - `result[0..n]`：匹配结果1..n+1
-
-#### `String.prototype.search(reg)`
-
-- 参数
-  - reg：正则表达式（如果参数不是正则表达式，通过`RegExp()`构造函数将其转换成正则表达式）
-- 返回
-  - 无匹配：返回`-1`
-  - 有匹配，返回第一个与之匹配的字串的起始位置（不支持全局搜索，会忽略全局修饰符 g）
-
-#### `String.prototype.replace(reg, str)`
-
-- 功能：执行检索和替换操作
-- 在替换字符串（第二个参数）中出现了 $ 加数字，代表正则表达式中与圆括号相匹配的字表达式
-- 正则表达式中是否有全局修饰符 g
-  - 有：替换所有匹配的字符串
-  - 没有：只替换匹配的第一个字符串
-
-#### `String.prototype.splice(reg)`
-
-- 参数
-  - reg：正则表达式
-- 返回
-  - 以 reg 拆分成的各个子串的数组
-
-### 正则表达式的字符串方法
-
-### `RegExp.prototype.test(str)`
-
-执行检索，查看正则表达式与指定的字符串是否匹配，返回`true`或`false`。
-
-如果正则表达式设置了全局标志`g`，`test()`的执行会改变正则表达式`lastIndex`属性。连续的执行`test()`方法，后续的执行将会从`lastIndex`处开始匹配字符串。
-
-#### `RegExp.prototype.exec(str)`
-
-- 返回
-  - 无匹配：返回`null`
-  - 有匹配：返回`result`，结构同`String.prototype.match(reg)`方法正则无全局匹配的结果
-    - `result[0]`：匹配的字符串
-    - `result[1..n]`：正则表达式中用圆括号括起来的字表达式1...n
-    - `result.index`：发生匹配的字符在`str`中的开始位置
-    - `result.input`：所检索的字符串
-    - 如果设置了全局匹配，`reg.lastIndex`将是下一次匹配开始的位置（初始为0）
-
-#### 实例
-
-##### 千分位表示法
-
-```js
-function thousandsFormat(str) {
-    const reg = /\B(?=(?:\d{3})+$)/g
-    // const reg = /(?!\b)(?=(?:\d{3})+$)/g
-    return str.replace(reg, ',');
-};
-```
-
-说明：
-
-- `\B`：匹配不是单词开头或结束的位置，即非边界位置
-- `(?=exp)`：零宽度正预测先行断言，如`/^Java(?=Script$)/`，匹配`JavaScript`里的`Java`，不匹配`Javascript`里的`Java`
-- `(?:exp)`：匹配`exp`，但不捕获匹配的文本，也不给此分组分配组号（即仅把`exp`组合成一个整体）
-
-非正则方法
-
-```js
-function formatCash(str) {
-    return str.split('').reverse().reduce((prev, next, index) => {
-        return ((index % 3) ? next : (next + ',')) + prev
+  let res;
+  if (isArray(source)) {
+    res = []
+    source.forEach(function (val, idx) {
+      res[idx] = clone(val)
     })
-}
-console.log(formatCash('1234567890')) // 1,234,567,890
-```
-
-```js
-function format(num) {
-  num = num + ''
-  const arr = num.split('').reverse()
-  for(let i = 3; i < arr.length + 1; i += 4) {
-    if (arr[i] !== undefined) {
-      arr.splice(i, 0, ',')
+  } else {
+    res = {}
+    for (const i in source) {
+      const val = source[i]
+      if (source.hasOwnProperty(i)) {
+        res[i] = clone(val)
+      }
     }
   }
-  return arr.reverse().join('')
+  return res
 }
+
+function isObject(x) {
+  return Object.prototype.toString.call(x) === '[object Object]'
+}
+function isArray(x) {
+  return Array.isArray(x)
+}
+```
+
+存在的问题：
+
+- 当数据层级过深，容易造成栈溢出
+- 无法解决循环引用的问题
+
+### JSON 深拷贝
+
+```js
+function JSONClone(source) {
+  return JSON.parse(JSON.stringify(source))
+}
+```
+
+存在的问题：
+
+- 当数据层级过深，容易造成栈溢出（`JSON.stringify`内部也是使用递归的方式）
+- 无法解决循环引用的问题（但是`JSON.stringify`内部会做循环引用检测，并抛错提示）
+
+### 终极深拷贝
+
+终极的深拷贝，做出了如下修改：
+
+- 用循环代替递归
+- 增加已拷贝检测，防止循环拷贝
+- 增加拷贝前与拷贝后的关联，避免引用丢失
+
+```js
+// 保持引用关系
+function cloneForce(x) {
+    const uniqueList = []; // 用来去重
+    let root = {};
+    // 循环数组
+    const loopList = [
+        {
+            parent: root,
+            key: undefined,
+            data: x,
+        }
+    ];
+    while(loopList.length) {
+        // 深度优先
+        const node = loopList.pop();
+        const parent = node.parent;
+        const key = node.key;
+        const data = node.data;
+
+        // 初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素
+        let res = parent;
+        if (typeof key !== 'undefined') {
+            res = parent[key] = {};
+        }
+
+        // 数据已经存在
+        let uniqueData = find(uniqueList, data);
+        if (uniqueData) {
+            parent[key] = uniqueData.target;
+            continue; // 中断本次循环
+        }
+
+        // 数据不存在
+        // 保存源数据，在拷贝数据中对应的引用
+        uniqueList.push({
+            source: data,
+            target: res,
+        });
+
+        for(let k in data) {
+            if (data.hasOwnProperty(k)) {
+                if (typeof data[k] === 'object') {
+                    // 下一次循环
+                    loopList.push({
+                        parent: res,
+                        key: k,
+                        data: data[k],
+                    });
+                } else {
+                    res[k] = data[k];
+                }
+            }
+        }
+    }
+
+    return root;
+}
+
+function find(arr, item) {
+    for(let i = 0; i < arr.length; i++) {
+        if (arr[i].source === item) {
+            return arr[i];
+        }
+    }
+
+    return null;
+}
+```
+
+Reference: [颜海镜 - 深拷贝的终极探索](https://yanhaijing.com/javascript/2018/10/10/clone-deep/)
+
+## 序列化 & 反序列化
+
+### eval
+
+`stringify`是将给定数据字符串化，可利用`eval`转换为原来的数据类型。
+
+```js
+function stringify(source) {
+    if (source === undefined ||
+        source === null ||
+        // 这里不能使用 isNaN，有坑：isNaN({}) // true
+        Number.isNaN(source)) {
+        return String(source)
+    }
+    const type = getPrototypeType(source)
+    switch(type) {
+        case 'Boolean': {
+            return Boolean(source)
+        }
+        case 'Number': {
+            return Number(source)
+        }
+        case 'String': {
+            return `'${String(source)}'`
+        }
+        case 'Object': {
+            let res = '{'
+            for (const key in source) {
+                if (source.hasOwnProperty(key)) {
+                    res += `${key}: ${stringify(source[key])}, `
+                }
+            }
+            return res.slice(0, -2) + '}'
+        }
+        case 'Array': {
+            let res = '['
+            source.forEach(function (val, idx) {
+                res += stringify(val) + ', '
+            });
+            return res.slice(0, -2) + ']'
+        }
+        case 'RegExp': {
+            return `new RegExp(${source})`
+        }
+        case 'Date': {
+            return `new Date(${source.getTime()})`
+        }
+    }
+}
+
+function parse(string) {
+    // 针对“对象”对面量，需要用()包起来，防止{}被当做块作用域解析
+    return eval(`(${string})`)
+}
+
+const typeReg = /^\[object (\w+)\]$/
+function getPrototypeType(x) {
+    const type = Object.prototype.toString.call(x)
+    return type.match(typeReg)[1]
+}
+
+// 验证
+console.log('Number', parse(stringify(1)))
+console.log('String', parse(stringify('2')))
+console.log('Boolean', parse(stringify(false)))
+console.log('RegExp', parse(stringify(/abc\w\n/gim)))
+console.log('Date', parse(stringify(new Date())))
+console.log('Undefined', parse(stringify(undefined)))
+console.log('null', parse(stringify(null)))
+console.log('NaN', parse(stringify(NaN)))
+console.log('Object', parse(stringify({
+    a: undefined,     // Undefined
+    b: null,          // null
+    c: 1,             // Number
+    d: '2',           // String
+    e: true,          // Boolean
+    f: NaN,           // NaN
+    g: {              // Object
+        hello: 'world'
+    },
+    h: [1, 2, 3],     // Array
+    i: /abc/img,      // RegExp
+    j: new Date()     // Date
+})))
+console.log('Array', parse(stringify([1, 2, 3])))
 ```

@@ -9,11 +9,11 @@ sidebarDepth: 0
 ## 属性的可枚举性
 
 四个操作会忽略`enumerable`为`false`的属性。
+
 - `for...in`循环：只遍历对象自身的和继承的可枚举的属性。
 - `Object.keys()`：返回对象自身的所有可枚举的属性的键名。
 - `JSON.stringify()`：只串行化对象自身的可枚举的属性。
 - `Object.assign()`： 忽略`enumerable`为`false`的属性，只拷贝对象自身的可枚举的属性。
-
 
 ## 属性的遍历
 
