@@ -180,3 +180,14 @@ function deleteRepeat(array){
 ```
 
 以上几种方法，无法针对不同引用的对象去重。比如`array = [{a: 1}, {a: 1}]`
+
+### 如何将二维数组扁平化为一维数组？
+
+```js
+const arr = [
+  [1, 2],
+  [3, 4]
+]
+
+Array.prototype.concat.apply([], arr) // [1, 2, 3, 4]
+```
