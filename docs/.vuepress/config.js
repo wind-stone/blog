@@ -172,9 +172,13 @@ module.exports = {
           title: 'Vue 源码学习',
           collapsable: true,
           children: [
+            'vue/source-study/observer/',
             'vue/source-study/observer/watcher',
             'vue/source-study/instance/computed',
+            'vue/source-study/instance/props',
+            'vue/source-study/instance/directives',
             'vue/source-study/vdom/',
+            'vue/source-study/vdom/patch',
             'vue/source-study/vdom/dom-binding'
           ]
         },
@@ -305,6 +309,15 @@ module.exports = {
           children: [
             'house/',
             'house/tianya-post'
+          ]
+        },
+        {
+          title: '其他',
+          collapsable: false,
+          children: [
+            'mac-shortcut-keys',
+            'word-pronunciation',
+            'effect'
           ]
         }
       ]

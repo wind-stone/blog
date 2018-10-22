@@ -1,4 +1,10 @@
-# Observer
+---
+sidebarDepth: 0
+---
+
+# 响应式 - Observer
+
+[[toc]]
 
 ## Object.defineProperty
 
