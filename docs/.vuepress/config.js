@@ -176,6 +176,7 @@ module.exports = {
           children: [
             'vue/source-study/observer/watcher',
             'vue/source-study/instance/computed',
+            'vue/source-study/vdom/',
             'vue/source-study/vdom/dom-binding'
           ]
         },

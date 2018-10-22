@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # VNode
+
+[[toc]]
 
 ## 组件的 Vnode 与 HTML 元素的 Vnode
 
