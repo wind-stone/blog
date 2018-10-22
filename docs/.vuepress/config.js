@@ -86,13 +86,11 @@ module.exports = {
             'feature/scroll',
           ]
         },
-
         {
           title: '移动端 - Hybrid',
           collapsable: true,
           children: [
-            'hybrid/h52app',
-            'hybrid/deeplink'
+            'hybrid/h52app'
           ]
         },
         {
