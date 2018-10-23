@@ -216,13 +216,13 @@ export function createElement (tagName: string, vnode: VNode): Element {
   }
 ```
 
-注意观察`patch`里`createElm`之后的那段代码，若是当前`vnode`是组件占位`vnode`在创建组件实例时生成的`vnode`，则需要将组件占位节点的`elm`属性更新为组件实例`vnode`的`elm`，并向上遍历所有的组件占位节点，将这些组件占位节点的`elm`都更新了。
+注意观察`patch`里`createElm`之后的那段代码，若是当前`vnode`是组件占位父 Vnode 在创建组件实例时生成的渲染 Vnode，则需要将组件占位父 Vnode 节点的`elm`属性更新为组件实例渲染 Vnode 的`elm`，并向上遍历所有的组件占位父 Vnode，将这些组件占位父 Vnode 的`elm`都更新了。
 
-如此，我们明白了，组件占位节点`vnode`的`elm`一开始是不存在的，当组件模板里（确切的说是`render`函数）的根节点是 HTML 元素时，根节点产生`elm`，进而在创建好根节点 DOM Node 后，更新组件占位节点`vnode`的`elm`。
+如此，我们明白了，组件占位父 Vnode 的`elm`属性一开始是不存在的，当组件渲染 Vnode 的根节点是 HTML 元素时，根节点产生`elm`，进而在创建好根节点 DOM Node 后，更新组件占位父 Vnode 的`elm`。
 
-若是 A 组件的组件模板的根节点还是 B 组件，那么在 B 组件的组件模板里的 HTML 根元素创建好后，再一次更新 A 组件和 B 组件占位节点的`elm`，依次类推。（最后一个组件的模板里的根节点肯定会是 HTML 元素）
+若是 A 组件的渲染 Vnode 的根节点还是 B 组件，那么在 B 组件渲染 Vnode 的 HTML 根元素创建好后，再一次更新 A 组件和 B 组件占位父 Vnode 的`elm`，依次类推。（最后一个组件的渲染 Vnode 的根节点肯定会是 HTML 元素）
 
-组件占位节点`vnode`在创建组件实例时，组件实例`vnode`的`parent`属性指向组件占位节点`vnode`。
+组件占位父 Vnode 在创建组件实例时，组件渲染 Vnode 的`parent`属性指向组件占位父 Vnode，即`vm._vnode.parent === vm.$vnode`，其中`vm._vnode`是组件实例的渲染 Vnode，`vm.$vnode`是组件的占位父 Vnode。
 
 ```js
 export function createComponentInstanceForVnode (
