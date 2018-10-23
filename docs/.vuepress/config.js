@@ -2,7 +2,10 @@ module.exports = {
   title: 'Wind Stone\'s blog',
   description: 'Record something mainly for myself ..',
   markdown: {
-    lineNumbers: true
+    lineNumbers: true,
+    toc: {
+      includeLevel: [2, 3, 4, 5]
+    }
   },
   themeConfig: {
     lastUpdated: 'Last Updated',
@@ -174,6 +177,7 @@ module.exports = {
           children: [
             'vue/source-study/observer/',
             'vue/source-study/observer/watcher',
+            'vue/source-study/instance/options',
             'vue/source-study/instance/computed',
             'vue/source-study/instance/props',
             'vue/source-study/instance/directives',
