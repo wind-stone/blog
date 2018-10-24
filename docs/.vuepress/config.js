@@ -17,7 +17,7 @@ module.exports = {
       {
         text: 'Vue.js',
         items: [
-          { text: 'Vue 生态系列', link: '/vue/vue-series/' },
+          { text: 'Vue 生态系列', link: '/vue/vue-series/vuejs/' },
           { text: 'Vue 源码学习', link: '/vue/source-study/' }
         ]
       },
@@ -168,10 +168,10 @@ module.exports = {
       ],
 
       // Vue 系列
-      '/vue-series/': [
+      '/vue/vue-series/': [
         {
           title: 'Vue.js',
-          collapsable: false,
+          collapsable: true,
           children: [
             'vuejs/',
             'vuejs/scoped-css'
@@ -179,7 +179,7 @@ module.exports = {
         },
         {
           title: 'Vuex',
-          collapsable: false,
+          collapsable: true,
           children: [
             'vuex/source-study',
             'vuex/register-module'
@@ -204,7 +204,7 @@ module.exports = {
         },
         {
           title: '组件化',
-          collapsable: false,
+          collapsable: true,
           children: [
             'component/register',
             'component/options',
@@ -213,7 +213,7 @@ module.exports = {
         },
         {
           title: '实例化',
-          collapsable: false,
+          collapsable: true,
           children: [
             'instance/computed',
             'instance/props',
@@ -222,7 +222,7 @@ module.exports = {
         },
         {
           title: '响应式原理',
-          collapsable: false,
+          collapsable: true,
           children: [
             'reactivity/',
             'reactivity/watcher',
@@ -230,11 +230,24 @@ module.exports = {
         },
         {
           title: 'Virtual Dom',
-          collapsable: false,
+          collapsable: true,
           children: [
             'vdom/',
-            'vdom/patch',
-            'vdom/dom-binding'
+            'vdom/patch'
+          ]
+        },
+        {
+          title: 'Vue 专题',
+          collapsable: true,
+          children: [
+            'topics/dom-binding'
+          ]
+        },
+        {
+          title: 'Vuex',
+          collapsable: true,
+          children: [
+            'vuex/'
           ]
         }
       ],

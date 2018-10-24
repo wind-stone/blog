@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# 专题：组件的 DOM Tree 是如何插入到父元素上的？
+# 组件的 DOM Tree 是如何插入到父元素上的？
 
 [[toc]]
 
