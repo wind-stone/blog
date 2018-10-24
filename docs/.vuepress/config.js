@@ -14,7 +14,13 @@ module.exports = {
       { text: '前端知识点', link: '/knowledge/js/' },
       { text: '移动端', link: '/mobile/feature/' },
       { text: 'ES6+', link: '/es6/' },
-      { text: 'Vue 系列', link: '/vue-series/vue/' },
+      {
+        text: 'Vue.js',
+        items: [
+          { text: 'Vue 生态系列', link: '/vue/vue-series/' },
+          { text: 'Vue 源码学习', link: '/vue/source-study/' }
+        ]
+      },
       { text: '构建工具', link: '/bundler/webpack/' },
       { text: '开发环境/工具', link: '/tools/git/' },
       { text: 'Code Snippet', link: '/code-snippet/js/' },
@@ -164,31 +170,16 @@ module.exports = {
       // Vue 系列
       '/vue-series/': [
         {
-          title: 'Vue',
-          collapsable: true,
+          title: 'Vue.js',
+          collapsable: false,
           children: [
-            'vue/',
-            'vue/scoped-css'
-          ]
-        },
-        {
-          title: 'Vue 源码学习',
-          collapsable: true,
-          children: [
-            'vue/source-study/observer/',
-            'vue/source-study/observer/watcher',
-            'vue/source-study/instance/options',
-            'vue/source-study/instance/computed',
-            'vue/source-study/instance/props',
-            'vue/source-study/instance/directives',
-            'vue/source-study/vdom/',
-            'vue/source-study/vdom/patch',
-            'vue/source-study/vdom/dom-binding'
+            'vuejs/',
+            'vuejs/scoped-css'
           ]
         },
         {
           title: 'Vuex',
-          collapsable: true,
+          collapsable: false,
           children: [
             'vuex/source-study',
             'vuex/register-module'
@@ -196,9 +187,54 @@ module.exports = {
         },
         {
           title: 'vue-router',
-          collapsable: true,
+          collapsable: false,
           children: [
             'vue-router/'
+          ]
+        }
+      ],
+
+      '/vue/source-study/': [
+        {
+          title: '总览',
+          collapsable: false,
+          children: [
+            ''
+          ]
+        },
+        {
+          title: '组件化',
+          collapsable: false,
+          children: [
+            'component/register',
+            'component/options',
+            'component/async-component'
+          ]
+        },
+        {
+          title: '实例化',
+          collapsable: false,
+          children: [
+            'instance/computed',
+            'instance/props',
+            'instance/directives'
+          ]
+        },
+        {
+          title: '响应式原理',
+          collapsable: false,
+          children: [
+            'reactivity/',
+            'reactivity/watcher',
+          ]
+        },
+        {
+          title: 'Virtual Dom',
+          collapsable: false,
+          children: [
+            'vdom/',
+            'vdom/patch',
+            'vdom/dom-binding'
           ]
         }
       ],

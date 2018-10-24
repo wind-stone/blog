@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# 响应式 - Observer
+# Observer
 
 [[toc]]
 

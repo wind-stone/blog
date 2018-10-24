@@ -2,10 +2,8 @@
 sidebarDepth: 0
 ---
 
-# 实例化 - 指令
+# Props
 
 [[toc]]
-
-## v-model
 
 待补充内容

@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# 实例化 - 合并配置
+# 合并配置
 
 [[toc]]
 
@@ -111,6 +111,8 @@ Vue.options = {
 ```
 
 #### resolveConstructorOptions
+
+更新：全局方法`Vue.component/directive/filter`也会导致`Vue.options`增加新的内容。
 
 若是想详细了解本节的内容，请先了解`Vue.extend`的实现。
 

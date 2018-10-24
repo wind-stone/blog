@@ -1,4 +1,8 @@
-# Vue 实例化
+---
+sidebarDepth: 0
+---
+
+# 实例化
 
 ## Vue 构造函数
 
