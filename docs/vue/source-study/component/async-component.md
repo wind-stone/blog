@@ -8,14 +8,14 @@ sidebarDepth: 0
 
 Vue 允许以工厂函数的方式定义组件，而在工厂函数内部，可以异步解析组件的定义。Vue 只有在这个组件需要被渲染的时候才会触发该工厂函数，且会把结果缓存起来供未来重渲染。
 
-## 工厂函数的几种形式
+## 异步组件的几种形式
 
-- 普通工厂函数，向`resolve`回调传递组件定义
-- 返回 Promise 的工厂函数
-- 高级工厂函数
+- 普通异步组件，向`resolve`回调传递组件定义
+- Promise 异步组件
+- 高级异步组件
 
 ```js
-// 普通工厂函数
+// 普通异步组件
 Vue.component('async-example', function (resolve, reject) {
   setTimeout(function () {
     // 向 `resolve` 回调传递组件定义
@@ -27,7 +27,7 @@ Vue.component('async-example', function (resolve, reject) {
 ```
 
 ```js
-// 返回 Promise 的工厂函数
+// 返回 Promise 的异步组件
 Vue.component(
   'async-webpack-example',
   // 这个 `import` 函数会返回一个 `Promise` 对象。
@@ -36,7 +36,7 @@ Vue.component(
 ```
 
 ```js
-// 高级工厂函数
+// 高级异步组件
 const AsyncComponent = () => ({
   // 需要加载的组件 (应该是一个 `Promise` 对象)
   component: import('./MyComponent.vue'),
@@ -58,7 +58,7 @@ const AsyncComponent = () => ({
 
 若是能获取到组件定义即工厂函数同步`resolve`返回组件的构造函数，则继续往下走，基于构造函数创建组件的 Vnode 节点。
 
-若是获取的结果是`undefined`（工厂函数异步获取组件定义，先以`undefined`返回），则创建异步占位 Vnode 并返回。等到真正的组件定义返回时，会调用`vm.$forceUpdate()`方法重新渲染，此时异步组件已经 ready，会同步返回组件的构造函数。
+若是获取的结果是`undefined`（工厂函数异步获取组件定义，先以`undefined`返回），则创建异步占位注释 Vnode 并返回。等到真正的组件定义返回时，会调用`vm.$forceUpdate()`方法重新渲染，此时异步组件已经 ready，会同步返回组件的构造函数。
 
 ```js
 export function createComponent (
@@ -94,7 +94,7 @@ export function createComponent (
 
 ### resolveAsyncComponent
 
-`resolveAsyncComponent`针对工厂函数的三种形式，分别进行了不同的逻辑处理。
+`resolveAsyncComponent`针对异步组件的三种形式，分别进行了不同的逻辑处理。
 
 ```js
 import {
@@ -127,7 +127,7 @@ function ensureCtor (comp: any, base) {
 }
 
 /**
- * 创建异步占位 Vnode
+ * 创建异步占位注释 Vnode
  */
 export function createAsyncPlaceholder (
   factory: Function,
@@ -145,16 +145,6 @@ export function createAsyncPlaceholder (
 
 /**
  * 解析异步组件
- *
- * - 首次解析
- *   - 若工厂函数同步 resolve 组件选项对象，则返回基于组件选项对象扩展的构造函数
- *   - 若工厂函数异步 resolve 组件选项对象
- *     - 若是高级异步组件 && 存在加载中组件 && delay 为 0，则返回基于加载中组件选项对象扩展的构造函数
- *     - 否则，返回 undefined（之后会强制渲染，再次解析异步组件）
- * - 再次解析
- *   - 若组件加载出错 && 高级异步组件存在出错时组件，返回基于出错时的组件选项对象扩展的构造函数
- *   - 若组件异步加载成功，返回基于组件选项对象扩展的构造函数
- *   - 若 delay 时间到达 && 仍处于异步加载过程中 && 高级异步组件存在加载中组件，返回基于加载中组件选项对象扩展的构造函数
  */
 export function resolveAsyncComponent (
   factory: Function,
@@ -297,7 +287,7 @@ export function resolveAsyncComponent (
   }
 ```
 
-不管工厂函数是哪一种形式，都需要执行工厂函数，并根据返回结果区分出是哪一种工厂函数形式。
+不管异步组件是哪一种形式，都需要执行工厂函数，并根据返回结果区分出是哪一种异步组件形式。
 
 `resolve`和`reject`函数都经过`once`函数封装了一层，保证`resolve`和`reject`的逻辑只执行一次。
 
@@ -305,9 +295,9 @@ export function resolveAsyncComponent (
 - `resolve`函数：将组件定义处理成构造函数，并挂载在`factory.reosolved`上，若是异步`resolve`的话，则调用`forceRender`进行强制渲染。
 - `reject`函数：开发环境下报错提示，（针对高级组件）标明组件定义获取失败，重新渲染（错误时显示的组件）
 
-#### 普通工厂函数
+#### 普通异步组件
 
-针对普通工厂函数而言，执行工厂函数返回的值通常为非对象类型（没有`return`语句的话，都是返回`undefined`），因此会跳过之后的处理 Promise 工厂函数和高级工厂函数的逻辑。但是在工厂函数内部`resolve`组件定义时，可能存在两种情况：同步`resolve`和异步`resolve`，这两种情况决定着最终`resolveAsyncComponent`函数的返回。
+针对普通异步组件而言，执行工厂函数返回的值通常为非对象类型（没有`return`语句的话，都是返回`undefined`），因此会跳过之后的处理 Promise 异步组件和高级异步组件的逻辑。但是在工厂函数内部`resolve`组件定义时，可能存在两种情况：同步`resolve`和异步`resolve`，这两种情况决定着最终`resolveAsyncComponent`函数的返回。
 
 若是同步`resolve`组件定义，`resolve`函数会将组件定义处理为构造函数的形式并挂载在`factory.resolved`上，最后`resolveAsyncComponent`函数返回的是`factory.resolved`构造函数，之后的流程就按常规的同步组件处理。
 
@@ -319,21 +309,21 @@ return factory.loading
 
 若是异步`resolve`组件定义，构造函数的将在之后的某个时间点挂载在`factory.resolved`上，并调用`forceRender`进行重新渲染。但是当前的`factory.resolved`就为`undefined`，最终`resolveAsyncComponent`函数返回的就是`undefined`。
 
-#### 返回 Promise 实例的工厂函数
+#### Promise 异步组件
 
-针对返回 Promise 实例的工厂函数而言，执行工厂函数后会返回 Promise 实例，则调用`promise.then()`方法添加`resolve`函数和`reject`函数，等待异步处理的结果，最终`resolveAsyncComponent`函数返回的也是`undefined`。
+针对 Promise 异步组件而言，执行工厂函数后会返回 Promise 实例，则调用`promise.then()`方法添加`resolve`函数和`reject`函数，等待异步处理的结果，最终`resolveAsyncComponent`函数返回的也是`undefined`。
 
-#### 高级工厂函数
+#### 高级异步组件
 
-针对高级工厂函数，执行工厂函数后会返回一对象`res`，且`res.component`是 Promise 实例，则调用`res.component.then()`方法添加`resolve`函数和`reject`函数，这一过程跟`返回 Promise 实例的工厂函数`完全一致。不同的是，高级异步组件可以添加更好的用户体验，可以先展示 Loading 过程的组件以及在超时后展示错误组件。
+针对高级异步组件，执行工厂函数后会返回一对象`res`，且`res.component`是 Promise 实例，则调用`res.component.then()`方法添加`resolve`函数和`reject`函数，这一过程跟`Promise 异步组件`完全一致。不同的是，高级异步组件可以添加更好的用户体验，可以先展示 Loading 过程的组件以及在超时后展示错误组件。
 
-若是`res.loading`存在，即存在渲染中组件：若是延迟`0s`，则`resolveAsyncComponent`函数返回渲染中组件，异步组件获取期间将显示渲染中组件；否则返回`undefined`。
+若是`res.loading`存在，即存在 Loading 组件：若是延迟`0s`，则`resolveAsyncComponent`函数返回 Loading 组件，异步组件获取期间将显示 Loading 组件；否则返回`undefined`。
 
-若是`res.timeout`存在，即规定了组件加载的超时时间，则设置一定时器，超过规定时间后组件定义还没加载到就调用`forceRender`强制渲染并显示错误组件。此种情况，`resolveAsyncComponent`函数会返回`undefined`
+若是`res.timeout`存在，即规定了组件加载的超时时间，则设置一定时器，超过规定时间后组件定义还没加载到就调用`forceRender`强制渲染并显示 Error 组件。此种情况，`resolveAsyncComponent`函数会返回`undefined`
 
 #### 获取组件定义后的再次渲染
 
-以上三种形式的工厂函数都有可能会涉及到调用`forceRender`进行强制重新渲染的问题。若是正常获取到了异步组件的定义，会将其处理成构造函数后挂在`factory.resolved`上，高级工厂函数若是有加载中或是错误组件，处理后将挂在`factory.errorComp`或`factory.loadingComp`，如此再下一次重新渲染时，`resolveAsyncComponent`函数就能直接返回构造函数了。
+以上三种形式的异步组件都有可能会涉及到调用`forceRender`进行强制重新渲染的问题。若是正常获取到了异步组件的定义，会将其处理成构造函数后挂在`factory.resolved`上，高级异步组件若是有 Loading 组件或是 Error 组件，处理后将挂在`factory.errorComp`或`factory.loadingComp`，如此再下一次重新渲染时，`resolveAsyncComponent`函数就能直接返回构造函数了。
 
 ```js
 export function resolveAsyncComponent (
@@ -359,9 +349,9 @@ export function resolveAsyncComponent (
 }
 ```
 
-### 异步占位 Vnode
+### 异步占位注释 Vnode
 
-若是工厂函数内异步去获取组件定义时，`resolveAsyncComponent`函数会返回`undefined`（除非是高级工厂函数且有无延迟的 Loading 组件）。此时，将调用`createAsyncPlaceholder`生成异步占位 Vnode 节点，先以此 Vnode 节点返回。异步占位 Vnode 是基于空的 Vnode 节点创建的，再加上异步组件的一些元数据如`data`、`children`等。
+若是工厂函数内异步去获取组件定义时，`resolveAsyncComponent`函数会返回`undefined`（除非是高级异步组件且是无延迟的 Loading 组件）。此时，将调用`createAsyncPlaceholder`生成异步占位注释 Vnode 节点，先以此 Vnode 节点返回。异步占位注释 Vnode 是基于空的 Vnode 节点创建的注释节点，再加上异步组件的一些元数据如`data`、`children`等。
 
 ```js
 export function createAsyncPlaceholder (
@@ -386,3 +376,14 @@ export const createEmptyVNode = (text: string = '') => {
   return node
 }
 ```
+
+## 总结
+
+经过以上的分析，以下两种情况会在第一次渲染时返回组件的构造函数，并进一步渲染出组件。
+
+- 普通异步组件的同步`resolve`组件定义
+- 高级异步组件含有无延迟 Loading 组件的情况外
+
+而在其他情况下，将先返回`undefined`，并创建异步占位注释 Vnode，最终生成一注释节点。等到组件定义获取成功后，再次触发重新渲染，并渲染出真正的组件。
+
+因此，异步组件的实质是“二次渲染”：第一次渲染时，工厂函数将异步获取组件定义，并先同步返回占位的注释 Vnode 以供渲染；组件定义获取成功后，将主动发起第二次渲染，此时组件定义已经准备好，可以同步返回。
