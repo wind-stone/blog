@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# webpack bootstrap 简单分析
+# Webpack Bootstrap 简单分析
 
 [[toc]]
 

@@ -2,9 +2,11 @@
 sidebarDepth: 0
 ---
 
-# Vue 项目配置 ESlint
+# ESlint
 
-## `.eslintrc` 文件配置
+## Vue 项目配置 ESlint
+
+### `.eslintrc` 文件配置
 
 ```json
 {
@@ -43,13 +45,13 @@ sidebarDepth: 0
 }
 ```
 
-## 需要增加的`devDependencies`
+### 需要增加的`devDependencies`
 
 - babel-eslint
 - [vue-eslint-parser](https://github.com/vuejs/vue-eslint-parser)
 - [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue)
 
-## VSCode 里的 User Setting 增加配置
+### VSCode 里的 User Setting 增加配置
 
 ```json
 {
@@ -63,6 +65,6 @@ sidebarDepth: 0
 
 [配置此项](https://github.com/vuejs/eslint-plugin-vue#why-doesnt-it-work-on-vue-file)，VSCode 可增加对`.vue`文件的 ESlint 检查。
 
-## 说明
+### 说明
 
 VSCode 配置完了之后，如果不可用，可重启下 VSCode。

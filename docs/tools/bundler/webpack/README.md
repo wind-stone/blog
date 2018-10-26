@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# 配置相关
+# Webpack 配置
 
 [[toc]]
 

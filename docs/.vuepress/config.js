@@ -21,7 +21,6 @@ module.exports = {
           { text: 'Vue 源码学习', link: '/vue/source-study/' }
         ]
       },
-      { text: '构建工具', link: '/bundler/webpack/' },
       { text: '开发环境/工具', link: '/tools/git/' },
       { text: 'Code Snippet', link: '/code-snippet/js/' },
       { text: '算法', link: '/algorithm/sorting-algorithm/' },
@@ -252,25 +251,6 @@ module.exports = {
         }
       ],
 
-      // 模块打包器
-      '/bundler/': [
-        {
-          title: 'Webpack',
-          collapsable: true,
-          children: [
-            'webpack/',
-            'webpack/bootstrap'
-          ]
-        },
-        {
-          title: 'Rollup',
-          collapsable: true,
-          children: [
-            'rollup/'
-          ]
-        }
-      ],
-
       // 代码片段
       '/code-snippet/': [
         {
@@ -297,7 +277,7 @@ module.exports = {
         }
       ],
 
-      // 最佳实践
+      // 算法
       '/algorithm/sorting-algorithm/': [
         {
           title: '排序算法',
@@ -316,6 +296,15 @@ module.exports = {
       // 开发环境/工具
       '/tools/': [
         {
+          title: '构建工具',
+          collapsable: false,
+          children: [
+            'bundler/webpack/',
+            'bundler/webpack/bootstrap',
+            'bundler/rollup'
+          ]
+        },
+        {
           title: 'git',
           collapsable: false,
           children: [
@@ -324,32 +313,14 @@ module.exports = {
             'git/gitlab'
           ]
         },
+
         {
-          title: 'CLI',
+          title: '其它工具',
           collapsable: false,
           children: [
-            'cli/'
-          ]
-        },
-        {
-          title: 'Linux',
-          collapsable: false,
-          children: [
-            'linux/'
-          ]
-        },
-        {
-          title: 'ESlint',
-          collapsable: false,
-          children: [
-            'eslint/eslint-vue'
-          ]
-        },
-        {
-          title: '其他',
-          collapsable: false,
-          children: [
-            'rsync'
+            '',
+            'linux',
+            'eslint',
           ]
         }
       ],
