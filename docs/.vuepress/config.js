@@ -202,7 +202,7 @@ module.exports = {
         },
         {
           title: '组件化',
-          collapsable: true,
+          collapsable: false,
           children: [
             'component/register',
             'component/options',
@@ -211,7 +211,7 @@ module.exports = {
         },
         {
           title: '实例化',
-          collapsable: true,
+          collapsable: false,
           children: [
             'instance/computed',
             'instance/props',
@@ -220,7 +220,7 @@ module.exports = {
         },
         {
           title: '响应式原理',
-          collapsable: true,
+          collapsable: false,
           children: [
             'reactivity/',
             'reactivity/watcher',
@@ -228,22 +228,22 @@ module.exports = {
         },
         {
           title: 'Virtual Dom',
-          collapsable: true,
+          collapsable: false,
           children: [
             'vdom/',
             'vdom/patch'
           ]
         },
         {
-          title: 'Vue 专题',
-          collapsable: true,
+          title: '专题',
+          collapsable: false,
           children: [
             'topics/dom-binding'
           ]
         },
         {
           title: 'Vuex',
-          collapsable: true,
+          collapsable: false,
           children: [
             'vuex/'
           ]
