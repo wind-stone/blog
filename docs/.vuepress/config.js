@@ -48,7 +48,8 @@ module.exports = {
           collapsable: true,
           children: [
             'css/',
-            'css/css-property-order'
+            'css/css-property-order',
+            'css/flex-image/'
           ]
         },
         {
