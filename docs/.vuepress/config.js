@@ -341,7 +341,7 @@ module.exports = {
           children: [
             'mac-shortcut-keys',
             'word-pronunciation',
-            'effect'
+            'theories'
           ]
         }
       ]
