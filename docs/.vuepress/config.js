@@ -310,7 +310,8 @@ module.exports = {
           children: [
             'git/',
             'git/git-commond',
-            'git/gitlab'
+            'git/gitlab',
+            'git/git-commit-guidelines'
           ]
         },
 
