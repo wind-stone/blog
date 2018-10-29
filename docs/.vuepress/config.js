@@ -214,8 +214,8 @@ module.exports = {
           title: '实例化',
           collapsable: false,
           children: [
+            'instance/prop',
             'instance/computed',
-            'instance/props',
             'instance/directives'
           ]
         },
