@@ -1,6 +1,6 @@
 module.exports = {
   title: 'Wind Stone\'s blog',
-  description: 'Record something mainly for myself ..',
+  description: '记录工作，记录生活',
   markdown: {
     lineNumbers: true,
     toc: {
