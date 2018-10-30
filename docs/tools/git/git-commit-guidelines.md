@@ -88,3 +88,17 @@ Issue #1, #2, #3
 ```html
 Close #1, #2, #3
 ```
+
+Reference: [Angular 团队提交规范](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines)
+
+## 自动化验证提交信息
+
+- `commit-msg`: 通过此钩子实现在`git commit`时去校验提交信息
+- `commitlint`: 实际校验提交信息的工具，可自定义提交信息模板
+- `husky`: 更加方便地使用 git hooks
+
+Reference:
+
+- [优雅的提交你的 Git Commit Message](https://juejin.im/post/5afc5242f265da0b7f44bee4)
+- [github - commitlint](https://github.com/marionebl/commitlint)
+- [github - husky](https://github.com/typicode/husky)
