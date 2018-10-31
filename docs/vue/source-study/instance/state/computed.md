@@ -6,7 +6,7 @@ sidebarDepth: 0
 
 [[toc]]
 
-## 源码
+## initComputed
 
 ```js
 const computedWatcherOptions = { lazy: true }
@@ -109,7 +109,7 @@ function createComputedGetter (key) {
 }
 ```
 
-## 问题解析
+## 释疑
 
 ### Dep.target 通过计算属性收集依赖
 
