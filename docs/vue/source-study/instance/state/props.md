@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# Prop
+# props
 
 [[toc]]
 
@@ -81,7 +81,7 @@ function initProps (vm: Component, propsOptions: Object) {
 校验`prop`时，主要做了三件事：
 
 1. `prop`为`Boolean`类型时做特殊处理
-2. `prop`的值为空时，获取默认值，并作响应式处理
+2. `prop`的值为空时，获取默认值，并创建观察者对象
 3. `prop`验证
 
 ```js
@@ -144,7 +144,7 @@ export function validateProp (
     // make sure to observe it.
     const prevShouldObserve = shouldObserve
     toggleObserving(true)
-    // 作响应式处理
+    // 默认值提供的数据可能不是响应式的，需要先将数据转换为响应式对象
     observe(value)
     toggleObserving(prevShouldObserve)
   }
@@ -171,7 +171,7 @@ export function validateProp (
 
 经过以上`Boolean`类型的处理之后，若是`prop`的值仍为`undefined`，则将获取`prop`的默认值。
 
-### 获取默认值 && 响应式处理
+### 获取默认值 && 创建观察者对象
 
 ```js
 /**
@@ -224,7 +224,7 @@ function getPropDefaultValue (vm: ?Component, prop: PropOptions, vmkey: string):
 
 如此，`prop`的默认值也就确定了。
 
-而在默认值确定之后，会对默认值做响应式处理，若该`prop`的值是对象类型，则在该`prop`的值的子孙元素变化的时候，依赖该`prop`的 Watcher 都可以接收到通知。
+而在默认值确定之后，会为默认值创建观察者对象。若该`prop`的值是对象类型，则在该`prop`的值的子孙属性变化的时候，依赖该`prop`值的子孙属性的值变化时，Watcher 都可以接收到通知。
 
 ### 验证
 
@@ -346,3 +346,52 @@ function getType (fn) {
   return match ? match[1] : ''
 }
 ```
+
+## 释疑
+
+### `initProps` 函数里的 `defineReactive(props, key, value)` 和 `validateProp` 函数里 `observe(value)` 有什么区别？
+
+从源码里我们发现有两处地方作了响应式相关的处理。第一处是在调用`validateProp`来校验并获取`prop`的值时，针对默认值提供的数据进行的响应式处理。第二处是在获取到`prop`的值后，将`prop`属性定义为响应式属性。那他们之间有什么区别呢？
+
+```js
+// src/core/instance/state.js
+function initProps (vm: Component, propsOptions: Object) {
+  // ...
+  for (const key in propsOptions) {
+    keys.push(key)
+    const value = validateProp(key, propsOptions, propsData, vm)
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production') {
+      // ...
+    } else {
+      // 将 prop 定义为响应式属性
+      defineReactive(props, key, value)
+    }
+  }
+  // ...
+}
+```
+
+```js
+// src/core/util/props.js
+export function validateProp (
+  key: string,
+  propOptions: Object,
+  propsData: Object,
+  vm?: Component
+): any {
+  // ...
+  if (value === undefined) {
+    value = getPropDefaultValue(vm, prop, key)
+    const prevShouldObserve = shouldObserve
+    toggleObserving(true)
+    // 默认值提供的数据可能不是响应式的，需要先将数据转换为响应式对象
+    observe(value)
+    toggleObserving(prevShouldObserve)
+  }
+  // ...
+  return value
+}
+```
+
+学习了响应式原理的`Observer`之后我们知道，经过`observe`处理后的响应式对象，仅在其子孙属性改变之后才能通知订阅者。而经过`defineReactive(props, key, value)`处理后，`prop`值自身改变时，也能通知订阅者。这二者一结合，就能保证，无论是`prop`自身改变，还是其子孙元素改变，都能通知到订阅者。
