@@ -214,8 +214,12 @@ module.exports = {
           title: '实例化',
           collapsable: false,
           children: [
-            'instance/prop',
-            'instance/computed',
+            'instance/state/',
+            'instance/state/props',
+            'instance/state/methods',
+            'instance/state/data',
+            'instance/state/computed',
+            'instance/state/watch',
             'instance/directives'
           ]
         },
@@ -223,8 +227,11 @@ module.exports = {
           title: '响应式原理',
           collapsable: false,
           children: [
-            'reactivity/',
-            'reactivity/watcher',
+            'observer/',
+            'observer/dep-collection',
+            'observer/notify-update',
+            'observer/dep',
+            'observer/watcher',
           ]
         },
         {
