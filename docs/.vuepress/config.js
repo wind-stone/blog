@@ -232,6 +232,7 @@ module.exports = {
             'observer/notify-update',
             'observer/dep',
             'observer/watcher',
+            'observer/scheduler',
           ]
         },
         {

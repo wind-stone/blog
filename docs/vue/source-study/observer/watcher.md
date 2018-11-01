@@ -6,8 +6,6 @@ sidebarDepth: 0
 
 [[toc]]
 
-## Watcher 类
-
 ## 释疑
 
 ### 哪些情况下会产生 Watcher？
@@ -185,33 +183,3 @@ export default {
 结果打印：`$watch 回调执行啦，尽管 OBJECT 没改变！`
 
 我们可以看到，监听的表达式的返回值时一常量对象`OBJECT`，我们并没有改变它，但是当我们改变表达式的依赖`data.a`时，回调函数居然执行了！（其实上，表达式并没有实际依赖`data.a`，只是在计算表达式的值时，会获取`data.a`的值，导致`data.a`成了表达式的依赖项了）
-
-### 同步计算 VS 异步队列
-
-创建 Watcher 实例时，若选项对象里的`sync`为`true`，则意味着只要依赖项发生改变，将立即计算 Watcher 实例的表达式；否则，Watcher 在依赖项发生变化时，会先将 Watcher 实例添加到异步队列，等下一次`tick`时再重新计算表达式。
-
-```js
-export default class Watcher {
-  // ...
-
-  /**
-   * 依赖改变时，依赖会调用 watcher.update
-   */
-  update () {
-    if (this.lazy) {
-      // 若是惰性计算的 watcher，只将 dirty 标志为 true，但不重新计算表达式；等到获取 value 时，再重新计算表达式
-      this.dirty = true
-    } else if (this.sync) {
-      // 若是同步计算，则依赖改变时，立即计算表达式
-      this.run()
-    } else {
-      // 否则，将 watcher 放入异步队列，在下一次 tick 时再计算表达式
-      queueWatcher(this)
-    }
-  }
-
-  // ...
-}
-```
-
-> Vue 异步执行 DOM 更新。只要观察到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据改变。如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作上非常重要。然后，在下一个的事件循环“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。Vue 在内部尝试对异步队列使用原生的 Promise.then 和 MessageChannel，如果执行环境不支持，会采用 setTimeout(fn, 0) 代替。—— [深入响应式原理 - 异步更新队列](https://cn.vuejs.org/v2/guide/reactivity.html#%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0%E9%98%9F%E5%88%97)
