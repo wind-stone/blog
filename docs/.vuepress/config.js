@@ -244,6 +244,13 @@ module.exports = {
           ]
         },
         {
+          title: 'Util',
+          collapsable: false,
+          children: [
+            'util/next-tick'
+          ]
+        },
+        {
           title: '专题',
           collapsable: false,
           children: [
