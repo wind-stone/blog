@@ -14,8 +14,8 @@ sidebarDepth: 0
 
 1. 获取`data`最终的值
 2. 检查`data`子属性的`key`是否与`props`和`methods`冲突
-3. 将对`data`数据的访问代理到`vm`实例上
-4. 对`data`作响应式处理
+3. 将对`data`数据的访问代理到`vm`实例上（详见[状态数据 - proxy](/vue/source-study/instance/state/#proxy)）
+4. 将`data`处理成响应式对象（详见[响应式原理 - observe](/vue/source-study/observer/#observe)）
 
 获取`data`的值，是因为`data`可能是函数，执行函数并返回最终值。而在执行`data`工厂函数的时候，函数内的`this`将指向`vm`，且在此之前`props`和`methods`都已经初始化，这也就意味着，在`data`里是完全可以访问`props`的，也可能可以访问`methods`（因为`methods`里可能涉及到其他`data`，所以有风险，最好不要这么做）。
 
