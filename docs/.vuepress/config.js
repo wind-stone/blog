@@ -24,7 +24,6 @@ module.exports = {
       { text: '开发环境/工具', link: '/tools/git/' },
       { text: 'Code Snippet', link: '/code-snippet/js/' },
       { text: '算法', link: '/algorithm/sorting-algorithm/' },
-      { text: '服务器端', link: '/server/node/' },
       { text: 'GitHub', link: 'https://github.com/wind-stone' },
       { text: '随记', link: '/wander/house/' }
     ],
@@ -125,23 +124,6 @@ module.exports = {
           children: [
             'compatibility/css/ie',
             'compatibility/css/android-small-fontsize'
-          ]
-        }
-      ],
-
-      '/server/': [
-        {
-          title: 'Node',
-          collapsable: false,
-          children: [
-            'node/'
-          ]
-        },
-        {
-          title: 'Unix',
-          collapsable: false,
-          children: [
-            'unix/'
           ]
         }
       ],
@@ -336,7 +318,13 @@ module.exports = {
             'git/git-commit-guidelines'
           ]
         },
-
+        {
+          title: 'Node',
+          collapsable: false,
+          children: [
+            'node/'
+          ]
+        },
         {
           title: '其它工具',
           collapsable: false,
