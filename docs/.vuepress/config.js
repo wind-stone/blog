@@ -164,6 +164,13 @@ module.exports = {
             'async-await/',
             'module/'
           ]
+        },
+        {
+          title: 'Polyfill',
+          collapsable: false,
+          children: [
+            'polyfill/object/'
+          ]
         }
       ],
 

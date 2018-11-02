@@ -50,12 +50,6 @@
 
 <<< @/docs/code-snippet/js/server/ipv4.js
 
-## Ployfill
-
-### Object.assign
-
-<<< @/docs/code-snippet/js/polyfill/object-assign.js
-
 ## 校验规则
 
 ### 身份证有效性校验
