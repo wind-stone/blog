@@ -6,6 +6,8 @@ sidebarDepth: 0
 
 [[toc]]
 
+## 源码
+
 ## 释疑
 
 ### 哪些情况下会产生 Watcher？
@@ -13,6 +15,108 @@ sidebarDepth: 0
 - 渲染 Watcher（`vm._watcher`）
 - 计算属性 Watcher
 - 用户 Watcher（通过`Vue.prototype.$watch`和组件对象的`watchers`属性产生）
+
+### Watcher 实例的 deps / newDeps，有什么区别？
+
+我们发现，Watcher 实例上不仅有`deps`/`depIds`属性，还有`newDeps`/`newDepIds`属性，这两组属性有什么区别呢？我们只要分析实例上的`get`、`addDep`和`cleanupDeps`方法就能知晓了。
+
+```js
+export default class Watcher {
+  // ...
+  /**
+   * Evaluate the getter, and re-collect dependencies.
+   */
+  get () {
+    pushTarget(this)
+    let value
+    const vm = this.vm
+    try {
+      value = this.getter.call(vm, vm)
+    } catch (e) {
+      if (this.user) {
+        handleError(e, vm, `getter for watcher "${this.expression}"`)
+      } else {
+        throw e
+      }
+    } finally {
+      // "touch" every property so they are all tracked as
+      // dependencies for deep watching
+      if (this.deep) {
+        traverse(value)
+      }
+      popTarget()
+      this.cleanupDeps()
+    }
+    return value
+  }
+
+  /**
+   * Add a dependency to this directive.
+   */
+  addDep (dep: Dep) {
+    const id = dep.id
+    if (!this.newDepIds.has(id)) {
+      this.newDepIds.add(id)
+      this.newDeps.push(dep)
+      if (!this.depIds.has(id)) {
+        dep.addSub(this)
+      }
+    }
+  }
+
+  /**
+   * Clean up for dependency collection.
+   */
+  cleanupDeps () {
+    let i = this.deps.length
+    while (i--) {
+      const dep = this.deps[i]
+      if (!this.newDepIds.has(dep.id)) {
+        dep.removeSub(this)
+      }
+    }
+    let tmp = this.depIds
+    this.depIds = this.newDepIds
+    this.newDepIds = tmp
+    this.newDepIds.clear()
+    tmp = this.deps
+    this.deps = this.newDeps
+    this.newDeps = tmp
+    this.newDeps.length = 0
+  }
+  // ...
+}
+```
+
+`get`方法的作用是计算`watcher`表达式的值，计算之前会调用`pushTarget(this)`将之前的`Dep.target`推入栈中并将`watcher`设置为当前的`Dep.target`。如此若是在计算表达式的过程中获取了响应式属性的值，就会通过`watcher.addDep`方法给`watcher`添加依赖，而所有的依赖都将添加到`watcher.newDeps`里，`watcher.newDepIds`里是依赖对应的`id`。而当`watcher`的表达式计算完成之后，会调用`popTarget()`还原之前的`Dep.target`。最后会调用`cleanupDeps`方法清理依赖。玄妙就在这里。
+
+`cleanupDeps`所做的处理是：
+
+1. 遍历`deps`，找出不在`newDeps`里的`dep`，将当前`watcher`从`dep`的订阅者移除
+2. 将`newDeps`赋给`deps`，清空`newDeps`
+
+经过第一步的操作后，不在`newDeps`里的`dep`与`watcher`解除了发布订阅关系，当`dep`发生改变之后，再也无法通知`watcher`了。
+
+经过第二步之后，`deps`里保存的就是最新一次收集到的所有依赖。
+
+如此，我们明白了，`watcher`在上一次收集的依赖与最新一次收集的依赖可能不完全一样，以前的依赖`dep`现在不依赖了，为了防止不依赖的`dep`在改变之后继续通知`watcher`进行更新，就需要将`watcher`从`dep`的订阅者里移除掉，这样就防止`watcher`不必要的重新计算了。
+
+意思基本上懂了，我们来简单看个示例：
+
+```js
+vm.$watch(function () {
+  return this.a === 1 ? this.b : this.c
+}, function () {
+  console.log('watcher 改变啦！')
+})
+```
+
+我们通过`vm.$watch`创建了一新的`watcher`，表面上看计算表达式的值时，会将`this.a`、`this.b`、`this.c`都作为依赖。但是事实上是，当`this.a`为`1`时，根本不会去获取`this.c`的值，也就不会将`this.c`作为依赖，因而`watcher`只依赖了`this.a`和`this.b`；同理，当`this.a`不为`1`时，`watcher`只依赖了`this.a`和`this.c`。
+
+1. 假设一开始`this.a`为`1`，`watcher`表达式的结果就是`this.b`；`watcher`的依赖是`this.a`、`this.b`；当`this.b`改变后，`watcher`就需要重新计算以获取表达式最新的值。
+2. 现在修改`this.a`为`2`，引起了`watcher`重新计算表达式，其结果为`this.c`；`watcher`的依赖变为`this.a`、`this.c`。
+
+经过`watcher.cleanupDeps()`之后，现在`this.b`再改变时，`watcher`就不需要重新计算表达式了！
 
 ### watcher 是如何实现 deep: true 深度监听的？
 
