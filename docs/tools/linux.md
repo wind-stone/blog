@@ -2,21 +2,34 @@
 sidebarDepth: 0
 ---
 
-# Linux 命令
+# Unix / Linux
 
 [[toc]]
 
-## pwd 显示工作目录
+## 用户默认目录
+
+```sh
+# wind-stone 代表用户，server-host 代表服务器
+# 进入服务器，会默认进行 home/wind-stone 目录下
+wind-stone@server-host
+
+# 以下目录，实际上是 home/wind-stone/files/some-directory/
+wind-stone@server-host::files/some-directory/
+```
+
+## 命令
+
+### pwd 显示工作目录
 
 Print Working Directory，显示工作目录的路径名称。
 
-## cat 查看文件
+### cat 查看文件
 
 ```sh
 cat filename
 ```
 
-## cp 复制文件
+### cp 复制文件
 
 将源文件复制到目标文件，或将多个源文件复制到目标目录
 
@@ -24,11 +37,11 @@ cat filename
 cp origin destination
 ```
 
-## mv 移动文件
+### mv 移动文件
 
-## vi
+### vi
 
-### 仅查看文件
+#### 仅查看文件
 
 ```sh
 <!-- 打开文件，输入 -->
@@ -38,7 +51,7 @@ vi filename
 :q!
 ```
 
-### 修改文件
+#### 修改文件
 
 ```sh
 <!-- 打开文件，输入 -->
@@ -55,7 +68,7 @@ esc
 shift 键 + Z*2
 ```
 
-## rm 删除文件
+### rm 删除文件
 
 ```sh
 rm filename
