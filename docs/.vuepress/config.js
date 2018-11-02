@@ -348,7 +348,8 @@ module.exports = {
           collapsable: false,
           children: [
             'house/',
-            'house/tianya-post'
+            'house/tianya-post',
+            'house/zhonghailichunhushu/'
           ]
         },
         {
