@@ -187,7 +187,22 @@ module.exports = {
           title: '总览',
           collapsable: false,
           children: [
-            ''
+            '',
+            'vue-constructor'
+          ]
+        },
+        {
+          title: '实例化',
+          collapsable: false,
+          children: [
+            'instance/init',
+            'instance/state/',
+            'instance/state/props',
+            'instance/state/methods',
+            'instance/state/data',
+            'instance/state/computed',
+            'instance/state/watch',
+            'instance/directives'
           ]
         },
         {
@@ -197,19 +212,6 @@ module.exports = {
             'component/register',
             'component/options',
             'component/async-component'
-          ]
-        },
-        {
-          title: '实例化',
-          collapsable: false,
-          children: [
-            'instance/state/',
-            'instance/state/props',
-            'instance/state/methods',
-            'instance/state/data',
-            'instance/state/computed',
-            'instance/state/watch',
-            'instance/directives'
           ]
         },
         {
