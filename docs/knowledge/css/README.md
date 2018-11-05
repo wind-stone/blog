@@ -113,32 +113,6 @@ Reference
 
 原文里："你只需要给红色的标签增加一个opacity小于1" 应该改成“你只需要给红色的标签外层的div增加一个opacity小于1”
 
-### `word-wrap`/`word-break`
-
-如果想要英文单词不折行显示，添加：
-
-```css
-{
-    word-break: break-all;
-    word-wrap: break-word;
-}
-```
-
-- `word-wrap`：用来表明是否允许浏览器在单词内进行断句，这是为了防止当一个字符串太长而找不到它的自然断句点时产生溢出现象。
-- `word-break`：用来标明怎么样进行单词内的断句。前提是可以在单词内换行，讨论的是怎么换行的问题。
-
-`word-break`取值 | 说明
---- | ---
-`normal` | 使用默认的换行规则
-`break-all` | 允许任意非 CJK（Chinese/Japanese/Korean）文本间的单词断行
-`keep-all` | 不允许 CJK（Chinese/Japanese/Korean）文本中的单词换行，只能在半角空格或连字符处换行。非 CJK 文本的行为实际上和`normal`一致
-
-`word-wrap: break-word`与`word-break: break-all`共同点是都能把长单词强行断句，不同点是
-
-- `word-wrap: break-word`会首先起一个新行来放置长单词，新的行还是放不下这个长单词则会对长单词进行强制断句
-- 而`word-break: break-all`则不会把长单词放在一个新行里，当这一行放不下的时候就直接强制断句了
-
-两个属性的具体区别见：[你真的了解word-wrap和word-break的区别吗？](http://www.cnblogs.com/2050/archive/2012/08/10/2632256.html)
 
 ### fixed + transform
 

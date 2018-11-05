@@ -48,7 +48,8 @@ module.exports = {
           children: [
             'css/',
             'css/css-property-order',
-            'css/flex-image/'
+            'css/flex-image/',
+            'css/text-wrap-and-ellipsis/'
           ]
         },
         {
