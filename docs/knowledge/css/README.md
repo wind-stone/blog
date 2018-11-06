@@ -113,7 +113,6 @@ Reference
 
 原文里："你只需要给红色的标签增加一个opacity小于1" 应该改成“你只需要给红色的标签外层的div增加一个opacity小于1”
 
-
 ### fixed + transform
 
 - [经过 transform 后的元素的子元素的 fixed 定位将以 transform 的元素为包含块进行定位，并失去固定效果](http://meyerweb.com/eric/thoughts/2011/09/12/un-fixing-fixed-elements-with-css-transforms/)
@@ -154,6 +153,20 @@ perspective / (perspective - distance)
 子元素 distance = -2
 
 则最终 子元素看来变成了原来的 1/3，此时将子元素 scale(3) 将获得跟原来一样的视图
+
+### CSS 3 里 width 属性的新取值：max/min-content、fit-content、fill-available
+
+CSS 3 里，`width`属性又多了几个关键字取值：
+
+“关键字”值 | 说明
+--- | ---
+`fill-available` | 元素自动充满剩余的空间（类似`div`元素默认宽度为父元素的`100%`），但是其`display`属性可以取其他任意值，比如`display: inline-block`
+`max-content` | 先假设容器元素有足够的宽度，其内部元素将按容器元素有足够的空间来布局，`max-content`的值就是宽度最大的那个内部元素的宽度
+`min-content` | 采用内部元素最小宽度值最大的那个元素的宽度作为最终容器的宽度
+`fit-content` | 类似于`shrink-to-fit`，可以实现元素收缩效果，同时能保持原本的`display`属性特性
+
+Reference: [张鑫旭 - 理解CSS3 max/min-content及fit-content等width值
+](https://www.zhangxinxu.com/wordpress/2016/05/css3-width-max-contnet-min-content-fit-content/)
 
 ## 问答篇
 
