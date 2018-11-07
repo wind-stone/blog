@@ -85,13 +85,13 @@ shrink-to-fit，指的是块级元素只占据内容所需要的宽度。Shrink-
 
 ## 属性篇
 
-### `rgba()`与`opacity`
+### rgba() 与 opacity
 
 - `rgba()`和`opacity`都能实现透明效果
 - `opacity`作用于元素，以及元素内的所有内容的透明度
 - `rgba()`只作用于元素的颜色或其背景色，子元素不会继承透明效果
 
-### 关于 z-index
+### z-index
 
 现在我们来说说什么情况下会产生新的层：
 
@@ -112,6 +112,12 @@ Reference
 - [http://web.jobbole.com/82884/](http://web.jobbole.com/82884/)
 
 原文里："你只需要给红色的标签增加一个opacity小于1" 应该改成“你只需要给红色的标签外层的div增加一个opacity小于1”
+
+### vertical-align
+
+CSS 的属性`vertical-align`用来指定行内元素（inline）或表格单元格（table-cell）元素的垂直对齐方式。
+
+也就意味着，`vertical-align`属性对块级元素是无效的。
 
 ### fixed + transform
 
@@ -191,6 +197,17 @@ Reference: [张鑫旭 - 理解CSS3 max/min-content及fit-content等width值
 如果同时使用`background-origin`和`background-clip`属性, `origin`属性值需在`clip`属性值之前, 如果`origin`与`clip`属性值相同, 则可只设置一个值。
 
 需要注意的是，对于 CSS 预处理器来说，当在缩写里同时使用`background-position`和`background-size`时，中间的`/`会被当成除号对待，待找出解决办法。
+
+### 属性值的百分比
+
+CSS 有些属性的属性值可以使用百分比值，那么这些百分比值都是相对哪些元素的哪些属性来说的呢？
+
+属性 | 相对元素和属性 | 说明
+--- | --- | ---
+`width` | 父元素的`width` |
+`height` | 父元素的`height` |
+`vertical-align` | 该元素的`line-height` |
+
 
 ## 问答篇
 

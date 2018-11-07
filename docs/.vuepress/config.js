@@ -56,7 +56,10 @@ module.exports = {
           title: 'HMLT-DOM',
           collapsable: true,
           children: [
-            'html-dom/'
+            'html-dom/',
+            'html-dom/elements/',
+            'html-dom/attributes/',
+            'html-dom/properties/',
           ]
         },
         {
