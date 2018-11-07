@@ -47,7 +47,9 @@ module.exports = {
           collapsable: true,
           children: [
             'css/',
-            'css/css-property-order',
+            'css/selectors/',
+            'css/properties/',
+            'css/layouts/',
             'css/flex-image/',
             'css/text-wrap-and-ellipsis/'
           ]
