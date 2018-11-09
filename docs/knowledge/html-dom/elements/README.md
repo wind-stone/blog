@@ -8,24 +8,32 @@ sidebarDepth: 0
 
 ## 元素分类
 
-### 块级元素
+### 可替换元素 VS 非替换元素
 
-- 总是独占一行，表现为另起一行开始，而且其后的元素也必须另起一行显示
-- 宽度(`width`)、高度(`height`)、内边距(`padding`)和外边距(`margin`)都可控制
+#### 可替换元素
 
-### 行内元素
+CSS 里，可替换元素（replaced element）的展现不是由 CSS 来控制的。这些元素是一类外观渲染独立于 CSS 的外部对象。 典型的可替换元素有`img`、`object`、`video`和表单元素，如`textarea`、`input`。某些元素只在一些特殊情况下表现为可替换元素，例如`audio`和`canvas`。 通过 CSS content 属性来插入的对象，被称作匿名可替换元素（anonymous replaced elements）。
 
-行内元素，又称为内联元素，分为替换元素和非替换元素。
+CSS 在某些情况下会对可替换元素做特殊处理，比如计算外边距和一些`auto`值。
 
-#### 替换元素
+需要注意的是，一部分（并非全部）可替换元素，本身具有尺寸和基线（`baseline`），会被像`vertical-align`之类的一些 CSS 属性用到。
 
-- 替换元素（`input`、`img`、`textarea`等）和相邻的内联元素在同一行
-- 宽度(`width`)、高度(`height`)、内边距(`padding`)和外边距(`margin`)都可控制
+### 块级元素 VS 行内元素
 
-#### 非替换元素
+#### 块级元素
 
-- 和相邻的内联元素在同一行
-- 宽度(`width`)、高度(`height`)、内边距的`top`/`bottom`(`padding-top`/`padding-bottom`)和外边距的`top`/`bottom`(`margin-top`/`margin-bottom`)都不可改变（也就是`padding`和`margin`的`left`和`right`是可以设置的）
+块级元素生成一个（默认情况下）元素框，填充其父元素的内容区域，并且在其两侧不能有其他元素，即它在元素框之前和之后生成“断行”。
+
+#### 行内元素
+
+#### 差别
+
+分类/比较点 | 行内元素 | 块级元素
+--- | --- | ---
+内容 | 一般情况下，行内元素只能包含数据和其他行内元素 | 块级元素可以包含行内元素和其他块级元素（这种结构上的包含继承区别可以使块级元素创建比行内元素更”大型“的结构）
+格式 | 默认情况下，行内元素不会以新行开始，而块级元素会新起一行 | 默认情况下，块级元素会新起一行
+大小 | `width`、`height`、`padding-top/bottom`、`margin-top/bottom`都不可控制，`padding-left/right`、`margin-left/right`可以控制 | `width`、`height`、`padding`、`margin`都可控制
+高度 | |
 
 ## 特别的元素
 
@@ -53,7 +61,9 @@ sidebarDepth: 0
 
 ![幽灵空白节点导致图片下方产生空隙](./img/ghost-element.png)
 
-因为`vertical-align`默认取值为`baseline`的原因，幽灵空白节点经常会导致同级的内联元素底部出现空隙。
+幽灵空白节点会继承父元素的`font-size`和`line-height`，而默认的`line-height`取值是`normal`，一般约为`1.2`倍的`font-size`（具体取决于元素的`font-family`），导致幽灵空白节点所占据位置的最下方与节点的基线位置的距离是超过`0`的。
+
+且内联元素`vertical-align`默认取值为`baseline`，而示例中图片作为替换元素，其`baseline`是图片的底部，幽灵空白节点的`baseline`是字符的基线，因此导致图片下方产生空隙，空隙的高度就是幽灵空白节点占据位置的最下方与节点内字符基线位置的距离。
 
 #### 清除幽灵空白节点
 
