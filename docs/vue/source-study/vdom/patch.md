@@ -26,3 +26,6 @@ insertedVnodeQueue 的添加顺序是先子后父
 - 先子组件后父组件的有：
   - `mounted`
   - `destroy`
+
+## 组件更新算法
+

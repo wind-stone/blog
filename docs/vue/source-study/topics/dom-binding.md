@@ -76,10 +76,12 @@ function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
 
 ## vnode.elm 的确定
 
-`vnode.elm`是在`createElm`的过程中产生的，不同类型的`vnode`，`vnode.elm`的生成过程不一样，共有两种不同的情况：
+`vnode.elm`是在`createElm`的过程中产生的，不同类型的`vnode`，`vnode.elm`的含义和生成过程都不一样，共有两种不同的情况：
 
-- HTML 元素对应的`vnode`
-- 组件对应的`vnode`
+- HTML 元素对应的`vnode`：`vnode.elm`就是`vnode`对应的 DOM 元素
+- 组件对应的`vnode`：`vnode.elm`即为最终挂载时组件（或者根节点组件）DOM Tree 的根节点（HTML 元素）
+
+且组件对应的`vnode`的`elm`的确定，是基于 HTML 元素对应的`vnode`的`elm`的确定。
 
 ### 普通 HTML 元素
 
@@ -254,14 +256,6 @@ export function createComponentInstanceForVnode (
     return vnode
   }
 ```
-
-若是组件对应的`vnode`（组件占位`vnode`，`vnode.tag`形如`vue-component-${Ctor.cid}-${name}`），在组件调用`patch`的最后，会将``
-
-### 总结
-
-组件对应的`vnode`的`elm`的确定，是基于 HTML 元素对应的`vnode`的`elm`的确定。
-
-PS：对于组件占位节点来说，`vnode.elm`即为最终挂载时组件（或者根节点组件） DOM Tree 的根节点（HTML 元素）
 
 ## parentElm 的确定
 

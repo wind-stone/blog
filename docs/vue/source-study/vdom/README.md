@@ -138,3 +138,11 @@ new Vue({
     <div class="child-root">Hello World!</div>
 </body>
 ```
+
+## 释疑
+
+### 模板里使用了 vm 上不存在的方法或属性时的报错，是如何实现的？
+
+非开发环境下，执行`render`函数时第一个参数传入的是`vm._renderProxy`而不是`vm`，`vm._renderProxy`是对`vm`的代理，其内实现了报错逻辑。
+
+TODO: 待完成一篇详细的分析文章
