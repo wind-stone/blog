@@ -2,12 +2,6 @@
 
 ## 主线：Vue 系列
 
-- 学习 vue create api
-- 整理 vue 常用的功能及实现
-- 函数式组件与常规组件的区别
-- Slot
-- vmodel 通过 value
-
 ## 副主线：Webpack 系列
 
 ## node.js 系列
