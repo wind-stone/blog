@@ -7,6 +7,9 @@ module.exports = {
       includeLevel: [2, 3, 4, 5]
     }
   },
+  head: [
+    ['link', { rel: 'icon', href: `/long.png` }]
+  ],
   themeConfig: {
     lastUpdated: 'Last Updated',
     sidebarDepth: 2,
@@ -50,6 +53,7 @@ module.exports = {
             'css/selectors/',
             'css/properties/',
             'css/layouts/',
+            'css/layouts/ifc/',
             'css/flex-image/',
             'css/text-wrap-and-ellipsis/'
           ]
@@ -237,6 +241,7 @@ module.exports = {
           collapsable: false,
           children: [
             'vdom/',
+            'vdom/vnode-tree-create',
             'vdom/patch'
           ]
         },
