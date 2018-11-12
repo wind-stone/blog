@@ -716,29 +716,18 @@ export function createComponent (
 
   return vnode
 }
-
-/**
- * 针对 vnode 创建组件实例
- * @param {*} vnode 组件对应的 vnode（vnode.name 的格式为 vue-component-Ctor.cid-name）
- * @param {*} parent 创建该组件时，处于活动状态的父组件，如此形成组件链
- * @param {*} parentElm 要插入到的 DOM 元素
- * @param {*} refElm 如果存在，组件将插入到 parentElm 之下，refElm 之前
- */
-export function createComponentInstanceForVnode (
-  vnode: any, // we know it's MountedComponentVNode but flow doesn't
-  parent: any, // activeInstance in lifecycle state
-): Component {
-  const options: InternalComponentOptions = {
-    _isComponent: true,
-    _parentVnode: vnode,
-    parent
-  }
-  // check inline-template render functions
-  const inlineTemplate = vnode.data.inlineTemplate
-  if (isDef(inlineTemplate)) {
-    options.render = inlineTemplate.render
-    options.staticRenderFns = inlineTemplate.staticRenderFns
-  }
-  return new vnode.componentOptions.Ctor(options)
-}
 ```
+
+可以看到，相比于创建 HTML 元素的 VNode，调用`new VNode()`创建组件的 VNode 时多传入了第七、八个参数，这两个参数是组件在基于 VNode 生成 DOM Node 时使用到的数据，其中第七个参数包括组件的如下数据：
+
+- 组件的构造函数`Ctor`
+- 传入组件的`props`相关数据`propsData`
+- 处理组件内部发出的事件的响应函数集合`listeners`
+- 组件的标签名称`tag`
+- 组件的子元素`children`（`slot`相关的元素）
+
+若是异步组件，传入的第八个参数是异步组件的工厂函数。
+
+这些组件的数据，都将在组件`patch`的过程中使用到。
+
+PS：以上的代码覆盖了创建根组件的 VNode 的全部流程，但是创建子组件的 VNode，会略微复杂一些，我们将在`patch`过程中详细描述。
