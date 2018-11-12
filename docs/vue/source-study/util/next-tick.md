@@ -162,7 +162,9 @@ function flushCallbacks () {
 
 ## withMacroTask
 
-`withMacroTask`是将`fn`函数封装一层，分装的作用是：在`fn`函数内若是调用了`nextTick(cb)`，则传入`nextTick`的函数`cb`将强制使用`macroTimerFunc`来执行，即放在 macro task 队列里执行。这种用法主要用于封装监听 DOM 事件的方法，后续将详细介绍。
+`withMacroTask`是将`fn`函数封装一层，分装的作用是：在`fn`函数内若是调用了`nextTick(cb)`，则传入`nextTick`的函数`cb`将强制使用`macroTimerFunc`来执行，即放在 macro task 队列里执行。
+
+这种用法主要用于封装监听 DOM 事件的方法，以便在 DOM 事件内发生的状态变更引起渲染 Watcher 重新计算时使用到的`nextTick`在`macroTimerFunc`里执行，详见[事件监听器 - 原生事件模块](/vue/source-study/instance/events.html#原生事件模块)。如果不这么做的话，可能引起的问题有：[#6566](https://github.com/vuejs/vue/issues/6566)，还有其他问题可以见上面的注释。
 
 ```js
 export function withMacroTask (fn: Function): Function {

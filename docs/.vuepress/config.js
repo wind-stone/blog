@@ -212,7 +212,8 @@ module.exports = {
             'instance/state/data',
             'instance/state/computed',
             'instance/state/watch',
-            'instance/directives'
+            'instance/directives',
+            'instance/events'
           ]
         },
         {
