@@ -34,7 +34,7 @@ module.exports = {
       '/knowledge/': [
         {
           title: 'JavaScript',
-          collapsable: true,
+          collapsable: false,
           children: [
             'js/',
             'js/data-structure',
@@ -47,7 +47,7 @@ module.exports = {
         },
         {
           title: 'CSS',
-          collapsable: true,
+          collapsable: false,
           children: [
             'css/',
             'css/selectors/',
@@ -60,7 +60,7 @@ module.exports = {
         },
         {
           title: 'HMLT-DOM',
-          collapsable: true,
+          collapsable: false,
           children: [
             'html-dom/',
             'html-dom/elements/',
@@ -70,7 +70,7 @@ module.exports = {
         },
         {
           title: '浏览器环境',
-          collapsable: true,
+          collapsable: false,
           children: [
             'browser-env/',
             'browser-env/console/',
@@ -87,7 +87,7 @@ module.exports = {
         },
         {
           title: 'Node 环境',
-          collapsable: true,
+          collapsable: false,
           children: [
             'node-env/'
           ]
