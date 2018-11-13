@@ -222,7 +222,8 @@ module.exports = {
           children: [
             'component/register',
             'component/options',
-            'component/async-component'
+            'component/async-component',
+            'component/functional-component'
           ]
         },
         {
