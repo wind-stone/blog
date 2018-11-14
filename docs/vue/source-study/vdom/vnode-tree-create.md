@@ -6,7 +6,7 @@ sidebarDepth: 0
 
 [[toc]]
 
-[创建组件实例](/vue/source-study/instance/init.html)时，会先初始化组件数据，之后创建渲染 Watcher。在计算渲染 Watcher 的表达式时，并将通过`vm._render()`创建 VNode Tree，以便之后用于给`vm._update`生成 DOM Tree。
+[创建组件实例](/vue/source-study/instance/init.html)时，会先初始化组件数据，之后创建渲染 Watcher。在计算渲染 Watcher 的表达式时，并将通过`vm._render()`创建 VNode Tree（VNode Tree 的根节点即为组件占位 VNode），以便之后用于给`vm._update`生成 DOM Tree。
 
 ## Vue.prototype._render
 
@@ -575,14 +575,15 @@ export default class VNode {
 创建组件的 VNode 就要复杂很多，需要处理组件的各种情况和数据等，以下是详细的步骤：
 
 1. 若`Ctor`为组件选项对象，则将其转换成构造函数
-2. 处理`Ctor`为异步工厂函数的情况
-3. 解析构造函数的 options，（详见[合并配置 - resolveConstructorOptions](/vue/source-study/component/options.html#resolveconstructoroptions)）
+2. 处理`Ctor`为异步工厂函数的情况，详见[异步组件](/vue/source-study/component/async-component.html)
+3. 解析构造函数的 options，详见[合并配置 - resolveConstructorOptions](/vue/source-study/component/options.html#resolveconstructoroptions)
 4. 将 v-model 数据转换为`props`&`events`
-5. （若有）创建函数式组件，直接返回，不继续向下了
-6. 处理抽象组件的一些数据，如`props`&`listeners`&`slot`
-7. 给组件的 data 安装 init、prepatch、insert、destroy 等钩子方法，方便在调用 vm.patch 时创建组件实例等操作
-8. 调用`new VNode`创建组件的 VNode
-9. 返回 VNode
+5. 提取 props 数据
+6. （若有）创建函数式组件的 VNode 并返回，详见[函数式组件](/vue/source-study/component/functional-component.html)
+7. 处理抽象组件的一些数据，如`props`&`listeners`&`slot`
+8. 给组件的 data 安装 init、prepatch、insert、destroy 等钩子方法，方便在调用 vm.patch 时创建组件实例等操作
+9. 调用`new VNode`创建组件的 VNode
+10. 返回 VNode
 
 TODO: 这里的内容较多，需要之后详细梳理。
 
@@ -726,13 +727,11 @@ export function createComponent (
 - 组件的标签名称`tag`
 - 组件的子元素`children`（`slot`相关的元素）
 
-若是异步组件，传入的第八个参数是异步组件的工厂函数。
+若是异步组件，传入的第八个参数是异步组件的工厂函数`asyncFactory`。
 
 这些组件的数据，都将在组件`patch`的过程中使用到。
 
 PS：以上的代码覆盖了创建根组件的 VNode 的全部流程，但是创建子组件的 VNode，会略微复杂一些，我们将在`patch`过程中详细描述。
-
-##### createFunctionalComponent
 
 ##### 提取 props 数据
 
@@ -743,6 +742,11 @@ PS：以上的代码覆盖了创建根组件的 VNode 的全部流程，但是�
 TODO: 模板编译时，是如何把组件上的特性识别为`attrs`还是`props`？
 
 ```js
+// src/core/vdom/helpers/extract-props.js
+
+/**
+ * 根据组件选项对象里定义的 props 选项里的 key，从 data.props/attrs 提取出 prop 数据
+ */
 export function extractPropsFromVNodeData (
   data: VNodeData,
   Ctor: Class<Component>,

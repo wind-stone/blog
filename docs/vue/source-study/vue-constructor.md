@@ -212,7 +212,7 @@ Web 初次处理版`Vue`添加的配置和方法主要有：
 - `Vue.prototype.$mount`
 
 ```js
-// src/
+// src/platforms/web/runtime/index.js
 import Vue from 'core/index'
 import config from 'core/config'
 import { extend, noop } from 'shared/util'
@@ -298,8 +298,7 @@ Web 最终导出版的`Vue`是在 Web 初次处理版上的基础上做了以下
 - 添加了`Vue.compile`方法
 
 ```js
-/* @flow */
-
+// src/platforms/web/entry-runtime-with-compiler.js
 import config from 'core/config'
 import { warn, cached } from 'core/util/index'
 import { mark, measure } from 'core/util/perf'

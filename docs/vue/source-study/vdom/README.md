@@ -139,6 +139,220 @@ new Vue({
 </body>
 ```
 
+### 数据来源及关系梳理
+
+### vm.$options.parent、vm.$parent、vnode.parent
+
+#### vm.$options.parent
+
+`vm.$options.parent`是子组件渲染时执行`vm.__patch__`时当前活跃的组件实例，也就是子组件实例的父组件实例
+
+```js
+Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
+  const vm: Component = this
+  const prevEl = vm.$el
+  const prevVnode = vm._vnode
+  const prevActiveInstance = activeInstance
+  activeInstance = vm
+  vm._vnode = vnode
+  if (!prevVnode) {
+    // 首次渲染
+    vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
+  } else {
+    // 数据更新
+    vm.$el = vm.__patch__(prevVnode, vnode)
+  }
+  activeInstance = prevActiveInstance
+}
+```
+
+```js
+import { activeInstance } from '../instance/lifecycle'
+const componentVNodeHooks = {
+  init (vnode: VNodeWithData, hydrating: boolean): ?boolean {
+    if (
+      // ...
+    ) {
+      // ...
+    } else {
+      // 创建子组件
+      const child = vnode.componentInstance = createComponentInstanceForVnode(
+        vnode,
+        activeInstance
+      )
+      // ...
+    }
+  }
+}
+```
+
+```js
+export function createComponentInstanceForVnode (
+  vnode: any, // we know it's MountedComponentVNode but flow doesn't
+  parent: any, // activeInstance in lifecycle state
+): Component {
+  const options: InternalComponentOptions = {
+    _isComponent: true,
+    _parentVnode: vnode,
+    parent
+  }
+  // ...
+  return new vnode.componentOptions.Ctor(options)
+}
+```
+
+```js
+Vue.prototype._init = function (options?: Object) {
+  const vm: Component = this
+  // ...
+  vm._isVue = true
+  if (options && options._isComponent) {
+    initInternalComponent(vm, options)
+  }
+  // ...
+}
+```
+
+```js
+export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
+  const opts = vm.$options = Object.create(vm.constructor.options)
+  const parentVnode = options._parentVnode
+  opts.parent = options.parent
+  // ...
+}
+```
+
+#### vm.$parent
+
+`vm.$parent`是组件实例的第一个非抽象的父组件实例
+
+```js
+export function initLifecycle (vm: Component) {
+  const options = vm.$options
+  // 注意：keep-alive 组件和 transition 组件是 abstract 的
+  // 初始化组件的 $options 时，vm.$options.parent 已经指向父组件
+  // 此处将组件加入到第一个非抽象父组件的 $children 里
+  let parent = options.parent
+  if (parent && !options.abstract) {
+    while (parent.$options.abstract && parent.$parent) {
+      parent = parent.$parent
+    }
+    parent.$children.push(vm)
+  }
+
+  // 第一个非抽象父组件
+  vm.$parent = parent
+}
+```
+
+#### vnode.parent
+
+其中`vnode`是组件实例通过`_render`生成的 VNode 节点，而`vnode.parent`是指组件占位 VNode
+
+```js
+export function renderMixin (Vue: Class<Component>) {
+  // ...
+  /**
+   * 调用 vm.$options.render() 生成 VNode 节点
+   */
+  Vue.prototype._render = function (): VNode {
+    const vm: Component = this
+    // 若是组件实例，则会存在 _parentVnode
+    const { render, _parentVnode } = vm.$options
+    // ...
+    // set parent vnode. this allows render functions to have access
+    // to the data on the placeholder node.
+    vm.$vnode = _parentVnode
+    // render self
+    let vnode
+    try {
+      vnode = render.call(vm._renderProxy, vm.$createElement)
+    } catch (e) {
+      // ...
+    }
+    // ...
+    // set parent
+    // _parentVnode 是组件实例的组件占位 VNode
+    vnode.parent = _parentVnode
+    return vnode
+  }
+}
+
+```
+
+### vm._vnode、vm.$vnode
+
+`vm._vnode.parent === vm.$vnode`
+
+#### vm._vnode
+
+`vm._vnode`是组件实例经过`vm._render()`创建的渲染 Vnode。
+
+```js
+export function mountComponent (
+  // ...
+) {
+  if (...) {
+    // ...
+  } else {
+    updateComponent = () => {
+      vm._update(vm._render(), hydrating)
+    }
+  }
+}
+```
+
+```js
+Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
+  const vm: Component = this
+  const prevEl = vm.$el
+  const prevVnode = vm._vnode
+  const prevActiveInstance = activeInstance
+  activeInstance = vm
+  vm._vnode = vnode
+  // ...
+}
+```
+
+#### vm.$vnode
+
+`vm.$vnode`是组件占位 Vnode
+
+```js
+const componentVNodeHooks = {
+  prepatch (oldVnode: MountedComponentVNode, vnode: MountedComponentVNode) {
+    const options = vnode.componentOptions
+    const child = vnode.componentInstance = oldVnode.componentInstance
+    updateChildComponent(
+      child,
+      options.propsData, // updated props
+      options.listeners, // updated listeners
+      vnode, // new parent vnode
+      options.children // new children
+    )
+  }
+}
+```
+
+```js
+export function updateChildComponent (
+  vm: Component,
+  propsData: ?Object,
+  listeners: ?Object,
+  parentVnode: MountedComponentVNode,
+  renderChildren: ?Array<VNode>
+) {
+  // ...
+  vm.$options._parentVnode = parentVnode
+  vm.$vnode = parentVnode // update vm's placeholder node without re-render
+
+  if (vm._vnode) { // update child tree's parent
+    vm._vnode.parent = parentVnode
+  }
+  // ...
+}
+```
+
 ## 释疑
 
 ### 模板里使用了 vm 上不存在的方法或属性时的报错，是如何实现的？
