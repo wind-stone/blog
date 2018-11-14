@@ -6,9 +6,9 @@ sidebarDepth: 0
 
 [[toc]]
 
-首先我们需要知道，在创建`vnode`节点对应的 DOM Node 后，会先递归创建子虚拟节点的 DOM Node，之后再将该节点的 DOM Node 插入到父元素上，因此：在由 VNode Tree 转化为 DOM Tree 的过程中，DOM 节点的创建是自上而下的，即先创建父元素，再创建子元素，最后创建孙元素；但是将元素插入到父元素的过程是自下而上的，即孙元素先插入到子元素之下，子元素再插入到父元素之下。
+首先我们需要知道，在创建 VNode 节点对应的 DOM 节点后，会先递归创建子虚拟节点的子 DOM 节点，之后再将该 DOM 节点插入到父元素上，因此：在由 VNode Tree 转化为 DOM Tree 的过程中，DOM 节点的创建是自上而下的，即先创建父 DOM 节点，再创建子 DOM 节点，最后创建孙 DOM 节点；但是将 DOM 节点插入到父 DOM 节点的过程是自下而上的，即孙 DOM 节点先插入到子 DOM 节点之下，子 DOM 节点再插入到父 DOM 节点之下。
 
-在`createElm`里创建`vnode`对应的 DOM Node 时，无论`vnode`是组件占位 VNode 还是 DOM 节点对应的 VNode，都会调用`insert(parentElm, vnode.elm, refElm)`将`vnode.elm`插入到父元素里。所不同的是，针对不同类型的`vnode`，其`vnode.elm`代表的 DOM Node 也不一样。
+在`createElm`里创建 VNode 对应的 DOM 节点时，无论 VNode 是组件占位 VNode 还是 DOM 节点类型的 VNode，都会调用`insert(parentElm, vnode.elm, refElm)`将`vnode.elm`插入到父元素上。所不同的是，针对不同类型的 VNode，其`vnode.elm`代表的 DOM 节点也不一样。
 
 ```js
 /**
@@ -44,7 +44,7 @@ function createElm (
         // 调用 create 钩子
         invokeCreateHooks(vnode, insertedVnodeQueue)
       }
-      // 将 vnode 对应的 DOM 节点，插入到父元素
+      // 将 VNode 对应的 DOM 节点，插入到父元素
       // 因为是递归调用 createElement，因此创建元素的过程是先父后子，将子元素插入到父元素的过程是先子后父
       insert(parentElm, vnode.elm, refElm)
     }
@@ -78,16 +78,16 @@ function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
 
 ## vnode.elm 的确定
 
-`vnode.elm`是在`createElm`的过程中产生的，不同类型的`vnode`，`vnode.elm`的含义和生成过程都不一样，共有两种不同的情况：
+调用`createElm`就是为了获得 VNode 的`vnode.elm`，而不同类型的 VNode，`vnode.elm`的含义和创建过程都不一样，共有如下几种不同的情况：
 
-- HTML 元素对应的 VNode：`vnode.elm`就是`vnode`对应的 DOM Node 元素
+- DOM 节点（元素/文本/注释）类型的 VNode：`vnode.elm`就是 VNode 对应的 DOM 元素/文本/注释节点
 - 组件占位 VNode：`vnode.elm`即为最终挂载时组件 DOM Tree 的根节点 DOM Node
 
-且组件对应的`vnode`的`elm`的确定，是基于 HTML 元素对应的`vnode`的`elm`的确定。
+且组件对应的`vnode`的`elm`的确定，是基于 DOM 节点类型的 VNode 的`vnode.elm`的确定。
 
-因此我们需要先了解下 HTML 元素对应的 VNode 的`vnode.elm`是如何确定的。
+因此我们需要先了解下 DOM 节点类型的 VNode 的`vnode.elm`是如何确定的。
 
-### HTML 元素对应的 VNode
+### DOM 节点类型的 VNode
 
 ```js
 function createElm (
@@ -101,17 +101,28 @@ function createElm (
 ) {
   // ...
   if (isDef(tag)) {
-    // 元素类型的 vnode
+    // ...
+    // DOM 元素节点类型的 VNode
     vnode.elm = vnode.ns
       ? nodeOps.createElementNS(vnode.ns, tag)
       : nodeOps.createElement(tag, vnode)
     setScope(vnode)
+    // ...
+  } else if (isTrue(vnode.isComment)) {
+    // DOM 注释节点类型的 VNode
+    vnode.elm = nodeOps.createComment(vnode.text)
+    insert(parentElm, vnode.elm, refElm)
+  } else {
+    // DOM 文本节点类型的 VNode
+    vnode.elm = nodeOps.createTextNode(vnode.text)
+    insert(parentElm, vnode.elm, refElm)
   }
   // ...
 }
 ```
 
 ```js
+// src/platsforms/runtime/node-ops.js
 export function createElement (tagName: string, vnode: VNode): Element {
   const elm = document.createElement(tagName)
   if (tagName !== 'select') {
@@ -123,13 +134,20 @@ export function createElement (tagName: string, vnode: VNode): Element {
   }
   return elm
 }
+export function createTextNode (text: string): Text {
+  return document.createTextNode(text)
+}
+
+export function createComment (text: string): Comment {
+  return document.createComment(text)
+}
 ```
 
-若是 HTML 元素对应的 VNode，会直接通过`createElement`生成对应的 DOM Node，并赋值给`vnode.elm`。
+若是 DOM 节点类型的 VNode，会直接通过`createElement/createTextNode/createComment`生成对应的 DOM 元素/文本/注释节点，并赋值给`vnode.elm`。
 
 ### 组件占位 VNode
 
-我们知道，组件的占位 VNode 最终并不会创建对应的 DOM Node 节点，只有`tag`为 HTML 标签名称的 VNode、文本 VNode 以及注释 VNode 才会创建对应的 DOM Node。但是组件实例是有渲染 VNode 的，若是组件渲染 VNode 的根节点 VNode 是 HTML 元素对应的 VNode，我们会将该 HTML 元素的 DOM Node 作为组件占位 VNode 的`vnode.elm`。
+我们知道，组件的占位 VNode 最终并不会创建对应的 DOM 节点。但是组件实例是有渲染 VNode 的，若是组件渲染 VNode 的根节点 VNode 是 DOM 节点类型的 VNode，我们会将该 DOM 节点作为组件占位 VNode 的`vnode.elm`。
 
 ```js
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
@@ -226,11 +244,11 @@ export function createElement (tagName: string, vnode: VNode): Element {
 
 注意观察`patch`里`createElm`之后的那段代码，若是当前`vnode`是组件实例的渲染 VNode，则需要将组件占位 VNode 节点的`vnode.elm`属性更新为组件实例渲染 VNode 的`vnode.elm`，并向上遍历所有的祖先组件占位 VNode，将这些组件占位 VNode 的`vnode.elm`都更新了。
 
-如此，我们明白了，组件占位 VNode 的`vnode.elm`属性一开始是不存在的，当组件渲染 VNode 的根节点是 HTML 元素时，根节点将创建 DOM Node 作为根节点 VNode 的`vnode.elm`。进而在创建好根节点 DOM Node 后，更新组件占位 VNode 的`vnode.elm`。
+如此，我们明白了，组件占位 VNode 的`vnode.elm`属性一开始是不存在的，当组件渲染 VNode 的根节点是 DOM 节点类型的 VNode 时，根节点将创建对应的 DOM 节点作为根节点 VNode 的`vnode.elm`。进而在创建好根节点 VNode 的 DOM 节点后，更新组件占位 VNode 的`vnode.elm`。
 
 那么若是遇到嵌套组件（即父组件的渲染 VNode 的根节点是子组件）的情况呢？
 
-若是 A 组件的渲染 VNode 的根节点是 B 组件，那么在 B 组件渲染 VNode 的 HTML 根元素创建好后，再一次更新 A 组件和 B 组件占位 VNode 的`elm`，依次类推。（最后一个组件的渲染 VNode 的根节点肯定会是 HTML 元素）
+若是 A 组件的渲染 VNode 的根节点是 B 组件，那么在 B 组件渲染 VNode 的 HTML 根元素创建好后，再一次更新 A 组件和 B 组件占位 VNode 的`elm`，依次类推。（最后一个组件的渲染 VNode 的根节点肯定会是 DOM 节点类型的 VNode）
 
 组件占位 VNode 在创建组件实例时，组件渲染 VNode 的`parent`属性指向组件占位 VNode，即`vm._vnode.parent === vm.$vnode`，其中`vm._vnode`是组件实例的渲染 VNode，`vm.$vnode`是组件占位 VNode。
 
@@ -269,11 +287,11 @@ export function createComponentInstanceForVnode (
 
 `parentElm`是在调用`createElm`创建 DOM 元素时传入的，而调用`createElm`主要有以下三大类情况：
 
-- 组件的父元素是 HTML 元素
+- 组件的父节点是 DOM 元素节点
 - 组件是根组件
 - 组件嵌套（这种情况比较复杂，将在下一小节单独说明）
 
-### 组件的父元素是 HTML 元素
+### 组件的父节点是 DOM 元素节点
 
 ```HTML
 <div class="div-el">
@@ -512,15 +530,15 @@ new Vue({
 ```
 
 ```HTML
-<!-- 组件 B 的模板根节点是 HTML 元素-->
+<!-- 组件 B 的模板根节点是 DOM 元素节点-->
 <template>
   <div class="b-root"></div>
 </template>
 ```
 
-为了详细说明，我们先假设组件 A 的父元素是 HTML 元素`div.a-parent`，组件 A 的模板的根节点是组件 B，组件 B 的模板的根节点是`div.b-root`。那么创建组件 B 的实例时，`parentElm`是什么呢？
+为了详细说明，我们先假设组件 A 的父节点是 DOM 元素节点`div.a-parent`，组件 A 的模板的根节点是组件 B，组件 B 的模板的根节点是 DOM 元素节点`div.b-root`。那么创建组件 B 的实例时，`parentElm`是什么呢？
 
-我们发现，前两种情况（组件的父元素是 HTML 元素、组件是根组件）组件调用`createElm`的时机和传入的参数都不相同，而组件嵌套里的子组件即组件 B 调用`createElm`创建元素也不同于前两种情况。
+我们发现，前两种情况（组件的父节点是 DOM 元素节点、组件是根组件）组件调用`createElm`的时机和传入的参数都不相同，而组件嵌套里的子组件即组件 B 调用`createElm`创建元素也不同于前两种情况。
 
 组件 A 的模板的根节点是组件 B，则组件 A 的渲染 VNode 同时也是组件 B 的占位 VNode。在组件 A 的实例调用`vmA.$mount`去生成组件 A 的渲染 VNode 时，传入`vmA.$mount`的第一个参数是`undefined`，这也导致为组件 A 的渲染 VNode 也就是组件 B 的占位 VNode 调用`createElm`创建元素时，不传入第三个参数`parentElm`。
 
@@ -673,6 +691,6 @@ export function createPatchFunction (backend) {
 2. 初始化组件 A 的实例
 3. 将组件 A 的占位 VNode 的`vnode.elm`即元素`.b-root`插入到`parentElm`上，`parentElm`是元素`.a-parent`，插入成功
 
-PS：组件 A/B 的占位 VNode 的`vnode.elm`都是元素`.b-root`，详见[vnode.elm 的确定 - 组件占位 VNode](/vue/source-study/topics/dom-binding.html#组件占位-vnode)；组件 A 创建元素时的`parentElm`是`.a-parent`，详见[parentElm 的确定 - 组件的父元素是 HTML 元素](/vue/source-study/topics/dom-binding.html#组件的父元素是-html-元素)
+PS：组件 A/B 的占位 VNode 的`vnode.elm`都是元素`.b-root`，详见[vnode.elm 的确定 - 组件占位 VNode](/vue/source-study/topics/dom-binding.html#组件占位-vnode)；组件 A 创建元素时的`parentElm`是`.a-parent`，详见[parentElm 的确定 - 组件的父节点是 DOM 元素节点](/vue/source-study/topics/dom-binding.html#组件的父节点是-dom-元素节点)
 
-事实上，组件的渲染 VNode 的根节点，既有可能是 HTML 元素的虚拟节点，也有可能是子组件的占位 VNode，而调用`createElm`为组件的渲染 VNode 创建元素时，不会将创建出的元素插入到父元素上（`parentElm`不存在）。但是在此之后，当组件的占位 VNode 创建的组件实例初始化之后，会将`vnode.elm`插入到`parentElm`上。
+事实上，组件的渲染 VNode 的根节点，既有可能是 DOM 节点类型的虚拟节点，也有可能是子组件的占位 VNode，而调用`createElm`为组件的渲染 VNode 创建元素时，不会将创建出的元素插入到父元素上（`parentElm`不存在）。但是在此之后，当组件的占位 VNode 创建的组件实例初始化之后，会将`vnode.elm`插入到`parentElm`上。

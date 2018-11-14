@@ -6,9 +6,9 @@ sidebarDepth: 0
 
 [[toc]]
 
-## 组件的 Vnode 与 HTML 元素的 Vnode
+## 组件占位 Vnode 与 元素类型的 Vnode
 
-- 创建 HMTL 元素的 Vnode 节点
+- 创建元素类型的 Vnode
 
 ```js
 export function _createElement (
@@ -43,7 +43,7 @@ export function _createElement (
 }
 ```
 
-- 创建组件的 Vnode 节点
+- 创建组件占位 Vnode
 
 ```js
 export function createComponent (
@@ -63,11 +63,11 @@ export function createComponent (
 }
 ```
 
-由此可见，创建 HTML 元素的 Vnode 节点时，会传入`children`作为 Vnode 的子 Vnode；但是创建组件实例的 Vnode 节点时，却不会传入`children`，组件会创建整个`render`函数或者模板的 DOM Tree。
+由此可见，创建元素类型的 Vnode 时，会传入`children`作为 Vnode 的子 Vnode；但是创建组件占位 Vnode 时，却不会传入`children`，组件会创建渲染 VNode 的 DOM Tree。
 
 ## Vnode Tree & DOM Tree
 
-针对`render`函数生成的 Vnode Tree（还没有实例化为真正的 DOM Tree），我们来大概描述下它的结构。
+针对`render`函数生成的 VNode Tree（还没有实例化为真正的 DOM Tree），我们来大概描述下它的结构。
 
 `ParentComponent.vue`定义如下，模板里的根节点就是`ChildComponent`：
 
@@ -123,7 +123,7 @@ new Vue({
 </body>
 ```
 
-如此，我们最终生成的 Vnode Tree 大概是这样的（以 Vnode 的`tag`来表示 Vnode 节点）：
+如此，我们最终生成的 VNode Tree 大概是这样的（以 Vnode 的`tag`来表示 Vnode 节点）：
 
 ```js
 - vue-component-${cid}-ParentComponent
