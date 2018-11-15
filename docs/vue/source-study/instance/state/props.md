@@ -20,8 +20,6 @@ sidebarDepth: 0
 
 对`prop`做响应式处理后，若是在模板里使用到了某`prop`，在`prop`改变之后，组件的渲染 Wather 就能接收到通知并重新渲染模板。监听`prop`亦然。
 
-在将`prop`的访问挂载到`vm`上后，可以通过`vm.xxx`直接访问`prop`。这里需要注意，我们只是将组件自己独有的`prop`挂载在`vm`上，而组件继承而来的`prop`实际上是通过`vm.constructor.prototype`来访问的，详情可查看`Vue.extend`的实现。
-
 ```js
 function initProps (vm: Component, propsOptions: Object) {
   const propsData = vm.$options.propsData || {}
@@ -75,6 +73,40 @@ function initProps (vm: Component, propsOptions: Object) {
   toggleObserving(true)
 }
 ```
+
+### prop 挂载到 vm 上便捷访问
+
+```js
+function initProps (vm: Component, propsOptions: Object) {
+  // ...
+  for (const key in propsOptions) {
+    // ...
+    // static props are already proxied on the component's prototype
+    // during Vue.extend(). We only need to proxy props defined at
+    // instantiation here.
+    // 将对 prop 的访问挂载到 vm 实例上
+    // 注意此处，in 操作符枚举出原型上的所有属性，所以这里只会把组件独有的 prop 的访问挂载在 vm 上，而共有的 prop 会自动通过 vm.constructor.prototype 访问，详情请查看 Vue.extend 的实现
+    if (!(key in vm)) {
+      proxy(vm, `_props`, key)
+    }
+  }
+  // ...
+}
+```
+
+```js
+export function proxy (target: Object, sourceKey: string, key: string) {
+  sharedPropertyDefinition.get = function proxyGetter () {
+    return this[sourceKey][key]
+  }
+  sharedPropertyDefinition.set = function proxySetter (val) {
+    this[sourceKey][key] = val
+  }
+  Object.defineProperty(target, key, sharedPropertyDefinition)
+}
+```
+
+组件实例上非继承的`props`会挂载在`vm`实例上，访问`vm.xxx`就会返回`vm._props.xxx`的值，设置`vm.xxx = yyy`就是设置`vm._props.xxx = yyy`。这里需要注意，我们只是将组件自己独有的`prop`挂载在`vm`上，而组件继承而来的`prop`实际上是通过`vm.constructor.prototype`来访问的，详情可查看`Vue.extend`的实现[Vue.extend - 继承的 props](/vue/source-study/component/extend.html#继承的-props)。
 
 ## prop 的校验与求值
 
