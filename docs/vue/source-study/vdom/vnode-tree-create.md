@@ -6,7 +6,7 @@ sidebarDepth: 0
 
 [[toc]]
 
-[创建组件实例](/vue/source-study/instance/init.html)时，会先初始化组件数据，之后创建渲染 Watcher。在计算渲染 Watcher 的表达式时，并将通过`vm._render()`创建 VNode Tree（VNode Tree 的根节点即为组件占位 VNode），以便之后用于给`vm._update`生成 DOM Tree。
+[创建组件实例](/vue/source-study/instance/create.html)时，会先初始化组件数据，之后创建渲染 Watcher。在计算渲染 Watcher 的表达式时，并将通过`vm._render()`创建 VNode Tree（VNode Tree 的根节点即为组件占位 VNode），以便之后用于给`vm._update`生成 DOM Tree。
 
 ## Vue.prototype._render
 
@@ -581,7 +581,7 @@ export default class VNode {
 5. 提取 props 数据
 6. （若有）创建函数式组件的 VNode 并返回，详见[函数式组件](/vue/source-study/component/functional-component.html)
 7. 处理抽象组件的一些数据，如`props`&`listeners`&`slot`
-8. 给组件的 data 安装 init、prepatch、insert、destroy 等钩子方法，方便在调用 vm.patch 时创建组件实例等操作
+8. 安装组件管理钩子方法
 9. 调用`new VNode`创建组件的 VNode
 10. 返回 VNode
 
@@ -693,7 +693,7 @@ export function createComponent (
   }
 
   // install component management hooks onto the placeholder node
-  // 给组件的 data 安装 init、prepatch、insert、destroy 等钩子方法，方便在调用 vm.patch 时创建组件实例等操作
+  // 安装组件管理钩子方法
   installComponentHooks(data)
 
   // return a placeholder vnode
@@ -816,5 +816,119 @@ function checkProp (
     }
   }
   return false
+}
+```
+
+##### 安装组件管理钩子方法
+
+组件在创建组件占位 VNode 之前，会往组件的`data`对象上安装`init`、`prepatch`、`insert`、`destroy`等管理组件的钩子方法，方便在调用`vm.__patch__`期间，为组件占位 VNode 提供额外的功能，比如创建组件实例、等操作。
+
+```js
+// inline hooks to be invoked on component VNodes during patch
+const componentVNodeHooks = {
+  init (vnode: VNodeWithData, hydrating: boolean): ?boolean {
+    if (
+      vnode.componentInstance &&
+      !vnode.componentInstance._isDestroyed &&
+      vnode.data.keepAlive
+    ) {
+      // kept-alive components, treat as a patch
+      const mountedNode: any = vnode // work around flow
+      componentVNodeHooks.prepatch(mountedNode, mountedNode)
+    } else {
+      const child = vnode.componentInstance = createComponentInstanceForVnode(
+        vnode,
+        activeInstance
+      )
+      // 服务端渲染时，会执行 $mount(vnode.elm)
+      // 对于正常的子组件初始化，会执行 $mount(undefined)
+      child.$mount(hydrating ? vnode.elm : undefined, hydrating)
+    }
+  },
+
+  prepatch (oldVnode: MountedComponentVNode, vnode: MountedComponentVNode) {
+    const options = vnode.componentOptions
+    const child = vnode.componentInstance = oldVnode.componentInstance
+    updateChildComponent(
+      child,
+      options.propsData, // updated props
+      options.listeners, // updated listeners
+      vnode, // new parent vnode
+      options.children // new children
+    )
+  },
+
+  /**
+   * 子组件完成 patch 之后，调用该 insert 钩子
+   *（如果是子组件是首次挂载，会调用 mounted 钩子）
+   */
+  insert (vnode: MountedComponentVNode) {
+    const { context, componentInstance } = vnode
+    if (!componentInstance._isMounted) {
+      componentInstance._isMounted = true
+      callHook(componentInstance, 'mounted')
+    }
+    if (vnode.data.keepAlive) {
+      if (context._isMounted) {
+        // vue-router#1212
+        // During updates, a kept-alive component's child components may
+        // change, so directly walking the tree here may call activated hooks
+        // on incorrect children. Instead we push them into a queue which will
+        // be processed after the whole patch process ended.
+        queueActivatedComponent(componentInstance)
+      } else {
+        activateChildComponent(componentInstance, true /* direct */)
+      }
+    }
+  },
+
+  destroy (vnode: MountedComponentVNode) {
+    const { componentInstance } = vnode
+    if (!componentInstance._isDestroyed) {
+      if (!vnode.data.keepAlive) {
+        componentInstance.$destroy()
+      } else {
+        deactivateChildComponent(componentInstance, true /* direct */)
+      }
+    }
+  }
+}
+
+const hooksToMerge = Object.keys(componentVNodeHooks)
+
+function installComponentHooks (data: VNodeData) {
+  const hooks = data.hook || (data.hook = {})
+  for (let i = 0; i < hooksToMerge.length; i++) {
+    const key = hooksToMerge[i]
+    const existing = hooks[key]
+    const toMerge = componentVNodeHooks[key]
+    if (existing !== toMerge && !(existing && existing._merged)) {
+      hooks[key] = existing ? mergeHook(toMerge, existing) : toMerge
+    }
+  }
+}
+
+/**
+ * 合并两个钩子函数，返回新函数，新函数执行时，依次执行被合并的两个钩子
+ */
+function mergeHook (f1: any, f2: any): Function {
+  const merged = (a, b) => {
+    // flow complains about extra args which is why we use any
+    f1(a, b)
+    f2(a, b)
+  }
+  merged._merged = true
+  return merged
+}
+```
+
+经过安装管理钩子方法之后，组件占位 VNode 的`vnode.data.hook`对象上将有如下钩子函数。
+
+```js
+{
+  init() {...},
+  prepatch() {...},
+  insert() {...},
+  destroy() {...}
 }
 ```

@@ -205,7 +205,7 @@ module.exports = {
           title: '实例化',
           collapsable: false,
           children: [
-            'instance/init',
+            'instance/create',
             'instance/state/',
             'instance/state/props',
             'instance/state/methods',
