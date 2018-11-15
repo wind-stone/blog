@@ -61,7 +61,15 @@ Reference: [Configuring Rules](http://eslint.cn/docs/user-guide/configuring#conf
 - [vue-eslint-parser](https://github.com/vuejs/vue-eslint-parser)
 - [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue)
 
-### VSCode 里的 User Setting 增加配置
+### VSCode 配置
+
+#### 安装 ESLint 扩展
+
+在 VS Code 商店里，搜索“ESLint”并安装。
+
+#### User Setting 添加配置
+
+Code -> 首选项 -> 设置，添加如下配置：
 
 ```json
 {
