@@ -719,9 +719,9 @@ export function createComponent (
 }
 ```
 
-可以看到，相比于创建 HTML 元素的 VNode，调用`new VNode()`创建组件的 VNode 时多传入了第七、八个参数，这两个参数是组件在基于 VNode 生成 DOM Node 时使用到的数据，其中第七个参数包括组件的如下数据：
+可以看到，相比于创建 HTML 元素的 VNode，调用`new VNode()`创建组件的 VNode 时多传入了第七、八个参数，这两个参数是组件在基于渲染 VNode 生成 DOM Tree 时使用到的数据，其中第七个参数包括组件的如下数据：
 
-- 组件的构造函数`Ctor`
+- 组件的构造函数`Ctor`，组件将通过`new Ctor()`来创建组件实例
 - 传入组件的`props`相关数据`propsData`
 - 处理组件内部发出的事件的响应函数集合`listeners`
 - 组件的标签名称`tag`

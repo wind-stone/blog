@@ -292,10 +292,13 @@ export function createComponentInstanceForVnode (
 ```js
 export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
   const opts = vm.$options = Object.create(vm.constructor.options)
+  // 子组件的占位 VNode
   const parentVnode = options._parentVnode
+  // 创建子组件时的活动实例
   opts.parent = options.parent
   opts._parentVnode = parentVnode
 
+  // 将组件占位 VNode 上有关组件的数据，转存到 vm.$options 上
   const vnodeComponentOptions = parentVnode.componentOptions
   opts.propsData = vnodeComponentOptions.propsData
   opts._parentListeners = vnodeComponentOptions.listeners
@@ -311,7 +314,7 @@ export function initInternalComponent (vm: Component, options: InternalComponent
 
 `initInternalComponent`主要做的是，基于`vm.constructor.options`创建`vm.$options`，并将如下数据转存到`vm.$options`，方便后续使用。
 
-- 创建组件占位父 Vnode 时存储在`vnode.componentOptions`里的数据比如`propsData`
+- 创建组件占位 VNode 时存储在`vnode.componentOptions`里的数据比如`propsData`、`listeners`、`children`、`tag`等
 - 创建子组件时的选项`options`上的`parent`、`render`、`staticRenderFns`等数据
 
 ```js

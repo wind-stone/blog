@@ -247,7 +247,7 @@ export function initLifecycle (vm: Component) {
 
 #### vnode.parent
 
-其中`vnode`是组件实例通过`_render`生成的 VNode 节点，而`vnode.parent`是指组件占位 VNode
+其中`vnode`是组件实例通过`_render`生成的渲染 VNode，而`vnode.parent`是指组件占位 VNode
 
 ```js
 export function renderMixin (Vue: Class<Component>) {

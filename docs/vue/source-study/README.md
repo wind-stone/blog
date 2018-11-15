@@ -13,6 +13,7 @@ sidebarDepth: 0
 - 函数式组件与常规组件的区别
 - 模板编译
   - v-model 实现
+  - v-on 绑定的函数为什么可以给函数传参数使用`@click="handler(item, index)"`？
 
 ## Vue 版本
 

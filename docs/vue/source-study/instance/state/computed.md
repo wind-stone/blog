@@ -207,6 +207,7 @@ Vue.extend = function (extendOptions: Object): Function {
     }
     // ...
 }
+
 function initComputed (Comp) {
   const computed = Comp.options.computed
   for (const key in computed) {
