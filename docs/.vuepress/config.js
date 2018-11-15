@@ -223,7 +223,8 @@ module.exports = {
             'component/register',
             'component/options',
             'component/async-component',
-            'component/functional-component'
+            'component/functional-component',
+            'component/extend'
           ]
         },
         {
@@ -244,7 +245,9 @@ module.exports = {
           children: [
             'vdom/',
             'vdom/vnode-tree-create',
-            'vdom/patch'
+            'vdom/patch',
+            'vdom/child-component-create',
+            'vdom/patch-fn'
           ]
         },
         {
