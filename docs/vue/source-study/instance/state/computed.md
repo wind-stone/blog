@@ -57,6 +57,32 @@ function initComputed (vm: Component, computed: Object) {
     }
   }
 }
+```
+
+### 计算属性挂载到 vm 上便捷访问
+
+在为每个计算属性创建了 Watcher 之后，会在`vm`实例上添加与计算属性同名的访问器属性，在该访问器属性的描述符对象里会定义`get`和`set`，用于通过计算属性的 Watcher 间接获取和设置计算属性的值。
+
+假设计算属性的名称为`xxx`，则访问`vm.xxx`时，就会在`vm._computedWatchers`对象上获取到同名的 Watcher 实例`vm._computedWatchers.xxx`，若该 Watcher 实例的依赖变化过，则重新计算 Watcher 实例的表达式；最后，返回 Watcher 实例的`watcher.value`。
+
+需要注意的是，以上说的计算属性，都是组件独有的计算属性，而对于组件继承而来的计算属性实际上是通过`vm.constructor.prototype`来访问的，详情可查看`Vue.extend`的实现[Vue.extend - computed](/vue/source-study/component/extend.html#继承的-computed)。
+
+```js
+function initComputed (vm: Component, computed: Object) {
+  // ...
+  for (const key in computed) {
+    // ...
+    // 注意此处：in 操作符将枚举出原型上的所有属性，包括继承而来的计算属性，因此针对组件特有的计算属性与继承而来的计算属性，访问方式不一样
+    // 1、组件实例特有的属性：组件独有的计算属性将挂载在 vm 上
+    // 2、组件继承而来的属性：组件继承而来的计算属性已挂载在 vm.constructor.prototype，详情请查看 Vue.extend 的实现
+    if (!(key in vm)) {
+      // 处理组件实例独有的计算属性
+      defineComputed(vm, key, userDef)
+    } else if (process.env.NODE_ENV !== 'production') {
+      // ...
+    }
+  }
+}
 
 export function defineComputed (
   target: any,
@@ -88,6 +114,7 @@ export function defineComputed (
       )
     }
   }
+  // 往 vm 上添加 computed 的访问器属性描述符对象
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 
