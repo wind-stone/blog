@@ -198,7 +198,8 @@ module.exports = {
           collapsable: false,
           children: [
             '',
-            'vue-constructor'
+            'vue-constructor',
+            'skills'
           ]
         },
         {
