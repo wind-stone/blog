@@ -2,11 +2,11 @@
 sidebarDepth: 0
 ---
 
-# Patch: 创建组件 DOM Tree
+# Patch
 
 [[toc]]
 
-通过`vm._render()`获取到组件的 VNode Tree（实际上是组件占位 VNode）之后，即可通过`vm._update()`创建组件的 DOM Tree。
+通过`vm._render()`获取到组件的 VNode Tree（实际上是组件占位 VNode）之后，即可通过`vm._update()`创建/更新/销毁组件的 DOM Tree。
 
 ## Vue.prototype._update
 
@@ -67,11 +67,11 @@ export function lifecycleMixin (Vue: Class<Component>) {
 ```
 
 ::: tip 重要提示
-调用`vm.__patch__`后将返回组件渲染 VNode 的`vnode.elm`，该值将赋给`vm.$el`，记录着组件的 DOM 根元素节点。PS：若是遇到组件嵌套，嵌套的父子组件的`$el`将对应着同一个 DOM 元素节点。
+调用`vm.__patch__`后将返回组件渲染 VNode 的`vnode.elm`，该值将赋给`vm.$el`，记录着组件 DOM Tree 的根元素节点。PS：若是遇到连续嵌套组件，连续嵌套的父子组件的`vm.$el`都对应着 DOM Tree 的根元素节点。
 
 若组件的渲染 VNode 是元素类型的 VNode，则返回的`vnode.elm`是渲染 VNode 对应的 DOM 元素节点。
 
-若组件的渲染 VNode 是另一组件的占位 VNode，则返回的`vnode.elm`是另一组件占位 VNode 的`vnode.elm`。详见[vnode.elm 的确定 - 组件占位 VNode](/vue/source-study/topics/dom-binding.html#组件占位-vnode)
+若组件的渲染 VNode 是子组件的占位 VNode，则返回的`vnode.elm`是子组件占位 VNode 的`vnode.elm`，也就是子组件 DOM Tree 的根元素节点。详见[vnode.elm 的确定 - 组件占位 VNode](/vue/source-study/topics/dom-binding.html#组件占位-vnode)
 :::
 
 ## Vue.prototype.__patch__
@@ -226,11 +226,11 @@ cbs = {
         - `oldVnode`和`vnode`是相同的 VNode 节点，则`patchVnode`更新组件
         - 否则，重新为`vnode`创建元素
 
-### 根组件首次 patch && 组件新旧 VNode 不能 patch
+### 根组件首次 patch && 组件新旧渲染 VNode 不能 patch 的情况
 
-根组件的首次`patch`和组件新旧 VNode 不能 patch 时，基本上是共用的一套逻辑，主要就是为新的 VNode 创建元素。
+根组件的首次`patch`，会为渲染 VNode 创建对应的 DOM 节点/组件实例，整个 DOM Tree 都是新创建的。而对于组件新旧渲染 VNode 不能 patch 时，也会弃用之前的 DOM Tree，转而重新创建新的 DOM Tree。因此这两种情况，可以共用同一套逻辑。
 
-稍有不同的是，需要将根组件的首次`patch`传入的`oldVnode`（实际上是 DOM 元素节点）处理成真正的 VNode，如此，处理后的`oldVnode`也拥有了`elm`属性。
+稍有不同的是，需要将根组件的首次`patch`传入的`oldVnode`（实际上是 DOM 元素节点）处理成旧的渲染 VNode 的形式。如此，处理后的`oldVnode`也拥有了`elm`属性，变成了组件新旧渲染 VNode 不能`patch`的情况了。
 
 ```js
   /**
@@ -241,14 +241,30 @@ cbs = {
   }
 ```
 
-此后，根组件的首次`patch`完全可以当成组件新旧 VNode 不能 patch 时来处理，主要的步骤有：
+此后，根组件的首次`patch`完全可以当成组件新旧 VNode 不能`patch`时来处理，主要的步骤有：
 
 1. 获取到旧 VNode 对应的`elm`及基于`elm`的父 DOM 元素节点
-2. 调用`createElm`为新 VNode 创建元素
+2. 调用`createElm`为新 VNode 创建 DOM 节点/组件实例
 3. 若 VNode 存在`vnode.parent`，则递归更新组件占位 VNode 的`vnode.elm`，详见[组件的 DOM Tree 是如何插入到父元素上的？ - 组件占位 VNode](/vue/source-study/topics/dom-binding.html#组件占位-vnode)
 4. 销毁旧 VNode 及移除其对应的 DOM 元素，详见[patch 辅助函数 - removeVnodes：移除子 VNode 及其 DOM 元素](/vue/source-study/vdom/patch-fn.html#removevnodes：移除子-vnode-及其-dom-元素)
 
+一言以蔽之就是，创建组件新的 DOM Tree -> 更新组件占位 VNode -> 销毁组件旧的 DOM Tree 及 VNode Tree
+
 ```js
+  /**
+   * 执行`patch`函数，是为组件的渲染 VNode 创建 DOM Tree，最后插入到文档内。在此过程中，会新增 DOM 节点、修补（patch）DOM 节点、删除 DOM 节点。
+
+   * - 组件创建时，会首次调用`patch`，会根据渲染 VNode 创建 DOM Tree，DOM Tree 里所有 DOM 元素/子组件实例都是新创建的，且 DOM Tree 是递归生成的。
+   * - 组件改变时，每次都会调用`patch`，会根据改变前后的渲染 VNode 修补 DOM Tree，该过程可能会新增 DOM 节点、修补（patch）DOM 节点、删除 DOM 节点。
+   * - 组件销毁时，最后一次调用`patch`，会销毁 DOM Tree。
+   *
+   * @param {*} oldVnode 组件旧的渲染 VNode
+   * @param {*} vnode 组件新的渲染 VNode（执行 vm._render 后返回的）
+   * @param {*} hydrating 是否混合（服务端渲染时为 true，非服务端渲染情况下为 false）
+   * @param {*} removeOnly 这个参数是给 transition-group 用的
+   *
+   * 需要额外注意的是，这里的传入的 vnode 肯定是某组件的渲染 VNode；而对于连续嵌套组件的情况来说，渲染 VNode 同时也是直接子组件的占位 VNode
+   */
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
     // ...
     if (isUndef(oldVnode)) {
@@ -266,17 +282,19 @@ cbs = {
         }
         // replacing existing element
         const oldElm = oldVnode.elm
-        // vnode 占位节点的父 DOM 元素节点
+        // 组件占位 VNode 的 DOM 父元素节点
         const parentElm = nodeOps.parentNode(oldElm)
 
         // create new node
-        // 为新的 VNode 创建 DOM 节点，若 parentElm 存在，则插入到父元素上
+        // 为新的 VNode 创建元素/组件实例，若 parentElm 存在，则插入到父元素上
         createElm(
           vnode,
           insertedVnodeQueue,
           oldElm._leaveCb ? null : parentElm,
           nodeOps.nextSibling(oldElm)
         )
+
+        // 递归更新占位 VNode 的 elm，以解决“连续嵌套组件”的情况，即父组件的渲染 VNode 同时是子组件的占位 VNode
         if (isDef(vnode.parent)) {
           let ancestor = vnode.parent
           const patchable = isPatchable(vnode)
@@ -321,11 +339,211 @@ cbs = {
   }
 ```
 
+#### 组件新旧渲染 VNode 不能 patch 的情况
+
+```js
+/**
+ * 判断两个 VNode 节点是否是同一种 VNode
+ */
+function sameVnode (a, b) {
+  return (
+    a.key === b.key && (
+      (
+        // 若是元素类型的 VNode，则需要相同的元素标签；若是组件占位 VNode，则需要是相同组件的 VNode
+        a.tag === b.tag &&
+        // 都是注释 VNode，或都不是注释 VNode
+        a.isComment === b.isComment &&
+        // VNode 的 data 都定义了，或都没定义
+        isDef(a.data) === isDef(b.data) &&
+        // （对于 input 输入框来说），相同的输入类型
+        sameInputType(a, b)
+      ) || (
+        // 对于异步组件占位 VNode 来说，工厂函数要完全相同；且新的异步组件占位 VNode 不能是失败状态
+        isTrue(a.isAsyncPlaceholder) &&
+        a.asyncFactory === b.asyncFactory &&
+        isUndef(b.asyncFactory.error)
+      )
+    )
+  )
+}
+
+/**
+ * 判断两个 VNode 是否是同一种 input 输入类型
+ */
+function sameInputType (a, b) {
+  // 若不是 input 标签，返回 true
+  if (a.tag !== 'input') return true
+  let i
+  const typeA = isDef(i = a.data) && isDef(i = i.attrs) && i.type
+  const typeB = isDef(i = b.data) && isDef(i = i.attrs) && i.type
+  // input 的 type 相同或者两个 input 都是文本输入类型
+  return typeA === typeB || isTextInputType(typeA) && isTextInputType(typeB)
+}
+```
+
+```js
+export const isTextInputType = makeMap('text,number,password,search,email,tel,url')
+```
+
 ### 组件更新
+
+若是组件的新旧渲染 VNode 是`sameVnode`，则不会为渲染 VNode 重新创建 DOM 节点，而是在原有的 DOM 节点上进行修补，尽可能复用之前的 DOM 节点。
+
+修复渲染 VNode 对应的 DOM 节点的步骤为：
+
+1. 若新旧 VNode 是同一引用对象，则无需修补，直接返回
+2. 处理旧 VNode 是异步占位 VNode 的情况
+3. 处理静态 VNode 的情况
+4. 调用组件占位 VNode 的`prepatch`钩子
+5. 若 VNode 是可`patch`（修补）的，则：
+    1. 调用各个模块的`update`钩子
+    2. 调用（带有自定义指令且指令存在`update`钩子的元素类型的）VNode 的`update`钩子
+6. 修补 DOM 节点，针对不同类型的 VNode，进行不同的处理
+    - 元素类型的新 VNode
+      - 新旧 VNode 都包含`children` && `children`不是同一引用：调用`updateChildren`递归更新`children`（重点，之后详细说）
+      - 新 VNode 的`children`存在 && 旧 VNode 的`children`不存在
+        - 若旧 VNode 是文本/注释节点，则将其`textContent`设为空字符串
+        - 遍历`children`，创建 DOM 节点，并插入到该 VNode 对应的 DOM 元素节点上
+      - 新 VNode 的`children`不存在 && 旧 VNode 的`children`存在：递归销毁子 VNode 和子 DOM 节点
+    - 文本/注释类型的新 VNode：更新 DOM 节点的`textContent`
+7. 调用（带有自定义指令且指令存在 componentUpdated 钩子的元素类型的） VNode 的 postpatch 钩子
+
+```js
+  /**
+   * 修补 VNode
+   */
+  function patchVnode (oldVnode, vnode, insertedVnodeQueue, removeOnly) {
+    if (oldVnode === vnode) {
+      // TODO: 这是什么情况下出现的，不都是新建的 VNode 吗？
+      return
+    }
+
+    const elm = vnode.elm = oldVnode.elm
+
+    // 若旧 VNode 是异步占位 VNode
+    if (isTrue(oldVnode.isAsyncPlaceholder)) {
+      if (isDef(vnode.asyncFactory.resolved)) {
+        // 新 VNode 是异步组件成功解析之后 render 出的 VNode，则进行混合操作
+        hydrate(oldVnode.elm, vnode, insertedVnodeQueue)
+      } else {
+        // TODO: isAsyncPlaceholder 默认是 false，怎么进入满足 isTrue(oldVnode.isAsyncPlaceholder) ？
+        vnode.isAsyncPlaceholder = true
+      }
+      return
+    }
+
+    // reuse element for static trees.
+    // note we only do this if the vnode is cloned -
+    // if the new node is not cloned it means the render functions have been
+    // reset by the hot-reload-api and we need to do a proper re-render.
+    // TODO:
+    if (isTrue(vnode.isStatic) &&
+      isTrue(oldVnode.isStatic) &&
+      vnode.key === oldVnode.key &&
+      (isTrue(vnode.isCloned) || isTrue(vnode.isOnce))
+    ) {
+      vnode.componentInstance = oldVnode.componentInstance
+      return
+    }
+
+    let i
+    const data = vnode.data
+    if (isDef(data) && isDef(i = data.hook) && isDef(i = i.prepatch)) {
+      // 调用组件占位 VNode 的 prepatch 钩子
+      i(oldVnode, vnode)
+    }
+
+    const oldCh = oldVnode.children
+    const ch = vnode.children
+    if (isDef(data) && isPatchable(vnode)) {
+      // 调用各个模块的 update 钩子
+      for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)
+      // 调用（带有自定义指令且指令存在 update 钩子的元素类型的） VNode 的 update 钩子
+      if (isDef(i = data.hook) && isDef(i = i.update)) i(oldVnode, vnode)
+    }
+    if (isUndef(vnode.text)) {
+      // 若 VNode 不是文本节点，即是元素类型的 VNode 或组件占位 VNode
+      if (isDef(oldCh) && isDef(ch)) {
+        // 若 vnode 和 oldVnode 的 children 都存在
+        if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
+      } else if (isDef(ch)) {
+        // 若 vnode 的 children 存在但 oldVnode 的 children 不存在，则添加子节点
+        if (isDef(oldVnode.text)) nodeOps.setTextContent(elm, '')
+        addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
+      } else if (isDef(oldCh)) {
+        // 若 oldVnode.children 存在但 vnode.children 不存在，则删除 oldVnode.children
+        removeVnodes(elm, oldCh, 0, oldCh.length - 1)
+      } else if (isDef(oldVnode.text)) {
+        // 若 oldVnode 是文本类型的 VNode，则删除文本内容
+        nodeOps.setTextContent(elm, '')
+      }
+    } else if (oldVnode.text !== vnode.text) {
+      // 文本/注释类型的 VNode，设置 DOM 节点的 textContent（DOM 注释节点也能通过 textContent 设置注释的内容哦）
+      nodeOps.setTextContent(elm, vnode.text)
+    }
+    if (isDef(data)) {
+      // 调用（带有自定义指令且指令存在 componentUpdated 钩子的元素类型的） VNode 的 postpatch 钩子
+      if (isDef(i = data.hook) && isDef(i = i.postpatch)) i(oldVnode, vnode)
+    }
+  }
+```
+
+#### 组件占位 VNode 的 prepatch 钩子
+
+#### updateChildren
 
 ### 组件销毁
 
-### createElm
+### 返回 vnode.elm
+
+除了组件销毁的情况之外，根组件和子组件的首次渲染和更新，执行`patch`函数都将返回组件渲染 VNode 的`vnode.elm`。而组件渲染 VNode 是元素类型的VNode 时和是子组件占位 VNode 时，`vnode.elm`的意义和获取方式都不相同，详见[vnode.elm 的确定](/vue/source-study/topics/dom-binding.html#vnode-elm-的确定)。
+
+```js
+export function createPatchFunction (backend) {
+  // ...
+  return function patch (oldVnode, vnode, hydrating, removeOnly) {
+    if (isUndef(vnode)) {
+      // 销毁 vnode 节点
+      if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
+      return
+    }
+
+    // 此处是组件首次渲染/更新的逻辑
+
+    // 返回组件渲染 VNode 的 vnode.elm
+    return vnode.elm
+  }
+}
+```
+
+而`patch`函数返回的`vnode.elm`将赋值给组件实例的`vm.$el`，即组件的`vm.$el`是组件 DOM Tree 的根元素节点。
+
+若是遇到连续嵌套组件的情况，因为父组件渲染 VNode 是子组件的占位 VNode，因此要更新父组件实例的`vm.$el`为子组件的`vm.$el`。
+
+```js
+export function lifecycleMixin (Vue: Class<Component>) {
+  Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
+    // ...
+    if (!prevVnode) {
+      vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
+    } else {
+      vm.$el = vm.__patch__(prevVnode, vnode)
+    }
+    // ...
+    // if parent is an HOC, update its $el as well
+    if (vm.$vnode && vm.$parent && vm.$vnode === vm.$parent._vnode) {
+      // vm.$vnode 是组件的占位 VNode
+      // vm.$parent 是组件渲染时当前活动的非抽象父组件
+      // vm.$vnode === vm.$parent._vnode 成立，说明组件的占位 VNode 是其非抽象父组件的渲染 VNode，即连续嵌套组件的情况
+      // 此种情况下，则更新父组件实例的 $el
+      vm.$parent.$el = vm.$el
+    }
+    // ...
+  }
+}
+```
+
+## createElm
 
 组件的首次`patch`时，肯定要为所有的 VNode 节点创建对应的 DOM 节点，而在组件更新的过程中，也有可能需要为新增的 VNode 节点创建 DOM 节点。
 
@@ -333,7 +551,7 @@ cbs = {
 
 ```js
   /*
-   * 为 VNode 创建对应的 DOM 节点
+   * 为 VNode 创建对应的 DOM 节点/组件实例
    *
    * @param {*} vnode 虚拟节点
    * @param {*} insertedVnodeQueue
@@ -443,9 +661,15 @@ cbs = {
   }
 ```
 
-#### 创建非组件占位 VNode 的 DOM 节点
+### 创建组件实例
 
-非组件占位 VNode 主要有三种类型：
+当调用`createElm`为 VNode 创建对应的 DOM 节点时，会先调用`createComponent`，以判断该 VNode 是否是组件占位 VNode。如果是，则进入到创建组件实例的流程，最终`createComponent`返回`true`并结束`createElm`的过程；若该 VNode 不是组件占位 VNode，`createComponent`返回`false`，继续为非组件占位 VNode 创建对应的 DOM 元素/文本/注释节点。
+
+详见[创建子组件实例](/vue/source-study/vdom/child-component-create.html)
+
+### 创建 DOM 节点
+
+经过`createComponent`判断后，走到这一步说明该 VNode 不是组件占位 VNode，而非组件占位 VNode 主要有三种类型，这三种类型都将创建 DOM 节点。
 
 - 元素类型的 VNode
 - 文本类型的 VNode
@@ -468,10 +692,6 @@ cbs = {
   - 创建 DOM 注释/文本节点`vnode.elm`，并插入到父元素
 
 若是元素类型的 VNode，在创建 VNode 对应的 DOM 元素节点之后，还需要依次创建子 VNode 对应的 DOM 节点。此外，若该 VNode 不是组件渲染 VNode 的根节点，将存在`parentElm`，会将 VNode 对应的 DOM 元素节点插入到父元素上。
-
-#### 创建组件占位 VNode 的组件实例
-
-详见[创建子组件实例](/vue/source-study/vdom/child-component-create.html)
 
 ## 释疑
 
