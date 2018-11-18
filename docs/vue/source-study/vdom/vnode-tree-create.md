@@ -90,9 +90,9 @@ export function renderMixin (Vue: Class<Component>) {
 
 调用`render`函数时，会将`vm`作为第一个参数传入（非生产环境会传入`vm._renderProxy`，其是对`vm`的代理，以便在获取不到`vm`上的方法/属性且该方法/属性不是`window`上的全局方法/属性时进行报错）作为函数内绑定的`this`，而`vm.$createElement`作为第二个参数。通过调用`vm.$createElement`返回的就是 VNode 节点。
 
-## createElement
+## createElement：创建节点的 VNode
 
-`vm.$createElement`是在`_init()`是通过调用`initRender`添加的。
+`vm.$createElement`是在`_init()`是通过调用`initRender`添加的，其功能是创建传入的节点的 VNode。
 
 ```js
 // src/core/instance/render.js
@@ -113,9 +113,9 @@ export function initRender (vm: Component) {
 }
 ```
 
-`initRender`里不仅添加了`vm.$createElement`，还添加了`vm._c`，它们都是对`createElement`函数的封装。其中，`vm._c`是将模板编译成`render`函数时使用的，而`vm.$createElement`是在用户自己编写的`render`函数里使用的，其区分就是传入`createElement`的第六个参数`alwaysNormalize`是否为`true`，涉及到元素的子虚拟节点的不同处理，我们后续再说。
+`initRender`里不仅添加了`vm.$createElement`，还添加了`vm._c`，它们都是对`createElement`函数的封装。其中，`vm._c`是将模板编译成`render`函数时用于创建 VNode 的，而`vm.$createElement`是在用户自己编写的`render`函数用于创建 VNode 的，其区分就是传入`createElement`的第六个参数`alwaysNormalize`是否为`true`，涉及到对所创建 VNode 的子 VNode 不同的规范化处理，我们后续再说。
 
-`createElement`函数是对`_createElement`的封装，主要是对传入`createElement`函数的参数位置进行调整（因为有些参数可以省略），以及分辨出是在用户编写的`render`函数还是模板编译出的`render`函数里调用的`createElement`，方便确定之后对节点的子虚拟节点数组采取哪一种规范化处理方式。
+`createElement`函数是对`_createElement`的封装，主要是对传入`createElement`函数的参数位置进行调整（因为有些参数可以省略），以及分辨出是在用户编写的`render`函数还是模板编译出的`render`函数里调用的`createElement`，方便确定之后对 VNode 的子 VNode 数组采取哪一种规范化处理方式。
 
 ```js
 // src/core/vdom/create-element.js
@@ -167,6 +167,7 @@ export function _createElement (
     //   'Always create fresh vnode data objects in each render!',
     //   context
     // )
+    // 避免使用可观察数据对象作为 VNode 的数据对象
     return createEmptyVNode()
   }
   // object syntax in v-bind
@@ -440,52 +441,6 @@ TODO: 未规范化处理之前的子节点，为什么可能是文本虚拟节�
   - `tag`是未知的元素标签或是无列出命名空间的元素：直接创建 VNode
 - 节点的`tag`是组件选项对象或工厂函数：调用`createComponent`创建 VNode
 
-```js
-export function _createElement (
-  context: Component,
-  tag?: string | Class<Component> | Function | Object,
-  data?: VNodeData,
-  children?: any,
-  normalizationType?: number
-): VNode | Array<VNode> {
-  // ...
-  if (typeof tag === 'string') {
-    // tag 为标签字符串：1、平台内置元素标签名称；2、全局/局部注册的组件名称
-
-    let Ctor
-    // 此时 context.$vnode 为 parentVnode，即先使用 parentVnode 的 ns
-    ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
-    if (config.isReservedTag(tag)) {
-      // platform built-in elements
-      // 字符串类型一：平台内置元素标签（字符串），web 平台下包括 HTML 标签和 SVG 标签
-      vnode = new VNode(
-        config.parsePlatformTagName(tag), data, children,
-        undefined, undefined, context
-      )
-    } else if (isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
-      // component
-      // 字符串类型二：局部注册的组件名称（包括继承、混合而来的）
-      // Ctor 可能是继承 Vue 的构造函数，或者是组件选项对象
-      vnode = createComponent(Ctor, data, context, children, tag)
-    } else {
-      // unknown or unlisted namespaced elements
-      // check at runtime because it may get assigned a namespace when its
-      // parent normalizes children
-      vnode = new VNode(
-        tag, data, children,
-        undefined, undefined, context
-      )
-    }
-  } else {
-    // tag 为 1、组件选项对象；2、构造函数；3、返回值为组件选项对象的异步函数
-
-    // direct component options / constructor
-    vnode = createComponent(tag, data, context, children)
-  }
-  // ...
-}
-```
-
 #### VNode Class
 
 VNode 是 Class，创建一 VNode 对象，就是实例化一 VNode 的实例，其`constructor`较为简单，只是将传入的数据一一变为实例的属性。
@@ -570,7 +525,17 @@ export default class VNode {
 }
 ```
 
-#### createComponent
+#### 创建非组件节点的 VNode
+
+非组件节点一般有如下几种 VNode：
+
+- `tag`为`falsy value`的节点：创建出空文本的注释 VNode
+- HTML/SVG 元素：创建出元素类型的 VNode
+- 未知元素/未列出命名空间的元素：创建出元素类型的 VNode
+
+以上几种情况，都是直接调用`new VNode()`创建出 VNode 的。
+
+#### 创建组件节点的 VNode
 
 创建组件的 VNode 就要复杂很多，需要处理组件的各种情况和数据等，以下是详细的步骤：
 
@@ -584,6 +549,8 @@ export default class VNode {
 8. 安装组件管理钩子方法
 9. 调用`new VNode`创建组件的 VNode
 10. 返回 VNode
+
+组件节点的 VNode，我们一般称之为组件占位 VNode，因为该 VNode 在最终创建的 DOM Tree 并不会存在一个 DOM 节点与之一一对应，即它只出现在 VNode Tree 里，但不出现在 DOM Tree 里。
 
 TODO: 这里的内容较多，需要之后详细梳理。
 

@@ -8,7 +8,7 @@ sidebarDepth: 0
 
 [创建组件实例](/vue/source-study/instance/create.html)一节中我们知道，根组件是用户显式调用`new Vue()`创建的 Vue 实例。除根组件实例之外的 Vue 实例，我们统称为子组件实例。而子组件，都是在根组件`patch`的过程中创建的。
 
-PS：一般所说的组件，都是指子组件，当指根组件时，会强调是根组件
+PS：一般所说的组件，都是指子组件，当指根组件时，会强调是根组件。
 
 当调用`createElm`为 VNode 创建对应的 DOM 节点时，会先判断该 VNode 是否是组件占位节点。如果是，则创建组件实例，并结束`createElm`的过程；否则，继续为非组件占位 VNode 创建对应的 DOM 元素/文本/注释节点。
 
@@ -206,7 +206,7 @@ export function createComponentInstanceForVnode (
 
 初始化组件实例过程中，需要做比较多的工作：
 
-- 将子组件首次渲染创建 DOM Tree 过程中收集的`insertedVnodeQueue`（保存在子组件占位 VNode 的`vnode.data.pendingInsert`里）添加到父组件的`insertedVnodeQueue`，详见[Patch: 创建组件 DOM Tree - insertedVnodeQueue 的作用](/vue/source-study/vdom/patch.html#insertedvnodequeue-的作用)
+- 将子组件首次渲染创建 DOM Tree 过程中收集的`insertedVnodeQueue`（保存在子组件占位 VNode 的`vnode.data.pendingInsert`里）添加到父组件的`insertedVnodeQueue`，详见[Patch - insertedVnodeQueue 的作用](/vue/source-study/vdom/patch.html#insertedvnodequeue-的作用)
 - 获取到组件实例的 DOM 根元素节点，赋给`vnode.elm`
 - 判断组件是否是可`patch`的
   - 组件可`patch`

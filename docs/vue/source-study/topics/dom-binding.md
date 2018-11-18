@@ -246,9 +246,9 @@ export function createComment (text: string): Comment {
 
 如此，我们明白了，组件占位 VNode 的`vnode.elm`属性一开始是不存在的，当组件渲染 VNode 的根节点是 DOM 节点类型的 VNode 时，根节点将创建对应的 DOM 节点作为根节点 VNode 的`vnode.elm`。进而在创建好根节点 VNode 的 DOM 节点后，更新组件占位 VNode 的`vnode.elm`。
 
-那么若是遇到嵌套组件（即父组件的渲染 VNode 的根节点是子组件）的情况呢？
+那么若是遇到[连续嵌套组件](/vue/source-study/vdom/#连续嵌套组件)的情况呢？
 
-若是 A 组件的渲染 VNode 的根节点是 B 组件，那么在 B 组件渲染 VNode 的 HTML 根元素创建好后，再一次更新 A 组件和 B 组件占位 VNode 的`elm`，依次类推。（最后一个组件的渲染 VNode 的根节点肯定会是 DOM 节点类型的 VNode）
+若是 A 组件的渲染 VNode 同时是 B 组件的占位 VNode，那么在 B 组件的渲染 VNode 创建好 DOM 节点后，将再一次更新 A 组件和 B 组件占位 VNode 的`elm`，依次类推。（连续嵌套组件里，最后一个组件的渲染 VNode 肯定会是 DOM 节点类型的 VNode）
 
 组件占位 VNode 在创建组件实例时，组件渲染 VNode 的`parent`属性指向组件占位 VNode，即`vm._vnode.parent === vm.$vnode`，其中`vm._vnode`是组件实例的渲染 VNode，`vm.$vnode`是组件占位 VNode。
 
@@ -289,7 +289,7 @@ export function createComponentInstanceForVnode (
 
 - 组件的父节点是 DOM 元素节点
 - 组件是根组件
-- 组件嵌套（这种情况比较复杂，将在下一小节单独说明）
+- 连续嵌套组件
 
 ### 组件的父节点是 DOM 元素节点
 
@@ -512,7 +512,7 @@ new Vue({
 })
 ```
 
-## 组件嵌套
+## 连续嵌套组件
 
 组件嵌套，是指父组件的渲染 VNode 的根节点是子组件的情况，请看如下示例。
 
@@ -612,8 +612,6 @@ export function createPatchFunction (backend) {
 ```
 
 ```js
-export function createPatchFunction (backend) {
-  // ...
   function createElm (
     vnode,
     insertedVnodeQueue,
@@ -630,13 +628,9 @@ export function createPatchFunction (backend) {
     }
     // ...
   }
-  // ...
-}
 ```
 
 ```js
-export function createPatchFunction (backend) {
-  // ...
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
     let i = vnode.data
     if (isDef(i)) {
@@ -655,14 +649,11 @@ export function createPatchFunction (backend) {
       }
     }
   }
-  // ...
-}
 ```
 
 经过一系列的过程，我们发现组件 B 的占位 VNode 创建好组件 B 的实例之后，调用`insert(parentElm, vnode.elm, refElm)`时，`parentElm`为`undefined`。查看`insert`函数的实现，当`parent`为`undefind`时，啥都没有干！
 
 ```js
-export function createPatchFunction (backend) {
   // ...
   function insert (parent, elm, ref) {
     if (isDef(parent)) {
@@ -676,10 +667,9 @@ export function createPatchFunction (backend) {
     }
   }
   // ...
-}
 ```
 
-最终我们得出结论，对于组件嵌套的情况，即组件 A 的模板的根节点是组件 B 时，组件 B 在创建了组件 B 的实例之后，不会将组件 B 的根 DOM Node 插入到父元素上。
+最终我们得出结论，对于连续嵌套组件的情况，即组件 A 的模板的根节点是组件 B 时，组件 B 在创建了组件 B 的实例之后，不会将组件 B 的根 DOM Node 插入到父元素上。
 
 但是在组件 A 创建了组件 A 实例之后，会将组件 B 的`vnode.elm`插入到`parentElm`上。
 
