@@ -8,6 +8,52 @@ sidebarDepth: 0
 
 ## VNode/DOM 操作相关
 
+### sameVnode
+
+```js
+/**
+ * 判断两个 VNode 节点是否是同一种 VNode
+ */
+function sameVnode (a, b) {
+  return (
+    a.key === b.key && (
+      (
+        // 若是元素类型的 VNode，则需要相同的元素标签；若是组件占位 VNode，则需要是相同组件的 VNode
+        a.tag === b.tag &&
+        // 都是注释 VNode，或都不是注释 VNode
+        a.isComment === b.isComment &&
+        // VNode 的 data 都定义了，或都没定义
+        isDef(a.data) === isDef(b.data) &&
+        // （对于 input 输入框来说），相同的输入类型
+        sameInputType(a, b)
+      ) || (
+        // 对于异步组件占位 VNode 来说，工厂函数要完全相同；且新的异步组件占位 VNode 不能是失败状态
+        isTrue(a.isAsyncPlaceholder) &&
+        a.asyncFactory === b.asyncFactory &&
+        isUndef(b.asyncFactory.error)
+      )
+    )
+  )
+}
+
+/**
+ * 判断两个 VNode 是否是同一种 input 输入类型
+ */
+function sameInputType (a, b) {
+  // 若不是 input 标签，返回 true
+  if (a.tag !== 'input') return true
+  let i
+  const typeA = isDef(i = a.data) && isDef(i = i.attrs) && i.type
+  const typeB = isDef(i = b.data) && isDef(i = i.attrs) && i.type
+  // input 的 type 相同或者两个 input 都是文本输入类型
+  return typeA === typeB || isTextInputType(typeA) && isTextInputType(typeB)
+}
+```
+
+```js
+export const isTextInputType = makeMap('text,number,password,search,email,tel,url')
+```
+
 ### removeVnodes：移除子 VNode 及其 DOM 元素节点
 
 ```js

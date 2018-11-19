@@ -13,25 +13,10 @@ sidebarDepth: 0
 - 函数式组件与常规组件的区别
 - 模板编译
   - v-model 实现
-  - v-on 绑定的函数为什么可以给函数传参数使用`@click="handler(item, index)"`？
+  - v-on 的表达式
+    - 传递内联语句是怎么实现的？`@click="handler(item, index)"`
+    - 内联语句的`$event`是怎么实现的？
 
 ## Vue 版本
 
 该源码学习系列文章，都是基于 Vue.js 2.5.16 版本
-
-## 名词解释
-
-### 组件选项对象
-
-```js
-const options = {
-  el: '...',
-  props: '...',
-  data: '...',
-  computed: {
-    // ...
-  },
-  created: () = {}
-  // ...
-}
-```

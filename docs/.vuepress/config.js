@@ -247,6 +247,7 @@ module.exports = {
             'vdom/',
             'vdom/vnode-tree-create',
             'vdom/patch',
+            'vdom/patch-vnode',
             'vdom/child-component-create',
             'vdom/patch-fn'
           ]
