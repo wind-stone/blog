@@ -244,6 +244,10 @@ export function updateComponentListeners (
 
 在调用`updateListeners`时会传入`add`、`remove`参数，这两个参数都是函数，函数内分别是调用了`vm.$on/$once`、`vm.$off`来添加或删除组件的订阅事件。
 
+::: warning 注意事项
+`add`函数和`remove`函数都是将事件注册/移除在`target`上，而`target`是子组件实例。这也就是说，尽管自定义事件的事件处理方法是父组件的方法，但是最终事件是注册在子组件实例上的。（事件处理方法的`this`已经绑定了父组件实例）
+:::
+
 #### updateListeners
 
 ```js
