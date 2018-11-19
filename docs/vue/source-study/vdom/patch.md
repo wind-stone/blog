@@ -488,9 +488,118 @@ export const isTextInputType = makeMap('text,number,password,search,email,tel,ur
   }
 ```
 
-#### 组件占位 VNode 的 prepatch 钩子
+#### 更新子组件
 
-#### 递归地修补子 VNode
+若是要修补的是子组件占位 VNode，则会调用子组件占位 VNode 的`prepatch`钩子，其主要作用是更新子组件实例上挂载的一些数据，如有必要，还需要强制子组件重新渲染。其内容主要有：
+
+- 更新`vm.$options._parentVnode`/`vm.$vnode`/`vm.$options._renderChildren`
+- 更新`vm.$attrs`/`vm.$listeners`，且这两个属性是响应式的，若是子组件视图对它们有依赖，会自动进行重新渲染
+- 更新`vm._props`，且这个属性是响应式的，若是子组件视图对它们有依赖，会自动进行重新渲染
+- 更新自定义事件
+- （若存在`slot`）更新`vm.$slots`，且强制渲染子组件
+
+```js
+const componentVNodeHooks = {
+  // ...
+  prepatch (oldVnode: MountedComponentVNode, vnode: MountedComponentVNode) {
+    const options = vnode.componentOptions
+    // 子组件占位 VNode 的 patch，复用组件实例
+    const child = vnode.componentInstance = oldVnode.componentInstance
+    // 更新子组件实例
+    updateChildComponent(
+      child,
+      options.propsData, // updated props
+      options.listeners, // updated listeners
+      vnode, // new parent vnode
+      options.children // new children
+    )
+  }
+  // ...
+}
+```
+
+```js
+/**
+ * 更新子组件实例
+ */
+export function updateChildComponent (
+  vm: Component,
+  propsData: ?Object,
+  listeners: ?Object,
+  parentVnode: MountedComponentVNode,
+  renderChildren: ?Array<VNode>
+) {
+  if (process.env.NODE_ENV !== 'production') {
+    isUpdatingChildComponent = true
+  }
+
+  // determine whether component has slot children
+  // we need to do this before overwriting $options._renderChildren
+  const hasChildren = !!(
+    renderChildren ||               // has new static slots
+    vm.$options._renderChildren ||  // has old static slots
+    parentVnode.data.scopedSlots || // has new scoped slots
+    vm.$scopedSlots !== emptyObject // has old scoped slots
+  )
+
+  // 更新子组件实例指向的子组件占位 VNode
+  vm.$options._parentVnode = parentVnode
+  vm.$vnode = parentVnode // update vm's placeholder node without re-render
+
+  if (vm._vnode) { // update child tree's parent
+    vm._vnode.parent = parentVnode
+  }
+  // 替换为新的 static slots
+  vm.$options._renderChildren = renderChildren
+
+  // update $attrs and $listeners hash
+  // these are also reactive so they may trigger child update if the child
+  // used them during render
+  // 更新子组件的 $attrs 和 $listeners，这两个属性也是响应式的，若是子组件视图里使用了它们，会引起子组件的重新渲染
+  vm.$attrs = parentVnode.data.attrs || emptyObject
+  vm.$listeners = listeners || emptyObject
+
+  // update props
+  // 更新子组件的 props
+  if (propsData && vm.$options.props) {
+    toggleObserving(false)
+    const props = vm._props
+    const propKeys = vm.$options._propKeys || []
+    for (let i = 0; i < propKeys.length; i++) {
+      const key = propKeys[i]
+      const propOptions: any = vm.$options.props // wtf flow?
+      // props 是响应式的，若是子组件视图依赖某个 prop，prop 改变，会想起子组件重新渲染
+      props[key] = validateProp(key, propOptions, propsData, vm)
+    }
+    toggleObserving(true)
+    // keep a copy of raw propsData
+    vm.$options.propsData = propsData
+  }
+
+  // update listeners
+  listeners = listeners || emptyObject
+  const oldListeners = vm.$options._parentListeners
+  vm.$options._parentListeners = listeners
+  updateComponentListeners(vm, listeners, oldListeners)
+
+  // resolve slots + force update if has children
+  // 若是子组件存在 slot，则强制渲染该组件
+  if (hasChildren) {
+    vm.$slots = resolveSlots(renderChildren, parentVnode.context)
+    vm.$forceUpdate()
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
+    isUpdatingChildComponent = false
+  }
+}
+```
+
+::: warning 注意事项
+调用子组件占位 VNode 的`prepatch`钩子是对组件实例进行修补，比如`vm.$attrs`/`vm.$listeners`/传入的`props`/自定义事件/`vm.$slots`等，但是`vm.$attrs`/`vm.$listeners`是响应式的，若子组件视图依赖了这些属性，这些属性的变化到导致子组件模板重新渲染。
+:::
+
+#### 修补子 VNode
 
 修补完 VNode 后，若新旧 VNode 都存在子 VNode，则需要递归地对子 VNode 进行修补。
 
@@ -618,6 +727,8 @@ PS：
 - 修补 DOM 的过程仅发生在同级的 DOM 节点上
 - 若 DOM 节点不是同级，将删除旧 DOM，生成新 DOM
 - `patch`的复杂度是`O(n)`
+
+#### TODO: 等待学习 slot 之后，需要重新审视一下子组件里有 slot 时的情况
 
 ### 组件销毁
 
