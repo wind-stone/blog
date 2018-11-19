@@ -490,7 +490,134 @@ export const isTextInputType = makeMap('text,number,password,search,email,tel,ur
 
 #### 组件占位 VNode 的 prepatch 钩子
 
-#### updateChildren
+#### 递归地修补子 VNode
+
+修补完 VNode 后，若新旧 VNode 都存在子 VNode，则需要递归地对子 VNode 进行修补。
+
+修补过程中，会尽可能地去寻找哪些新旧 VNode 是`sameVnode`。若是新 VNode 能找到`sameVnode`的旧 VNode，则递归地修补该子 VNode，若找不到，会针对新子 VNode 创建 DOM 节点。若是`newChildren`数组里的新子 VNode 都处理完毕，但是`oldChildren`里仍存在未处理的旧子 VNode，则需要将这些旧子 VNode 都移除掉；若是`oldChildren`里旧子 VNode 都被处理完了但是`newChildren`还有未处理的新子 VNode，则需要未这些新子 VNode 创建对应的 DOM 节点。
+
+而在对于新旧子 VNode 是否是`sameVnode`的过程中，为了在单次循环里尽可能多地比较新旧子 VNode 是否是`sameVnode`，且不添加新的循环而引入更大的复杂度，每次循环里会进行四次比较：
+
+- `oldStartVnode` vs `newStartVnode`
+- `oldEndVnode` vs `newEndVnode`
+- `oldStartVnode` vs `newEndVnode`
+- `oldEndVnode` vs `newStartVnode`
+
+其中，前两种出现的概率最大，而两种是为了尽量多地比较但又不引入新的循环的情况下进行比较的。
+
+更详细的过程，请参考下面的源码注释，已经比较清晰了。
+
+```js
+  /**
+   * 更新 VNode 的子 VNode
+   * @param {*} parentElm VNode 对应的 DOM 元素节点
+   * @param {*} oldCh 旧 VNode 的子 VNode 数组
+   * @param {*} newCh 新 VNode 的子 VNode 数组
+   * @param {*} insertedVnodeQueue
+   * @param {*} removeOnly
+   */
+  function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly) {
+    let oldStartIdx = 0
+    let newStartIdx = 0
+    let oldEndIdx = oldCh.length - 1
+    // 下一个未经 patch 的旧子 VNode 节点，在此索引之前的旧子 VNode 都已经处理完毕
+    let oldStartVnode = oldCh[0]
+    // 最后一个未经 patch 的旧子 VNode 节点，在此索引之后的旧子 VNode 都已经处理完毕
+    let oldEndVnode = oldCh[oldEndIdx]
+    let newEndIdx = newCh.length - 1
+    // 下一个未经 patch 的新子 VNode 节点，在此索引之前的新子 VNode 都已经处理完毕
+    let newStartVnode = newCh[0]
+    // 最后一个未经 patch 的新子 VNode 节点，在此索引之后的新子 VNode 都已经处理完毕
+    let newEndVnode = newCh[newEndIdx]
+    let oldKeyToIdx, idxInOld, vnodeToMove, refElm
+
+    // removeOnly is a special flag used only by <transition-group>
+    // to ensure removed elements stay in correct relative positions
+    // during leaving transitions
+    const canMove = !removeOnly
+
+    if (process.env.NODE_ENV !== 'production') {
+      checkDuplicateKeys(newCh)
+    }
+
+    // 为了在单次循环里尽可能多地比较新旧子 VNode 是否是`sameVnode`，且不添加新的循环而引入更大的复杂度，每次循环里会进行四次比较：
+    // - oldStartVnode vs newStartVnode
+    // - oldEndVnode vs newEndVnode
+    // - oldStartVnode vs newEndVnode
+    // - oldEndVnode vs newStartVnode
+    // 其中，前两种出现的概率最大，而两种是为了尽量多地比较但又不引入新的循环的情况下进行比较的。
+    while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+      // 这里要针对 oldStartVnode 和 oldEndVnode 判断是否为 undefined，是因为最后一个 else 里的逻辑可能会将旧子 VNode 设置为 undefined
+      if (isUndef(oldStartVnode)) {
+        oldStartVnode = oldCh[++oldStartIdx] // Vnode has been moved left
+      } else if (isUndef(oldEndVnode)) {
+        oldEndVnode = oldCh[--oldEndIdx]
+      } else if (sameVnode(oldStartVnode, newStartVnode)) {
+        // PS：oldStartVnode 和 newStartVnode，最有可能是同一个 VNode
+        patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue)
+        oldStartVnode = oldCh[++oldStartIdx]
+        newStartVnode = newCh[++newStartIdx]
+      } else if (sameVnode(oldEndVnode, newEndVnode)) {
+        // PS：oldEndVnode 和 newEndVnode，最有可能是同一个 VNode
+        patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue)
+        oldEndVnode = oldCh[--oldEndIdx]
+        newEndVnode = newCh[--newEndIdx]
+      } else if (sameVnode(oldStartVnode, newEndVnode)) { // Vnode moved right
+        // PS：oldStartVnode 和 newEndVnode，也有可能是同一个 VNode
+        patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue)
+        // patch 后将 oldStartVnode 对应的 DOM 节点移到 oldEndVnode 对应的 DOM 节点之后
+        canMove && nodeOps.insertBefore(parentElm, oldStartVnode.elm, nodeOps.nextSibling(oldEndVnode.elm))
+        oldStartVnode = oldCh[++oldStartIdx]
+        newEndVnode = newCh[--newEndIdx]
+      } else if (sameVnode(oldEndVnode, newStartVnode)) { // Vnode moved left
+        // PS：oldEndVnode 和 newStartVnode，也有可能是同一个 VNode
+        patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue)
+        // patch 后将 oldEndVnode 对应的 DOM 节点移到 oldStartVnode 对应的 DOM 节点之前
+        canMove && nodeOps.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm)
+        oldEndVnode = oldCh[--oldEndIdx]
+        newStartVnode = newCh[++newStartIdx]
+      } else {
+        // 查找 newStartVnode 在 oldChildren 里对应的 oldVnode 的索引
+        // 注意：oldStartIdx 之前和 oldEndIdx 之后的 VNode 都已经处理完毕
+        if (isUndef(oldKeyToIdx)) oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx)
+        idxInOld = isDef(newStartVnode.key)
+          ? oldKeyToIdx[newStartVnode.key]
+          : findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx)
+        if (isUndef(idxInOld)) { // New element
+          // 若是没找到对应的 oldVnode，创建新的元素
+          createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx)
+        } else {
+          // 若是找到对应的 oldVnode
+          vnodeToMove = oldCh[idxInOld]
+          if (sameVnode(vnodeToMove, newStartVnode)) {
+            // 移动
+            patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue)
+            oldCh[idxInOld] = undefined
+            canMove && nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm)
+          } else {
+            // same key but different element. treat as new element
+            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx)
+          }
+        }
+        newStartVnode = newCh[++newStartIdx]
+      }
+    }
+    if (oldStartIdx > oldEndIdx) {
+      // oldChildren 先遍历完，说明 newChildren 存在多余节点，添加这些新节点
+      refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm
+      addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue)
+    } else if (newStartIdx > newEndIdx) {
+      // newChildren 先遍历完，说明 oldChildren 存在多余节点，删除掉
+      removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)
+    }
+  }
+```
+
+PS：
+
+- 修补 DOM 的过程仅发生在同级的 DOM 节点上
+- 若 DOM 节点不是同级，将删除旧 DOM，生成新 DOM
+- `patch`的复杂度是`O(n)`
 
 ### 组件销毁
 
