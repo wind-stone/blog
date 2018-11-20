@@ -159,9 +159,13 @@ export function initEvents (vm: Component) {
 
 详细分析`updateComponentListeners`如何将事件监听器添加到`vm._events`之前，我们先来了解下事件监听器数据`listeners`是如何而来的。
 
-`initEvents`函数里的`listeners`来源于组件占位节点上的监听器数据（模板编译）或元素的数据对象的`on`属性上的监听器数据（用户编写的`render`函数），在创建组件占位 VNode 时，会将这些监听器数据`listeners`添加到组件占位 VNode 的`componentOptions`属性上去。在组件`_init`初始化时，会将组件占位 VNode 上的`componentOptions`数据合并到`vm.$options`上，最终可以在`initEvents`上获取到`vm.$options._parentListeners`。
+`initEvents`函数里的`listeners`来源于组件数据对象`on`属性上的监听器数据，在创建组件占位 VNode 时，会将这些监听器数据`listeners`添加到组件占位 VNode 的`componentOptions`属性上去。在组件`_init`初始化时，会将组件占位 VNode 上的`componentOptions`数据合并到`vm.$options`上，最终可以在`initEvents`上获取到`vm.$options._parentListeners`。
 
-TODO: 模板编译时，如何获取`data.on`和`data.nativeOn`？
+::: tip 提示
+组件的模板最终将编译成`render`函数，在编译时，会将组件标签上的自定义事件转换，变成`render`函数里传入`createElement`的第二个参数即数据对象上的`on`属性上的`key`（自定义事件名称）和`value`（自定义事件处理方法）。
+:::
+
+TODO: 待添加，模板编译时是如何解析自定义事件和原生事件的？
 
 ```js
 // src/core/vdom/create-component.js
@@ -245,7 +249,7 @@ export function updateComponentListeners (
 在调用`updateListeners`时会传入`add`、`remove`参数，这两个参数都是函数，函数内分别是调用了`vm.$on/$once`、`vm.$off`来添加或删除组件的订阅事件。
 
 ::: warning 注意事项
-`add`函数和`remove`函数都是将事件注册/移除在`target`上，而`target`是子组件实例。这也就是说，尽管自定义事件的事件处理方法是父组件的方法，但是最终事件是注册在子组件实例上的。（事件处理方法的`this`已经绑定了父组件实例）
+`add`函数和`remove`函数都是将自定义事件注册在`target`上以及从`target`上移除，而`target`是子组件实例。这也就是说，尽管自定义事件的事件处理方法是父组件的方法，但是最终事件是注册在子组件实例上的。（事件处理方法的`this`已经绑定了父组件实例）
 :::
 
 #### updateListeners
@@ -570,6 +574,10 @@ export default {
 原生事件也是调用的`updateListeners`函数，只是传入的`add`和`remove`方法不同，这两个方法都是使用的 DOM Node 的`addEventListener`方法来添加浏览器原生的事件监听器。
 
 这里有一点需要额外注意，原生事件的监听器函数在绑定到 DOM 之前，都要先用`withMacroTask`封装一下，详见[nextTick - withmacrotask](/vue/source-study/util/next-tick.html#withmacrotask)
+
+::: warning
+原生事件是添加和删除都发生在`vnode.elm`上。对于元素类型的 VNode 来说，`vnode.elm`是对应的 DOM 元素节点；对于组件占位 VNode 来说，`vnode.elm`是组件 DOM Tree 的根 DOM 元素节点。
+:::
 
 #### once 的疑惑
 
