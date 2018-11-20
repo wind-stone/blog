@@ -158,6 +158,6 @@ function initComputed (Comp) {
 }
 ```
 
-对比与[组件特有的计算属性的便捷访问](/vue/source-study/instance/state/computed.html#计算属性挂载到-vm-上便捷访问)，继承而来的计算属性时挂载在组件的构造函数上，而不是组件实例上。
+对比与[组件特有的计算属性的访问](/vue/source-study/instance/state/computed.html#访问计算属性)，继承而来的计算属性时挂载在组件的构造函数上，而不是组件实例上。
 
 以后访问`subVm.computedXxx`时，会先在子类实例`subVm`上寻找`computedXxx`，但是找不到，会沿着子类实例的原型链查找，并在`Sub.prototype`上找到了`computedXxx`，但是这是个访问器属性，最终返回的还是`this._computedWatchers.computedXxx.value`。
