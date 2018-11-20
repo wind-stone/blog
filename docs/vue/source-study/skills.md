@@ -43,3 +43,38 @@ if (res.errno === 0) {
 ```
 
 可以发现，针对对象属性的层次很深时，且每一层属性的`key`都较长并都需要判断是否存在时，使用不断给`i`赋值的方式，要方便许多，尤其是在判断存在后获取最后一层属性值时。
+
+## 代码格式
+
+### 三元运算符
+
+```js
+const result = firstCondition
+        ? thisIsFirstResultOfTheFirstCondition
+        : secondCondition
+          ? thisIsFirstRusultOfTheSecondCondition
+          : thisIsSecondRusultOfTheSecondCondition
+```
+
+PS：三元运算符是右结合的，上下这两个表达式结果是相同的。
+
+```js
+const result = firstCondition
+        ? thisIsFirstResultOfTheFirstCondition
+        : (secondCondition
+          ? thisIsFirstRusultOfTheSecondCondition
+          : thisIsSecondRusultOfTheSecondCondition)
+```
+
+### 并排的条件语句
+
+```js
+if (
+  a &&
+  b && (
+    c || d
+  )
+) {
+  // ...
+}
+```
