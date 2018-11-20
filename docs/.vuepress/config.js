@@ -249,6 +249,7 @@ module.exports = {
             'vdom/patch',
             'vdom/patch-vnode',
             'vdom/child-component-create',
+            'vdom/patch-modules/',
             'vdom/patch-fn'
           ]
         },
