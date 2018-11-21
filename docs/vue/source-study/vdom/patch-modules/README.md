@@ -231,3 +231,15 @@ DOM 元素创建好后以及初始化创建好的子组件时会调用`invokeCre
 ### dom-props 模块
 
 详见[dom-props 模块](/vue/source-study/vdom/patch-modules/dom-props.html)
+
+### transition 模块
+
+TODO: 待添加
+
+### ref 模块
+
+详见[ref 模块](/vue/source-study/vdom/patch-modules/ref.html)
+
+### directives 模块
+
+TODO: 待添加
