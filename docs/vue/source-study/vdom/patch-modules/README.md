@@ -220,6 +220,14 @@ DOM 元素创建好后以及初始化创建好的子组件时会调用`invokeCre
 
 详见[class 模块](/vue/source-study/vdom/patch-modules/class.html)
 
+### style 模块
+
+详见[style 模块](/vue/source-study/vdom/patch-modules/style.html)
+
 ### attrs 模块
 
 详见[attrs 模块](/vue/source-study/vdom/patch-modules/attrs.html)
+
+### dom-props 模块
+
+详见[dom-props 模块](/vue/source-study/vdom/patch-modules/dom-props.html)
