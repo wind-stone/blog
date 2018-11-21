@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # attrs
+
+[[toc]]
 
 创建 DOM 元素节点和修补 DOM 元素节点时，可能需要添加/修改元素节点的特性`attribute`。`attrs`模块将`attribute`的添加和修改合并成了同一个函数`updateAttrs`。
 
@@ -52,6 +58,7 @@ function updateAttrs (oldVnode: VNodeWithData, vnode: VNodeWithData) {
   let attrs: any = vnode.data.attrs || {}
   // clone observed objects, as the user probably wants to mutate it
   // vm.$attrs 是响应式的，且指向了 vnode.data.attrs，且为 vm.$attrs 添加响应式的操作在前，因此 vnode.data.attrs 也是响应式的
+  // 为了防止用户直接修改 attribute 的值，此处克隆一份数据
   if (isDef(attrs.__ob__)) {
     attrs = vnode.data.attrs = extend({}, attrs)
   }

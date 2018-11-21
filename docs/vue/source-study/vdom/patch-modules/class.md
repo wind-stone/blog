@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # class 模块
+
+[[toc]]
 
 创建 DOM 元素节点和修补 DOM 元素节点时，可能需要添加/修改元素节点的`class`特性。`class`模块将`class`的添加和修改合并成了同一个函数`updateClass`。
 

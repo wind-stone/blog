@@ -266,8 +266,11 @@ export function renderMixin (Vue: Class<Component>) {
     return vnode
   }
 }
-
 ```
+
+::: tip 提示
+只有组件的渲染 VNode 才有`vnode.parent`属性哦！
+:::
 
 ### vm._vnode、vm.$vnode
 

@@ -633,7 +633,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
 
 而`insertedVnodeQueue`就是保存这些 VNode 的，但是需要注意的是，每一个组件每次调用`vm.__patch__`时都会新创建一个`insertedVnodeQueue`空数组，也就是说，`insertedVnodeQueue`仅收集组件单次`vm.__patch__`过程中遇到的带有`vnode.data.hook.insert`钩子的 VNode。
 
-另外一点，当子组件首次渲染时，不会急着遍历`insertedVnodeQueue`并调用各个 VNode 的`insert`方法，而是将`insertedVnodeQueue`转存至子组件占位 VNode 的`vnode.data.pendingInsert`上，等到子组件占位节点在做子组件初始化时，再将这些子组件的`insertedVnodeQueue`都`push`到父组件的`insertedVnodeQueue`中。
+组件在调用`patch`函数的最后，会调用`invokeInsertHook`进而调用此次渲染过程中收集到`insertedVnodeQueue`中各个 VNode 的`insert`钩子。但是当子组件首次渲染完成之后，`invokeInsertHook`中不会立即调用`insertedVnodeQueue`中各个 VNode 的`insert`方法，而是将`insertedVnodeQueue`转存至子组件占位 VNode 的`vnode.data.pendingInsert`上，等到子组件做初始化（即`initComponent`）时，再将这些子组件渲染时收集到的`insertedVnodeQueue`都`push`到父组件的`insertedVnodeQueue`中，再根据父组件是否也是子组件首次渲染来决定是将父组件的`insertedVnodeQueue`继续往父组件的父组件上`push`，还是调用父组件`insertedVnodeQueue`中各个 VNode 的`insert`方法。
 
 子组件`vm.__patch__()`的最后（下面代码里的`vnode`是指子组件渲染 VNode，`vnode.parent`是指子组件占位 VNode）：
 
@@ -666,7 +666,7 @@ export function createPatchFunction (backend) {
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
     // ...
     invokeInsertHook(vnode, insertedVnodeQueue, isInitialPatch)
-    // ...
+    return vnode.elm
   }
 }
 ```
@@ -681,7 +681,7 @@ export function createPatchFunction (backend) {
    */
   function initComponent (vnode, insertedVnodeQueue) {
     if (isDef(vnode.data.pendingInsert)) {
-      // 将子组件在创建 DOM Tree 过程中新增的所有带 insert 钩子的 VNode 数组添加到 insertedVnodeQueue 中
+      // 将子组件的 insertedVnodeQueue，push 到组件的 insertedVnodeQueue 中
       insertedVnodeQueue.push.apply(insertedVnodeQueue, vnode.data.pendingInsert)
       vnode.data.pendingInsert = null
     }
@@ -703,10 +703,6 @@ export function createPatchFunction (backend) {
 }
 ```
 
-insertedVnodeQueue 的添加顺序是先子后父
-
-所以对于同步渲染的子组件而言，
-
 ### 钩子函数的执行顺序
 
 - 先父组件后子组件的有：
@@ -719,5 +715,3 @@ insertedVnodeQueue 的添加顺序是先子后父
 - 先子组件后父组件的有：
   - `mounted`
   - `destroy`
-
-### 组件更新算法

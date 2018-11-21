@@ -229,7 +229,7 @@ export function mergeOptions (
     child = child.options
   }
 
-  // 格式化 props、inject、directives 为对象格式
+  // 标准化 props、inject、directives 为对象格式
   normalizeProps(child, vm)
   normalizeInject(child, vm)
   normalizeDirectives(child)

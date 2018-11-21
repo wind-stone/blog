@@ -19,7 +19,7 @@ sidebarDepth: 0
 5. 删除不在新`style`里的老`style`的属性
 6. 将新`style`设置到 DOM 元素节点上
 
-::: tips 提示
+::: tip 提示
 编译阶段已经将`vnode.data.staticStyle`处理成了对象形式，但`vnode.data.style`仍可能是字符串形式、对象形式或对象数组形式。
 :::
 

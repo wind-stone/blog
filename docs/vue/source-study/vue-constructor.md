@@ -364,7 +364,9 @@ Vue.prototype.$mount = function (
       const { render, staticRenderFns } = compileToFunctions(template, {
         shouldDecodeNewlines,
         shouldDecodeNewlinesForHref,
+        // 模板内表达式前后的分隔符，默认是 ["{{", "}}"]
         delimiters: options.delimiters,
+        // 是否保留且渲染模板中的 HTML 注释，默认是 false
         comments: options.comments
       }, this)
       options.render = render
@@ -398,6 +400,10 @@ Vue.compile = compileToFunctions
 
 export default Vue
 ```
+
+::: tip 提示
+若是使用运行时版的`Vue.js`，则 Web 初次处理版`Vue`就是最终导出的`Vue`；若是使用完整版的`Vue.js`，则需要再做一些处理，Web 最终导出版`Vue`才是最终导出的`Vue`。
+:::
 
 ## 释疑
 
