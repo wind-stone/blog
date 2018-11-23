@@ -14,10 +14,42 @@ sidebarDepth: 0
 - Box Model 相关属性包括：border / margin / padding / width / height 等
 - Typographic 相关属性包括：font / line-height / text-align / word-wrap 等
 - Visual 相关属性包括：background / color / transition / list-style 等
-
 - 另外，如果包含 content 属性，应放在最前面。
 
 Reference：[百度-CSS 编码规范](https://github.com/fex-team/styleguide/blob/master/css.md)
+
+### 其他最佳实践
+
+- 类似`margin`/`padding`这类具有四个值的属性，书写顺序是：上、右、下、左
+- 不要用`0px`，而是`0`
+- 颜色值
+  - 尽量使用 #XXX
+  - 不要使用单词
+- 小数值：不要用`0.X`，而是`.X`
+
+### background 属性简写
+
+`background`简写属性在一个声明中可设置所有的背景属性。
+
+可设置属性如下:
+
+- `background-image`: 设置背景图像, 可以是真实的图片路径, 也可以是创建的渐变背景;
+- `background-position`: 设置背景图像的位置;
+- `background-size`: 设置背景图像的大小;
+- `background-repeat`: 指定背景图像的铺排方式;
+- `background-attachment`: 指定背景图像是滚动还是固定;
+- `background-origin`: 设置背景图像显示的原点[`background-position`相对定位的原点];
+- `background-clip`: 设置背景图像向外剪裁的区域;
+- `background-color`: 指定背景颜色。
+
+简写的顺序如下: bg-color || bg-image || bg-position [ / bg-size]? || bg-repeat || bg-attachment || bg-origin || bg-clip
+
+顺序并非固定, 但是要注意:
+
+`background-position`和`background-size`属性，之间需使用/分隔，且`background-position`值在前，`background-size`值在后。
+如果同时使用`background-origin`和`background-clip`属性, `origin`属性值需在`clip`属性值之前, 如果`origin`与`clip`属性值相同, 则可只设置一个值。
+
+需要注意的是，对于 CSS 预处理器来说，当在缩写里同时使用`background-position`和`background-size`时，中间的`/`会被当成除号对待，待找出解决办法。
 
 ## rgba() 与 opacity
 
@@ -103,30 +135,6 @@ CSS 3 里，`width`属性又多了几个关键字取值：
 
 Reference: [张鑫旭 - 理解CSS3 max/min-content及fit-content等width值
 ](https://www.zhangxinxu.com/wordpress/2016/05/css3-width-max-contnet-min-content-fit-content/)
-
-## background 属性简写
-
-`background`简写属性在一个声明中可设置所有的背景属性。
-
-可设置属性如下:
-
-- `background-image`: 设置背景图像, 可以是真实的图片路径, 也可以是创建的渐变背景;
-- `background-position`: 设置背景图像的位置;
-- `background-size`: 设置背景图像的大小;
-- `background-repeat`: 指定背景图像的铺排方式;
-- `background-attachment`: 指定背景图像是滚动还是固定;
-- `background-origin`: 设置背景图像显示的原点[`background-position`相对定位的原点];
-- `background-clip`: 设置背景图像向外剪裁的区域;
-- `background-color`: 指定背景颜色。
-
-简写的顺序如下: bg-color || bg-image || bg-position [ / bg-size]? || bg-repeat || bg-attachment || bg-origin || bg-clip
-
-顺序并非固定, 但是要注意:
-
-`background-position`和`background-size`属性，之间需使用/分隔，且`background-position`值在前，`background-size`值在后。
-如果同时使用`background-origin`和`background-clip`属性, `origin`属性值需在`clip`属性值之前, 如果`origin`与`clip`属性值相同, 则可只设置一个值。
-
-需要注意的是，对于 CSS 预处理器来说，当在缩写里同时使用`background-position`和`background-size`时，中间的`/`会被当成除号对待，待找出解决办法。
 
 ## 属性值的百分比
 

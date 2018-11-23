@@ -28,3 +28,7 @@ sidebarDepth: 0
 
 - [HTML Boolean Attributes](http://www.xiaocaoge.com/html-boolean-attributes.html)
 - [Boolean attributes](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes)
+
+## 超链接 rel = noopener
+
+超链接里打开外部网站时，要在超链接上添加`res="noopener"`，详见[网站使用 rel="noopener" 打开外部锚](https://developers.google.com/web/tools/lighthouse/audits/noopener?hl=zh-cn)
