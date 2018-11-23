@@ -30,3 +30,16 @@ Reference：
 
 - [为什么排版引擎解析 CSS 选择器时一定要从右往左解析？](https://www.zhihu.com/question/20185756)
 - [Why do browsers match CSS selectors from right to left?](http://stackoverflow.com/questions/5797014/why-do-browsers-match-CSS-selectors-from-right-to-left)
+
+## 命名规范
+
+### BEM
+
+BEM 是一种 CSS 类命名规范，通过 模块化和可维护的方式 编写样式。
+
+BEM是 块（Block），元素（Element），修饰符（Modifier）的缩写。
+
+Reference:
+
+- [CSS使用BEM命名规范的五大理由](https://juejin.im/post/5a1c175551882535c470fe2c)
+- [5 Reasons To Use BEM (a.k.a. why is BEM G.R.E.A.T.)](https://blog.elpassion.com/reasons-to-use-bem-a88738317753)
