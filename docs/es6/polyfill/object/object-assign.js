@@ -1,22 +1,4 @@
 /**
- * Object.create
- *
- * Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
- */
-if (typeof Object.create !== "function") {
-  Object.create = function (proto, propertiesObject) {
-    if (!(proto === null || typeof proto === "object" || typeof proto === "function")) {
-      throw TypeError('Argument must be an object, or null');
-    }
-    var temp = new Object();
-    temp.__proto__ = proto;
-    Object.defineProperties(temp, propertiesObject);
-    return temp;
-  };
-}
-
-
-/**
  * Object.assign
  *
  * 拷贝源对象自身的并且可枚举的属性到目标对象身上，注意以下几点：
@@ -24,6 +6,7 @@ if (typeof Object.create !== "function") {
  *    - 继承属性和不可枚举属性是不能拷贝的
  *    - 浅拷贝，非深度拷贝
  *    - 如果 source 是原始类型，会被包装成 object
+ *
  * Reference: https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
  */
 if (typeof Object.assign != 'function') {
