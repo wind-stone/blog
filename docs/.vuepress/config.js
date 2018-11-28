@@ -258,6 +258,7 @@ module.exports = {
           collapsable: false,
           children: [
             'compile/',
+            'compile/compile-process',
             'compile/parse-html'
           ]
         },
