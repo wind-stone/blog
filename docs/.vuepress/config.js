@@ -254,6 +254,13 @@ module.exports = {
           ]
         },
         {
+          title: '编译',
+          collapsable: false,
+          children: [
+            'compile/parse-html'
+          ]
+        },
+        {
           title: 'Util',
           collapsable: false,
           children: [
