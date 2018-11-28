@@ -257,6 +257,7 @@ module.exports = {
           title: '编译',
           collapsable: false,
           children: [
+            'compile/',
             'compile/parse-html'
           ]
         },
