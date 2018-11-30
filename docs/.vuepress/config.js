@@ -66,6 +66,7 @@ module.exports = {
             'html-dom/elements/',
             'html-dom/attributes/',
             'html-dom/properties/',
+            'html-dom/image/'
           ]
         },
         {
