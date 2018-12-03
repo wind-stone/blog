@@ -260,6 +260,8 @@ module.exports = {
           children: [
             'compile/',
             'compile/compile-process',
+            'compile/base-compile',
+            'compile/parse',
             'compile/parse-html'
           ]
         },

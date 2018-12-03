@@ -205,7 +205,7 @@ export function createCompilerCreator (baseCompile: Function): Function {
 
 #### baseCompile
 
-详见
+`compile`函数里所使用的`baseCompile`函数是在调用`createCompilerCreator`函数时传入的，详见[核心编译](/vue/source-study/compile/base-compile.html)
 
 #### detectErrors
 
