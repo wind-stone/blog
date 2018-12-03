@@ -2,13 +2,13 @@
 sidebarDepth: 0
 ---
 
-# 解析模板
+# 解析模板字符串
 
 [[toc]]
 
 ## parseHTML
 
-`parseHTML(html, options)`函数的作用是解析传入的`html`字符串，识别出元素的开始标签（也称为开放标签）、结束标签（也称为闭合标签）、标签的特性及特性值、文本、注释等等，进而调用`options.start/end/chars/comment`以处理这些解析出的内容。
+`parseHTML(html, options)`函数的作用是循环解析传入的`html`字符串，单次循环可以解析出元素的开始标签（也称为开放标签）或结束标签（也称为闭合标签）或文本或注释中的一种，进而调用`options.start/end/chars/comment`回调函数以分别处理这些解析出的内容。每循环一次，`html`字符串就被解析出一段内容，就调用一次回调函数，经过多次循环，直到`html`字符串全部解析完成。
 
 解析过程主要是利用正则表达式做正则匹配，从`html`字符串的第一个字符开始，每识别出一段文本属于那种类型，就调用`options`中对应的方法传递给`parser`做对应的处理。先简单介绍`options`里各个方法的作用：
 
@@ -25,26 +25,204 @@ sidebarDepth: 0
 
 1. 首次匹配 || 上一次匹配的`lastTag`不是纯文本元素标签（比如`script,style,textarea`）
     - 若`html`的第一个字符是`<`
-      - 匹配到注释：获取完整的注释字符串及注释结尾位置，调用`options.comment`处理，丢弃注释部分的字符串，继续处理注释之后的字符串
-      - 匹配到 IE 条件注释：获取条件注释的结尾位置，丢弃条件注释部分的字符串，继续处理条件注释之后的字符串
-      - 匹配到 Doctype：获取 Doctype 的结尾位置，丢弃 Doctype 字符串，继续处理之后的字符串
-      - 匹配到结束标签：获取完整的结束标签字符串，做如下处理：
+      - 匹配到注释：获取完整的注释字符串及注释结尾位置，调用`options.comment`处理，丢弃注释部分的字符串，`continue`继续处理注释之后的字符串
+      - 匹配到 IE 条件注释：获取条件注释的结尾位置，丢弃条件注释部分的字符串，`continue`继续处理条件注释之后的字符串
+      - 匹配到 Doctype：获取 Doctype 的结尾位置，丢弃 Doctype 字符串，`continue`继续处理 Doctype 之后的字符串
+      - 匹配到结束标签：获取完整的结束标签字符串，做如下处理后，`continue`继续处理结束标签之后的字符串
         - 查找`stack`栈里最后一个同名的标签
-          - 若能找到，遍历栈尾到该标签之间的所有标签（这些标签都没有闭合），发出警告，并调用`options.end`并将这些没有结束标签的标签和结束标签提交给外界处理
+          - 若能找到
+            - 遍历栈尾到该标签之间的所有标签（这些标签都没有闭合），发出警告
+            - 调用`options.end`并将这些没有结束标签的标签和结束标签提交给外界处理
+            - 重置`stack`栈的大小，即删除`stack`里从栈尾到（包括）该标签的所有标签
           - 若找不到，处理结束标签为`br`/`p`的特殊情况
-      - 匹配到开始标签：
+      - 匹配到开始标签，做如下处理后，`continue`继续处理结束标签之后的字符串
         - 解析开始标签，提取出特性字符串，分辨出是否是一元标签
         - 处理开始标签
           - 处理某些特殊情况
           - 将特性字符串处理成对象形式
           - 对于非一元标签，推入栈中
           - 调用`options.start()`，将开始标签相关信息交给外界处理（外界创建 AST 元素，处理指令、事件、特性等等）
+    - 若上一步没匹配到或`html`的第一个字符不是`<`，匹配文本，调用`options.char`将文本交给外界处理
 2. 非首次匹配 && 上一次匹配的`lastTag`是纯文本元素标签（比如`script,style,textarea`）
     - 将标签内包含的`<!\-- -->`、`<![CDATA[]]>`移除
     - 调用`options.chars()`将标签内的文本提交给外界处理
     - 做与“匹配到结束标签”相同的处理
 
-上面的描述仅仅说明了大概的过程，省略了细节实现，更加详细的内容需要阅读源码。
+## 示例
+
+如下先给出一个简单示例，说明`parseHTML`是如何解析 HTML 的。
+
+假设组件的模板是下面这样，且假设传入的`options.shouldKeepComment`为`true`。
+
+```html
+<div class="container">
+  <!--这里是注释内容-->
+  <p v-if="isRoot" style="font-size: 12px">插值内容<br> {{ chazhi }}</p>
+</div>
+```
+
+为了让上面`html`字符串里节点之间不易见的空格和换行符更加明显，我们用`*`来表示空格，用`#`来表示换行符`\n`。
+
+```html
+<div class="container">#
+**<!--这里是注释内容-->#
+**<p v-if="isRoot" style="font-size: 12px">插值内容<br>{{ chazhi }}</p>#
+</div>
+```
+
+- 第一次循环，匹配到开始标签，`<div class="container">`
+  - 解析开始标签
+    - `tag`为`div`
+    - `attrs`为`[ 'class="container"' ]`
+    - `unarySlash`为`false`，即不是一元标签
+  - 处理标签
+    - 将`attrs`特性字符串处理为`[ { name: 'class', value: 'container' } ]`
+    - 将开始标签推入`stack`中
+    - 调用`options.start(tagName, attrs, unary, match.start, match.end)`
+      - `tagName`: `'div'`
+      - `attrs`: `[ { name: 'class', value: 'container' } ]`
+      - `unary`: `false`
+      - `match.start`: `0`
+      - `match.end`: `23`
+
+第一次循环后，`html`字符串和`stack`变成了下面这样：（空格已经用`*`代替）
+
+```html
+                       #
+**<!--这里是注释内容-->#
+**<p v-if="isRoot" style="font-size: 12px">插值内容<br>{{ chazhi }}</p>#
+</div>
+```
+
+```js
+stack = [
+  { tag: 'div', lowerCasedTag: 'div', attrs: [ { name: 'class', value: 'container' } ] }
+]
+```
+
+- 第二次循环，匹配到文本`#**`，即`<div class="container">`和`<!-- 这里是注释内容 -->`之间的内容，调用`options.chars('#**')`
+
+第二次循环后，`html`字符串变成了下面这样：
+
+```html
+  <!--这里是注释内容-->#
+**<p v-if="isRoot" style="font-size: 12px">插值内容<br>{{ chazhi }}</p>#
+</div>
+```
+
+- 第三次循环，匹配到注释节点，`<!--这里是注释内容-->`，调用`options.comment('这里是注释内容')`
+
+第三次循环后，`html`字符串变成了下面这样：
+
+```html
+                     #
+**<p v-if="isRoot" style="font-size: 12px">插值内容<br>{{ chazhi }}</p>#
+</div>
+```
+
+- 第四次循环，匹配到文本`#**`，即`<!--这里是注释内容-->`和`<p...`之间的内容
+
+第四次循环后，`html`字符串变成了下面这样：
+
+```html
+  <p v-if="isRoot" style="font-size: 12px">插值内容<br>{{ chazhi }}</p>#
+</div>
+```
+
+- 第五次循环，匹配到开始标签，`<p v-if="isRoot" style="font-size: 12px">`
+  - 解析开始标签
+    - `tag`为`p`
+    - `attrs`为`[ 'v-if="isRoot"', 'style="font-size: 12px"' ]`
+    - `unarySlash`为`false`，即不是一元标签
+  - 处理标签
+    - 将`attrs`特性字符串处理为`[ { name: 'v-if', value: 'isRoot' }, { name: 'style', value: 'font-size: 12px' } ]`
+    - 将开始标签推入`stack`中
+    - 调用`options.start(tagName, attrs, unary, match.start, match.end)`
+      - `tagName`: `'p'`
+      - `attrs`: `[ { name: 'v-if', value: 'isRoot' }, { name: 'style', value: 'font-size: 12px' } ]`
+      - `unary`: `false`
+      - `match.start`: `43`
+      - `match.end`: `84`
+
+第五次循环后，`html`字符串和`stack`变成了下面这样：
+
+```html
+                                           插值内容<br>{{ chazhi }}</p>#
+</div>
+```
+
+```js
+stack = [
+  { tag: 'div', lowerCasedTag: 'div', attrs: [ { name: 'class', value: 'container' } ] },
+  { tag: 'p', lowerCasedTag: 'p', attrs: [ { name: 'v-if', value: 'isRoot' }, { name: 'style', value: 'font-size: 12px' } ] }
+]
+```
+
+- 第六次循环，匹配到文本`插值内容`
+
+```html
+                                                  <br>{{ chazhi }}</p>#
+</div>
+```
+
+- 第七次循环，匹配到开始标签，`<br>`
+  - 解析开始标签
+    - `tag`为`br`
+    - `attrs`为`[]`
+    - `unarySlash`为`true`，是一元标签
+  - 处理标签
+    - 将`attrs`特性字符串处理为`[]`
+    - 调用`options.start(tagName, attrs, unary, match.start, match.end)`
+      - `tagName`: `'br'`
+      - `attrs`: `[]`
+      - `unary`: `true`
+      - `match.start`: `88`
+      - `match.end`: `92`
+
+```html
+                                                      {{ chazhi }}</p>#
+</div>
+```
+
+- 第八循环，匹配到文本`{{ chazhi }}`
+
+```html
+                                                                  </p>#
+</div>
+```
+
+- 第九循环，匹配到结束标签，`</p>`
+  - 在`stack`栈里找到了`p`标签
+  - 调用`options.end()`
+  - 删除`stack`栈里`p`标签~最后一个标签
+
+```html
+                                                                      #
+</div>
+```
+
+```js
+stack = [
+  { tag: 'div', lowerCasedTag: 'div', attrs: [ { name: 'class', value: 'container' } ] }
+]
+```
+
+- 第十循环，匹配到文本`#`
+
+```html
+</div>
+```
+
+- 第十一循环，匹配到结束标签，`</div>`
+  - 在`stack`栈里找到了`div`标签
+  - 调用`options.end()`
+  - 删除`stack`栈里`div`标签~最后一个标签
+
+至此，`html`解析完成，`stack`栈也为`[]`了。
+
+上面的描述仅仅说明了大概的过程，省略了很多细节，更加详细的内容需要阅读源码。
+
+## 源码
 
 ```js
 /**
