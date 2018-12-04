@@ -488,14 +488,14 @@ function stringify(source) {
                     res += `${key}: ${stringify(source[key])}, `
                 }
             }
-            return res.slice(0, -2) + '}'
+            return (res.length === 1 ? res : res.slice(0, -2)) + '}'
         }
         case 'Array': {
             let res = '['
             source.forEach(function (val, idx) {
                 res += stringify(val) + ', '
             });
-            return res.slice(0, -2) + ']'
+            return (res.length === 1 ? res : res.slice(0, -2)) + ']'
         }
         case 'RegExp': {
             return `new RegExp(${source})`

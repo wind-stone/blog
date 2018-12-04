@@ -263,6 +263,8 @@ export function updateComponentListeners (
  *   是否监听一次
  *   是否采取捕获模式
  *   是否 passive
+ *
+ * PS: 在模板编译阶段，会将事件的修饰符变成对应的符号添加在事件名称之前，这里是从事件名称里解析出各个修饰符
  */
 const normalizeEvent = cached((name: string): {
   name: string,
