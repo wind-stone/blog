@@ -262,7 +262,8 @@ module.exports = {
             'compile/compile-process',
             'compile/base-compile',
             'compile/parse',
-            'compile/parse-html'
+            'compile/parse-html',
+            'compile/optimize'
           ]
         },
         {
