@@ -97,7 +97,8 @@ observer.observe(element);
 
 ### 滚动穿透问题解决
 
-[移动端滚动穿透解决方案](https://juejin.im/post/5abf1c69f265da239706fcb8)
+- [移动端滚动穿透解决方案](https://juejin.im/post/5abf1c69f265da239706fcb8)
+- [示例代码](/code-snippet/other/no-bg-scroll.html)
 
 #### 容器内仍有
 

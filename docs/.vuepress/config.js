@@ -308,7 +308,8 @@ module.exports = {
           title: '其他',
           collapsable: true,
           children: [
-            'rem/'
+            'rem/',
+            'other/no-bg-scroll'
           ]
         }
       ],
