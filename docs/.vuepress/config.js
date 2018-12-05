@@ -14,16 +14,11 @@ module.exports = {
     lastUpdated: 'Last Updated',
     sidebarDepth: 2,
     nav: [
+      { text: 'Vue 源码学习', link: '/vue/source-study/' },
+      { text: 'Vue 生态系列', link: '/vue/vue-series/vuejs/' },
       { text: '前端知识点', link: '/knowledge/js/' },
       { text: '移动端', link: '/mobile/feature/' },
       { text: 'ES6+', link: '/es6/' },
-      {
-        text: 'Vue.js',
-        items: [
-          { text: 'Vue 生态系列', link: '/vue/vue-series/vuejs/' },
-          { text: 'Vue 源码学习', link: '/vue/source-study/' }
-        ]
-      },
       { text: '开发环境/工具', link: '/tools/git/' },
       { text: 'Code Snippet', link: '/code-snippet/js/' },
       { text: '算法', link: '/algorithm/sorting-algorithm/' },
@@ -31,168 +26,7 @@ module.exports = {
       { text: '随记', link: '/wander/house/' }
     ],
     sidebar: {
-      '/knowledge/': [
-        {
-          title: 'JavaScript',
-          collapsable: false,
-          children: [
-            'js/',
-            'js/data-structure',
-            'js/event-loop',
-            'js/prototype',
-            'js/this',
-            'js/functional-programming',
-            'js/performance'
-          ]
-        },
-        {
-          title: 'CSS',
-          collapsable: false,
-          children: [
-            'css/',
-            'css/selectors/',
-            'css/properties/',
-            'css/layouts/',
-            'css/layouts/ifc/',
-            'css/flex-image/',
-            'css/text-wrap-and-ellipsis/'
-          ]
-        },
-        {
-          title: 'HMLT-DOM',
-          collapsable: false,
-          children: [
-            'html-dom/',
-            'html-dom/elements/',
-            'html-dom/attributes/',
-            'html-dom/properties/',
-            'html-dom/image/'
-          ]
-        },
-        {
-          title: '浏览器环境',
-          collapsable: false,
-          children: [
-            'browser-env/',
-            'browser-env/console/',
-            'browser-env/debug',
-            'browser-env/memory',
-            'browser-env/cross-domain',
-            'browser-env/security',
-            'browser-env/file-system',
-            'browser-env/file-download/',
-            'browser-env/pwa',
-            'browser-env/web-components',
-            'browser-env/image-lazy-load'
-          ]
-        },
-        {
-          title: 'Node 环境',
-          collapsable: false,
-          children: [
-            'node-env/'
-          ]
-        }
-      ],
-
-      '/mobile/': [
-        {
-          title: '移动端 - 独有特性',
-          collapsable: true,
-          children: [
-            'feature/',
-            'feature/click-delay',
-            'feature/scroll',
-          ]
-        },
-        {
-          title: '移动端 - Hybrid',
-          collapsable: true,
-          children: [
-            'hybrid/h52app'
-          ]
-        },
-        {
-          title: '移动端 - 通用兼容性',
-          collapsable: true,
-          children: [
-            'compatibility/general/',
-            'compatibility/general/input-delay/',
-            'compatibility/general/media',
-            'compatibility/general/video'
-          ]
-        },
-        {
-          title: '移动端 - JS 兼容性',
-          collapsable: true,
-          children: [
-            'compatibility/js/fastclick'
-          ]
-        },
-        {
-          title: '移动端 - CSS 兼容性',
-          collapsable: true,
-          children: [
-            'compatibility/css/ie',
-            'compatibility/css/android-small-fontsize'
-          ]
-        }
-      ],
-
-      '/es6/': [
-        {
-          title: 'ES6+',
-          collapsable: false,
-          children: [
-            '',
-            'babel/',
-            'let-const/',
-            'destructuring-assignment/',
-            'array/',
-            'object/',
-            'class/',
-            'iterator/',
-            'generator/',
-            'promise/',
-            'async-await/',
-            'module/'
-          ]
-        },
-        {
-          title: 'Polyfill',
-          collapsable: false,
-          children: [
-            'polyfill/object/'
-          ]
-        }
-      ],
-
-      // Vue 系列
-      '/vue/vue-series/': [
-        {
-          title: 'Vue.js',
-          collapsable: true,
-          children: [
-            'vuejs/',
-            'vuejs/scoped-css'
-          ]
-        },
-        {
-          title: 'Vuex',
-          collapsable: true,
-          children: [
-            'vuex/register-module'
-          ]
-        },
-        {
-          title: 'vue-router',
-          collapsable: false,
-          children: [
-            'vue-router/'
-          ]
-        }
-      ],
-
+      // Vue 源码学习
       '/vue/source-study/': [
         {
           title: '总览',
@@ -285,6 +119,170 @@ module.exports = {
           collapsable: false,
           children: [
             'vuex/'
+          ]
+        }
+      ],
+
+      // Vue 生态系列
+      '/vue/vue-series/': [
+        {
+          title: 'Vue.js',
+          collapsable: false,
+          children: [
+            'vuejs/',
+            'vuejs/scoped-css'
+          ]
+        },
+        {
+          title: 'Vuex',
+          collapsable: false,
+          children: [
+            'vuex/register-module'
+          ]
+        },
+        {
+          title: 'vue-router',
+          collapsable: false,
+          children: [
+            'vue-router/'
+          ]
+        }
+      ],
+
+      // 前端知识点
+      '/knowledge/': [
+        {
+          title: 'JavaScript',
+          collapsable: false,
+          children: [
+            'js/',
+            'js/data-structure',
+            'js/event-loop',
+            'js/prototype',
+            'js/this',
+            'js/functional-programming',
+            'js/performance'
+          ]
+        },
+        {
+          title: 'CSS',
+          collapsable: false,
+          children: [
+            'css/',
+            'css/selectors/',
+            'css/properties/',
+            'css/layouts/',
+            'css/layouts/ifc/',
+            'css/flex-image/',
+            'css/text-wrap-and-ellipsis/'
+          ]
+        },
+        {
+          title: 'HMLT-DOM',
+          collapsable: false,
+          children: [
+            'html-dom/',
+            'html-dom/elements/',
+            'html-dom/attributes/',
+            'html-dom/properties/',
+            'html-dom/image/'
+          ]
+        },
+        {
+          title: '浏览器环境',
+          collapsable: false,
+          children: [
+            'browser-env/',
+            'browser-env/console/',
+            'browser-env/debug',
+            'browser-env/memory',
+            'browser-env/cross-domain',
+            'browser-env/security',
+            'browser-env/file-system',
+            'browser-env/file-download/',
+            'browser-env/pwa',
+            'browser-env/web-components',
+            'browser-env/image-lazy-load'
+          ]
+        },
+        {
+          title: 'Node 环境',
+          collapsable: false,
+          children: [
+            'node-env/'
+          ]
+        }
+      ],
+
+      // 移动端
+      '/mobile/': [
+        {
+          title: '移动端 - 独有特性',
+          collapsable: true,
+          children: [
+            'feature/',
+            'feature/click-delay',
+            'feature/scroll',
+          ]
+        },
+        {
+          title: '移动端 - Hybrid',
+          collapsable: true,
+          children: [
+            'hybrid/h52app'
+          ]
+        },
+        {
+          title: '移动端 - 通用兼容性',
+          collapsable: true,
+          children: [
+            'compatibility/general/',
+            'compatibility/general/input-delay/',
+            'compatibility/general/media',
+            'compatibility/general/video'
+          ]
+        },
+        {
+          title: '移动端 - JS 兼容性',
+          collapsable: true,
+          children: [
+            'compatibility/js/fastclick'
+          ]
+        },
+        {
+          title: '移动端 - CSS 兼容性',
+          collapsable: true,
+          children: [
+            'compatibility/css/ie',
+            'compatibility/css/android-small-fontsize'
+          ]
+        }
+      ],
+
+      '/es6/': [
+        {
+          title: 'ES6+',
+          collapsable: false,
+          children: [
+            '',
+            'babel/',
+            'let-const/',
+            'destructuring-assignment/',
+            'array/',
+            'object/',
+            'class/',
+            'iterator/',
+            'generator/',
+            'promise/',
+            'async-await/',
+            'module/'
+          ]
+        },
+        {
+          title: 'Polyfill',
+          collapsable: false,
+          children: [
+            'polyfill/object/'
           ]
         }
       ],
