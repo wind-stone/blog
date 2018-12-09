@@ -85,7 +85,8 @@ module.exports = {
             'vdom/patch-vnode',
             'vdom/child-component-create',
             'vdom/patch-modules/',
-            'vdom/patch-fn'
+            'vdom/patch-fn',
+            'vdom/topics/dom-binding'
           ]
         },
         {
@@ -112,13 +113,6 @@ module.exports = {
           collapsable: false,
           children: [
             'util/next-tick'
-          ]
-        },
-        {
-          title: '专题',
-          collapsable: false,
-          children: [
-            'topics/dom-binding'
           ]
         },
         {

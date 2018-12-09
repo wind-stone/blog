@@ -681,6 +681,6 @@ export function createPatchFunction (backend) {
 2. 初始化组件 A 的实例
 3. 将组件 A 的占位 VNode 的`vnode.elm`即元素`.b-root`插入到`parentElm`上，`parentElm`是元素`.a-parent`，插入成功
 
-PS：组件 A/B 的占位 VNode 的`vnode.elm`都是元素`.b-root`，详见[vnode.elm 的确定 - 组件占位 VNode](/vue/source-study/topics/dom-binding.html#组件占位-vnode)；组件 A 创建元素时的`parentElm`是`.a-parent`，详见[parentElm 的确定 - 组件的父节点是 DOM 元素节点](/vue/source-study/topics/dom-binding.html#组件的父节点是-dom-元素节点)
+PS：组件 A/B 的占位 VNode 的`vnode.elm`都是元素`.b-root`，详见[vnode.elm 的确定 - 组件占位 VNode](/vue/source-study/vdom/topics/dom-binding.html#组件占位-vnode)；组件 A 创建元素时的`parentElm`是`.a-parent`，详见[parentElm 的确定 - 组件的父节点是 DOM 元素节点](/vue/source-study/vdom/topics/dom-binding.html#组件的父节点是-dom-元素节点)
 
 事实上，组件的渲染 VNode 的根节点，既有可能是 DOM 节点类型的虚拟节点，也有可能是子组件的占位 VNode，而调用`createElm`为组件的渲染 VNode 创建元素时，不会将创建出的元素插入到父元素上（`parentElm`不存在）。但是在此之后，当组件的占位 VNode 创建的组件实例初始化之后，会将`vnode.elm`插入到`parentElm`上。

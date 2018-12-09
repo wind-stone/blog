@@ -347,7 +347,7 @@ function checkForAliasModel () { ... }
 
 ```js
 const element = {
-  type: 1, // 节点类型，1 元素节点；2. 带插值的文本；3. 常规文本
+  type: 1, // 节点类型，1 元素节点；2. 带插值的文本节点；3. 静态文本节点/注释节点
   tag, // 元素节点的标签
   attrsList: attrs, // 元素节点的特性对象数组
   attrsMap: makeAttrsMap(attrs), // 元素节点的特性对象
@@ -369,7 +369,8 @@ const element = {
 
   // 指令
   directives: [
-    { name, rawName, value, arg, modifiers }, ...
+    { name, rawName, value, arg, modifiers },
+    ...
   ],
 
   // 组件上的原生事件
@@ -377,8 +378,8 @@ const element = {
     // key 为事件名称；value 为事件监听器，可以是单个对象，或者对象数组
     [eventName]: [
       {
-        value, // 事件监听器字符串
-        modifiers // 事件修饰符对象
+        value, // {String} 方法名称/内联 JavaScript 语句/函数表达式
+        modifiers // {Object} 事件修饰符对象
       }
     ]
   },
@@ -388,13 +389,23 @@ const element = {
     // key 为事件名称；value 为事件监听器，可以是单个对象，或者对象数组
     [eventName]: [
       {
-        value, // 事件监听器字符串
-        modifiers // 事件修饰符对象
+        value, // {String} 方法名称/内联 JavaScript 语句/函数表达式
+        modifiers // {Object} 事件修饰符对象
       }
     ]
   },
 
-  plain: Boolean, // （可选）若元素存在 attrs、props、directives，则该值为 false，即元素是否是纯元素
+  /**
+   * （可选）若元素存在以下属性时，则该值为 false，即元素不是纯元素
+   *    - attrs
+   *    - props
+   *    - directives，
+   *    - nativeEvents/events
+   *    - scopedSlots
+   *    - key
+   *    - 除了结构性指令外，还存在其他特性
+   */
+  plain: Boolean,
 
 
   // 以下是存在 v-for 指令时，独有的属性
@@ -445,7 +456,7 @@ const element = {
   inlineTemplate, // （可选）是否是内联模板
 
 
-  hasBindings, // （可选）元素有动态绑定指令是为 true
+  hasBindings, // （可选）元素有动态绑定指令时为 true
 
   // （可选）静态 style 对象字符串，前后都有双引号 "
   // 注意，这里的 staticStyle 已经处理成对象形式
@@ -456,6 +467,12 @@ const element = {
   styleBinding, // （可选）动态绑定的 style 字符串，其值可能是对象的字符串形式、数组的字符串形式、以及绑定的表达式
 }
 ```
+
+#### 结构性指令
+
+- `v-for`
+- `v-if`/`v-else`/`v-else-if`
+- `v-once`
 
 ### end
 
@@ -545,16 +562,16 @@ const element = {
       if (text) {
         let res
         if (!inVPre && text !== ' ' && (res = parseText(text, delimiters))) {
+          // 带插值的文本节点
           children.push({
-            // 带 文本插值 的文本
             type: 2,
             expression: res.expression,
             tokens: res.tokens,
             text
           })
         } else if (text !== ' ' || !children.length || children[children.length - 1].text !== ' ') {
+          // 静态文本节点
           children.push({
-            // 常规文本
             type: 3,
             // text 可能为 ' '
             text
@@ -574,8 +591,8 @@ const element = {
   parseHTML(template, {
     // ...
     comment (text: string) {
+      // 静态注释节点
       currentParent.children.push({
-        // 静态注释文本
         type: 3,
         text,
         isComment: true

@@ -12,19 +12,19 @@ sidebarDepth: 0
 
 只要协议、域名、端口有任何一个不同，都被当作是不同的域，之间的请求就是跨域操作。
 
-
 ## 造成跨域的两种策略
 
 浏览器的同源策略会导致跨域，这里同源策略又分为以下两种：
+
 - DOM 同源策略：禁止对不同源页面 DOM 进行操作。这里主要场景是 iframe 跨域的情况，不同域名的 iframe 是限制互相访问的。
 - XmlHttpRequest 同源策略：禁止使用 XHR 对象向不同源的服务器地址发起 HTTP 请求。（实际上是可以请求，但是请求返回后，浏览器会告知你这是跨域请求，返回结果无法使用）
-
 
 ## 为什么要有跨域限制？
 
 跨域限制主要是为了安全考虑。
 
 Ajax 同源策略主要用来防止 CSRF 攻击。如果没有 Ajax 同源策略，相当危险，我们发起的每一次 HTTP 请求都会带上请求地址对应的 cookie，那么可以做如下攻击：
+
 1. 用户登录了自己的银行页面`http://mybank.com`，`http://mybank.com`向用户的 cookie 中添加用户标识。
 2. 用户浏览了恶意页面`http://evil.com`，执行了页面中的恶意 Ajax 请求代码。
 3. `http://evil.com`向`http://mybank.com`发起 Ajax 请求，请求会默认把`http://mybank.com`对应 cookie 也同时发送过去。
@@ -32,14 +32,15 @@ Ajax 同源策略主要用来防止 CSRF 攻击。如果没有 Ajax 同源策略
 5. 而且由于 Ajax 在后台执行，用户无法感知这一过程。
 
 DOM 同源策略也一样，如果 iframe 之间可以跨域访问，可以这样攻击：
+
 1. 做一个假网站，里面用 iframe 嵌套一个银行网站 http://mybank.com
 2. 把 iframe 宽高啥的调整到页面全部，这样用户进来除了域名，别的部分和银行的网站没有任何差别
 3. 这时如果用户输入账号密码，我们的主网站可以跨域访问到 http://mybank.com 的 dom 节点，就可以拿到用户的输入了，那么就完成了一次攻击。所以说有了跨域跨域限制之后，我们才能更安全的上网了。
 
-
 ## 跨域方法
 
 如下列举所有我已知的跨域方法，包括
+
 - CORS
 - JSONP
 - postMessage
@@ -61,13 +62,12 @@ CORS 是一个 W3C 标准，全称是“跨域资源共享”（Cross-origin res
 1. 对于客户端，我们还是正常使用 xhr 对象发送 Ajax 请求。唯一需要注意的是，我们需要设置我们的 xhr 属性 `withCredentials`为`true`，即`xhr.withCredentials = true`，否则 cookie 是带不过去的
 2. 对于服务器端，需要在 response header 中设置如下两个字段，如此便可以跨域请求接口了
 
-```
+```sh
 Access-Control-Allow-Origin: http://www.yourhost.com
 Access-Control-Allow-Credentials:true
 ```
 
 优点：CORS 支持所有类型的 HTTP 请求，是跨域 HTTP 请求的根本解决方案
-
 
 ### JSONP
 
@@ -96,10 +96,10 @@ function jsonp(url, data, callback) {
 
 缺点：只支持GET请求。
 
-
 ### postMessage
 
 信息传递除了客户端与服务器之前的传递，还存在以下几个问题：
+
 - 页面和新开的窗口的数据交互
 - 多窗口之间的数据交互
 - 页面与所嵌套的 iframe 之间的信息传递
@@ -121,21 +121,17 @@ iframe.contentWindow.postMessage({
 }, '*')
 ```
 
-
 ### 服务器代理
 
 浏览器有跨域限制，但是服务器不存在跨域问题，所以可以由服务器请求所要域的资源再返回给客户端。
 
 一般在项目开发阶段，会使用本地服务器转发接口（比如可以通过 webpack 的`webpack-dev-server`去配置`proxy`），从而达到通过服务器代理解决跨域问题。
 
-
 ### 表单提交
 
 表单可以设置 action 为任何域名，进而实现跨域提交，但是表单提交默认会进行跳转，因此一般会新建 iframe 并在其内创建表单并提交
 
-Reference:
-- [http://blog.csdn.net/cxl444905143/article/details/41923497](http://blog.csdn.net/cxl444905143/article/details/41923497)
-
+Reference: [http://blog.csdn.net/cxl444905143/article/details/41923497](http://blog.csdn.net/cxl444905143/article/details/41923497)
 
 ### document.domain（主域相同的跨域）
 
@@ -144,9 +140,9 @@ document.domain 的场景只适用于不同子域的框架间的交互，及主�
 各个子域通过将页面文档的 document.domain 设置为相同的主域，实现多个页面处于同一域名下，这样就不存在跨域的问题了。
 
 Reference:
+
 - [前端跨域问题及解决方案 #2](https://github.com/wengjq/Blog/issues/2)
 - [设置document.domain实现js跨域注意点 【转】](http://www.cnblogs.com/fsjohnhuang/articles/2279554.html)
-
 
 ### window.name
 
@@ -197,7 +193,6 @@ document.body.appendChild(iframe)
 window.name = 'some data from server or somewhere'
 ```
 
-
 ### location.hash
 
 `location.hash`可以跨域的原理是，子框架具有修改父框架`src`里`hash`值的功能，通过修改`hash`可以传递数据，且页面不会刷新。但是传递的数据长度是有限的。
@@ -241,20 +236,20 @@ parent.parent.location.hash = self.location.hash.substring(1)
 ```
 
 优点：
+
 - 可以解决域名完全不同的跨域
 - 可以实现双向通讯（待分析）
 
 缺点：
+
 - 数据暴露在 url 上，数据不安全
 - 改变 hash 会产生历史记录，影响用户体验
 - url 上的数据大小有限制
 - 不支持`hashchange`事件的浏览器，需要轮询来获取 url 里 hash 的改变
 
-
 ### WebSocket
 
 WebSocket 是一种通信协议，使用ws://（非加密）和wss://（加密）作为协议前缀。该协议不实行同源政策，只要服务器支持，就可以通过它进行跨源通信。
-
 
 ## Reference
 

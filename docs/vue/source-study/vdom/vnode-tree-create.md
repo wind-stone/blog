@@ -483,7 +483,7 @@ export default class VNode {
     children?: ?Array<VNode>,
     // 节点的文本
     text?: string,
-    // 详见 https://windstone.cc/vue/source-study/topics/dom-binding.html#vnode-elm-%E7%9A%84%E7%A1%AE%E5%AE%9A
+    // 详见 https://windstone.cc/vue/source-study/vdom/topics/dom-binding.html#vnode-elm-%E7%9A%84%E7%A1%AE%E5%AE%9A
     elm?: Node,
     // 组件渲染时的父上下文组件
     context?: Component,

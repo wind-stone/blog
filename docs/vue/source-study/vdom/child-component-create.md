@@ -255,4 +255,4 @@ export default {
 
 ### 组件 DOM Tree 插入到父元素
 
-当组件创建好并初始化好组件实例之后，其 DOM Tree 也已经完全 ready，此时若是存在`parentElm`，就会将组件的 DOM Tree 插入到`parentElm`。若是该组件同时作为其他组件渲染 VNode 的根节点，则不会存在`parentElm`，也不会插入到`parentElm`。详见：[组件的 DOM Tree 是如何插入到父元素上的？](/vue/source-study/topics/dom-binding.html)
+当组件创建好并初始化好组件实例之后，其 DOM Tree 也已经完全 ready，此时若是存在`parentElm`，就会将组件的 DOM Tree 插入到`parentElm`。若是该组件同时作为其他组件渲染 VNode 的根节点，则不会存在`parentElm`，也不会插入到`parentElm`。详见：[组件的 DOM Tree 是如何插入到父元素上的？](/vue/source-study/vdom/topics/dom-binding.html)

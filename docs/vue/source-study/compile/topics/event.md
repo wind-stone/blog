@@ -21,9 +21,6 @@ const ChildComponent = {
       console.log('From ChildComponent: child-root click!')
       this.$emit('child-custom-event')
     }
-  },
-  mounted () {
-    console.log(this.$options.render)
   }
 }
 
@@ -40,10 +37,7 @@ const ParentComponent = {
   `,
   components: {
     ChildComponent
-  },
-  mounted () {
-    console.log('parent VM', this.$options.render)
-  },
+  }
   methods: {
     handleChildCustomEvent () {
       console.log('From ParentComponent: child component custom event!')
@@ -581,6 +575,7 @@ function genFilterCode (key: string): string {
     with (this) {
         return _c('div', {
             staticClass: "child-root",
+            // 数据对象里的 on
             on: {
                 "click": handleClick
             }
@@ -588,10 +583,3 @@ function genFilterCode (key: string): string {
     }
 })
 ```
-
-我们注意到，若`v-on`指令的表达式
-
-## 总结
-
-- 只有组件节点才能添加自定义事件；组件节点要是添加原生事件，需要有`native`修饰符
-- 

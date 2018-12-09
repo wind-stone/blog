@@ -71,7 +71,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
 
 若组件的渲染 VNode 是元素类型的 VNode，则返回的`vnode.elm`是渲染 VNode 对应的 DOM 元素节点。
 
-若组件的渲染 VNode 是子组件的占位 VNode，则返回的`vnode.elm`是子组件占位 VNode 的`vnode.elm`，也就是子组件 DOM Tree 的根元素节点。详见[vnode.elm 的确定 - 组件占位 VNode](/vue/source-study/topics/dom-binding.html#组件占位-vnode)
+若组件的渲染 VNode 是子组件的占位 VNode，则返回的`vnode.elm`是子组件占位 VNode 的`vnode.elm`，也就是子组件 DOM Tree 的根元素节点。详见[vnode.elm 的确定 - 组件占位 VNode](/vue/source-study/vdom/topics/dom-binding.html#组件占位-vnode)
 :::
 
 ## Vue.prototype.__patch__
@@ -247,7 +247,7 @@ cbs = {
 
 1. 获取到旧 VNode 对应的`elm`及基于`elm`的父 DOM 元素节点
 2. 调用`createElm`为新 VNode 创建 DOM 节点/组件实例
-3. 若 VNode 存在`vnode.parent`，则递归更新组件占位 VNode 的`vnode.elm`，详见[组件的 DOM Tree 是如何插入到父元素上的？ - 组件占位 VNode](/vue/source-study/topics/dom-binding.html#组件占位-vnode)
+3. 若 VNode 存在`vnode.parent`，则递归更新组件占位 VNode 的`vnode.elm`，详见[组件的 DOM Tree 是如何插入到父元素上的？ - 组件占位 VNode](/vue/source-study/vdom/topics/dom-binding.html#组件占位-vnode)
 4. 销毁旧 VNode 及移除其对应的 DOM 元素，详见[patch 辅助函数 - removeVnodes：移除子 VNode 及其 DOM 元素](/vue/source-study/vdom/patch-fn.html#removevnodes：移除子-vnode-及其-dom-元素)
 
 一言以蔽之就是，创建组件新的 DOM Tree -> 更新组件占位 VNode -> 销毁组件旧的 DOM Tree 及 VNode Tree
@@ -425,7 +425,7 @@ export function mountComponent (
 
 ### 返回 vnode.elm
 
-除了组件销毁的情况之外，根组件和子组件的首次渲染和更新，执行`patch`函数都将返回组件渲染 VNode 的`vnode.elm`。而组件渲染 VNode 是元素类型的VNode 时和是子组件占位 VNode 时，`vnode.elm`的意义和获取方式都不相同，详见[vnode.elm 的确定](/vue/source-study/topics/dom-binding.html#vnode-elm-的确定)。
+除了组件销毁的情况之外，根组件和子组件的首次渲染和更新，执行`patch`函数都将返回组件渲染 VNode 的`vnode.elm`。而组件渲染 VNode 是元素类型的VNode 时和是子组件占位 VNode 时，`vnode.elm`的意义和获取方式都不相同，详见[vnode.elm 的确定](/vue/source-study/vdom/topics/dom-binding.html#vnode-elm-的确定)。
 
 ```js
 export function createPatchFunction (backend) {
