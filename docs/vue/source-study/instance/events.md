@@ -8,9 +8,13 @@ sidebarDepth: 0
 
 我们通常通过`v-on`指令或其缩写`@`监听元素上的事件。用在普通元素上时，只能监听原生 DOM 事件；用在自定义元素组件上时，也可以监听子组件触发的自定义事件。该节主要分析监听事件是如何与元素关系到一起，以及如何实现的。
 
-## 组件自定义事件
+## 模板编译
 
-组件自定义的事件监听器是在组件实例初始化时
+关于如何将模板里的`v-on`指令编译成`render`函数里数据对象的`data.nativeOn/on`，详情请参考：[编译专题--event](/vue/source-study/compile/topics/event.html)
+
+也可以直接略过该模板编译部分，`data.nativeOn/on`相关信息可参考[渲染函数 & JSX--深入 data 对象](https://cn.vuejs.org/v2/guide/render-function.html#%E6%B7%B1%E5%85%A5-data-%E5%AF%B9%E8%B1%A1)
+
+## 组件自定义事件
 
 在导出[基础核心版 Vue](/vue/source-study/vue-constructor.html#基础核心版-vue)构造函数时，会调用`eventsMixin(Vue)`给`Vue`构造函数的原型添加一些事件相关的方法，即`Vue`构造函数实现了事件接口，`Vue`实例将具有发布订阅事件的能力。
 
@@ -159,13 +163,11 @@ export function initEvents (vm: Component) {
 
 详细分析`updateComponentListeners`如何将事件监听器添加到`vm._events`之前，我们先来了解下事件监听器数据`listeners`是如何而来的。
 
-`initEvents`函数里的`listeners`来源于组件数据对象`on`属性上的监听器数据，在创建组件占位 VNode 时，会将这些监听器数据`listeners`添加到组件占位 VNode 的`componentOptions`属性上去。在组件`_init`初始化时，会将组件占位 VNode 上的`componentOptions`数据合并到`vm.$options`上，最终可以在`initEvents`上获取到`vm.$options._parentListeners`。
+`initEvents`函数里的`listeners`来源于组件数据对象`on`属性上的监听器数据，在创建组件占位 VNode 时，会将这些监听器数据`listeners`添加到组件占位 VNode 的`componentOptions`属性上去。在组件`_init`初始化时，会将组件占位 VNode 上的`componentOptions`数据合并到`vm.$options`上，最终可以在`initEvents`里获取到`vm.$options._parentListeners`。
 
 ::: tip 提示
-组件的模板最终将编译成`render`函数，在编译时，会将组件标签上的自定义事件转换，变成`render`函数里传入`createElement`的第二个参数即数据对象上的`on`属性上的`key`（自定义事件名称）和`value`（自定义事件处理方法）。
+组件的模板最终将编译成`render`函数，在编译时，会将组件节点上的自定义事件事件转换，变成`render`函数里传入`createElement`的第二个参数即数据对象上的`data.on`属性上的`key`（自定义事件名称）和`value`（自定义事件处理方法）。
 :::
-
-TODO: 待添加，模板编译时是如何解析自定义事件和原生事件的？
 
 ```js
 // src/core/vdom/create-component.js
@@ -175,9 +177,11 @@ export function createComponent (...) {
 
   // extract listeners, since these needs to be treated as
   // child component listeners instead of DOM listeners
+  // 组件数据对象 data.on 上存储的是组件的自定义事件
   const listeners = data.on
   // replace with listeners with .native modifier
   // so it gets processed during parent component patch.
+  // 组件数据对象 data.nativeOn 上存储的是组件的原生事件
   data.on = data.nativeOn
 
   const name = Ctor.options.name || tag
@@ -432,7 +436,7 @@ export function updateChildComponent (
 
 ## 原生事件
 
-原生事件的处理，独立成为了一个模块，模块对外暴露了两个方法`create`和`update`，分别用来创建和更新原生事件，但模块内部这两个方法实际上调用的是同一个函数。
+原生事件（包括 DOM 元素节点上的原生事件和组件节点上带`native`修饰符的原生事件）的处理，独立成为了一个模块，模块对外暴露了两个方法`create`和`update`，分别用来创建和更新原生事件，但模块内部这两个方法实际上调用的是同一个函数。
 
 ### 添加原生事件
 
@@ -578,7 +582,7 @@ export default {
 这里有一点需要额外注意，原生事件的监听器函数在绑定到 DOM 之前，都要先用`withMacroTask`封装一下，详见[nextTick - withmacrotask](/vue/source-study/util/next-tick.html#withmacrotask)
 
 ::: warning
-原生事件是添加和删除都发生在`vnode.elm`上。对于元素类型的 VNode 来说，`vnode.elm`是对应的 DOM 元素节点；对于组件占位 VNode 来说，`vnode.elm`是组件 DOM Tree 的根 DOM 元素节点。
+原生事件是添加和删除都发生在`vnode.elm`上。对于 DOM 元素类型的 VNode 来说，`vnode.elm`是对应的 DOM 元素节点；对于组件占位 VNode 来说，`vnode.elm`是组件 DOM Tree 的根 DOM 元素节点。
 :::
 
 #### once 的疑惑

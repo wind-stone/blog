@@ -101,6 +101,13 @@ module.exports = {
           ]
         },
         {
+          title: '编译专题',
+          collapsable: false,
+          children: [
+            'compile/topics/event'
+          ]
+        },
+        {
           title: 'Util',
           collapsable: false,
           children: [

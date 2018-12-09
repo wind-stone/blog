@@ -13,9 +13,6 @@ sidebarDepth: 0
 - 模板编译
   - slot 的实现
   - v-model 实现、`sync`修饰符的实现
-  - v-on 的表达式
-    - 传递内联语句是怎么实现的？`@click="handler(item, index)"`
-    - 内联语句的`$event`是怎么实现的？
 - vm.$options 里的数据如 props 等都是如何解析出来的？
 
 ## Vue 版本
