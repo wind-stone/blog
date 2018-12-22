@@ -46,7 +46,7 @@ WebKit 的开发者在 2009 年提出了（修改滚动条）样式的方案。�
 
 Chrome、Safari、Opera 甚至于 UC 浏览器或者三星自带的桌面浏览器都支持（上述 CSS）。Edge 也有计划实现它们。但三年过去了，该计划仍在中等优先级中（而尚未被实现）。
 
-## 流畅的滚动
+## 锚点切换时，流畅的滚动
 
 通过锚点链接来跳转到页面上的不同区块时，若想实现平滑地滚动，可添加一行代码：
 
@@ -57,6 +57,25 @@ html {
 ```
 
 目前`scroll-behavior`仅在 Chrome、 Firefox 与 Opera 上被支持，但我们希望它能被广泛支持，因为使用 CSS （比使用 JavaScript）在解决页面滚动问题时优雅得多，并更符合“渐进增强”的模式。
+
+## iOS 上顺畅滚动
+
+iOS 上若不做处理，滚动将显得不流程，此时，可添加一行代码：
+
+```css
+.scroll-area {
+    -webkit-overflow-scrolling: touch;
+}
+```
+
+`-webkit-overflow-scrolling`属性有两个取值：
+
+- `auto`：使用普通滚动, 当手指从触摸屏上移开，滚动会立即停止
+- `touch`：使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。同时也会创建一个新的堆栈上下文
+
+::: warning 注意
+该特性是非标准的，详情请见[MDN 之 -webkit-overflow-scrolling](https://developer.mozilla.org/zh-CN/docs/Web/CSS/-webkit-overflow-scrolling)
+:::
 
 ## `position: sticky`
 
