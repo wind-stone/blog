@@ -254,6 +254,7 @@ module.exports = {
           title: '移动端 - CSS 兼容性',
           collapsable: true,
           children: [
+            'compatibility/css/flex',
             'compatibility/css/ie',
             'compatibility/css/android-small-fontsize'
           ]
