@@ -643,6 +643,118 @@ PS: 下一步可跳转到本章的“运行时阶段-组件的`v-model`”继续
 
 #### select 元素
 
+若元素是`select`元素，则将生成`select`元素`v-model`指令的代码：往元素上添加`change`事件及事件处理方法。
+
+```js
+function genSelect (
+  el: ASTElement,
+  value: string,
+  modifiers: ?ASTModifiers
+) {
+  const number = modifiers && modifiers.number
+  const selectedVal = `Array.prototype.filter` +
+    `.call($event.target.options,function(o){return o.selected})` +
+    `.map(function(o){var val = "_value" in o ? o._value : o.value;` +
+    `return ${number ? '_n(val)' : 'val'}})`
+
+  const assignment = '$event.target.multiple ? $$selectedVal : $$selectedVal[0]'
+  let code = `var $$selectedVal = ${selectedVal};`
+  code = `${code} ${genAssignmentCode(value, assignment)}`
+  addHandler(el, 'change', code, null, true)
+}
+```
+
+我们看到，拼接好事件处理方法的函数体之后，会调用`addHandler`给元素添加`change`事件，最终将通过`addEventListener`添加到`select`元素的 DOM 节点上。`addHandler`之后的处理，可参考[event 之 addhandler](/vue/source-study/compile/topics/event.html#addhandler)
+
+需要注意的是，在`model`函数内调用`genSelect`后，将返回将是`true`，这也意味着`select`元素的`v-model`指令，需要运行时，因此会将`v-model`指令的相关数据放置在元素的数据对象的`data.directives`选项里。
+
+TODO: 为什么需要运行时？
+
+我们通过简单的示例来说明生成的代码是什么样的。
+
+```js
+// 源码
+const ExampleComp = {
+  template: `
+      <select v-model="value">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+  `,
+  data () {
+    return {
+      value: 1
+    }
+  },
+  mounted () {
+    console.log(this.$options.render)
+  }
+}
+
+new Vue({
+  el: '#app',
+  store,
+  components: { ExampleComp },
+  template: '<ExampleComp></ExampleComp>'
+})
+```
+
+```js
+// ExampleComp 组件的 render 函数
+(function anonymous() {
+    with (this) {
+        return _c(
+            'select',
+            // select 元素的数据对象
+            {
+                directives: [{
+                    name: "model",
+                    rawName: "v-model",
+                    value: (value),
+                    expression: "value"
+                }],
+                on: {
+                    "change": function($event) {
+                        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+                            return o.selected
+                        }).map(function(o) {
+                            var val = "_value"in o ? o._value : o.value;
+                            return val
+                        });
+                        value = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    }
+                }
+            },
+            // select 元素的子元素
+            [
+                _c('option', {
+                    attrs: {
+                        "value": "1"
+                    }
+                }, [_v("1")]), _v(" "),
+                 _c('option', {
+                    attrs: {
+                        "value": "2"
+                    }
+                }, [_v("2")]), _v(" "),
+                _c('option', {
+                    attrs: {
+                        "value": "3"
+                    }
+                }, [_v("3")]), _v(" "),
+                _c('option', {
+                    attrs: {
+                        "value": "4"
+                    }
+                }, [_v("4")])
+            ]
+        )
+    }
+})
+```
+
 ## 运行时阶段
 
 ### 组件的 v-model
@@ -653,9 +765,10 @@ PS: 下一步可跳转到本章的“运行时阶段-组件的`v-model`”继续
 
 在运行时阶段生成组件的 VNode 时，会对`v-model`生成的代码（在`data.model`里）进行处理，处理过程在`transformModel`函数里，包括:
 
-1. 从组件的选项对象里获取自定义的`model`选项，即`model.prop`和`model.event`，若不存在则使用`value`作为`prop`的名称，`input`作为`event`的名称
+1. 从组件的选项对象里获取自定义的`model`选项，即`model.prop`和`model.event`，若不存在则使用`value`作为`prop`的名称，`input`作为`event`的事件类型
 2. 将`v-model`的表达式作为`data.props[prop]`的值
-3. 在`data.on`上添加新的事件和事件处理方法，事件名为`event`的值，事件处理方法为`data.model.callback`
+3. 在`data.props`上添加新的`prop`
+4. 在`data.on`上添加新的事件和事件处理方法，事件名为`event`的值，事件处理方法为`data.model.callback`
 
 因为组件的`data.on`之后将作为`listeners`，因此对组件上的`v-model`的处理实际上是采用的自定义的事件，而不是原生事件。
 
@@ -730,3 +843,10 @@ Vue.component('base-checkbox', {
 ```
 
 我们看到，当想要改变组件上的`v-model`的表达式时，需要显式的调用`vm.$emit`去触发`v-model`自定义事件，并传入要变更的值，`v-model`的自定义事件处理方法将执行并更改`v-model`表达式的值。
+
+## 总结
+
+`v-model`的本质是都将指令最终转换为事件。
+
+- 动态组件、自定义组件：转换为组件的自定义事件，需要通过`vm.$emit`触发自定义事件
+- `select`元素：转换为 DOM 原生`change`事件，在视图改变时，自动触发`change`事件
