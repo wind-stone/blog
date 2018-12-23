@@ -105,7 +105,8 @@ module.exports = {
           title: '编译专题',
           collapsable: false,
           children: [
-            'compile/topics/event'
+            'compile/topics/event',
+            'compile/topics/v-model'
           ]
         },
         {
