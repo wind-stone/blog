@@ -220,7 +220,7 @@ module.exports = {
       '/mobile/': [
         {
           title: '移动端 - 独有特性',
-          collapsable: true,
+          collapsable: false,
           children: [
             'feature/',
             'feature/click-delay',
@@ -229,14 +229,14 @@ module.exports = {
         },
         {
           title: '移动端 - Hybrid',
-          collapsable: true,
+          collapsable: false,
           children: [
             'hybrid/h52app'
           ]
         },
         {
           title: '移动端 - 通用兼容性',
-          collapsable: true,
+          collapsable: false,
           children: [
             'compatibility/general/',
             'compatibility/general/input-delay/',
@@ -246,20 +246,27 @@ module.exports = {
         },
         {
           title: '移动端 - JS 兼容性',
-          collapsable: true,
+          collapsable: false,
           children: [
             'compatibility/js/fastclick'
           ]
         },
         {
           title: '移动端 - CSS 兼容性',
-          collapsable: true,
+          collapsable: false,
           children: [
             'compatibility/css/flex',
             'compatibility/css/ie',
             'compatibility/css/android-small-fontsize'
           ]
-        }
+        },
+        {
+          title: '调试',
+          collapsable: false,
+          children: [
+            'debug/',
+          ]
+        },
       ],
 
       '/es6/': [
