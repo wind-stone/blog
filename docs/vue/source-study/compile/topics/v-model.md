@@ -755,6 +755,79 @@ new Vue({
 })
 ```
 
+#### 默认的 input、textarea 元素
+
+若元素是`input`元素且不是`radio`、`checkbox`，或元素是`textarea`元素，就会走该逻辑：
+
+1. （非生产环境）对同时使用`v-model`指令和`v-bind:value`指令且没使用`v-bind:type`的情况给予警告
+2. 判断是否需要进行[composition处理](https://segmentfault.com/a/1190000009246058)
+3. 判断事件的类型
+    - 若有`lazy`修饰符，则使用`change`事件
+    - 若没有`lazy`修饰符
+      - 若不是`range`，则使用`input`事件
+      - 若是`range`，则需要在运行时确定事件类型
+4. 生成事件处理方法的函数体部分
+5. 往元素上添加名为`value`的`domProps`，
+6. 往元素上添加事件及事件处理方法
+7. 若存在`trim`和`number`修饰符，则添加`blur`事件，在`blur`事件发生时，对组件进行强制刷新
+
+::: tip 提示
+第 5 步添加的`value`是添加到元素数据对象的`domProps`上的
+:::
+
+```js
+function genDefaultModel (
+  el: ASTElement,
+  value: string,
+  modifiers: ?ASTModifiers
+): ?boolean {
+  const type = el.attrsMap.type
+
+  // warn if v-bind:value conflicts with v-model
+  // except for inputs with v-bind:type
+  if (process.env.NODE_ENV !== 'production') {
+    const value = el.attrsMap['v-bind:value'] || el.attrsMap[':value']
+    const typeBinding = el.attrsMap['v-bind:type'] || el.attrsMap[':type']
+    if (value && !typeBinding) {
+      const binding = el.attrsMap['v-bind:value'] ? 'v-bind:value' : ':value'
+      warn(
+        `${binding}="${value}" conflicts with v-model on the same element ` +
+        'because the latter already expands to a value binding internally'
+      )
+    }
+  }
+
+  const { lazy, number, trim } = modifiers || {}
+  const needCompositionGuard = !lazy && type !== 'range'
+  const event = lazy
+    ? 'change'
+    : type === 'range'
+      ? RANGE_TOKEN
+      : 'input'
+
+  let valueExpression = '$event.target.value'
+  if (trim) {
+    valueExpression = `$event.target.value.trim()`
+  }
+  if (number) {
+    valueExpression = `_n(${valueExpression})`
+  }
+
+  let code = genAssignmentCode(value, valueExpression)
+  if (needCompositionGuard) {
+    // composing 用于处理中文输入截断问题，详见：https://segmentfault.com/a/1190000009246058
+    code = `if($event.target.composing)return;${code}`
+  }
+
+  // 添加名为 value 的 prop
+  addProp(el, 'value', `(${value})`)
+  addHandler(el, event, code, null, true)
+  if (trim || number) {
+    addHandler(el, 'blur', '$forceUpdate()')
+  }
+}
+```
+
 ## 运行时阶段
 
 ### 组件的 v-model
