@@ -8,6 +8,133 @@ sidebarDepth: 0
 
 组件实例化的过程中，会在`vm._init`里调用`initState()`对组件实例上的状态数据进行初始化，比如`props`、`methods`、计算属性等等。而`initState()`里的第一项就是初始化`props`数据。究其原因就是，`props`数据最优先的数据（通俗地说，组件一出生时爸妈给的数据），是组件其他数据如`data`、`methods`、`computed`等的提前，在这些其他数据里都可以访问到`props`的数据。
 
+## 提取 propsData
+
+若是使用模板，在模板编译阶段，会将模板上的所有特性都提取到元素的数据对象`data.attrs`上；若是使用`render`函数，用户会将组件`props`相关的数据放置在数据对象`data.props`上。因此，在组件初始化`props`数据之前、创建组件占位节点的 VNode 时，需要依据组件选项对象`options.props`里的定义，从组件占位节点数据对象的`data.props/attrs`里，将外界传给组件的`propsData`提取出来。
+
+::: tip 提示
+组件可能会存在[非 Prop 特性](https://cn.vuejs.org/v2/guide/components.html#%E9%9D%9E-Prop-%E7%89%B9%E6%80%A7)，对于没有在组件选项对象`options.props`里定义为`prop`的特性，会直接被添加到组件的根元素上。
+:::
+
+```js
+// src/core/vdom/create-component.js
+export function createComponent (
+  // 参数
+): VNode | Array<VNode> | void {
+  // ...
+  // extract props
+  // 提取外部传给组件的 propsData
+  const propsData = extractPropsFromVNodeData(data, Ctor, tag)
+  // ...
+  const vnode = new VNode(
+    `vue-component-${Ctor.cid}${name ? `-${name}` : ''}`,
+    data, undefined, undefined, undefined, context,
+    // vnode.componentOptions
+    { Ctor, propsData, listeners, tag, children },
+    asyncFactory
+  )
+  // ...
+}
+```
+
+创建组件的 VNode 时，提取出`propsData`数据，并放置在组件占位节点的`vnode.componentOptions`对象上。
+
+```js
+// src/core/instance/init.js
+export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
+  const opts = vm.$options = Object.create(vm.constructor.options)
+  // ...
+  // 将组件占位 VNode 上有关组件的数据，转存到 vm.$options 上
+  const vnodeComponentOptions = parentVnode.componentOptions
+  opts.propsData = vnodeComponentOptions.propsData
+  // ...
+}
+```
+
+组件实例在初始化时，会将组件占位节点的`vnode.vnodeComponentOptions.propsData`赋值给`vm.$options.propsData`，如此组件在实例化时初始化`props`数据时，就可以从`vm.$options.propsData`获取数据并使用了。
+
+### extractPropsFromVNodeData
+
+```js
+// src/core/vdom/helpers/extract-props.js
+
+/**
+ * 根据组件选项对象里定义的 options.props，从数据对象 data.props/attrs 提取出 props 数据
+ */
+export function extractPropsFromVNodeData (
+  data: VNodeData,
+  Ctor: Class<Component>,
+  tag?: string
+): ?Object {
+  // we are only extracting raw values here.
+  // validation and default values are handled in the child
+  // component itself.
+  const propOptions = Ctor.options.props
+  if (isUndef(propOptions)) {
+    return
+  }
+  const res = {}
+  const { attrs, props } = data
+  if (isDef(attrs) || isDef(props)) {
+    for (const key in propOptions) {
+      const altKey = hyphenate(key)
+      if (process.env.NODE_ENV !== 'production') {
+        const keyInLowerCase = key.toLowerCase()
+        if (
+          key !== keyInLowerCase &&
+          attrs && hasOwn(attrs, keyInLowerCase)
+        ) {
+          // 警告：prop 注册是 camelCased，但是在模板里使用时用的是 camelCased/camelcased
+          // 在模板里使用时，应该用 camel-cased
+          tip(
+            `Prop "${keyInLowerCase}" is passed to component ` +
+            `${formatComponentName(tag || Ctor)}, but the declared prop name is` +
+            ` "${key}". ` +
+            `Note that HTML attributes are case-insensitive and camelCased ` +
+            `props need to use their kebab-case equivalents when using in-DOM ` +
+            `templates. You should probably use "${altKey}" instead of "${key}".`
+          )
+        }
+      }
+      // 先从 props 里获取 prop，若获取不到，再从 attrs 里获取 prop
+      // 需要注意，若是在 props 里获取到了 prop，要在 props 里保留该 prop；
+      // 若是在 attrs 里获取到了 prop，则要将该 prop 从 attrs 里删除
+      checkProp(res, props, key, altKey, true) ||
+      checkProp(res, attrs, key, altKey, false)
+    }
+  }
+  return res
+}
+
+/**
+ * 检查 prop 是否存在在给定的 hash 里，若存在，添加到 res 里
+ */
+function checkProp (
+  res: Object,
+  hash: ?Object,
+  key: string,
+  altKey: string,
+  preserve: boolean
+): boolean {
+  if (isDef(hash)) {
+    if (hasOwn(hash, key)) {
+      res[key] = hash[key]
+      if (!preserve) {
+        delete hash[key]
+      }
+      return true
+    } else if (hasOwn(hash, altKey)) {
+      res[key] = hash[altKey]
+      if (!preserve) {
+        delete hash[altKey]
+      }
+      return true
+    }
+  }
+  return false
+}
+```
+
 ## initProps
 
 初始化`prop`时，主要做了三件事情：

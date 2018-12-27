@@ -542,8 +542,8 @@ export default class VNode {
 1. 若`Ctor`为组件选项对象，则将其转换成构造函数
 2. 处理`Ctor`为异步工厂函数的情况，详见[异步组件](/vue/source-study/component/async-component.html)
 3. 解析构造函数的 options，详见[合并配置 - resolveConstructorOptions](/vue/source-study/component/options.html#resolveconstructoroptions)
-4. 将 v-model 数据转换为`props`&`events`
-5. 提取 props 数据
+4. 将 v-model 数据转换为`props`&`events`，详见[编译专题 - v-model - 运行时阶段 - 组件的 v-model](/vue/source-study/compile/topics/v-model.html#组件的-v-model)
+5. 提取 props 数据，详见[props - 提取 propsData](/vue/source-study/instance/state/props.html#提取-propsdata)
 6. （若有）创建函数式组件的 VNode 并返回，详见[函数式组件](/vue/source-study/component/functional-component.html)
 7. 处理抽象组件的一些数据，如`props`&`listeners`&`slot`
 8. 安装组件管理钩子方法
@@ -699,92 +699,6 @@ export function createComponent (
 这些组件的数据，都将在组件`patch`的过程中使用到。
 
 PS：以上的代码覆盖了创建根组件的 VNode 的全部流程，但是创建子组件的 VNode，会略微复杂一些，我们将在`patch`过程中详细描述。
-
-##### 提取 props 数据
-
-组件可能会存在[非 Prop 特性](https://cn.vuejs.org/v2/guide/components.html#%E9%9D%9E-Prop-%E7%89%B9%E6%80%A7)，对于没在组件内定义为`prop`的特性，会直接传入组件并被添加到组件的根元素上。
-
-如果组件存在非 prop 特性，当将`template`编译成`render`函数时，我们就无法判断该特性是否是组件内定义的`prop`，因此`createElement`里的`data`就会包含`attrs`和`props`，需要我们自行根据组件选项对象里的`props`去`data.attrs/props`里筛选出需要的`prop`。
-
-TODO: 模板编译时，是如何把组件上的特性识别为`attrs`还是`props`？
-
-```js
-// src/core/vdom/helpers/extract-props.js
-
-/**
- * 根据组件选项对象里定义的 props 选项里的 key，从 data.props/attrs 提取出 prop 数据
- */
-export function extractPropsFromVNodeData (
-  data: VNodeData,
-  Ctor: Class<Component>,
-  tag?: string
-): ?Object {
-  // we are only extracting raw values here.
-  // validation and default values are handled in the child
-  // component itself.
-  const propOptions = Ctor.options.props
-  if (isUndef(propOptions)) {
-    return
-  }
-  const res = {}
-  const { attrs, props } = data
-  if (isDef(attrs) || isDef(props)) {
-    for (const key in propOptions) {
-      const altKey = hyphenate(key)
-      if (process.env.NODE_ENV !== 'production') {
-        const keyInLowerCase = key.toLowerCase()
-        if (
-          key !== keyInLowerCase &&
-          attrs && hasOwn(attrs, keyInLowerCase)
-        ) {
-          tip(
-            `Prop "${keyInLowerCase}" is passed to component ` +
-            `${formatComponentName(tag || Ctor)}, but the declared prop name is` +
-            ` "${key}". ` +
-            `Note that HTML attributes are case-insensitive and camelCased ` +
-            `props need to use their kebab-case equivalents when using in-DOM ` +
-            `templates. You should probably use "${altKey}" instead of "${key}".`
-          )
-        }
-      }
-      // 先从 props 里获取 prop，若获取不到，再从 attrs 里获取 prop
-      // 需要注意，若是在 props 里获取到了 prop，要在 props 里保留该 prop；
-      // 若是在 attrs 里获取到了 prop，则要将该 prop 从 attrs 里删除
-      checkProp(res, props, key, altKey, true) ||
-      checkProp(res, attrs, key, altKey, false)
-    }
-  }
-  return res
-}
-
-/**
- * 检查 prop 是否存在在给定的 hash 里
- */
-function checkProp (
-  res: Object,
-  hash: ?Object,
-  key: string,
-  altKey: string,
-  preserve: boolean
-): boolean {
-  if (isDef(hash)) {
-    if (hasOwn(hash, key)) {
-      res[key] = hash[key]
-      if (!preserve) {
-        delete hash[key]
-      }
-      return true
-    } else if (hasOwn(hash, altKey)) {
-      res[key] = hash[altKey]
-      if (!preserve) {
-        delete hash[altKey]
-      }
-      return true
-    }
-  }
-  return false
-}
-```
 
 ##### 安装组件管理钩子方法
 
