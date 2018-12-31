@@ -106,7 +106,8 @@ module.exports = {
           collapsable: false,
           children: [
             'compile/topics/event',
-            'compile/topics/v-model'
+            'compile/topics/v-model',
+            'compile/topics/slot'
           ]
         },
         {
