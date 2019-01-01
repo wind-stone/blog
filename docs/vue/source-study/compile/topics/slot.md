@@ -6,6 +6,20 @@ sidebarDepth: 0
 
 [[toc]]
 
+## 普通插槽 VS 作用域插槽
+
+- 编译作用域
+  - 普通插槽：父组件
+  - 作用域插槽：子组件
+
+- VNode 的生成方式
+  - 普通插槽：父组件编译时，直接生成普通插槽的 VNode，作为子组件的`children`
+  - 作用域插槽：父组件编译时，生成子组件数据对象上的`data.scopedSlots`里的`key-fn`对，`fn`是作用域插槽生成函数；在运行时阶段子组件`render`函数执行时动态生成作用域插槽的 VNode
+
+- 默认插槽与默认作用域插槽不能共存，若共存，则只有默认作用域插槽生效
+
+- 父组件模板里，插槽必须作为子组件标签的直接子元素
+
 ## 普通插槽
 
 ### 示例
@@ -134,7 +148,9 @@ export function genData (el: ASTElement, state: CodegenState): string {
 
 #### 子组件模板里的插槽元素
 
-代码生成阶段，若子组件里的元素是`slot`标签，则子组件`render`函数里`slot`标签最终生成的代码为`_t(slotName, children, attrs对象, bind对象)`（作为对比，非`slot`标签生成的为`_c(tag, data, children)`），`_t`函数是`renderSlot`，会在运行时阶段执行。
+代码生成阶段，若子组件里的元素是`slot`标签，则子组件`render`函数里`slot`标签最终生成的代码为`_t(slotName, children)`（作为对比，非`slot`标签生成的为`_c(tag, data, children)`），`_t`函数是`renderSlot`，会在运行时阶段执行。
+
+需要注意，普通插槽元素，`_t`的第三个参数`attrs`对象和`bind`对象是无用的，它们在作用域插槽中会用到。
 
 ```js
 /**
@@ -405,16 +421,16 @@ export function resolveSlots (
 
 在代码生成阶段我们知道，子组件模板里的`slot`标签，在子组件的`render`里生成的代码为`_t(slotName, children, attrs对象, bind对象)`，`_t`函数是`renderSlot`，其作用就是针对子组件模板里的`slot`节点，返回该节点的 VNode。
 
-若`slot`节点是普通插槽，就在子组件实例`vm.$slots`里查找`slot`节点对应的 VNode。
+若`slot`节点是普通插槽，就在子组件实例`vm.$slots`里查找`slot`节点对应的 VNode 数组。
 
-若能找到，则使用`vm.$slots`里的 VNode。（此时该 VNode 的编译作用域是父组件）
+若能找到，则使用`vm.$slots`里的 VNode 数组。（此时该 VNode 数组的编译作用域是父组件）
 
-若找不到，则使用子组件模板里的`slot`标签下的默认内容的 VNode。（此时默认内容的 VNode 的编译作用域是子组件）
+若找不到，则使用子组件模板里的`slot`标签下的默认内容的 VNode 数组。（此时默认内容的 VNode 数组的编译作用域是子组件）
 
 ```js
 /**
  * Runtime helper for rendering <slot>
- * 返回 slot 节点的 VNode 数组
+ * 返回子组件里 slot 元素节点的 VNode 数组
  */
 export function renderSlot (
   // 插槽的名称
@@ -460,6 +476,488 @@ export function renderSlot (
 
 ## 作用域插槽
 
+### 示例
+
+```js
+const ChildComp = {
+  name: 'ChildComp',
+  template: `
+    <div class="child-root">
+      <slot text="hello"></slot>
+      <slot name="world" text="world" :message="'你好！'"></slot>
+    </div>
+  `,
+  mounted () {
+    console.log('this.$options.render', this.$options.render)
+  }
+}
+
+const ParentComp = {
+  name: 'ParentComp',
+  template: `
+    <div class="parent-root">
+      <ChildComp>
+        <div slot-scope="props">{{ props.text }}</div>
+        <div slot="world" slot-scope="props">{{ props.text }}, {{ props.message }}</div>
+      </ChildComp>
+    </div>
+  `,
+  components: {
+    ChildComp
+  },
+  mounted () {
+    console.log('this.$options.render', this.$options.render)
+  }
+}
+
+new Vue({
+  el: '#app',
+  components: { ParentComp },
+  template: '<ParentComp></ParentComp>'
+})
+
+```
+
+最终生成的 HTML 为：
+
+```js
+<div class="parent-root">
+  <div class="child-root">
+    <div>hello</div>
+    <div>world, 你好！</div>
+  </div>
+</div>
+```
+
+### 编译阶段
+
+编译阶段仍然是先编译父组件，后编译子组件。
+
+父组件编译时，若模板里的元素是带有`slot`属性，则其为作用域插槽的内容，此时会往作用域插槽内容元素的 AST 上添加`el.slotScope`。
+
+```js
+function processSlot (el) {
+  if (el.tag === 'slot') {
+    // ...
+  } else {
+    // 父组件模板里子组件标签内的插槽元素
+    let slotScope
+
+    // 处理作用于插槽 slot-scope
+    if (el.tag === 'template') {
+      // 示例：
+      // <template slot-scope="props">
+      //   <span>hello from parent</span>
+      //   <span>{{ props.text }}</span>
+      // </template>
+      slotScope = getAndRemoveAttr(el, 'scope')
+      /* istanbul ignore if */
+      if (process.env.NODE_ENV !== 'production' && slotScope) {
+        warn(
+          `the "scope" attribute for scoped slots have been deprecated and ` +
+          `replaced by "slot-scope" since 2.5. The new "slot-scope" attribute ` +
+          `can also be used on plain elements in addition to <template> to ` +
+          `denote scoped slots.`,
+          true
+        )
+      }
+      el.slotScope = slotScope || getAndRemoveAttr(el, 'slot-scope')
+    } else if ((slotScope = getAndRemoveAttr(el, 'slot-scope'))) {
+      /* istanbul ignore if */
+      if (process.env.NODE_ENV !== 'production' && el.attrsMap['v-for']) {
+        warn(
+          `Ambiguous combined usage of slot-scope and v-for on <${el.tag}> ` +
+          `(v-for takes higher priority). Use a wrapper <template> for the ` +
+          `scoped slot to make it clearer.`,
+          true
+        )
+      }
+      el.slotScope = slotScope
+    }
+    // 命名插槽 slot
+    const slotTarget = getBindingAttr(el, 'slot')
+    if (slotTarget) {
+      el.slotTarget = slotTarget === '""' ? '"default"' : slotTarget
+      // preserve slot as an attribute for native shadow DOM compat
+      // only for non-scoped slots.
+      // 若是一般插槽（非作用域插槽），将要分发到的 slot 的名称保存在元素的 slot 特性里
+      if (el.tag !== 'template' && !el.slotScope) {
+        addAttr(el, 'slot', slotTarget)
+      }
+    }
+  }
+}
+```
+
+紧接着`processSlot`之后，会对作用域插槽内容元素做以下处理：
+
+```js
+      if (currentParent && !element.forbidden) {
+        if (element.elseif || element.else) {
+          // 处理元素带有 v-else-if/v-else 指令的情况
+          processIfConditions(element, currentParent)
+        } else if (element.slotScope) { // scoped slot
+          // 将作用域插槽放入父元素的 scopedSlots 里，而不是作为父元素的 child
+          currentParent.plain = false
+          const name = element.slotTarget || '"default"'
+          ;(currentParent.scopedSlots || (currentParent.scopedSlots = {}))[name] = element
+        } else {
+          // 作为父节点的子节点
+          currentParent.children.push(element)
+          element.parent = currentParent
+        }
+      }
+```
+
+可以发现，针对作用域插槽来说，并不会加入到父节点的`children`作为子节点来处理，而是将其放置在父节点的 AST 的`parentEl.scopedSlots`里，作用域插槽的`name`作为`key`，作用域插槽的内容元素作为`value`。
+
+### 代码生成阶段
+
+#### 父组件模板里子组件内的作用域插槽
+
+```js
+export function genData (el: ASTElement, state: CodegenState): string {
+  // ...
+  // scoped slots
+  // 该元素拥有的所有的作用域插槽（带模板内容）
+  if (el.scopedSlots) {
+    data += `${genScopedSlots(el.scopedSlots, state)},`
+  }
+  // ...
+}
+
+function genScopedSlots (
+  slots: { [key: string]: ASTElement },
+  state: CodegenState
+): string {
+  return `scopedSlots:_u([${
+    Object.keys(slots).map(key => {
+      return genScopedSlot(key, slots[key], state)
+    }).join(',')
+  }])`
+}
+
+/**
+ * 获取 scoped slot 模板函数，最终 data.scopedSlots 的数据结构是 { key: fn, ... }
+ * @param {*} key slot 的名称
+ * @param {*} el 分发内容的元素
+ * @param {*} state
+ */
+function genScopedSlot (
+  key: string,
+  el: ASTElement,
+  state: CodegenState
+): string {
+  if (el.for && !el.forProcessed) {
+    return genForScopedSlot(key, el, state)
+  }
+  // 生成分发内容模板
+  const fn = `function(${String(el.slotScope)}){` +
+    `return ${el.tag === 'template'
+      ? el.if
+        ? `${el.if}?${genChildren(el, state) || 'undefined'}:undefined`
+        : genChildren(el, state) || 'undefined'
+      : genElement(el, state)
+    }}`
+  return `{key:${key},fn:${fn}}`
+}
+```
+
+代码生成阶段，若元素含有作用域插槽，就需要往元素的数据对象上添加`data.scopedSlots`属性，该属性值是`_u([{key, fn}, ...])`的形式，其中`_u`是`resolveScopedSlots`函数，将在运行时阶段执行，等之后再详细说，先来看看`_u`函数的参数数组里的每一项都是什么。
+
+数组里的每一项都是一对象，`key`是作用于插槽的名称，`fn`是拼接生成的函数代码。
+
+`fn`的生成类似于`render`函数的生成，但`fn`的参数是`el.slotScope`，即作用域插槽内容元素的`slot-scope`属性的值。`fn`函数体里，调用了`genElement`/`genChildren`等函数去生成代码。
+
+```js
+// 父组件的 render 函数
+(function anonymous() {
+    with (this) {
+        return _c(
+            'div',
+            {
+                staticClass: "parent-root"
+            },
+            [
+                _c(
+                    'ChildComp',
+                    {
+                        scopedSlots: _u(
+                            [
+                                {
+                                    key: "default",
+                                    fn: function(props) {
+                                        return _c('div', {}, [_v(_s(props.text))])
+                                    }
+                                },
+                                {
+                                    key: "world",
+                                    fn: function(props) {
+                                        return _c('div', {}, [_v(_s(props.text) + ", " + _s(props.message))])
+                                    }
+                                }
+                            ]
+                        )
+                    }
+                )
+            ],
+            1
+        )
+    }
+})
+```
+
+#### 子组件模板里的作用域插槽元素
+
+```js
+/**
+ * （针对子组件里的 slot 标签）
+ * 生成 slot 标签的内容
+ *
+ * 最终拼装成 _t(slotName, children, attrs对象, bind对象)
+ */
+function genSlot (el: ASTElement, state: CodegenState): string {
+  const slotName = el.slotName || '"default"'
+  // children 是 slot 标签内的节点，若该 slot 没有分发内容，则显示默认内容即 children
+  const children = genChildren(el, state)
+  let res = `_t(${slotName}${children ? `,${children}` : ''}`
+  const attrs = el.attrs && `{${el.attrs.map(a => `${camelize(a.name)}:${a.value}`).join(',')}}`
+  const bind = el.attrsMap['v-bind']
+  if ((attrs || bind) && !children) {
+    res += `,null`
+  }
+  if (attrs) {
+    res += `,${attrs}`
+  }
+  if (bind) {
+    res += `${attrs ? '' : ',null'},${bind}`
+  }
+  return res + ')'
+}
+```
+
+```js
+// 子组件的 render 函数
+(function anonymous() {
+    with (this) {
+        return _c(
+            'div', {
+                staticClass: "child-root"
+            },
+            [
+                _t(
+                    "default",
+                    null,
+                    {
+                        text: "hello"
+                    }
+                ),
+                _v(" "),
+                _t(
+                    "world",
+                    null,
+                    {
+                        text: "world",
+                        message: '你好！'
+                    }
+                )
+            ],
+            2
+        )
+    }
+})
+```
+
+### 运行时阶段
+
+#### 父组件的 render 函数执行
+
+运行时阶段，在父组件`render`函数执行时，会先执行`_u`即`resolveScopedSlots`函数，以获得最终的`scopedSlots`。
+
+`resolveScopedSlots`函数就是将传入的对象数组，平铺化为对象，对象的`key`是作用域插槽的名称，`value`是作用域插槽的生成函数`fn`。
+
+```js
+export function resolveScopedSlots (
+  fns: ScopedSlotsData, // see flow/vnode
+  res?: Object
+): { [key: string]: Function } {
+  res = res || {}
+  for (let i = 0; i < fns.length; i++) {
+    if (Array.isArray(fns[i])) {
+      resolveScopedSlots(fns[i], res)
+    } else {
+      res[fns[i].key] = fns[i].fn
+    }
+  }
+  return res
+}
+```
+
+#### 子组件的 vm.$scopedSlots
+
+接下来，在子组件实例化之后，调用`_render`方法生成子组件的 VNode Tree 时会将子组件占位节点数据对象上的`scopedSlots`（即上一步`resolveScopedSlots`的结果）赋值给子组件实例的`vm.$scopedSlots`。
+
+```js
+  Vue.prototype._render = function (): VNode {
+    const vm: Component = this
+    // 若是组件实例，则会存在 _parentVnode
+    const { render, _parentVnode } = vm.$options
+
+    // reset _rendered flag on slots for duplicate slot check
+    if (process.env.NODE_ENV !== 'production') {
+      for (const key in vm.$slots) {
+        // $flow-disable-line
+        vm.$slots[key]._rendered = false
+      }
+    }
+
+    if (_parentVnode) {
+      vm.$scopedSlots = _parentVnode.data.scopedSlots || emptyObject
+    }
+    // ...
+  }
+```
+
+#### 子组件的 render 函数执行
+
+子组件的`render`函数执行时，会执行`_t`即`renderSlot`，返回作用域插槽元素的 VNode 数组。
+
+不同于普通插槽，作用域插槽是从子组件实例的`vm.$scopedSlots`获取作用域插槽的生成函数，传入`props`作为参数来调用生成函数，返回作用域插槽的 VNode 数组。
+
+```js
+/**
+ * Runtime helper for rendering <slot>
+ * 返回 slot 节点的 VNode 数组
+ */
+export function renderSlot (
+  // 插槽的名称
+  name: string,
+  // fallback 是 slot 标签内的插槽默认内容的 VNode 数组。若该 slot 没有分发内容，则使用默认内容
+  fallback: ?Array<VNode>,
+  // slot 元素上的特性对象
+  props: ?Object,
+  // v-bind 指令的值，对象类型
+  bindObject: ?Object
+): ?Array<VNode> {
+  const scopedSlotFn = this.$scopedSlots[name]
+  let nodes
+  if (scopedSlotFn) { // scoped slot
+    props = props || {}
+    if (bindObject) {
+      if (process.env.NODE_ENV !== 'production' && !isObject(bindObject)) {
+        warn(
+          'slot v-bind without argument expects an Object',
+          this
+        )
+      }
+      props = extend(extend({}, bindObject), props)
+    }
+    // 生成 vnode 节点
+    nodes = scopedSlotFn(props) || fallback
+  } else {
+    // ...
+  }
+
+  // target 为 slot 的名称，仅在节点 tag 为 template 下才有 slot 属性
+  // 使用 template 的原因是，插槽的默认内容可以是多个元素？
+  const target = props && props.slot
+  if (target) {
+    // 一般插槽：生成分发内容的 VNode，target 为要分发到的 slot 名称
+    return this.$createElement('template', { slot: target }, nodes)
+  } else {
+    // 作用域插槽
+    return nodes
+  }
+}
+
+```
+
+## 疑惑
+
+### 默认插槽和默认作用域插槽不能同时生效？
+
+作用域插槽是插槽的特殊形式，因此不能同时存在默认普通插槽和默认作用域插槽，只能存在一个默认普通插槽/作用域插槽。
+
+PS：经测试，同时存在默认普通插槽和默认作用域插槽时，最终只有默认作用域插槽生效。只有默认作用域插槽生效的原因是：子组件里`render`函数执行时，调用`renderSlot`为默认插槽标签寻找插槽内容时，会优先查找到作用域操作内容，而忽略默认普通插槽。
+
+```js
+export function renderSlot (
+  // 插槽的名称
+  name: string,
+  // fallback 是 slot 标签内的插槽默认内容的 VNode 数组。若该 slot 没有分发内容，则使用默认内容
+  fallback: ?Array<VNode>,
+  // slot 元素上的特性对象
+  props: ?Object,
+  // v-bind 指令的值，对象类型
+  bindObject: ?Object
+): ?Array<VNode> {
+  const scopedSlotFn = this.$scopedSlots[name]
+  let nodes
+  // 在此处会找到名为 default 的作用域插槽，而跳过 else 里的普通插槽的查找过程，导致有默认作用域插槽生效
+  if (scopedSlotFn) { // scoped slot
+    // 生成作用域插槽的 VNode
+  } else {
+    // 生成普通插槽的 VNode
+  }
+}
+```
+
+### slot 内容元素声明的位置
+
 ::: warning 警告
-作用域插槽是插槽的特殊形式，因此不能同时存在默认普通插槽和默认作用域插槽，只能存在一个默认普通插槽/作用域插槽。PS：经测试，同时存在默认普通插槽和默认作用域插槽时，最终只有默认作用域插槽生效（TODO: 为什么这个生效？）。
+无论是普通插槽还是作用域插槽，在声明时，都要作为子组件标签的直接子元素。只要直接子元素上没有`slot`属性，都会当成默认插槽。
 :::
+
+```js
+const ChildComp = {
+  name: 'ChildComp',
+  template: `
+    <div class="child-root">
+      <slot></slot>
+      <slot name="test"></slot>
+    </div>
+  `,
+  mounted () {
+    console.log('this.$options.render', this.$options.render)
+  }
+}
+
+const ParentComp = {
+  name: 'ParentComp',
+  template: `
+    <div class="parent-root">
+      <ChildComp>
+        <div>
+          <p slot="test">hello</p>
+        </div>
+        <div>world</div>
+      </ChildComp>
+    </div>
+  `,
+  components: {
+    ChildComp
+  },
+  mounted () {
+    console.log('this.$options.render', this.$options.render)
+  }
+}
+
+new Vue({
+  el: '#app',
+  components: { ParentComp },
+  template: '<ParentComp></ParentComp>'
+})
+```
+
+最终生成的 HTML 为：
+
+```html
+<div class="parent-root">
+  <div class="child-root">
+    <div>
+      <p slot="test">hello</p>
+    </div>
+    <div>world</div>
+  </div>
+</div>
+```
