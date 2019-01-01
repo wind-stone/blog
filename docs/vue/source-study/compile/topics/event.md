@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # event
+
+[[toc]]
 
 该章节讲述在编译阶段如何处理`v-on`指令，以及如何生成`render`函数里`on`/`nativeOn`选项对应的代码。
 

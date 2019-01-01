@@ -346,7 +346,7 @@ function checkForAliasModel () { ... }
 经过对开始标签上的各个特性进行处理后，AST 元素的结构如下所示，这里包含的属性是全集，有些属性是互斥的，有些属性仅在元素带有某些指令的情况下存在。
 
 ```js
-const element = {
+const astEl = {
   type: 1, // 节点类型，1 元素节点；2. 带插值的文本节点；3. 静态文本节点/注释节点
   tag, // 元素节点的标签
   attrsList: attrs, // 元素节点的特性对象数组
@@ -363,8 +363,20 @@ const element = {
     // 若元素 element 是父组件模板里子组件里的分发内容，会有这一项，比如父组件模板里，<child><h1 slot="header"></h1></child>，这里 slotTarget 即为 header，element 为 h1 元素。注意：若是 element 为 template 标签，不会有该项
     { name: 'slot', value: slotTarget }
   ],
-  props: [ // 必须要使用 property 来做数据绑定的特性
-    { name, value }, ...
+
+  /**
+   * (可选)分两类：
+   * 1. 必须要使用 property 来做数据绑定的特性
+   * 2. 某些指令产生的特性，比如
+   *   - v-model: value 或 checked 属性
+   *   - v-text: textContent 属性
+   *   - v-html: innerHTML 属性
+   *
+   * AST 元素上的 astEl.props 在代码生成阶段，最终将转变成数据对象上的 data.domProps（在 genData 函数里处理的）
+   */
+  props: [
+    { name, value },
+    ...
   ],
 
   // 指令
