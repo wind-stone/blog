@@ -28,6 +28,10 @@
 
 <<< @/docs/code-snippet/js/browser/env.js
 
+### 版本比较
+
+<<< @/docs/code-snippet/js/browser/version.js
+
 ### 事件代理
 
 <<< @/docs/code-snippet/js/browser/delegate.js
