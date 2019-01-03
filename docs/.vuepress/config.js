@@ -147,7 +147,8 @@ module.exports = {
           title: 'vue-router',
           collapsable: false,
           children: [
-            'vue-router/'
+            'vue-router/',
+            'vue-router/best-practice'
           ]
         }
       ],

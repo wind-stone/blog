@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# 总览
+# 原理
 
 [[toc]]
 
