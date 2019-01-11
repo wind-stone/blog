@@ -198,7 +198,7 @@ module.exports = {
           children: [
             'browser-env/',
             'browser-env/console/',
-            'browser-env/debug',
+            'browser-env/debug/',
             'browser-env/memory',
             'browser-env/cross-domain',
             'browser-env/security',
