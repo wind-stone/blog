@@ -16,7 +16,7 @@ module.exports = {
     nav: [
       { text: 'Vue 源码学习', link: '/vue/source-study/' },
       { text: 'Vue 生态系列', link: '/vue/vue-series/vuejs/' },
-      { text: '前端知识点', link: '/knowledge/js/' },
+      { text: '前端知识点', link: '/knowledge/' },
       { text: '移动端', link: '/mobile/feature/' },
       { text: 'ES6+', link: '/es6/' },
       { text: '开发环境/工具', link: '/tools/git/' },
@@ -156,6 +156,13 @@ module.exports = {
       // 前端知识点
       '/knowledge/': [
         {
+          title: '前端知识点',
+          collapsable: false,
+          children: [
+            ''
+          ]
+        },
+        {
           title: 'JavaScript',
           collapsable: false,
           children: [
@@ -261,13 +268,6 @@ module.exports = {
             'compatibility/css/flex',
             'compatibility/css/ie',
             'compatibility/css/android-small-fontsize'
-          ]
-        },
-        {
-          title: '调试',
-          collapsable: false,
-          children: [
-            'debug/',
           ]
         },
         {
