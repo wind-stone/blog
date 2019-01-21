@@ -23,13 +23,43 @@ wind-stone@server-host::files/some-directory/
 
 Print Working Directory，显示工作目录的路径名称。
 
-### cat 查看文件
+### mkdir：创建目录
+
+```sh
+mkdir directory-name
+```
+
+详细请参考：[每天一个linux命令（4）：mkdir命令](http://www.cnblogs.com/peida/archive/2012/10/25/2738271.html)
+
+### rm：删除文件、目录
+
+```sh
+rm -rf director-or-file-name
+```
+
+命令参数：
+
+- `-f`/`--force`：忽略不存在的文件，从不给出提示。
+- `-i`/`--interactive`：进行交互式删除
+- `-r`/`-R`/`--recursive`：指示rm将参数中列出的全部目录和子目录均递归地删除。
+- `-v`/`--verbose`：详细显示进行的步骤
+- `--help`：显示此帮助信息并退出
+- `--version`：输出版本信息并退出
+
+注意：
+
+- 若没有`-r`选项，则`rm`命令不会删除目录
+- 若仅使用`rm`来删除文件，通常仍可以将该文件恢复原状
+
+详细请参考：[每天一个linux命令（5）：rm 命令](http://www.cnblogs.com/peida/archive/2012/10/26/2740521.html)
+
+### cat：查看文件
 
 ```sh
 cat filename
 ```
 
-### cp 复制文件
+### cp：复制文件
 
 将源文件复制到目标文件，或将多个源文件复制到目标目录
 
