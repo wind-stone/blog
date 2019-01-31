@@ -20,6 +20,11 @@
      * 设置 html 根元素的 font-size
      */
     function setRootElementFontSize() {
+        // 不能这样获取屏幕宽度，因为在低端 OPPO & VIVO 手机上会返回 980
+        // var rootElementWidth = window.innerWidth
+
+        // 也可以这样获取屏幕宽度
+        // var rootElementWidth = document.documentElement.clientWidth
         var rootElementWidth = rootElement.getBoundingClientRect().width;
         var pxPerRem = rootElementWidth / 10;
         rootElement.style.fontSize = pxPerRem + 'px';
