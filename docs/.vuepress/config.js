@@ -241,7 +241,8 @@ module.exports = {
           title: '移动端 - Hybrid',
           collapsable: false,
           children: [
-            'hybrid/h52app'
+            'hybrid/h52app',
+            'hybrid/jsbridge'
           ]
         },
         {
