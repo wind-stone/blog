@@ -381,6 +381,13 @@ module.exports = {
           ]
         },
         {
+          title: 'CLI Tools',
+          collapsable: false,
+          children: [
+            'cli-tools/'
+          ]
+        },
+        {
           title: '其它工具',
           collapsable: false,
           children: [
