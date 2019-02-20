@@ -39,5 +39,3 @@ const options = {
   @change="inputChange">
 </el-input>
 ```
-
-

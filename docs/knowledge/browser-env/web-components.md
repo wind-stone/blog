@@ -14,21 +14,17 @@ Web Components 的标准化只规范接口，而底层的实现是完全自由�
 
 Reference: [http://fex.baidu.com/blog/2014/05/web-components-future-oriented/](http://fex.baidu.com/blog/2014/05/web-components-future-oriented/)
 
-
 ## 详细内容
 
 ### template
 
 [HTML's New Template Tag](https://www.html5rocks.com/en/tutorials/webcomponents/template/)
 
-
 ### Custom Element
 
 - 自定义属性默认：`display: inline`
 
-
 [自定义元素 v1：可重用网络组件](https://developers.google.cn/web/fundamentals/web-components/customelements)
-
 
 ### Shadow DOM
 
@@ -38,10 +34,10 @@ Reference: [http://fex.baidu.com/blog/2014/05/web-components-future-oriented/](h
 
 [CSS性能优化新属性 contain 的语法、作用及使用场景](http://www.webhek.com/post/css-contain-property.html)
 
-
 ### HTML Import
 
 [HTML Imports](https://www.html5rocks.com/en/tutorials/webcomponents/imports/)
 
 Reference
-- http://javascript.ruanyifeng.com/htmlapi/webcomponents.html
+
+- [阮一峰 Web Components](http://javascript.ruanyifeng.com/htmlapi/webcomponents.html)

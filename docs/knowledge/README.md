@@ -7,3 +7,8 @@
 - HTML-DOM
 - 浏览器环境
 - Node 环境
+
+## 常用词语的翻译
+
+- kebab-case: 短横线隔开
+- camelCased: 驼峰命名，分为大驼峰（CamelCased 或 PascalCase）和小驼峰（camelCased）
