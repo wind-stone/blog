@@ -8,7 +8,7 @@ module.exports = {
     }
   },
   head: [
-    ['link', { rel: 'icon', href: `/long.png` }]
+    ['link', { rel: 'icon', href: `/img/long.png` }]
   ],
   themeConfig: {
     lastUpdated: 'Last Updated',
