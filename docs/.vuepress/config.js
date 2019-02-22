@@ -334,6 +334,13 @@ module.exports = {
           ]
         },
         {
+          title: 'Vue 组件',
+          collapsable: true,
+          children: [
+            'vue-components/common-popup'
+          ]
+        },
+        {
           title: '其他',
           collapsable: true,
           children: [

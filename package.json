@@ -12,6 +12,9 @@
     "@commitlint/cli": "^7.2.1",
     "@commitlint/config-conventional": "^7.1.2",
     "husky": "^1.1.2",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
     "vuepress": "^0.14.4"
-  }
+  },
+  "dependencies": {}
 }
