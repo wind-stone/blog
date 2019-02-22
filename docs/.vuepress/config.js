@@ -223,6 +223,13 @@ module.exports = {
           children: [
             'node-env/'
           ]
+        },
+        {
+          title: '网络',
+          collapsable: false,
+          children: [
+            'network/dns'
+          ]
         }
       ],
 
