@@ -159,7 +159,7 @@ git remote show origin
 git remote add pb https://github.com/paulboone/ticgit
 ```
 
-添加新的远程仓库，地址为 https://github.com/paulboone/ticgit，并指定其引用的简写为 pb
+添加新的远程仓库，地址为`https://github.com/paulboone/ticgit`，并指定其引用的简写为 pb
 
 ### 重命名
 
@@ -211,32 +211,73 @@ git checkout -b dev-branch origin/dev-branch
 
 ### 推送分支
 
-```sh
-git push origin dev-branch
-```
-
-推送本地的 dev-branch 分支，将其作为远程仓库的 dev-branch 分支
+#### git push 命令
 
 ```sh
+# 将本地 local-branch 推动到 origin 远程仓库的 server-branch 分支上
+# 若 origin 远程仓库不存在 server-branch 分支，则会新创建 server-branch 分支
+#
+# 通过这种方式，可以将本地分支推动到远程仓库的一个命名不相同的远程分支
+# PS: 执行该命令时，可以处于本地的任意分支，不一定要在 local-branch 分支上
 git push origin local-branch:server-branch
 ```
 
-#### git push 的三种方式
+```sh
+git push origin master
+# 等同于
+git push origin master:master
+```
 
-- git push
+##### 省略远程仓库名称
 
-常规的方式，先将远程分支和本地分支合并后的推送方式（包括`fast-forward`）
+```sh
+# 将本地当前分支推送到 origin 远程仓库的同名分支上
+git push origin
 
-- git push --force
+# 若本地当前分支只追踪了一个远程仓库的分支，则可以省略远程仓库的名称 origin
+git push
+```
 
-强制推送，会覆盖远程分支的提交
+##### 省略分支名称
 
-- git push --rebase
+若执行的命令是在本地`example-branch`分支上，且要推动`origin`远程仓库的`example-branch`分支上，且本地`example-branch`分支已经追踪了`origin/example-branch`分支，则在执行`git push`相关命令时，可以省略分支名称。
 
-基于远程分支，把本地分支新的提交`rebase`到远程分支之后，再提交
+#### 选项
 
+##### --set-upstream
 
-推送本地的 local-branch 分支，将其作为远程仓库的 server-branch 分支
+```sh
+# 将本地 master 分支推动到 origin 远程仓库 master 分支
+# 同时指定 origin 为默认远程仓库，以后就可以不加任何参数使用 git push 了
+git push --set-upstream origin master
+# 简写
+git push -u origin master
+```
+
+##### --all
+
+```sh
+# 将所有本地分支都推送到 origin 远程仓库的同名分支上
+git push --all origin
+```
+
+##### --force
+
+```sh
+# 强制推送，会覆盖远程分支的提交
+git push --force origin
+# 简写
+git push -f origin
+```
+
+##### --tags
+
+`git push`命令不会推送标签（`tag`），除非使用`--tags`选项。
+
+```sh
+git push --tags
+git push origin --tags
+```
 
 ### 追踪分支
 
