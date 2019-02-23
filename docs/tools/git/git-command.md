@@ -42,15 +42,18 @@ git branch dev-branch
 
 （在当前 HEAD 指向的提交对象上）创建新的分支 dev-branch
 
-### 检出（切换）分支
+### 检出分支
 
 ```sh
 git checkout dev-branch
 ```
 
-切换到（已存在的）dev-branch 分支上。这条命令做了两件事。 一是使 HEAD 指回 dev-branch 分支，二是将工作目录恢复成 dev-branch 分支所指向的快照内容。
+切换到（已存在的）dev-branch 分支上。这条命令做了两件事。
 
-### 创建分支并检出（切换）
+- 使 HEAD 指回 dev-branch 分支
+- 将工作目录恢复成 dev-branch 分支所指向的快照内容。
+
+### 创建分支并检出
 
 ```sh
 git checkout -b dev-branch
@@ -69,6 +72,24 @@ git merge dev-branch
 ```
 
 将 dev-branch 合并到当前所在分支（合并以后，当前分支指向新的提交，dev-branch 指向的提交不变）
+
+#### squash 参数
+
+```sh
+git checkout master
+
+git merge --squash bugfix
+
+git commit
+```
+
+以上面的命令为例，`--squash`参数是将`bugfix`上（与`master`不同的）所有提交压缩到一起放置在`master`分支上的暂存区。尤其需要注意，此时`bugfix`上的所有修改（这些修改可能来自于`bugfix`上的多个提交）只是放在暂存区，但并没有提交这些修改。
+
+再通过`git commit`提交所有暂存区的修改，生成`master`分支上的一个新的提交。
+
+最终的效果是，`master`分支合并了`bugfix`分支上的所有修改，并最终在`master`分支上只生成了一个新的提交。
+
+PS：`bugfix`分支不会出现任何变化。
 
 ### 删除分支
 

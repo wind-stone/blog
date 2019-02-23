@@ -382,7 +382,7 @@ module.exports = {
           collapsable: false,
           children: [
             'git/',
-            'git/git-commond',
+            'git/git-command',
             'git/gitlab',
             'git/git-commit-guidelines'
           ]
