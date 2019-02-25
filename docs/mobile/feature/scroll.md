@@ -92,6 +92,8 @@ iOS 上若不做处理，滚动将显得不流程，此时，可添加一行代�
 ```js
 window.addEventListener('scroll', () => {
   const rect = elem.getBoundingClientRect();
+  // rect.left/top/right/bottom 是相对于视口的左上角位置而言的
+  // 判断整个元素是否完全在视口之内
   const inViewport = rect.bottom > 0 && rect.right > 0 &&
                      rect.left < window.innerWidth &&
                      rect.top < window.innerHeight;
@@ -109,6 +111,24 @@ observer.observe(element);
 ```
 
 此 API 被广泛地支持，但仍有一些浏览器需要 polyfill。尽管如此，它仍是目前最好的解决方案。
+
+### 文档滚动加载
+
+```js
+window.addEventListener('scroll', () => {
+  // 获取文档的垂直滚动距离
+  const documentScrollY = window.pageYOffset;
+  // 获取文档的高度
+  const documentHeight = document.body.offsetHeight;
+  // 获取视口高度
+  const viewPortHeight = window.innerHeight;
+  // 文档底部距离视口底部的距离
+  const leftDistance = documentHeight - documentScrollY - viewPortHeight;
+  if (leftDistance <= 20) {
+    // 文档滑动时，文档底部距离视口底部还有 20 px 时，加载新数据
+  }
+}
+```
 
 ## 滚动穿透问题、滚动边界问题
 
