@@ -266,6 +266,7 @@ module.exports = {
           title: '移动端 - JS 兼容性',
           collapsable: false,
           children: [
+            'compatibility/js/',
             'compatibility/js/fastclick'
           ]
         },
