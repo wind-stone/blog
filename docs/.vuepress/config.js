@@ -319,6 +319,14 @@ module.exports = {
       // 代码片段
       '/code-snippet/': [
         {
+          title: 'Vue 组件',
+          collapsable: true,
+          children: [
+            'vue-components/common-popup',
+            'vue-components/simple-marquee'
+          ]
+        },
+        {
           title: 'JS 代码片段',
           collapsable: true,
           children: [
@@ -331,13 +339,6 @@ module.exports = {
           children: [
             // 'css/',
             'css/dog-ear'
-          ]
-        },
-        {
-          title: 'Vue 组件',
-          collapsable: true,
-          children: [
-            'vue-components/common-popup'
           ]
         },
         {
