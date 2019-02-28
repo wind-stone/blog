@@ -242,6 +242,7 @@ module.exports = {
             'feature/',
             'feature/click-delay',
             'feature/scroll',
+            'feature/touch-event'
           ]
         },
         {
