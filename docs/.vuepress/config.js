@@ -15,7 +15,7 @@ module.exports = {
     sidebarDepth: 2,
     nav: [
       { text: 'Vue 源码学习', link: '/vue/source-study/' },
-      { text: 'Vue 生态系列', link: '/vue/vue-series/vuejs/' },
+      { text: '前端专题', link: '/web-topics/' },
       { text: '前端知识点', link: '/knowledge/' },
       { text: '移动端', link: '/mobile/feature/' },
       { text: 'ES6+', link: '/es6/' },
@@ -153,6 +153,19 @@ module.exports = {
         }
       ],
 
+      '/web-topics/': [
+        {
+          title: '滚动专题',
+          collapsable: false,
+          children: [
+            'scroll/',
+            'scroll/touch-event',
+            'scroll/click-delay',
+            'scroll/fastclick'
+          ]
+        },
+      ],
+
       // 前端知识点
       '/knowledge/': [
         {
@@ -230,7 +243,7 @@ module.exports = {
           children: [
             'network/dns'
           ]
-        }
+        },
       ],
 
       // 移动端
@@ -240,9 +253,7 @@ module.exports = {
           collapsable: false,
           children: [
             'feature/',
-            'feature/click-delay',
-            'feature/scroll',
-            'feature/touch-event'
+            'feature/click-delay'
           ]
         },
         {
@@ -325,7 +336,8 @@ module.exports = {
           collapsable: true,
           children: [
             'vue-components/common-popup',
-            'vue-components/simple-marquee'
+            'vue-components/simple-marquee',
+            'vue-components/vue-tap'
           ]
         },
         {
