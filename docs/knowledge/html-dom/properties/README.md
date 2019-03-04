@@ -10,6 +10,10 @@ sidebarDepth: 0
 
 ![元素大小](./element-size.gif)
 
+参考文档
+
+- [W3C DOM Compatibility - CSS Object Model View](https://www.quirksmode.org/dom/w3c_cssom.html)
+
 ### scrollWidth/scrollHeight
 
 包含滚动内容的元素的大小。
@@ -26,7 +30,7 @@ sidebarDepth: 0
 
 ### clientWidth/clientHeigh
 
-元素内容及其内边距所占据的空间大小，不包括滚动条，不包括隐藏的区域
+元素内容及其`padding`所占据的空间大小，不包括边框、滚动条
 
 ### offsetWidth/offsetHeight
 
@@ -34,10 +38,10 @@ sidebarDepth: 0
 
 元素的可见大小由其高度、宽度决定，包括所有内边距、滚动条和边框大小（注意，不包括外边距）。
 
-通过下列4 个属性可以取得元素的偏移量。
+通过下列 4 个属性可以取得元素的偏移量。
 
-- `offsetWidth`：元素在水平方向上占用的空间大小，包括元素的宽度、（可见的）垂直滚动条的宽度、左边框宽度和右边框宽度。
-- `offsetHeight`：元素在垂直方向上占用的空间大小，包括元素的高度、（可见的）水平滚动条的高度、上边框高度和下边框高度。
+- `offsetWidth`：元素在水平方向上占用的空间大小，包括元素的宽度、（可见的）垂直滚动条的宽度、左右边框宽度。
+- `offsetHeight`：元素在垂直方向上占用的空间大小，包括元素的高度、（可见的）水平滚动条的高度、上下边框高度。
 - `offsetLeft`：元素的左外边框至包含元素的左内边框之间的像素距离。
 - `offsetTop`：元素的上外边框至包含元素的上内边框之间的像素距离。
 

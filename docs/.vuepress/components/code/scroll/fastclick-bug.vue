@@ -1,7 +1,7 @@
 <template>
     <div class="fastclick-bug">
         <div
-            class="div1 needsclick"
+            class="div1"
             @click="clickDiv1"
         >div1，点击此处，将在 div1 的 click 回调里触发 div2.click() </div>
         <div
@@ -14,12 +14,6 @@
 </template>
 
 <script>
-import FastClick from 'fastclick';
-// import Vconsole from 'vconsole';
-// new Vconsole();
-
-FastClick.attach(document.body)
-
 export default {
     name: 'vue-tap-fastclick-bug',
     data() {
@@ -27,12 +21,17 @@ export default {
             div2Bg: false,
         }
     },
+    mounted() {
+        // 在浏览器端再执行 fastclick
+        import('fastclick').then((Fastclick) => {
+            Fastclick.attach(document.body);
+        })
+    },
     methods: {
         clickDiv1() {
             this.$refs.div2.click();
         },
         clickDiv2(evt) {
-            console.log('22222222 clicked~')
             this.div2Bg = !this.div2Bg;
         }
     }

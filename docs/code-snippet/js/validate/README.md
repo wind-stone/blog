@@ -1,4 +1,8 @@
-# 校验方法
+# 校验规则
+
+## 身份证有效性校验
+
+<<< @/docs/code-snippet/js/validate/idcard.js
 
 ## 中文名称校验
 

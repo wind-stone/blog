@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# registerModule 里的坑
+# Vuex registerModule 里的坑
 
 [[toc]]
 

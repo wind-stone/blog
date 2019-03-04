@@ -6,26 +6,7 @@ sidebarDepth: 0
 
 [[toc]]
 
-## 名词解释
-
-### 组件选项对象
-
-```js
-const options = {
-  el: '...',
-  props: '...',
-  data: '...',
-  computed: {
-    // ...
-  },
-  created: () = {}
-  // ...
-}
-```
-
-## Vue UI 库
-
-### element-ui
+## element-ui
 
 ### el-input 支持 enter 事件
 

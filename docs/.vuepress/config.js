@@ -20,135 +20,110 @@ module.exports = {
       { text: '移动端', link: '/mobile/feature/' },
       { text: 'ES6+', link: '/es6/' },
       { text: '开发环境/工具', link: '/tools/git/' },
-      { text: 'Code Snippet', link: '/code-snippet/js/' },
+      { text: '代码片段', link: '/code-snippet/' },
       { text: '算法', link: '/algorithm/sorting-algorithm/' },
       { text: 'GitHub', link: 'https://github.com/wind-stone' },
       { text: '随记', link: '/wander/house/' }
     ],
     sidebar: {
       // Vue 源码学习
-      '/vue/source-study/': [
+      '/vue/': [
         {
-          title: '总览',
+          title: 'Vue 应用',
           collapsable: false,
           children: [
-            '',
-            'vue-constructor',
-            'skills'
+            'vue-series/vuejs/',
+            'vue-series/vuejs/scoped-css',
+            'vue-series/vuex/register-module',
+            'vue-series/vue-router/',
           ]
         },
         {
           title: '实例化',
           collapsable: false,
           children: [
-            'instance/create',
-            'instance/state/',
-            'instance/state/props',
-            'instance/state/methods',
-            'instance/state/data',
-            'instance/state/computed',
-            'instance/state/watch',
-            'instance/directives',
-            'instance/events'
+            'source-study/vue-constructor',
+            'source-study/instance/create',
+            'source-study/instance/state/',
+            'source-study/instance/state/props',
+            'source-study/instance/state/methods',
+            'source-study/instance/state/data',
+            'source-study/instance/state/computed',
+            'source-study/instance/state/watch',
+            'source-study/instance/directives',
+            'source-study/instance/events'
           ]
         },
         {
           title: '组件化',
           collapsable: false,
           children: [
-            'component/register',
-            'component/options',
-            'component/async-component',
-            'component/functional-component',
-            'component/extend'
+            'source-study/component/register',
+            'source-study/component/options',
+            'source-study/component/async-component',
+            'source-study/component/functional-component',
+            'source-study/component/extend'
           ]
         },
         {
           title: '响应式原理',
           collapsable: false,
           children: [
-            'observer/',
-            'observer/dep-collection',
-            'observer/notify-update',
-            'observer/dep',
-            'observer/watcher',
-            'observer/scheduler',
+            'source-study/observer/',
+            'source-study/observer/dep-collection',
+            'source-study/observer/notify-update',
+            'source-study/observer/dep',
+            'source-study/observer/watcher',
+            'source-study/observer/scheduler',
           ]
         },
         {
           title: 'Virtual Dom',
           collapsable: false,
           children: [
-            'vdom/',
-            'vdom/vnode-tree-create',
-            'vdom/patch',
-            'vdom/patch-vnode',
-            'vdom/child-component-create',
-            'vdom/patch-modules/',
-            'vdom/patch-fn',
-            'vdom/topics/dom-binding'
+            'source-study/vdom/',
+            'source-study/vdom/vnode-tree-create',
+            'source-study/vdom/patch',
+            'source-study/vdom/patch-vnode',
+            'source-study/vdom/child-component-create',
+            'source-study/vdom/patch-modules/',
+            'source-study/vdom/patch-fn',
+            'source-study/vdom/topics/dom-binding'
           ]
         },
         {
           title: '编译',
           collapsable: false,
           children: [
-            'compile/',
-            'compile/compile-process',
-            'compile/base-compile',
-            'compile/parse',
-            'compile/parse-html',
-            'compile/optimize'
+            'source-study/compile/',
+            'source-study/compile/compile-process',
+            'source-study/compile/base-compile',
+            'source-study/compile/parse',
+            'source-study/compile/parse-html',
+            'source-study/compile/optimize'
           ]
         },
         {
           title: '编译专题',
           collapsable: false,
           children: [
-            'compile/topics/event',
-            'compile/topics/v-model',
-            'compile/topics/slot'
+            'source-study/compile/topics/event',
+            'source-study/compile/topics/v-model',
+            'source-study/compile/topics/slot'
           ]
         },
         {
           title: 'Util',
           collapsable: false,
           children: [
-            'util/next-tick'
+            'source-study/util/next-tick'
           ]
         },
         {
           title: 'Vuex',
           collapsable: false,
           children: [
-            'vuex/'
-          ]
-        }
-      ],
-
-      // Vue 生态系列
-      '/vue/vue-series/': [
-        {
-          title: 'Vue.js',
-          collapsable: false,
-          children: [
-            'vuejs/',
-            'vuejs/scoped-css'
-          ]
-        },
-        {
-          title: 'Vuex',
-          collapsable: false,
-          children: [
-            'vuex/register-module'
-          ]
-        },
-        {
-          title: 'vue-router',
-          collapsable: false,
-          children: [
-            'vue-router/',
-            'vue-router/best-practice'
+            'source-study/vuex/'
           ]
         }
       ],
@@ -252,8 +227,7 @@ module.exports = {
           title: '移动端 - 独有特性',
           collapsable: false,
           children: [
-            'feature/',
-            'feature/click-delay'
+            'feature/'
           ]
         },
         {
@@ -279,7 +253,6 @@ module.exports = {
           collapsable: false,
           children: [
             'compatibility/js/',
-            'compatibility/js/fastclick'
           ]
         },
         {
@@ -287,7 +260,6 @@ module.exports = {
           collapsable: false,
           children: [
             'compatibility/css/',
-            'compatibility/css/flex',
             'compatibility/css/ie',
             'compatibility/css/android-small-fontsize'
           ]
@@ -333,23 +305,25 @@ module.exports = {
       '/code-snippet/': [
         {
           title: 'Vue 组件',
-          collapsable: true,
+          collapsable: false,
           children: [
             'vue-components/common-popup',
-            'vue-components/simple-marquee',
-            'vue-components/vue-tap'
+            'vue-components/simple-marquee'
           ]
         },
         {
           title: 'JS 代码片段',
-          collapsable: true,
+          collapsable: false,
           children: [
-            'js/'
+            'js/',
+            'js/browser/',
+            'js/server/',
+            'js/validate/'
           ]
         },
         {
           title: 'CSS 代码片段',
-          collapsable: true,
+          collapsable: false,
           children: [
             // 'css/',
             'css/dog-ear'
@@ -357,7 +331,7 @@ module.exports = {
         },
         {
           title: '其他',
-          collapsable: true,
+          collapsable: false,
           children: [
             'rem/',
             'other/no-bg-scroll'
@@ -369,7 +343,7 @@ module.exports = {
       '/algorithm/sorting-algorithm/': [
         {
           title: '排序算法',
-          collapsable: true,
+          collapsable: false,
           children: [
             '',
             'bubble-sort/',
