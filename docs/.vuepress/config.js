@@ -16,7 +16,7 @@ module.exports = {
     nav: [
       { text: 'Vue 源码学习', link: '/vue/source-study/' },
       { text: '前端专题', link: '/web-topics/' },
-      { text: '前端知识点', link: '/knowledge/' },
+      { text: 'Knowledge', link: '/knowledge/' },
       { text: '移动端', link: '/mobile/feature/' },
       { text: 'ES6+', link: '/es6/' },
       { text: '开发环境/工具', link: '/tools/git/' },
@@ -206,10 +206,10 @@ module.exports = {
           ]
         },
         {
-          title: 'Node 环境',
+          title: '服务端',
           collapsable: false,
           children: [
-            'node-env/'
+            'server/'
           ]
         },
         {
