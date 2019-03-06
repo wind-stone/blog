@@ -12,7 +12,8 @@ sidebarDepth: 0
 - CSS
 - HTML-DOM
 - 浏览器环境
-- Node 环境
+- Node
+- 网络
 
 ## 常用词语的翻译
 

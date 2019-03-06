@@ -1,12 +1,57 @@
-# Node 对 CommonJS 规范的实现
+---
+sidebarDepth: 0
+---
 
-## commonjs 与 commonjs2
+# CommonJS 规范及实现
 
-`commonjs`只定义了`exports`，`commonjs2`还定义了`module.exports`，而 Node.js 及许多`CommonJs`的实现都是`commonjs2`
+[[toc]]
 
-Reference: [What is commonjs2 ? #1114](https://github.com/webpack/webpack/issues/1114)
+## 包规范的实现 - NPM
 
-## Node 的模块实现
+NPM 是 CommonJS 包规范的一种实现。
+
+### CommonJS 包规范的目录
+
+- `package.json`：包描述文件
+- `bin`：用于存放可执行二进制文件的目录
+- `lib`：用于存放 JavaScript 代码的目录
+- `doc`：用于存放文档的目录
+- `test`：用于存放单元测试用例的代码
+
+#### package.json
+
+`package.json`文件是 NPM 包的描述文件，NPM 包的所有行为与包描述文件的字段息息相关。
+
+与 CommonJS 包规范相比，NPM 的实现里的包描述文件多了`author`、`bin`、`main`、`devDependencies`四个字段。
+
+#### bin
+
+一些包作者希望包可以作为命令行工具使用。配置好`bin`字段后，通过`npm install package_name -g`命令可以将脚本添加到执行路径中，之后可以在命令行中直接执行。
+
+```json
+{
+  "name": "express",
+  "bin": {
+    "express": "./bin/express"
+  }
+}
+```
+
+### 安装依赖包
+
+#### 全局安装
+
+`npm install express -g`命令是对`express`进行全局安装，`-g`是将一个包安装为全局可用的可执行命令。它根据包描述文件中`bin`字段配置，将实际脚本链接到与 Node 可执行文件相同的路径下：
+
+```json
+{
+  "bin": {
+    "express": "./bin/express"
+  }
+}
+```
+
+## 模块规范的实现
 
 Node 作为 CommonJS 规范的实现，并没有完全按照规范实现，而是对模块规范进行了一定的取舍，同时也添加了少许自身需要的特性。
 
@@ -49,3 +94,15 @@ Node 中引入模块，需要经历如下3个步骤：
 若是模块路径数组都被遍历完毕，依然没有查找到目标文件，则会抛出查找失败的异常。
 
 Reference: [深入浅出 NodeJS]
+
+### require.resolve
+
+获取模块的绝对路径
+
+```js
+require.resolve('a.js')
+// 结果
+// /home/ruanyf/tmp/a.js
+```
+
+Reference: [require() 源码解读](http://www.ruanyifeng.com/blog/2015/05/require.html)

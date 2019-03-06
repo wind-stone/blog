@@ -145,14 +145,14 @@ module.exports = {
       '/knowledge/': [
         {
           title: '前端知识点',
-          collapsable: false,
+          collapsable: true,
           children: [
             ''
           ]
         },
         {
           title: 'JavaScript',
-          collapsable: false,
+          collapsable: true,
           children: [
             'js/',
             'js/data-structure',
@@ -165,7 +165,7 @@ module.exports = {
         },
         {
           title: 'CSS',
-          collapsable: false,
+          collapsable: true,
           children: [
             'css/',
             'css/selectors/',
@@ -178,7 +178,7 @@ module.exports = {
         },
         {
           title: 'HMLT-DOM',
-          collapsable: false,
+          collapsable: true,
           children: [
             'html-dom/',
             'html-dom/elements/',
@@ -189,7 +189,7 @@ module.exports = {
         },
         {
           title: '浏览器环境',
-          collapsable: false,
+          collapsable: true,
           children: [
             'browser-env/',
             'browser-env/console/',
@@ -206,15 +206,19 @@ module.exports = {
           ]
         },
         {
-          title: '服务端',
-          collapsable: false,
+          title: 'Node',
+          collapsable: true,
           children: [
-            'server/'
+            'node/',
+            'node/commonjs',
+            'node/third-party-package',
+            'node/koa',
+            'node/server'
           ]
         },
         {
           title: '网络',
-          collapsable: false,
+          collapsable: true,
           children: [
             'network/dns'
           ]
@@ -374,13 +378,6 @@ module.exports = {
             'git/git-command',
             'git/gitlab',
             'git/git-commit-guidelines'
-          ]
-        },
-        {
-          title: 'Node',
-          collapsable: false,
-          children: [
-            'node/'
           ]
         },
         {
