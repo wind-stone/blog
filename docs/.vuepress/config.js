@@ -212,7 +212,7 @@ module.exports = {
             'node/',
             'node/commonjs',
             'node/third-party-package',
-            'node/koa',
+            'node/koa/',
             'node/server'
           ]
         },
