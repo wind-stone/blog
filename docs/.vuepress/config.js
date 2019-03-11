@@ -213,6 +213,7 @@ module.exports = {
             'node/commonjs',
             'node/third-party-package',
             'node/koa/',
+            'node/pm2',
             'node/server'
           ]
         },

@@ -4,21 +4,6 @@ sidebarDepth: 0
 
 # 第三方工具
 
-## pm2
-
-```sh
-<!-- 查看有哪些 node 服务 -->
-pm2 list
-
-<!-- 重启 node-growth-dev1 服务 -->
-pm2 reload node-growth-dev1
-
-<!-- 查看服务 node-growth-dev1 的实时日志 -->
-pm2 logs node-growth-dev1
-
-history | grep node-growth-dev1
-```
-
 ## nodemon
 
 [`nodemon`](https://github.com/remy/nodemon)可以在开发`node.js`应用时，监控目录下的文件改变，并自动重启`node.js`应用。
@@ -56,3 +41,7 @@ npm install --save-dev cross-env
   }
 }
 ```
+
+## chokidar
+
+[chokidar](https://github.com/paulmillr/chokidar)，基于 Nodej.js 的`fs.watch`/`fs.watchFile`/`fsevents`封装的`watch`工具。
