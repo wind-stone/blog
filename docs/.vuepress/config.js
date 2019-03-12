@@ -218,6 +218,13 @@ module.exports = {
           ]
         },
         {
+          title: 'Server',
+          collapsable: true,
+          children: [
+            'server/'
+          ]
+        },
+        {
           title: '网络',
           collapsable: true,
           children: [
