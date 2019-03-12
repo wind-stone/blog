@@ -54,6 +54,10 @@ if (!module.parent) app.listen(3000);
 <p><%= user.name.first %> is a <%= user.age %> year old <%= user.species %>.</p>
 ```
 
+### koa-proxy
+
+[koa-proxy](https://github.com/popomore/koa-proxy)，是`koa`的代理中间件，主要是将请求代理到其他服务器上。
+
 ## 简单实现
 
 ### 1.x 中间件简单实现
@@ -65,7 +69,7 @@ if (!module.parent) app.listen(3000);
 - 中间件 Generator 函数里`yield next`的实现
 - 中间件 Generator 函数里`yield`另一个中间件的实现
 
-<<< @/docs/knowledge/node/koa/1.x-simple-implement.js
+<<< @/docs/back-end/node/koa/1.x-simple-implement.js
 
 ### 2.x 中间件简单实现
 

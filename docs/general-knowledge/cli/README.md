@@ -2,13 +2,9 @@
 sidebarDepth: 0
 ---
 
-# 工具
+# 命令行
 
 [[toc]]
-
-## NPM registry 管理工具
-
-[nrm](https://www.npmjs.com/package/nrm)
 
 ## CLI
 
@@ -23,13 +19,18 @@ CLI（command-line interface，命令行界面）
 
 Reference: [由linux命令行下命令参数前的一横（-）和两横（--）的区别而得知的](http://blog.csdn.net/songjinshi/article/details/6816776)
 
-## rsync
+## 常用命令行工具
 
-[[toc]]
+### unrar
+
+解压`rar`文件
+
+1. 使用`Homebrew`安装`unrar`：`$ brew install unrar`
+2. 切换到`rar`文件所在目录，输入命令进行解压：`unrar x test.rar`
+
+### rsync
 
 `rsync`命令是一个远程数据同步工具，可通过 LAN/WAN 快速同步多台主机间的文件。`rsync`使用所谓的“rsync算法”来使本地和远程两个主机之间的文件达到同步，这个算法只传送两个文件的不同部分，而不是每次都整份传送，因此速度相当快。
-
-### 常用命令
 
 ```sh
 # rsync [OPTION]... SRC [USER@]HOST::DEST

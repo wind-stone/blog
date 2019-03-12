@@ -15,11 +15,11 @@ module.exports = {
     sidebarDepth: 2,
     nav: [
       { text: 'Vue 源码学习', link: '/vue/source-study/' },
-      { text: '前端专题', link: '/web-topics/' },
-      { text: 'Knowledge', link: '/knowledge/' },
+      { text: 'Front End', link: '/front-end/' },
+      { text: 'Back End', link: '/back-end/'},
+      { text: 'General Knowledge', link: '/general-knowledge/'},
       { text: '移动端', link: '/mobile/feature/' },
       { text: 'ES6+', link: '/es6/' },
-      { text: '开发环境/工具', link: '/tools/git/' },
       { text: '代码片段', link: '/code-snippet/' },
       { text: '算法', link: '/algorithm/sorting-algorithm/' },
       { text: 'GitHub', link: 'https://github.com/wind-stone' },
@@ -128,28 +128,8 @@ module.exports = {
         }
       ],
 
-      '/web-topics/': [
-        {
-          title: '滚动专题',
-          collapsable: false,
-          children: [
-            'scroll/',
-            'scroll/touch-event',
-            'scroll/click-delay',
-            'scroll/fastclick'
-          ]
-        },
-      ],
-
       // 前端知识点
-      '/knowledge/': [
-        {
-          title: '前端知识点',
-          collapsable: true,
-          children: [
-            ''
-          ]
-        },
+      '/front-end/': [
         {
           title: 'JavaScript',
           collapsable: true,
@@ -206,15 +186,80 @@ module.exports = {
           ]
         },
         {
+          title: '打包工具',
+          collapsable: true,
+          children: [
+            'bundler/webpack/',
+            'bundler/webpack/bootstrap',
+            'bundler/rollup'
+          ]
+        },
+        {
+          title: '工具',
+          collapsable: true,
+          children: [
+            'tools/eslint'
+          ]
+        },
+        {
+          title: '专题 - 滚动',
+          collapsable: true,
+          children: [
+            'scroll/',
+            'scroll/touch-event',
+            'scroll/click-delay',
+            'scroll/fastclick'
+          ]
+        },
+      ],
+
+      // Back End
+      '/back-end/': [
+        {
           title: 'Node',
           collapsable: true,
           children: [
-            'node/',
+            'node/pm2',
+            'node/koa/',
             'node/commonjs',
             'node/third-party-package',
-            'node/koa/',
-            'node/pm2',
-            'node/server'
+            'node/'
+          ]
+        }
+      ],
+
+      // General Knowledge
+      '/general-knowledge/': [
+        {
+          title: 'CLI',
+          collapsable: true,
+          children: [
+            'cli/',
+            'cli/command'
+          ]
+        },
+        {
+          title: 'Git',
+          collapsable: true,
+          children: [
+            'git/git-command',
+            'git/git-commit-guidelines',
+            'git/gitlab',
+            'git/'
+          ]
+        },
+        {
+          title: 'Nginx',
+          collapsable: true,
+          children: [
+            'nginx/'
+          ]
+        },
+        {
+          title: 'Network',
+          collapsable: true,
+          children: [
+            'network/dns'
           ]
         },
         {
@@ -225,12 +270,12 @@ module.exports = {
           ]
         },
         {
-          title: '网络',
+          title: '其他',
           collapsable: true,
           children: [
-            'network/dns'
+            'others/glob'
           ]
-        },
+        }
       ],
 
       // 移动端
@@ -363,45 +408,6 @@ module.exports = {
             'insertion-sort/',
             'merge-sort/',
             'quick-sort/'
-          ]
-        }
-      ],
-
-      // 开发环境/工具
-      '/tools/': [
-        {
-          title: '构建工具',
-          collapsable: false,
-          children: [
-            'bundler/webpack/',
-            'bundler/webpack/bootstrap',
-            'bundler/rollup'
-          ]
-        },
-        {
-          title: 'git',
-          collapsable: false,
-          children: [
-            'git/',
-            'git/git-command',
-            'git/gitlab',
-            'git/git-commit-guidelines'
-          ]
-        },
-        {
-          title: 'CLI Tools',
-          collapsable: false,
-          children: [
-            'cli-tools/'
-          ]
-        },
-        {
-          title: '其它工具',
-          collapsable: false,
-          children: [
-            '',
-            'linux',
-            'eslint',
           ]
         }
       ],

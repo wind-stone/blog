@@ -2,32 +2,21 @@
 sidebarDepth: 0
 ---
 
-# 简介
-
-[[toc]]
+# 通用技能
 
 这里将记录前端的主要知识点，包括：
 
-- JavaScript
-- CSS
-- HTML-DOM
-- 浏览器环境
-- Node
+- Git
 - Server
-- 网络
+- Web Applications
+- Operating System
+- Network
 
-## 常用词语的翻译
-
-- kebab-case: 短横线隔开
-- camelCased: 驼峰命名，分为大驼峰（CamelCased 或 PascalCase）和小驼峰（camelCased）
-
-## 其他配置
-
-### 配置本地 hosts 文件
+## 配置本地 hosts 文件
 
 在浏览器中输入`www.baidu.com`域名，操作系统会先检查自己本地的`hosts`文件查看是否有这个网址映射关系，如果有，就先调用这个 IP 地址映射，完成域名解析。完整的 DNS 解析过程，请查看[知乎 - DNS解析的过程是什么，求详细的？](https://www.zhihu.com/question/23042131)
 
-#### MAC 电脑
+### MAC 电脑
 
 1. 打开`Finder`在菜单中选择`前往` --> `前往文件夹`，或使用快捷键`Command + Shift + G`
 2. 输入跳转路径`/private/etc/`，点击`前往`

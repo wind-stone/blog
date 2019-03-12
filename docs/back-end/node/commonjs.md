@@ -24,6 +24,31 @@ NPM 是 CommonJS 包规范的一种实现。
 
 与 CommonJS 包规范相比，NPM 的实现里的包描述文件多了`author`、`bin`、`main`、`devDependencies`四个字段。
 
+##### scripts 里的参数传递
+
+假设`package.json`文件里如下配置了`scripts`属性：
+
+```json
+{
+  "name": "script-tests",
+  "version": "1.0.0",
+  "description": "Foo Bar",
+  "scripts": {
+    "pm2": "node ./server/pm2.js"
+  }
+}
+```
+
+当在控制台执行`npm run pm2 hello world`后，实际上是执行了`node ./server/pm2.js "hello" "world"`命令，在`./server/pm2.js`文件里的输出如下：
+
+```js
+// ./server/pm2.js
+console.log('0', process.argv[0]) // 0 /Users/wind-stone/.nvm/versions/node/v11.10.0/bin/node
+console.log('1', process.argv[1]) // 1 /Users/wind-stone/kuaishou/ug-node-h5/server/pm2.js
+console.log('2', process.argv[2]) // 2 hello
+console.log('3', process.argv[3]) // 3 world
+```
+
 #### bin
 
 一些包作者希望包可以作为命令行工具使用。配置好`bin`字段后，通过`npm install package_name -g`命令可以将脚本添加到执行路径中，之后可以在命令行中直接执行。

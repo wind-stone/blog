@@ -2,28 +2,22 @@
 sidebarDepth: 0
 ---
 
-# Unix / Linux
+# 命令
 
 [[toc]]
 
-## 用户默认目录
+## 查看端口是否被占用
 
 ```sh
-# wind-stone 代表用户，server-host 代表服务器
-# 进入服务器，会默认进行 home/wind-stone 目录下
-wind-stone@server-host
-
-# 以下目录，实际上是 home/wind-stone/files/some-directory/
-wind-stone@server-host::files/some-directory/
+# 查看 3000 端口是否被占用
+lsof -i :3000
 ```
 
-## 命令
-
-### pwd 显示工作目录
+## pwd 显示工作目录
 
 Print Working Directory，显示工作目录的路径名称。
 
-### mkdir：创建目录
+## mkdir：创建目录
 
 ```sh
 mkdir directory-name
@@ -31,7 +25,7 @@ mkdir directory-name
 
 详细请参考：[每天一个linux命令（4）：mkdir命令](http://www.cnblogs.com/peida/archive/2012/10/25/2738271.html)
 
-### rm：删除文件、目录
+## rm：删除文件、目录
 
 ```sh
 rm -rf director-or-file-name
@@ -53,13 +47,13 @@ rm -rf director-or-file-name
 
 详细请参考：[每天一个linux命令（5）：rm 命令](http://www.cnblogs.com/peida/archive/2012/10/26/2740521.html)
 
-### cat：查看文件
+## cat：查看文件
 
 ```sh
 cat filename
 ```
 
-### cp：复制文件
+## cp：复制文件
 
 将源文件复制到目标文件，或将多个源文件复制到目标目录
 
@@ -67,11 +61,11 @@ cat filename
 cp origin destination
 ```
 
-### mv 移动文件
+## mv 移动文件
 
-### vi
+## vi
 
-#### 仅查看文件
+## 仅查看文件
 
 ```sh
 <!-- 打开文件，输入 -->
@@ -81,7 +75,7 @@ vi filename
 :q!
 ```
 
-#### 修改文件
+## 修改文件
 
 ```sh
 <!-- 打开文件，输入 -->
@@ -98,7 +92,7 @@ esc
 shift 键 + Z*2
 ```
 
-### rm 删除文件
+## rm 删除文件
 
 ```sh
 rm filename

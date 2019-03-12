@@ -1,3 +1,11 @@
+---
+sidebarDepth: 0
+---
+
+# 未分类
+
+[[toc]]
+
 # 编写原生 JavaScript 插件
 
 ## 插件需要满足的条件
