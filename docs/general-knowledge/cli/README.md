@@ -6,18 +6,82 @@ sidebarDepth: 0
 
 [[toc]]
 
-## CLI
-
-[[toc]]
-
 CLI（command-line interface，命令行界面）
 
-### 命令行参数前 -- 与 - 的区别
+## 知识点
 
-- 参数用一横的说明后面的参数是字符形式，如 npm -h
-- 参数用两横的说明后面的参数是单词形式，如 npm --help
+### 命令行 -- 与 - 的区别
 
-Reference: [由linux命令行下命令参数前的一横（-）和两横（--）的区别而得知的](http://blog.csdn.net/songjinshi/article/details/6816776)
+在 Linux 的`shell`中，我们把`-`和`--`加上一个字符（字符串）叫做命令行参数，主流的有下面几种风格：
+
+- Unix 风格参数，参数前加单破折线`-`
+- GNU 风格参数，参数前加双破折线`--`
+- BSD 风格参数，参数前不加破折线
+
+#### Unix 风格参数
+
+单个`-`后面加单个字母，代表一个参数。Unix风格的参数是从贝尔实验室开发的 AT&T Unix 系统上原有的命令继承下来的。比如
+
+```sh
+ls -l
+rm -fr /
+git commit -am "xxx"
+```
+
+而对于单个`-`后面加多个字母的情况，实际上是多个参数，只是合并起来而已。比如`git --am`实际上是`git -a -m`，可以分开写，也可以合并在一起写。
+
+#### GNU 风格参数
+
+两个`--`后面加单词或短语，代表一个参数。
+
+```sh
+npm install lodash --save
+npm install express --save-dev
+```
+
+若`--`后面加短语，短语的每个单词之间也会使用`-`连接，比如上面的`--save-dev`代表单个参数。
+
+通常情况，`-`的参数是`--`参数的简写，比如`-h`和`--help`、`ls`命令里的`-a`和`--all`。当然，也会有一些例外情况。
+
+#### 单独的 --
+
+目前这种情况仅在 PM2 里见过。
+
+PM2 是进程管理工具，执行 PM2 的`start`命令会间接执行`node`命令，若是想在执行命令时给`node`命令传递参数，可以如下使用`--`：
+
+```sh
+pm2 start app.js -- helle world
+```
+
+```js
+// app.js
+for (let i = 0; i <= process.argv.length; i++) {
+  console.log(i, process.argv[i])
+}
+
+// 输出：
+
+// 0 '/Users/wind-stone/.nvm/versions/node/v11.10.0/bin/node'
+// 1 '/Users/wind-stone/.nvm/versions/node/v11.10.0/lib/node_modules/pm2/lib/ProcessContainerFork.js'
+// 2 'hello'
+// 3 'world'
+// 4 undefined
+```
+
+即单独的`--`代表将之后的所有参数传递给`node`命令。
+
+### 用户默认目录
+
+Linux/Unix 系统下
+
+```sh
+# wind-stone 代表用户，server-host 代表服务器
+# 进入服务器，会默认进行 home/wind-stone 目录下
+wind-stone@server-host
+
+# 以下目录，实际上是 home/wind-stone/files/some-directory/
+wind-stone@server-host::files/some-directory/
+```
 
 ## 常用命令行工具
 
