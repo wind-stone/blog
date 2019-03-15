@@ -58,6 +58,10 @@ if (!module.parent) app.listen(3000);
 
 [koa-proxy](https://github.com/popomore/koa-proxy)，是`koa`的代理中间件，主要是将请求代理到其他服务器上。
 
+### koa-logger
+
+[koa-logger](https://github.com/koajs/logger)，`koa`开发风格的日志中间件。这个中间件应该尽可能靠前放置，以便可以记录下所有的请求和响应。
+
 ## 简单实现
 
 ### 1.x 中间件简单实现
