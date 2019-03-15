@@ -273,7 +273,8 @@ module.exports = {
           title: '其他',
           collapsable: true,
           children: [
-            'others/glob'
+            'others/glob',
+            'others/google-cloud'
           ]
         }
       ],
