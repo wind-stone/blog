@@ -997,36 +997,38 @@ module.exports = {
   deploy: {
     // production 是环境名称
     production: {
-      // SSH 公钥的路径，默认是 $HOME/.ssh
-      key: "/path/to/some.pem",
+      // （本地的）SSH 公钥的路径，默认是 $HOME/.ssh
+      key: '~/.ssh/google_compute_engine',
       // SSH user
-      user: "ubuntu",
-      // SSH host
-      host: ["192.168.0.13"],
+      user: 'cxl_windstone',
+
+      // 要部署到的服务器列表
+      host: ['35.220.249.163'],
+      // 要部署到的服务器的路径，注意：请保持该文件夹里无文件，PM2 部署时会填充文件
+      path: '/home/cxl_windstone/node-projects/koa-nuxt',
       // SSH options with no command-line flag, see 'man ssh'
       // can be either a single string or an array of strings
-      ssh_options: "StrictHostKeyChecking=no",
-      // GIT 远程仓库名称/分支
-      ref: "origin/master",
-      // GIT 远程仓库地址
-      repo: "git@github.com:Username/repository.git",
-      // 要部署到的服务器的路径
-      path: "/var/www/my-repository",
-      // Pre-setup command or path to a script on your local machine
-      pre-setup: "apt-get install git ; ls -la",
-      // Post-setup commands or path to a script on the host machine
-      // eg: placing configurations in the shared dir etc
-      post-setup: "ls -la",
+      ssh_options: 'StrictHostKeyChecking=no',
+
+      // git 仓库信息
+      // git 远程仓库名称/分支
+      ref: 'origin/master',
+      // git 远程仓库地址
+      repo: 'git@github.com:wind-stone/koa-nuxt.git',
+
+      // 命令或脚本路径，将在本地机器上执行
+      'pre-setup': 'echo  pre-setup 1111111111',
+      // 命令或脚本路径，将在本地机器上执行，比较将配置放在 shared 目录等
+      'post-setup': 'echo post-setup 22222222222',
+
       // pre-deploy action
-      pre-deploy-local: "echo 'This is a local executed command'",
-      // post-deploy action
-      post-deploy: "npm install",
-    },
+      'pre-deploy-local': 'echo pre-deploy-local 333333333',
+      // post-deploy action，将在服务器上执行
+      'post-deploy': 'npm install'
+    }
   }
 }
 ```
-
-需要注意：服务器的路径必须是空的，因为 PM2 部署时会填充它
 
 #### Setup
 
@@ -1036,13 +1038,29 @@ pm2 deploy production setup
 
 执行以上命令，完成首次部署，并将文件填入远程服务器路径文件夹下。
 
+执行此命令后，服务器上的`koa-nuxt`文件夹下会存在三个文件夹：
+
+- `source`: 项目的源代码，从远程仓库拉取的
+- `current`: 指向`source`目录，貌似目前没什么用
+- `shared`
+  - `pids`
+  - `logs`
+
+详情请见：
+
+- [PM2 deploy folder structure - how to use / configure](https://stackoverflow.com/questions/49068667/pm2-deploy-folder-structure-how-to-use-configure)
+- 
+
 #### Deploy
 
 这里是一些实用的命令：
 
 ```sh
-# Setup deployment at remote location
+# 1. Setup deployment at remote location
 pm2 deploy production setup
+
+# 2. 部署
+pm2 deploy production
 
 # Update remote version
 pm2 deploy production update
