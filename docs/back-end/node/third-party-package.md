@@ -45,3 +45,47 @@ npm install --save-dev cross-env
 ## chokidar
 
 [chokidar](https://github.com/paulmillr/chokidar)，基于 Nodej.js 的`fs.watch`/`fs.watchFile`/`fsevents`封装的`watch`工具。
+
+## require-all
+
+[`require-all`](https://github.com/felixge/node-require-all)，`require`整个目录里的所有文件。
+
+```js
+// 方式一：该方式可直接看官网示例，有详细说明
+var controllers = require('require-all')({
+  dirname     :  __dirname + '/controllers',
+  filter      :  /(.+Controller)\.js$/,
+  excludeDirs :  /^\.(git|svn)$/,
+  recursive   : true
+});
+```
+
+```js
+// 方式二：该方式官网里直接说明结果的结构，因此如下阐述
+var libs = require('require-all')(__dirname + '/lib');
+```
+
+假设`lib`目录下的文件夹结构为：
+
+- lib
+  - folder1
+    - file1-1.js
+    - file1-2.js
+  - folder2
+    - file2-1.js
+
+则通过方式二得到的`libs`为：
+
+```js
+{
+  folder1: {
+    file1-1: [Function: exports],
+    file1-2: [Function: exports]
+  },
+  folder2: {
+    file2-1: [Function: exports]
+  }
+}
+```
+
+各个文件的结构为`module.exports = function() {}`，以`[Function: exports]`表示。
