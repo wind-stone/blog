@@ -62,6 +62,14 @@ if (!module.parent) app.listen(3000);
 
 [koa-logger](https://github.com/koajs/logger)，`koa`开发风格的日志中间件。这个中间件应该尽可能靠前放置，以便可以记录下所有的请求和响应。
 
+### etag
+
+[etag](https://github.com/jshttp/etag)，创建简单的 ETags。
+
+### koa-send
+
+[koa-send](https://github.com/koajs/send)，静态文件服务中间件，该库隶属于`koajs`
+
 ## 简单实现
 
 ### 1.x 中间件简单实现
