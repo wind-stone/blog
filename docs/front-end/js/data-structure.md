@@ -98,6 +98,15 @@ function getMonthCountDay (year, month) {
 }
 ```
 
+Date API 处理日期溢出时的规则，类似于加法进位，减法退位。
+
+- `new Date(2019, 0, 50)`，其中0代表1月，1月只有31天，则多出来的19天会被加到2月，结果是2019年2月19日
+- `new Date(2019, 20, 10)`，1年只有12个月，多出来的9个月会被加到2020年，结果是2020年9月10日
+- `new Date(2019, -2, 10)`，2019年1月10日往前推2个月，结果为2018年11月10日
+- `new Date(2019, 2, -2)`，2019年3月1日往前推2天，结果为2019年2月26日
+
+Reference: [小技巧：已知年月，求该月共多少天？](https://github.com/justjavac/the-front-end-knowledge-you-may-not-know/issues/41)
+
 ## 类型判断及转换
 
 ### 返回给定参数的类型
