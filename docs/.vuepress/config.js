@@ -172,6 +172,7 @@ module.exports = {
           collapsable: true,
           children: [
             'browser-env/',
+            'browser-env/process-thread',
             'browser-env/console/',
             'browser-env/debug/',
             'browser-env/error-handler',
