@@ -206,6 +206,7 @@ module.exports = {
           title: 'Webpack',
           collapsable: true,
           children: [
+            'webpack/config',
             'webpack/webpack4-import'
           ]
         },
