@@ -6,6 +6,8 @@ sidebarDepth: 0
 
 [[toc]]
 
+PS: 以下会列出一些常用的命令及常用的用法，每个命令更加详细的用法可以参考后面的链接。
+
 ## 查看端口是否被占用
 
 ```sh
@@ -102,3 +104,35 @@ rm -rf filename
 ```
 
 Reference: [每天一个linux命令目录](https://www.cnblogs.com/peida/archive/2012/12/05/2803591.html)
+
+## grep 搜索
+
+常用参数：
+
+- `-n`: `--line-number`，在显示符合样式的那一行之前，标示出该行的行号。
+
+```sh
+# 从 test.txt 文件里查输出含有 linux 的内容行
+grep -n 'linux' test.txt
+# 或
+cat test.txt | grep -n 'linux'
+
+# 从多个文件里查找关键词
+grep 'linux' test.txt test2.txt
+
+# 输出以 u 开头的行内容
+cat test.txt | grep ^u
+# 输出非 u 开头的行内容
+cat test.txt | grep ^[^u]
+
+# 输出以 hat 结尾的行内容
+cat test.txt | grep hat$
+
+# 输出包含 ed 或者 at 字符的内容行
+cat test.txt | grep -E "ed|at"
+
+# 显示当前目录下面以 .txt 结尾的文件中的所有包含每个字符串至少有7个连续小写字符的字符串的行
+grep '[a-z]\{7\}' *.txt
+```
+
+更好用法和正则表达式等内容，请参考[每天一个linux命令（39）：grep 命令](http://www.cnblogs.com/peida/archive/2012/12/17/2821195.html)
