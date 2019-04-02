@@ -2,7 +2,6 @@
 
 ## Vue
 
-- vue create API
 - 函数式组件与常规组件的区别
 - 模板编译
   - slot 的实现

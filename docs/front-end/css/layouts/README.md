@@ -40,8 +40,8 @@ sidebarDepth: 0
 ### BFC 的特性
 
 - 阻止外边距折叠
-- 包含浮动的元素
-- 阻止元素被浮动元素覆盖
+- 包含`float`浮动的元素
+- 阻止元素被`float`浮动元素覆盖
 
 详见：[清除浮动及 BFC（块级格式化上下文）](http://blog.csdn.net/cxl444905143/article/details/42266723)
 
