@@ -151,6 +151,7 @@ module.exports = {
             'css/selectors/',
             'css/properties/',
             'css/layouts/',
+            'css/layouts/visual-formatting-model/',
             'css/layouts/ifc/',
             'css/layouts/font/',
             'css/flex-image/',
