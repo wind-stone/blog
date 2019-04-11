@@ -51,11 +51,20 @@ Reference：[百度-CSS 编码规范](https://github.com/fex-team/styleguide/blo
 
 需要注意的是，对于 CSS 预处理器来说，当在缩写里同时使用`background-position`和`background-size`时，中间的`/`会被当成除号对待，待找出解决办法。
 
-## rgba() 与 opacity
+### rgba() 与 opacity
 
 - `rgba()`和`opacity`都能实现透明效果
 - `opacity`作用于元素，以及元素内的所有内容的透明度
 - `rgba()`只作用于元素的颜色或其背景色，子元素不会继承透明效果
+
+### display: none 与 visibility: hidden
+
+- `display: none`
+  - 元素不会影响布局，不会生成`box`，即不会出现在`formatting structure`里
+  - 后代元素上设置`display`不为`none`，无法覆盖这种行为
+- `visibility: hidden`
+  - 元素会生成`box`，但是不可见（全透明，不会绘制任何东西），会影响布局
+  - 后代元素可通过设置`visibility: visible`使得后代元素可见
 
 ## z-index
 
@@ -147,3 +156,4 @@ CSS 有些属性的属性值可以使用百分比值，那么这些百分比值�
 `padding` | 包含块的宽度`width` |
 `margin` | 包含块的宽度`width` |
 `vertical-align` | 该元素的`line-height` |
+`font-size` | 父元素`font-size` |
