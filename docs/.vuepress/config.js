@@ -179,6 +179,7 @@ module.exports = {
             'browser-env/console/',
             'browser-env/debug/',
             'browser-env/error-handler',
+            'browser-env/log',
             'browser-env/memory',
             'browser-env/cross-domain',
             'browser-env/security',
