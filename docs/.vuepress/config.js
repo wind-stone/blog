@@ -135,7 +135,7 @@ module.exports = {
           collapsable: true,
           children: [
             'js/',
-            'js/data-structure',
+            'js/data-structure/',
             'js/event-loop',
             'js/prototype',
             'js/this',
