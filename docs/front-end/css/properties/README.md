@@ -8,15 +8,113 @@ sidebarDepth: 0
 
 ## 属性书写顺序
 
-同一 rule set 下的属性在书写时，应按功能进行分组，并以 Formatting Model（布局方式、位置） > Box Model（尺寸） > Typographic（文本相关） > Visual（视觉效果） 的顺序书写，以提高代码的可读性。
+国外著名的 Web 前端专家 Andy Ford 推荐过一种按照类型分组排序的方式，他把 CSS 属性分为 7 大类：
 
-- Formatting Model 相关属性包括：position / top / right / bottom / left / float / display / overflow 等
-- Box Model 相关属性包括：border / margin / padding / width / height 等
-- Typographic 相关属性包括：font / line-height / text-align / word-wrap 等
-- Visual 相关属性包括：background / color / transition / list-style 等
-- 另外，如果包含 content 属性，应放在最前面。
+- 显示与浮动（`Diplay`&`Flow`）
+- 定位（`Positioning`）
+- 尺寸（`Dimensions`）
+- 边框相关属性（`Margins`、`Padding`、`Borders`、`Outline`）
+- 字体样式（`Typographic Styles`）
+- 背景（`Backgrounds`）
+- 其他样式（`Opacity、Cursors、Generated Content`）
 
-Reference：[百度-CSS 编码规范](https://github.com/fex-team/styleguide/blob/master/css.md)
+这种按照样式类型分组排列的方式不仅把功能相似的属性归类到一起，并且按照样式功能的重要性从上到下进行了排序。可以把影响元素页面布局的样式（如 `float`、`margin`、`padding`、`height`、`width`等）排到前面，而把不影响布局的样式（如`background`、`color`、`font`等）放到后面。这种主次分明的排列方式，极大地提高了代码的可维护性。
+
+```css
+.example {
+    /* 显示与浮动 */
+    display: ;
+    visibility: ;
+    float: ;
+    clear: ;
+
+    /* 定位 */
+    position: ;
+    top: ;
+    right: ;
+    bottom: ;
+    left: ;
+    z-index: ;
+
+    /* 尺寸 */
+    width: ;
+    min-width: ;
+    max-width: ;
+    height: ;
+    min-height: ;
+    max-height: ;
+    overflow: ;
+
+    /* 边框相关属性 */
+    margin: ;
+    margin-top: ;
+    margin-right: ;
+    margin-bottom: ;
+    margin-left: ;
+
+    padding: ;
+    padding-top: ;
+    padding-right: ;
+    padding-bottom: ;
+    padding-left: ;
+
+    border-width: ;
+    border-top-width: ;
+    border-right-width: ;
+    border-bottom-width: ;
+    border-left-width: ;
+
+    border-style: ;
+    border-top-style: ;
+    border-right-style: ;
+    border-bottom-style: ;
+    border-left-style: ;
+
+    border-color: ;
+    border-top-color: ;
+    border-right-color: ;
+    border-bottom-color: ;
+    border-left-color: ;
+
+    outline: ;
+    list-style: ;
+
+    table-layout: ;
+    caption-side: ;
+    border-collapse: ;
+    border-spacing: ;
+    empty-cells: ;
+
+    /* 字体样式 */
+    font: ;
+    font-family: ;
+    font-size: ;
+    line-height: ;
+    font-weight: ;
+    text-align: ;
+    text-indent: ;
+    text-transform: ;
+    text-decoration: ;
+    letter-spacing: ;
+    word-spacing: ;
+    white-space: ;
+    vertical-align: ;
+    color: ;
+
+    /* 背景 */
+    background: ;
+    background-color: ;
+    background-image: ;
+    background-repeat: ;
+    background-position: ;
+
+    /* 其他样式 */
+    opacity: ;
+    cursor: ;
+    content: ;
+    quotes: ;
+}
+```
 
 ### 其他最佳实践
 
@@ -152,8 +250,10 @@ CSS 有些属性的属性值可以使用百分比值，那么这些百分比值�
 属性 | 相对元素和属性 | 说明
 --- | --- | ---
 `width` | 包含块宽度`width` |
-`height` | 包含块高度`height` |
 `padding` | 包含块的宽度`width` |
 `margin` | 包含块的宽度`width` |
+`left`/`right` | 包含块的宽度`width` |
+`height` | 包含块高度`height` |
+`top`/`bottom` | 包含块的高度`height` |
 `vertical-align` | 该元素的`line-height` |
 `font-size` | 父元素`font-size` |
