@@ -10,7 +10,6 @@ sidebarDepth: 0
 
 - [深入理解浏览器的缓存机制](https://www.jianshu.com/p/54cc04190252)
 
-
 ## 浏览器 API
 
 ### 判断页面是否可见

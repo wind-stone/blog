@@ -9,7 +9,7 @@ sidebarDepth: 0
 ## 系列文章
 
 - `Number`
-  - [JS 关于 IEEE 754 双精度浮点数的实现](/front-end/js/data-structure/js-number-implementation.html)
+  - [JavaScript 关于 IEEE 754 双精度浮点数的实现](/front-end/js/data-structure/js-number-implementation.html)
 
 ## 基本数据类型
 
@@ -23,10 +23,6 @@ sidebarDepth: 0
 `Symbol` | `[object Symbol]` | `symbol`
 
 ### Number
-
-#### 数字范围及存储
-
-
 
 #### 关于 X.toString()，X 是数字直接量
 

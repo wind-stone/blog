@@ -27,10 +27,14 @@ sidebarDepth: 0
 
 ### apply 与 call 的区别
 
-apply 和 call 的第1个参数都是将要绑定的 this 对象，不同的是：
+`apply`和`call`的第 1 个参数都是将要绑定的`this`对象，不同的是：
 
-- apply 第2个是数组，数组里的每一项将作为函数的参数
-- call 第2~第n个参数，依次作为函数的第1~第n-1个参数
+- `apply`第 2 个是数组，数组里的每一项将作为函数的参数
+- `call`第 2 ~ n 个参数，依次作为函数的第 1 ~ n-1 个参数
+
+### 性能对比
+
+`call`的性能比`apply`的性能更好，详见[call和apply的性能对比 #6](https://github.com/noneven/__/issues/6)
 
 ### 常用示例
 
