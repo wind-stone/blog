@@ -97,32 +97,32 @@
 
 当一个行内盒包含了一个处于常规流中的块级盒，这个行内盒（以及与它在同一行盒里的它的行内祖先盒子）将被这个块级盒（以及与它连续的兄弟块级盒，或者被“可折叠的空格”或“脱离了常规流的元素”分开的兄弟块级盒）折断，并将这个行内盒分离为两个盒子（即使两边都是空的），分别处于块级盒的两边。折断处之前和之后的行内盒都会被匿名块盒包裹住，并且原先的块级盒将成为这些匿名块盒的兄弟盒子。若是这个行内盒被相对定位所影响，任何因而产生的转变，也将影响到这个行内盒所包含的块级盒。
 
-> 根据如上的规则，这个模型将应用到下面的示例里。
->
-> ```css
-> p    { display: inline }
-> span { display: block }
-> ```
->
-> ```html
-> <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-> <HEAD>
-> <TITLE>Anonymous text interrupted by a block</TITLE>
-> </HEAD>
-> <BODY>
-> <P>
-> This is anonymous text before the SPAN.
-> <SPAN>This is the content of SPAN.</SPAN>
-> This is anonymous text after the SPAN.
-> </P>
-> </BODY>
-> ```
->
-> P 元素包含了一个匿名文本的块（C1），其后是一个块级元素，再其后是另一个匿名文本的块（C2）。最终生成的盒子将是:，一个块盒，代表 BODY 元素，其中包含了：
->
-> - 一个包裹着 C1 的匿名块盒
-> - SPAN 块盒
-> - 另一个包裹着 C2 的匿名块盒
+::: warning 根据如上的规则，这个模型将应用到下面的示例里
+```css
+p    { display: inline }
+span { display: block }
+```
+
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HEAD>
+<TITLE>Anonymous text interrupted by a block</TITLE>
+</HEAD>
+<BODY>
+<P>
+This is anonymous text before the SPAN.
+<SPAN>This is the content of SPAN.</SPAN>
+This is anonymous text after the SPAN.
+</P>
+</BODY>
+```
+
+P 元素包含了一个匿名文本的块（C1），其后是一个块级元素，再其后是另一个匿名文本的块（C2）。最终生成的盒子将是:，一个块盒，代表 BODY 元素，其中包含了：
+
+- 一个包裹着 C1 的匿名块盒
+- SPAN 块盒
+- 另一个包裹着 C2 的匿名块盒
+:::
 
 匿名块盒的属性将继承于封闭的非匿名盒子（比如上面小节标题“匿名块盒”下的示例里的 DIV 盒子）。非继承属性有它们的初始值。比如，匿名块盒的`font`属性将继承于 DIV，但是`margin`属性将为 0。
 
@@ -209,12 +209,132 @@ Computed value: | see text
 
 注意，尽管`display`的初始值是`inline`，但是用户代理默认样式表里的规则可能覆盖这个值，详见附录里的 HTML4 的[示例样式表](https://www.w3.org/TR/CSS22/sample.html)。
 
-> 这里是`display`属性的一些示例:
->
-> p   { display: block }
->
-> em  { display: inline }
->
-> li  { display: list-item }
->
-> img { display: none }      /* Do not display images */
+::: warning 这里是 display 属性的一些示例
+p   { display: block }
+
+em  { display: inline }
+
+li  { display: list-item }
+
+img { display: none }      /* Do not display images */
+:::
+
+## 9.3 定位方案
+
+在 CSS 2.2 里，一个盒子可能会根据如下三种定位方案（`positioning schemes`）来布局:
+
+- 常规流（`normal flow`）。在 CSS 2.2 里，常规流包括块级盒的块格式化，行内级盒的行内格式化，以及块级盒和行内级盒的相对定位。
+- 浮动（`float`）。在浮动模型里，盒子一开始会按照常规流布局，之后将脱离常规流，转移到最左边或最右边。内容可能会流动在浮动元素的边缘。
+- 绝对定位（`absolute positioning`）。在绝对定位模型里，盒子将完全从常规流里移除（它对其后的兄弟元素无影响）并放置在一个相对于包含块的位置。
+
+若元素是浮动的、绝对定位的，或是根元素，我们称该元素是脱离流的（`out of flow`）。若元素没有脱离流，我们称元素处于流中（`in-flow`）。
+
+元素 A 的流，是以下成员的集合:
+
+- 元素 A
+- 处于流中的元素，这些元素最近的脱离流的祖先元素是元素 A
+
+（译者注: 即使元素 A 脱离了流，但是其后代元素可能还是会处于元素 A 的流中）
+
+::: tip 提示
+CSS 2.2 的定位方案通过允许它们避免布局影响中的标记把戏的方式，帮助创造者使得他们的文档更加容易访问。（TODO: 待深入了解这句话）
+:::
+
+### 9.3.1 设置 position 属性来选择定位方案
+
+`position`和`float`属性决定了使用哪种 CSS 2.2 定位算法来计算盒子的位置。
+
+Name: | position
+--- | ---
+Value: | `static | relative | absolute | fixed | inherit`
+Initial: | static
+Applies to: | all elements
+Inherited: | no
+Percentages: | N/A
+Media: | visual
+Computed value: | as specified
+
+`position`属性的这些值及其含义如下。
+
+- `static`
+  - 盒子是常规盒子，按照常规流来布局。`top`/`right`/`bottom`/`left`属性都不起作用。
+- `relative`
+  - 盒子的位置按照常规流计算（这称为常规流里的位置）。之后，盒子会相对于它在常规流里的位置发生偏移。当盒子 B 是相对定位的，会按照盒子 B 没有发生偏移来计算盒子 B 之后的盒子的位置。`position: relative`在 `table-row-group`/`table-header-grou`/`table-footer-group`/`table-row`/`table-column-group`/`table-colum`/`table-cell`/`table-caption`元素上的影响是未定义的。
+- `absolute`
+  - 盒子的位置（也可能包括尺寸）由`top`、`right`、`bottom`、`left`属性指定。这些属性明确了盒子相对于其包含块的偏移。绝对定位的盒子将脱离常规流，这意味着他们对之后的兄弟盒子的布局没有影响。另外，尽管绝对定位的盒子有`margin`属性，但是它们不会与任何其他元素的`margin`发生重叠。
+- `fixed`
+  - 盒子的位置按照绝对定位模型来计算，但是盒子是相对于某些参考系固定的。在绝对定位模型里，盒子的`margin`不会与其他任何元素的`margin`发生重叠。在手持式设备、投影、屏幕、TTY 和 TV 等媒体类型下，盒子会相对于视口（`viewport`）固定，并且在滚动时保持不动。在打印媒体类型下，盒子将在每一页绘制，并相对于页面盒子（`page box`）固定，即使页面可以通过一个视口看见（比如在打印预览的情况下）。对于其他媒体类型来说，其行为表现是未定义的。创造者（`author`）可能需要以媒体依赖的方式指定`fixed`。比如，创造者可能想要盒子固定在屏幕视口的顶部，但是不想要在打印的每一页的顶部。这两种特定需求可以通过使用`@media`规则来分离，就像这样：
+
+```css
+@media screen {
+  h1#first { position: fixed }
+}
+@media print {
+  h1#first { position: static }
+}
+```
+
+  用户代理必须不能为固定盒子的内容分页。注意，用户代理可能通过其他方式打印不可见的内容，详情请见第 13 章的[Content outside the page box](https://www.w3.org/TR/CSS22/page.html#outside-page-box)。
+
+针对根元素，用户代理可能将其对待为`position: static`。
+
+### 盒子的偏移，top/right/bottom/left
+
+若元素的`position`属性设置了除`static`之外的值，则这个元素是定位的（`positioned`）。定位的元素生成定位盒子，按照如下四个属性进行布局。
+
+Name: | top
+--- | ---
+Value: | `<length> | <percentage> | auto | inherit`
+Initial: | auto
+Applies to: | positioned elements
+Inherited: | no
+Percentages: | refer to height of containing block
+Media: | visual
+Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'.
+
+`top`属性指定了绝对定位盒子的上外边距的上边界，距离包含块盒子的上边界（译者注: 即包含块的上边框的下边界），偏移有多远。对于相对定位的盒子，偏移是相对于盒子自身的上边界（比如，盒子在常规流中有一个位置，然后相对于这个位置，按照这些属性的值进行偏移）。
+
+Name: | right
+--- | ---
+Value: | `<length> | <percentage> | auto | inherit`
+Initial: | auto
+Applies to: | positioned elements
+Inherited: | no
+Percentages: | refer to width of containing block
+Media: | visual
+Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'.
+
+类似于`top`，但是指定了盒子的右外边距的右边界，距离包含块盒子右边界的左边（译者注: 包含块的右边框的左边界），偏移有多远。对于相对定位的盒子，偏移是相对于盒子自身的右边界。
+
+Name: | bottom
+--- | ---
+Value: `<length> | <percentage> | auto | inherit`
+Initial: | auto
+Applies to: | positioned elements
+Inherited: | no
+Percentages: | refer to height of containing block
+Media: | visual
+Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'.
+
+类似于`top`，但是指定了盒子的下外边距的下边界，距离包含块盒子的底部（译者注: 包含块的下边框的上边界），偏移有多远。对于相对定位的盒子，偏移是相对于盒子自身的下边界。
+
+Name: | left
+--- | ---
+Value: `<length> | <percentage> | auto | inherit`
+Initial: | auto
+Applies to: | positioned elements
+Inherited: | no
+Percentages: | refer to width of containing block
+Media: | visual
+Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'.
+
+类似于`top`，但是指定了盒子的左外边距的左边界，距离包含块盒子的左边界的右边（译者注: 包含框的左边框的右边界），距离有多远。对于相对定位的盒子，偏移是相对于盒子自身的左边界。
+
+这四个属性有如下取值及含义:
+
+- `<length>`
+  - 偏移是从参考系边界的固定距离，允许负值
+- `<percentage>`
+  - 偏移是包含块的`width`（针对`left`和`right`）或`height`（针对`top`和`bottom`）的百分比，允许负值
+- `auto`
+  - 对于非替换元素，这个值的效果依赖于具体哪个属性，详情请见绝对定位的非替换元素的`width`和`height`。对于替换元素，这个值的效果仅依赖于替换元素的固有尺寸，详情请见绝对定位的替换元素的`width`和`height`。
