@@ -98,6 +98,7 @@
 当一个行内盒包含了一个处于常规流中的块级盒，这个行内盒（以及与它在同一行盒里的它的行内祖先盒子）将被这个块级盒（以及与它连续的兄弟块级盒，或者被“可折叠的空格”或“脱离了常规流的元素”分开的兄弟块级盒）折断，并将这个行内盒分离为两个盒子（即使两边都是空的），分别处于块级盒的两边。折断处之前和之后的行内盒都会被匿名块盒包裹住，并且原先的块级盒将成为这些匿名块盒的兄弟盒子。若是这个行内盒被相对定位所影响，任何因而产生的转变，也将影响到这个行内盒所包含的块级盒。
 
 ::: warning 根据如上的规则，这个模型将应用到下面的示例里
+
 ```css
 p    { display: inline }
 span { display: block }
@@ -338,3 +339,213 @@ Computed value: | if specified as a length, the corresponding absolute length; i
   - 偏移是包含块的`width`（针对`left`和`right`）或`height`（针对`top`和`bottom`）的百分比，允许负值
 - `auto`
   - 对于非替换元素，这个值的效果依赖于具体哪个属性，详情请见绝对定位的非替换元素的`width`和`height`。对于替换元素，这个值的效果仅依赖于替换元素的固有尺寸，详情请见绝对定位的替换元素的`width`和`height`。
+
+## 9.4 常规流
+
+常规流里的盒子总是属于一个上下文，在 CSS 2.2 里，是 TFC、BFC、IFC 中的一种。在未来的 CSS 里，可能会有其他类型的格式化上下文。块级盒参与 BFC，行内级盒参与 IFC，表格格式化上下文将在表格一章描述。
+
+### 9.4.1 BFC
+
+BFC，`block formatting context`，块格式化上下文。以下几种元素都将为其内容创建新的块格式化上下文。
+
+- 浮动元素
+- 绝对定位元素
+- 是块容器（比如`inline-block`/`table-cell`/`table-caption`）但不是块盒的元素
+- `overflow`不为`visible`的块盒元素（除非值已经传播到了视口）
+
+在 BFC 里，盒子在垂直方向上紧挨着放置，由包含块的顶部开始。两个兄弟盒子之间的垂直距离，由`margin`属性决定。在 BFC 里，相邻块级盒的垂直`margin`将发生坍塌。
+
+在 BFC 里，每一个盒子的左外边界会紧挨着包含块的左边界（对于由右向左的排版，则是每一个盒子的右外边界会紧挨着包含块的右边界）。即使存在浮动（尽管盒子的行盒可能因为浮动而收缩）也是如此，除非盒子创建了新的 BFC（在这种情况下，盒子自身可能因为浮动，导致更加狭窄）。
+
+BFC 的特性:
+
+- 若元素创建新的 BFC，可避免该元素与其子元素发生外边距折叠（但是处于同一 BFC 下的该元素与其兄弟元素仍会发生外边距折叠）
+- 若元素创建新的 BFC，则该元素可包含其`float`浮动的子元素，且元素的高度会根据其浮动子元素的内容自动适应
+- 若元素创建新的 BFC，可阻止元素与浮动的兄弟元素重叠（该元素与浮动元素位于同一个 BFC 下，详见“9.5 浮动”）
+
+详见：[清除浮动及 BFC（块级格式化上下文）](http://blog.csdn.net/cxl444905143/article/details/42266723)
+
+更多关于分页媒体中页面如何折断的信息，请翻阅[allowed page breaks](https://www.w3.org/TR/CSS22/page.html#allowed-page-breaks)章节。
+
+### 9.4.2 IFC
+
+IFC，`inline formatting contexts`，行内格式化上下文。
+
+不包含块级盒的块容器盒将创建一个行内格式化上下文 IFC。在 IFC 里，盒子在水平方向上紧挨着放置，由包含块的顶部开始。盒子的水平`margin`/`border`/`padding`将起作用。这些盒子可能以各种方式在垂直方向上对齐：基于这些盒子的顶部或底部对齐，或基于盒子内的文本基线对齐。包含了这些矩形区域，形成了一行，称为行盒（`line box`）。
+
+行盒的宽度，取决于包含块和浮动元素。行盒的高度取决于[行高的计算](https://www.w3.org/TR/CSS22/visudet.html#line-height)章节里给出的规则。
+
+行盒总是足够高，以包含其内所有的盒子。而且，它可能比它包含的最高的盒子还要高（比如，盒子的对齐可能导致所有盒子的基线排成一行）。当盒子 B 的高度比包含它的行盒要小时，盒子 B 在行盒里的垂直对齐取决于`vertical-align`属性。当多个行内级盒不能水平放置在单个行盒里时，它们将分布在两个或多个垂直堆叠的行盒里。因此，段落就是一个由行盒垂直堆叠起来的堆栈。行盒堆叠时不会存在垂直间隙（除非在别处指定），而且它们从不重叠（译者注：简单说就是，两个相邻的行盒是紧挨着的，其间没有空隙）。
+
+通常来说，行盒的左边界与其包含块的左边界紧挨着，行盒的右边界与其包含块的右边界紧挨着。但是，浮动盒子可能位于包含块边界和行盒边界中间。因此，尽管同一 IFC 内的行盒通常有同样的宽度（包含块的宽度），但如果因为浮动导致可用的水平空间减少，它们的宽度也是会变化的。同一 IFC 里的行盒的高度通常是不一样的，比如某一行盒可能包含一个较高的图片，而其他行盒只包含文本。
+
+当行盒内的所有行内级盒的总宽度小于行盒的宽度时，它们在行盒内水平方向上的分布，将取决于`text-align`属性。若是`text-align`属性的的值为`justify`，用户代理可能拉伸行内盒里的空间和单词（但不会拉伸`inline-block`和`inline-table`盒子）。
+
+当一个行内盒超过了行盒的宽度，将分离为多个盒子，这多个盒子将分布在多个行盒里。如果这个行内盒不能分离（比如行内盒包含了一个简单的字符，或者特定语言的单词折断规则不允许其在行内盒里折断，或者行内盒受取值为`nowrap`或`pre`的`white-space`属性影响），则行内盒将溢出行盒。
+
+当一个行内盒分离后，`margin`/`border`/`padding`在分离发生的地方都不会有视觉上的影响。
+
+由于[bidirectional text processing](https://www.w3.org/TR/CSS22/visuren.html#direction)，行内盒可能分离为多个盒子，并位于同一行盒内。
+
+行盒的创建，是为了在 IFC 里处理行内级内容。
+
+- 不包含文本、
+- 不包含保留的空格（[preserved white space](https://www.w3.org/TR/CSS22/text.html#white-space-prop)）
+- 不包含非 0 的`margin`/`padding`/`border`的行内元素
+- 不包含其他处于流中的内容（比如图片、`inline-block`/`inline-table`元素）
+- 不以保留的换行符结尾
+
+若行盒满足了以上所有的情况，则必须被视为零高度的行盒，以便确定行盒内任意元素的位置；并且基于任何其他目的考虑时，该行盒也要被视为不存在。
+
+::: warning 这里有一个行内盒构建的示例
+以下的段落（由 HTML 块级元素 P 创建）包含了匿名文本，匿名文本周边夹杂着 EM 和 STRONG 元素。
+
+```html
+<P>Several <EM>emphasized words</EM> appear
+<STRONG>in this</STRONG> sentence, dear.</P>
+```
+
+P 元素生成了一个块盒，包含了五个行内盒，其中三个是匿名的:
+
+- 匿名: "Several"
+- EM: "emphasized words"
+- 匿名: "appear"
+- STRONG: "in this"
+- 匿名: "sentence, dear."
+
+为了格式化这个段落，用户代理将这五个盒子按顺序流放置在行盒里。在这个示例里，P 元素生成的盒子为行盒创建了包含块。如果包含块足够宽，则所有的行内盒将布局在单个行盒里，最终显示效果为:
+
+Several <em>emphasized words</em> appear <strong>in this</strong> sentence, dear.
+
+否则，这些行内盒将分离开，分布在多个行盒里。原先的段落可能分离为以下这样:
+
+Several <em>emphasized words</em> appear
+
+<strong>in this</strong>  sentence, dear.
+
+或者像这样:
+
+Several <em>emphasized</em>
+
+<em>words</em> appear <strong>in this</strong>
+
+sentence, dear.
+:::
+
+在上面示例的最后一个效果里，EM 盒子分离为两个 EM 盒子（称之为`split1`和`split2`）。`margin`/`border`/`padding`或`text-decoration`在`split1`之后和`split2`之前都没有视觉上的效果。
+
+::: warning 考虑如下的示例
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+  <HEAD>
+    <TITLE>Example of inline flow on several lines</TITLE>
+    <STYLE type="text/css">
+      EM {
+        padding: 2px;
+        margin: 1em;
+        border-width: medium;
+        border-style: dashed;
+        line-height: 2.4em;
+      }
+    </STYLE>
+  </HEAD>
+  <BODY>
+    <P>Several <EM>emphasized words</EM> appear here.</P>
+  </BODY>
+</HTML>
+```
+
+依赖于 P 的宽度，盒子的分布可能如下所示:
+
+![图 3](./img/diagram-3.png)
+
+图片注释: 这张图说明了在行内盒分离点处`margin`/`border`/`padding`的行为。这个图展示了 HTML 文档的渲染结果。行内盒包含的两个单词“emphasized text”在单词之间分离了，在分离点，`padding`、`border`（虚线边框以示强调）、`padding`都没渲染。（译者注: 应该是指水平方向上的`margin`/`border`/`padding`）
+
+- `margin`会插入到"emphasized"之前和"words"之后
+- `padding`会插入"emphasized"之前、之上和之下，"words"之后、之上和之下。虚线边框渲染在每一个盒子的三个边上。
+
+------------------------ 分割线，以下为译者注 ------------------------
+
+行内盒的上下`margin`/`border`/`padding`都会正常渲染，但是不会占据空间；行内盒的左右`margin`/`border`/`padding`正常渲染且占据空间
+
+![padding-border-normal](./img/padding-border-normal.png) ![border-10px](./img/border-10px.png)
+
+`border-width: medium` VS `border-width: 10px`
+
+![padding-border-normal](./img/padding-border-normal.png) ![padding-20px](./img/padding-20px.png)
+
+`padding: 10px` VS `padding: 20px`
+
+可以发现，行内元素 EM 的上下`padding`/`border`都渲染了出来，即使`padding`/`border`增大了，元素占据的高度并没有改变（因为行内盒的高度实际上取决于`line-height`）。
+:::
+
+### 9.4.3 相对定位
+
+一旦一个盒子按照常规流或浮动进行布局（即会有一个定位位置），则它可能会相对于这个位置被移动。这称为相对定位（`relative positioning`）。以这种方式使盒子 B1 偏移，不会影响到随后的盒子 B2: B2 会基于 B1 没有发生偏移来确定位置，在 B1 应用发生偏移的属性后，B2 也不会重新定位。这也表明了，相对定位可能会导致盒子发生重叠。但是，如果相对定位导致有`overflow: auto`或`overflow: scroll`的盒子发生溢出，用户代理必须允许用户访问溢出的内容（在溢出内容偏移后的位置上），通过产生滚动条的方式，这可能会改变布局。
+
+::: tip 译者注
+
+![relative-positioning-normal](./img/relative-positioning-normal.png) ![relative-positioning-overflow](./img/relative-positioning-overflow.png)
+
+第一个 DIV 相对定位`position: relative; left: 100px; top: 50px;`前后对比
+
+![relative-positioning-x-scroll](./img/relative-positioning-x-scroll.png) ![relative-positioning-y-scroll](./img/relative-positioning-y-scroll.png)
+
+DIV 溢出后，导致`.ctn`产生了横向和纵向的滚动条
+
+```css
+.ctn {
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid black;
+}
+.ctn .offset {
+  position: relative;
+  left: 100px;
+  top: 50px;
+  background-color: red;
+}
+.ctn .reference {
+  margin-top: 10px;
+  background-color: gray;
+}
+```
+
+```html
+<div class="ctn">
+  <div class="offset">hello world!</div>
+  <div class="reference">hello world!</div>
+</div>
+```
+
+上面的示例里，`.offset`元素进行了相对定位，向右发生了偏移，溢出到具有`overflow: auto`的包含块元素之外，导致包含块`.ctn`产生了滚动条。
+:::
+
+一个相对定位的盒子会保持它在常规流里的尺寸，包括换行和其原来保留的空格。[包含块](https://www.w3.org/TR/CSS22/visuren.html#containing-block)章节解释了一个相对定位的盒子何时将创建一个新的包含块。
+
+对于相对定位元素，`left`和`right`将水平移动盒子，且不改变它们的尺寸。`left`将把盒子往右移动，而`right`将把盒子往左移动。由于`left`/`right`不会分离或拉伸盒子，对于使用的值，总有`left` = `-right`。
+
+若`left`和`right`都是`auto`（即初始值），它们最终使用的值都是`0`（比如，盒子位于它的初始位置）。
+
+若`left`是`auto`，它将使用`right`值的负值（比如，盒子按`right`的负值向左移动）。
+
+若`right`指定为`auto`，它将使用`left`值的负值。
+
+若`left`和`right`都不是`auto`，其位置将`over-constrained`，而且其中一个将被忽略。若包含块的`direction`属性是`ltr`，则`left`生效`right`将被忽略。若包含块的`direction`属性是`rtl`，则`right`生效`left`将被忽略。
+
+::: warning 如下三个规则是相等的
+
+```css
+div.a8 { position: relative; direction: ltr; left: -1em; right: auto }
+div.a8 { position: relative; direction: ltr; left: auto; right: 1em }
+div.a8 { position: relative; direction: ltr; left: -1em; right: 5em }
+```
+
+:::
+
+`top`和`bottom`属性将在垂直方向上移动相对定位元素，且不改变它们的尺寸。`top`向下移动盒子，`bottom`向上移动盒子。由于`top`/`bottom`不会分离或拉伸盒子，对于使用的值，总有`top` = `-bottom`。若这两个都是`auto`，它们最终使用的值都是`0`。若其中有一个是`auto`，其值为另一个的负值。如果这两个都不是`auto`，`bottom`将忽略（比如，`bottom`的值将是`top`的负值）。
+
+::: tip 提示
+在脚本环境里，相对定位盒子的动态移动可以产生动画效果（`visibility`属性也可以）。Although relative positioning may be used as a form of superscripting and subscripting, the line height is not automatically adjusted to take the positioning into consideration. See the description of [line height calculations](https://www.w3.org/TR/CSS22/visudet.html#line-height) for more information.
+:::
