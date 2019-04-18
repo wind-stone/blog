@@ -15,6 +15,7 @@ module.exports = {
     sidebarDepth: 2,
     nav: [
       { text: 'Vue 源码学习', link: '/vue/source-study/' },
+      { text: 'CSS 2.2 规范', link: '/css-spec/9-visual-formatting-model/' },
       { text: 'Front End', link: '/front-end/' },
       { text: 'Back End', link: '/back-end/'},
       { text: 'General Knowledge', link: '/general-knowledge/'},
@@ -129,6 +130,17 @@ module.exports = {
       ],
 
       // 前端知识点
+      '/css-spec/': [
+        {
+          title: 'CSS 2.2 规范',
+          collapsable: true,
+          children: [
+            '9-visual-formatting-model/'
+          ]
+        },
+      ],
+
+      // 前端知识点
       '/front-end/': [
         {
           title: 'JavaScript',
@@ -151,7 +163,6 @@ module.exports = {
             'css/selectors/',
             'css/properties/',
             'css/layouts/',
-            'css/layouts/visual-formatting-model/',
             'css/layouts/ifc/',
             'css/layouts/font/',
             'css/flex-image/',

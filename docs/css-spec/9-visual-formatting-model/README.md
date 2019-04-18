@@ -1,4 +1,4 @@
-# 视觉格式化模型
+# 9 视觉格式化模型
 
 [[toc]]
 
@@ -548,4 +548,386 @@ div.a8 { position: relative; direction: ltr; left: -1em; right: 5em }
 
 ::: tip 提示
 在脚本环境里，相对定位盒子的动态移动可以产生动画效果（`visibility`属性也可以）。Although relative positioning may be used as a form of superscripting and subscripting, the line height is not automatically adjusted to take the positioning into consideration. See the description of [line height calculations](https://www.w3.org/TR/CSS22/visudet.html#line-height) for more information.
+:::
+
+## 9.5 浮动
+
+浮动是将一个盒子转移至当前行的左边或右边。关于浮动盒子最有趣的特性是，内容可能沿着浮动盒子侧边流动（可以通过`clear`属性禁止这一特性）。内容将流向左浮动的盒子的右侧，流向右浮动的盒子的左侧。以下将介绍浮动定位和内容流。控制浮动行为的确切规则，将在`float`属性的描述里给出。
+
+一个浮动盒子将被转移到左边或右边，直到它的外边界接触到包含块的边界或者另一个浮动盒子的外边界。若是存在行盒，浮动盒子的上外边界将于当前行盒的顶部对齐。
+
+若是水平方向上没有足够的空间容纳浮动盒子，它将向下转移，直到它能放下，或当前行没有浮动元素。
+
+由于浮动元素不在流里，非定位的块盒将在浮动盒子流（`the float box flow`）的（垂直方向上）之前和之后创建，就好像浮动盒子不存在一样。但是，浮动元素旁边的当前和随后的行盒都将按需缩短，以便为浮动盒子的`margin box`（译者注: 即包括盒子的`margin`/`border`/`padding`/`content-area`）留出空间。
+
+当存在一个垂直位置满足以下所有四个条件，行盒将与浮动元素相邻（译者注: 左右相邻，即行盒的）。
+
+- 位于行盒的顶部，或之下
+- 位于行盒的底部，或之上
+- 在浮动元素的上外边距的边界之下
+- 在浮动元素的下外边距的边界之上
+
+::: tip 提示
+这也就是说，若浮动元素的`outer height`（即`margin`+`padding`+`border`+`height`）为`0`或负值，则不会使行盒缩短。
+
+```css
+.ctn .float {
+  float: left;
+  height: 50px;
+  /* margin-top: -50px; */
+  background-color: red;
+}
+.ctn .reference {
+  background-color: gray;
+}
+```
+
+```html
+<div class="ctn">
+  <div class="float">hello world!</div>
+  <div class="reference">
+      hello world!
+      hello world!
+      hello world!
+      hello world!
+      hello world!
+  </div>
+</div>
+```
+
+![float-outer-height-normal](./img/float-outer-height-normal.png) ![float-outer-height-zero](./img/float-outer-height-zero.png)
+
+`.float`设置`margin-top: -50px`前后
+:::
+
+如果缩短的行盒小到无法包含任何内容，则行盒将向下转移（行盒的宽度也将重新计算）直到能容纳下一些内容或当前行没有浮动元素。任何在当前行位于浮动元素之前的内容将流向同一行浮动元素的另一边（译者注: 内容流动前，是指 HTML 里内容位于浮动元素之前；最终渲染时，内容将流动到浮动元素的另一边）。换句话说，若是将行内级盒子放置在行盒里（在遇到左浮动元素填充行盒剩余的空间之前），再将左浮动元素放置在该行，浮动元素将与行盒的顶部对齐，已经在行盒里的行内盒将相应地移动到浮动元素的右边。（右边是左浮动元素的另一边）。同理，针对`direction`为`rtl`的，遇到右浮动，行内盒将移动到右浮动元素的左边。
+
+- `table`元素
+- 块级替换元素
+- 常规流里创建了 BFC 的元素（比如元素的`overflow`不为`visible`）
+
+以上这些元素自身的`border box`必须不能与同一 BFC 里的任何浮动元素的`margin box`重叠（译者注: 这些元素的内部元素，可能会与浮动元素重叠）。若有必要，在实现时，应该将这些元素放在任何（之前的）浮动元素之下，以起到清除浮动的效果，但如果有充足的空间，也可以将这些元素与浮动元素相邻放置。浮动元素可能导致上面所说的这些元素的`border box`比[10.3.3 章节](https://www.w3.org/TR/CSS22/visudet.html#blockwidth)定义的要更窄一些。CSS 2 没有定义用户代理何时应该将上面这些元素放置在浮动元素旁边，或者这些元素将变得有多窄。
+
+::: warning 示例
+如下的文档片段里，包含块太窄不足以（在同一行）容纳浮动元素和文字内容，因此文字内容移动到浮动元素之下，并按照`text-align`属性在行盒里对齐。
+
+```css
+p {
+  width: 10em;
+  border: solid aqua;
+}
+span {
+  float: left;
+  width: 5em;
+  height: 5em;
+  border: solid blue;
+}
+```
+
+```html
+<p>
+  <span> </span>
+  Supercalifragilisticexpialidocious
+</p>
+```
+
+以上文档片段最终的效果如下:
+
+![图 4](./img/diagram-4.png)
+:::
+
+多个浮动元素可能相邻，这个模型也可以应用到同一行里相邻的浮动元素上。
+
+::: warning 示例
+如下的规则使得所有含有`class="icon"`的 IMG 盒子向左浮动:
+
+```css
+img.icon {
+  float: left;
+  margin-left: 0;
+}
+```
+
+:::
+
+::: warning 示例
+考虑如下的 HTML 和 CSS:
+
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+  <HEAD>
+    <TITLE>Float example</TITLE>
+    <STYLE type="text/css">
+      IMG { float: left }
+      BODY, P, IMG { margin: 2em }
+    </STYLE>
+  </HEAD>
+  <BODY>
+    <P><IMG src=img.png alt="This image will illustrate floats">
+       Some sample text that has no other...
+  </BODY>
+</HTML>
+```
+
+IMG 盒子向左浮动，随后的内容被格式化到浮动元素的右边，与浮动元素于同一行开始，浮动元素右边的行盒应为浮动元素的存在而缩短，但是在浮动元素之下恢复了常规的宽度（P 元素创建的包含块的宽度）。这个文档可能格式化为以下这样:
+
+![图 5](./img/diagram-5.png)
+
+图片注释: 这张图说明了文本是如何围绕在浮动元素周边的，尤其是，在浮动元素旁边的行盒是如何缩短以为浮动盒子（包括`margin`）让出空间的。图片里顶部的`max (BODY margin, P margin)`表明垂直`margin`坍塌了。但是因为浮动，IMG 元素的`margin`并没有参与坍塌的计算。图片里的左边，BODY、P、和 IMG 的左`margin`并没有坍塌（因为水平`margin`并不会坍塌）。段落里的文本沿着 IMG 的右边流动，开始于段落的顶部，到段落右`margin`的左边。当文本到达 IMG 下`margin`的底部，它将继续流动，就像它处于正常的 P 元素里一样（译者注: 即此时不再受浮动元素影响）。因此，只有（在水平方向）挨着浮动元素的行盒会缩短。
+
+若是文档修改为如下这样，格式化的结果也是完全一样的:
+
+```html
+<BODY>
+  <P>Some sample text
+  <IMG src=img.png alt="This image will illustrate floats">
+           that has no other...
+</BODY>
+```
+
+因为挨着浮动元素左边的内容被浮动元素取代，并重新流向了浮动元素的右边。
+:::
+
+正如在[8.3.1 章节]规定的，浮动盒子的`margin`从不与相邻的盒子的`margin`发生坍塌。因此，在之前的示例里，P 盒子和浮动的 IMG 盒子之间的垂直`margin`并没有发生坍塌。
+
+TODO:以下这一段还不太了解。
+
+浮动元素的内容像栈一样堆叠在一起，就好像浮动元素生成了新的堆栈上下文，除非任何定位元素以及实际上创建了新的堆栈上下文的元素参与到了浮动元素的父堆栈上下文里。浮动元素可以与常规流里的其他盒子重叠（比如浮动元素旁边处于常规流里的盒子有一个负外边距）。若是如此，浮动元素将渲染在非定位的处于常规流里的块级元素的前面，但是在处于行内元素后面。
+
+::: warning 示例
+这里有另一个插图，展示了当浮动元素与常规流里元素的边框重叠时的情况。
+
+![图 6](./img/diagram-6.png)
+
+图片注释: 这个插入说明了浮动图片与常规流里的两个段落的边框重叠了: 段落的边框被图片的非透明部分给覆盖了。常规流里有两个段落，都有红色边框。左浮动的图片导致了上面的段落的最后三行沿着浮动元素的右边浮动。这也导致随后的段落的前三行也是沿着图片的右边浮动，而剩余的段落内容则正常。段落的边框穿过了图片盒子的`margin box`区域，导致图片的非透明部分将覆盖这些边框。
+
+译者大致还原了这张插图的 HTML 片段和 CSS:
+
+```css
+p {
+  margin: 2em;
+  padding: 1em;
+  border: 1px solid red;
+}
+img {
+  float: left;
+  width: 100px;
+  height: 165px;
+  margin: 1em;
+  background: gray;
+}
+```
+
+```html
+<p class="first">
+  Some sample text in the first paragraph. It has a <img> floating image that was right about here(X) in the source. However, the image is so large that it extends below hte text of this paragraph..
+</p>
+<p class="second">
+  The second paragraph is therefore alse affected. Any inline boxes in it ara "pushed aside." as they are forbidden from coming inside the area delimited by the floating image's margins. Note that the paragraph boxes are still rectangular, but their borders and backgrounds ara "clipped" or interrupted by the floating image.
+</p>
+```
+
+其效果大概是这样:
+
+![float-overlap-borders.png](./img/float-overlap-borders.png)
+
+:::
+
+接下来的这个插图说明了使用`clear`属性来阻止内容在浮动元素旁边流动。
+
+::: warning 示例
+假设有一个如下的规则
+
+```css
+p {
+  clear: left;
+}
+```
+
+格式化的结果如下:
+
+![图 7](./img/diagram-7.png)
+
+图片注释: 这个插图说明了浮动图片与常规流里的一个段落的边框发生了重叠: 段落的边框被图片的非透明部分给覆盖了。通过`clear`属性，第二个段落被强制推到浮动元素之下。常规流里有两个段落，都有红色边框。左浮动的图片导致了上面的段落的最后三行沿着浮动元素的右边浮动。段落的边框穿过了图片盒子的`margin box`区域，导致图片的非透明部分将覆盖这些边框。第二个段落则正常渲染，开始于图片的下外边距之下。充足的“安全间距”被添加到第二个段落的上外边距之上，因此它的边框接触到之前段落的下外边距（译者注: 实际上，第二个段落的上边框接触到了图片的下外边距）。
+
+两个段落都有设置`clear: left`，但只导致第二个段落被推到浮动元素的下方 —— 通过在段落顶部添加一段“安全间距（clearance）”来完成这个效果（详见[clear](https://www.w3.org/TR/CSS22/visuren.html#propdef-clear)属性）
+:::
+
+### 9.5.1 float 属性
+
+Name: | float
+--- | ---
+Value: | left | right | none | inherit
+Initial: | none
+Applies to: | all, but see 9.7
+Inherited: | no
+Percentages: | N/A
+Media: | visual
+Computed value: | as specified
+
+该属性指定了盒子是应该浮动到左边、右边，还是不浮动。该属性可设置到任意元素上，但是只应用到生成非绝对定位盒子的元素上。该属性的所有取值如下:
+
+- `left`
+  - 元素生成浮动到左边的块盒。内容将在盒子的右边流动，开始于顶部
+- `right`
+  - 类似于`left`，盒子浮动到右边，内容将在盒子的左边流动，开始于顶部
+- `none`
+  - 盒子不浮动
+
+在根元素上，用户代理可能会将其视为`none`。
+
+如下是一些控制浮动行为的精确的规则:
+
+1. 左浮动盒子的左外边界可能不会处于它包含块的左边界的左边。右浮动同理。
+    - 译者注: 即左浮动盒子不会超过其包含块的左外边界。实际上 UA 实现时，浮动盒子的`margin box`是处于包含块的`content box`里的
+2. 若当前盒子是左浮动的，而且在其之前源文档里已经有了其他左浮动的盒子，那么，要么当前盒子的左外边界必须处于之前浮动盒子右边界的右边，要么当前盒子的顶部必须比之前盒子的底部要低（即当前盒子处于之前盒子的下面）。右浮动同理。
+    - 译者注: 这条规则可以防止浮动元素相互“覆盖”，保证浮动内容都是可见的
+3. 左浮动盒子的右外边界可能不会位于与其相邻的任何右浮动盒子的左边界的右边。右浮动同理。
+    - 译者注: 这条规则可以防止浮动元素相互重叠
+4. 浮动盒子的上外边界可能不会高于其包含块的顶部。当浮动发生在两个坍塌的外边距之间时，浮动盒子定位时，就好像它有一个空的匿名父块盒参与到流里。这个父块盒的位置由外边距坍塌章节里的规则确定。
+    - 译者注: 该规则可以防止浮动元素一直浮动到文档的顶端
+5. 浮动盒子的上外边界可能不会高于源文档里之前元素生成的块盒或浮动盒子的上外边界。
+    - 译者注: 类似于规则 4，该规则要求浮动元素不能一直浮动到其包含块的顶端
+6. 若源文档里浮动盒子之前有别的元素生成的盒子，则浮动盒子的上外边界可能不会高于包含了别的元素生成的盒子的任何行盒。
+    - 译者注: 类似于规则 4 和 5，该规则进一步限制了浮动盒子的向上浮动
+7. 若左浮动盒子的左边有另一个左浮动的盒子，那么它的右外边界可能不会位于其包含块右边界的右边。宽松点说，左浮动盒子不会伸出其包含块的右边界，除非它已经离左边界尽可能远。右浮动同理。
+    - 译者注: 这就是说，浮动盒子不能超出其包含块，除非浮动盒子太宽，无法独立位于一行里，这时可以超出包含块。
+8. 浮动盒子必须尽可能高地放置。
+9. 左浮动盒子必须尽可能远离包含块的左边界，右浮动盒子必须尽可能远离包含块的右边界。
+    - 译者注: 这条规则是说，多个浮动盒子应该尽可能放置在同一行（即最后一个浮动盒子离包含块的边界尽可能远）
+
+But in CSS 2.2, if, within the block formatting context, there is an in-flow negative vertical margin such that the float's position is above the position it would be at were all such negative margins set to zero, the position of the float is undefined.
+
+上述规则里提到的其他元素的引用，仅是指与浮动元素在同一 BFC 里其他元素。
+
+::: warning 示例
+以下的文档片段将导致 b 浮动到右边。
+
+```html
+<P>a<SPAN style="float: right">b</SPAN></P>
+```
+
+若是 P 元素足够宽，a 和 b 将各在一边，像下图这样。
+
+![图 8](./img/diagram-8.png)
+:::
+
+### 9.5.2 控制浮动旁边的流: clear 属性
+
+Name: | clear
+--- | ---
+Value: | none | left | right | both | inherit
+Initial: | none
+Applies to: | block-level elements
+Inherited: | no
+Percentages: | N/A
+Media: | visual
+Computed value: | as specified
+
+该属性表明元素盒子的哪一边不能与之前的浮动盒子相邻。`clear`属性不影响元内部的浮动或其他 BFC 里的浮动。
+
+以下值及含义，将应用到非浮动的块级盒上:
+
+- `left`
+  - 要求盒子的上边框边界（`border edge`）位于任何源文档里之前生成的左浮动盒子的下外边界之下。
+- `right`
+  - 要求盒子的上边框边界位于任何源文档里之前生成的右浮动盒子的下外边界之下。
+- `both`
+  - 要求盒子的上边框边界位于任何源文档里之前生成的右浮动或左浮动盒子的下外边界之下。
+- `none`
+  - 相对于浮动盒子，盒子的位置没有限制
+
+除`none`以外的值，都有可能引入安全间距（`clearance`）。安全间距将阻止外边距坍塌，并作为元素`margin-top`之上的空间存在。安全间距将被用于元素在垂直方向上越过浮动元素。（译者注: 即同一水平线上，不能同时存在元素和浮动元素）
+
+若是计算设置了`clear`属性的元素的安全间距，首先要确定元素上边框边界的假定位置。这个位置就是，元素的`clear`属性设置为`none`时，实际的上边框边界所在的位置。若是元素上边框边界的这个假定的位置没有越过相关的浮动元素，则将引入安全间距，外边距将按照 8.3.1 的规则发生坍塌。
+
+安全间距将被设置为以下的较大者:
+
+- 将块的上边框边界放置在最低的浮动元素的下外边界（之下）以实现清除浮动效果的必需距离
+- 将块的上边框边界放置在它假定位置的必需距离
+
+另一种选择是，将安全间距设置为，将块的上边框边界放置在最低的浮动元素的下外边界（之下）以实现清除浮动效果的必需距离。
+
+::: tip 提示
+这两种方式都允许推迟对“与现有 Web 内容的兼容性”的评估。但未来的 CSS 规范将要求其中一个是确定的。
+:::
+
+::: tip 提示
+安全间距可以是负数，或 0。
+:::
+
+::: warning 示例 1
+为了简化，假定我们有三个盒子，顺序是:
+
+- 块 B1，`margin-bottom`为 M1（B1 没有子节点且没有`padding`和`border`）
+- 浮动的块 F，高度为 H
+- 块 B2，`margin-top`为 M2（B2 没有子节点且没有`padding`和`border`），B2 设置了`clear: both`，我们还假设 B2 不是空的。
+
+我们先不考虑 B2 的`clear`属性，此时的情况如下图所示。B1 和 B2 发生了外边距坍塌。我们以 B1 的下边框的边界作为 Y 轴的原点，即 y = 0，则各个位置的坐标如下:
+
+- F 的顶部: y = M1
+- B2 的上边框边界: y = max(B1, B2)
+- F 的底部: y = M1 + H
+
+![图 9](./img/diagram-9.png)
+
+我们也假设 B2 不在 F 之下，即假设我们处于规范里描述的需要添加安全间距的情况下，这就是说，
+
+> max(M1, M2) < M1 + H
+
+我们需要计算安全间距 C 两次，C1 和 C2，并保留较大的，即 C = max(C1, C2)。第一种方式是将 B2 的顶部放置在 F 的底部，即 B2 的上边框边界: y = M1 + H。这也就是说，由于有了安全间距，B1 和 B2 间的外边距不再坍塌:
+
+> F 的底部 = B2 的上边框边界 ⇔
+>
+> M1 + H = M1 + C1 + M2 ⇔
+>
+> C1 = M1 + H - M1 - M2
+>
+> = H - M2
+
+第二个计算方式是保持 B2 在它原先的位置，即 y = max(M1, M2)。这也就是说，
+
+> max(M1, M2) = M1 + C2 + M2 ⇔
+>
+> C2 = max(M1, M2) - M1 - M2
+
+我们之前已经得出了 max(M1, M2) < M1 + H，因此
+
+> C2 = max(M1, M2) - M1 - M2 < M1 + H - M1 - M2 = H - M2 ⇒
+>
+> C2 < H - M2
+
+并且，由于 C1 = H - M2，我们可以知道
+
+> C2 < C1
+
+因此，
+
+> C = max(C1, C2) = C1
+:::
+
+::: warning 示例 2
+这里有一个负安全间距的例子，其安全间距为`-1em`。（假定元素都没有`border`和`padding`）
+
+```html
+<p style="margin-bottom: 4em">
+  First paragraph.
+
+<p style="float: left; height: 2em; margin: 0">
+  Floating paragraph.
+
+<p style="clear: left; margin-top: 3em">
+  Last paragraph.
+```
+
+解释: 若是没有`clear`，第一个和最后一个段落的外边距将发生坍塌，最后一个段落的上边框边界完全与浮动段落的顶部平齐。但是`clear`要求最后一个段落的上边框边界处于浮动元素之下，即再降低`2em`。这也就说，必须引入安全间距。按照上面的计算，外边距不再坍塌，因此安全间距被设置为: clearance + margin-top = 2em，即 clearance = 2em - margin-top = 2em - 3em = -1em
+:::
+
+当`clear`设置在浮动元素上时，将导致对规则里的一个修改，以便来定位浮动元素。一个额外的约束(#10)被添加了:
+
+- 浮动元素的上外边界必须处于所有之前左浮动盒子的下外边界之下（`clear: left`的情况下），或所有之前右浮动盒子的下边界之下（`clear: right`的情况下），或所有之前左浮动和右浮动盒子的下边界之下（`clear: both`的情况下）
+
+::: tip 提示
+该属性可以应用到 CSS 1 里的所有属性。实现可能因此已经支持了所有元素上的该属性。在 CSS 2 和 CSS 2.2 里，`clear`属性，仅应用到块级元素上。因此创作者应该仅在块级元素上使用该属性。如果实现支持在行内元素上清除浮动，但不是如下描述里设置了安全间距，那么实现应该强制打断，插入一或多个空的行盒（或在之下插入 9.5 章节里描述的新的行盒），以将行内元素的顶部移动到与之相关的浮动盒子之下。
 :::
