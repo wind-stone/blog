@@ -129,7 +129,7 @@ module.exports = {
         }
       ],
 
-      // 前端知识点
+      // CSS 2.2 规范
       '/css-spec/': [
         {
           title: 'CSS 2.2 规范',
@@ -205,8 +205,6 @@ module.exports = {
           title: '打包工具',
           collapsable: true,
           children: [
-            'bundler/webpack/',
-            'bundler/webpack/bootstrap',
             'bundler/rollup'
           ]
         },
@@ -221,7 +219,9 @@ module.exports = {
           title: 'Webpack',
           collapsable: true,
           children: [
+            'webpack/',
             'webpack/config',
+            'webpack/webpack-runtime',
             'webpack/webpack4-import'
           ]
         },
