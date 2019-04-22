@@ -202,17 +202,11 @@ module.exports = {
           ]
         },
         {
-          title: '打包工具',
-          collapsable: true,
-          children: [
-            'bundler/rollup'
-          ]
-        },
-        {
           title: '工具',
           collapsable: true,
           children: [
-            'tools/eslint'
+            'tools/eslint',
+            'tools/rollup'
           ]
         },
         {
