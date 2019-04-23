@@ -28,13 +28,13 @@
 - 文档树里元素之间的关系
 - 外部信息（比如视口尺寸、图片的固有尺寸等）
 
-该章节和下一章节定义的属性，可以应用到流媒体（`continuous media`）和分页媒体（`paged media`）。但是，当应用到分页媒体时，`margin`相关的属性的意义就有所改变了，详情可见[page model](https://www.w3.org/TR/CSS22/page.html#page-margins)
+该章节和下一章节定义的属性，可以应用到连续媒体（`continuous media`）和分页媒体（`paged media`）。但是，当应用到分页媒体时，`margin`相关的属性的意义就有所改变了，详情可见[page model](https://www.w3.org/TR/CSS22/page.html#page-margins)
 
 视觉格式化模型没有明确格式化的各个方面（比如它没有指定一个`letter-spacing`算法），因此针对规格文档里没有涉及的格式化问题，用户代理可能表现不一致。
 
 ### 9.1.1 视口
 
-流媒体的用户代理通常给用户提供一个视口（屏幕上的一个窗口或者其他可视区域），以让用户翻阅文档。当视口`resized`后，用户代理可能改变文档的布局，可见[初始包含块](https://www.w3.org/TR/CSS22/visudet.html#containing-block-details)
+连续媒体的用户代理通常给用户提供一个视口（屏幕上的一个窗口或者其他可视区域），以让用户翻阅文档。当视口`resized`后，用户代理可能改变文档的布局，可见[初始包含块](https://www.w3.org/TR/CSS22/visudet.html#containing-block-details)
 
 当视口小于文档渲染的画布区域时，用户代理应该提供一个滚动机制。每一张画布至少有一个视口，但是用户代理可能渲染到不止一张画布上（比如提供同一个文档的不同视图）。
 
@@ -87,11 +87,11 @@
 </DIV>
 ```
 
-![图 1](./img/diagram-1.png)
+![diagram-anon-block](./img/diagram-anon-block.png)
 
-图 1: 图里显示了三个盒子，其中一个是匿名的
+图里显示了三个盒子，其中一个是匿名的
 
-关于匿名块盒详细的描述: 这个图说明了匿名块盒是如何存在于匿名内容周边的。这里有两个包含文本的矩形盒子，第一个是匿名的，它有一个浅灰色的背景，并包含了文本“Some text”。在它之下，是`p`元素的盒子，稍深灰色的背景，并包含了文本`More text`。这两个盒子都在`div`元素的盒子里面。
+示意图注释: 该示意图说明了匿名块盒是如何存在于匿名内容周边的。这里有两个包含文本的矩形盒子，第一个是匿名的，它有一个浅灰色的背景，并包含了文本“Some text”。在它之下，是`p`元素的盒子，稍深灰色的背景，并包含了文本`More text`。这两个盒子都在`div`元素的盒子里面。
 
 换句话说，如果一个块容器盒（比如上面 DIV 元素生成的盒子）里面有一个块级盒（比如上面的 P 元素生成的盒子），那么我们会强制让该块容器盒仅包含块级盒（译者注: 以添加匿名块盒的方式）。
 
@@ -129,9 +129,9 @@ P 元素包含了一个匿名文本的块（C1），其后是一个块级元素�
 
 已设置在导致生成匿名块盒元素上的属性，仍将应用到匿名块盒以及元素的内容上。比如在上面的示例里，若是已为 P 元素设置了`border`，那么 C1 和 C2 周围也将会有`border`。（译者注：但不会应用到 SPAN 元素上）
 
-![图 2](./img/diagram-2.png)
+![anonymous-block-box-property](./img/anonymous-block-box-property.png)
 
-图 2: 在 P 元素上设置了`border: 1px solid red`，导致包裹 C1 和 C2 的匿名块盒都有`border`，但 SPAN 元素没有
+在 P 元素上设置了`border: 1px solid red`，导致包裹 C1 和 C2 的匿名块盒都有`border`，但 SPAN 元素没有
 
 一些用户代理已经以其他方式实现了行内包含块的边框，比如在匿名行盒（`anonymous line boxes`）内部包装一个嵌套的块，并在这些盒子周边绘制行内边框。由于 CSS1 和 CSS2 并没有定义这个行为，`CSS1-only`和`CSS2-only`的用户代理可能实现了这个可选的模型，并声称和 CSS 2.2 的这部分保持了一致。而在这个规则文档发布之后开发的用户代理则不是这样。
 
@@ -435,6 +435,7 @@ sentence, dear.
 在上面示例的最后一个效果里，EM 盒子分离为两个 EM 盒子（称之为`split1`和`split2`）。`margin`/`border`/`padding`或`text-decoration`在`split1`之后和`split2`之前都没有视觉上的效果。
 
 ::: warning 考虑如下的示例
+
 ```html
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <HTML>
@@ -458,9 +459,9 @@ sentence, dear.
 
 依赖于 P 的宽度，盒子的分布可能如下所示:
 
-![图 3](./img/diagram-3.png)
+![diagram-inline-layout](./img/diagram-inline-layout.png)
 
-图片注释: 这张图说明了在行内盒分离点处`margin`/`border`/`padding`的行为。这个图展示了 HTML 文档的渲染结果。行内盒包含的两个单词“emphasized text”在单词之间分离了，在分离点，`padding`、`border`（虚线边框以示强调）、`padding`都没渲染。（译者注: 应该是指水平方向上的`margin`/`border`/`padding`）
+示意图注释: 该示意图说明了在行内盒分离点处`margin`/`border`/`padding`的行为。这个图展示了 HTML 文档的渲染结果。行内盒包含的两个单词“emphasized text”在单词之间分离了，在分离点，`padding`、`border`（虚线边框以示强调）、`padding`都没渲染。（译者注: 应该是指水平方向上的`margin`/`border`/`padding`）
 
 - `margin`会插入到"emphasized"之前和"words"之后
 - `padding`会插入"emphasized"之前、之上和之下，"words"之后、之上和之下。虚线边框渲染在每一个盒子的三个边上。
@@ -633,7 +634,7 @@ span {
 
 以上文档片段最终的效果如下:
 
-![图 4](./img/diagram-4.png)
+![diagram-supercal](./img/diagram-supercal.png)
 :::
 
 多个浮动元素可能相邻，这个模型也可以应用到同一行里相邻的浮动元素上。
@@ -672,9 +673,9 @@ img.icon {
 
 IMG 盒子向左浮动，随后的内容被格式化到浮动元素的右边，与浮动元素于同一行开始，浮动元素右边的行盒应为浮动元素的存在而缩短，但是在浮动元素之下恢复了常规的宽度（P 元素创建的包含块的宽度）。这个文档可能格式化为以下这样:
 
-![图 5](./img/diagram-5.png)
+![diagram-floateg](./img/diagram-floateg.png)
 
-图片注释: 这张图说明了文本是如何围绕在浮动元素周边的，尤其是，在浮动元素旁边的行盒是如何缩短以为浮动盒子（包括`margin`）让出空间的。图片里顶部的`max (BODY margin, P margin)`表明垂直`margin`坍塌了。但是因为浮动，IMG 元素的`margin`并没有参与坍塌的计算。图片里的左边，BODY、P、和 IMG 的左`margin`并没有坍塌（因为水平`margin`并不会坍塌）。段落里的文本沿着 IMG 的右边流动，开始于段落的顶部，到段落右`margin`的左边。当文本到达 IMG 下`margin`的底部，它将继续流动，就像它处于正常的 P 元素里一样（译者注: 即此时不再受浮动元素影响）。因此，只有（在水平方向）挨着浮动元素的行盒会缩短。
+示意图注释: 该示意图说明了文本是如何围绕在浮动元素周边的，尤其是，在浮动元素旁边的行盒是如何缩短以为浮动盒子（包括`margin`）让出空间的。图片里顶部的`max (BODY margin, P margin)`表明垂直`margin`坍塌了。但是因为浮动，IMG 元素的`margin`并没有参与坍塌的计算。图片里的左边，BODY、P、和 IMG 的左`margin`并没有坍塌（因为水平`margin`并不会坍塌）。段落里的文本沿着 IMG 的右边流动，开始于段落的顶部，到段落右`margin`的左边。当文本到达 IMG 下`margin`的底部，它将继续流动，就像它处于正常的 P 元素里一样（译者注: 即此时不再受浮动元素影响）。因此，只有（在水平方向）挨着浮动元素的行盒会缩短。
 
 若是文档修改为如下这样，格式化的结果也是完全一样的:
 
@@ -698,9 +699,9 @@ TODO:以下这一段还不太了解。
 ::: warning 示例
 这里有另一个插图，展示了当浮动元素与常规流里元素的边框重叠时的情况。
 
-![图 6](./img/diagram-6.png)
+![diagram-float2p](./img/diagram-float2p.png)
 
-图片注释: 这个插入说明了浮动图片与常规流里的两个段落的边框重叠了: 段落的边框被图片的非透明部分给覆盖了。常规流里有两个段落，都有红色边框。左浮动的图片导致了上面的段落的最后三行沿着浮动元素的右边浮动。这也导致随后的段落的前三行也是沿着图片的右边浮动，而剩余的段落内容则正常。段落的边框穿过了图片盒子的`margin box`区域，导致图片的非透明部分将覆盖这些边框。
+示意图注释: 该示意图说明了浮动图片与常规流里的两个段落的边框重叠了: 段落的边框被图片的非透明部分给覆盖了。常规流里有两个段落，都有红色边框。左浮动的图片导致了上面的段落的最后三行沿着浮动元素的右边浮动。这也导致随后的段落的前三行也是沿着图片的右边浮动，而剩余的段落内容则正常。段落的边框穿过了图片盒子的`margin box`区域，导致图片的非透明部分将覆盖这些边框。
 
 译者大致还原了这张插图的 HTML 片段和 CSS:
 
@@ -747,9 +748,9 @@ p {
 
 格式化的结果如下:
 
-![图 7](./img/diagram-7.png)
+![diagram-floatclear](./img/diagram-floatclear.png)
 
-图片注释: 这个插图说明了浮动图片与常规流里的一个段落的边框发生了重叠: 段落的边框被图片的非透明部分给覆盖了。通过`clear`属性，第二个段落被强制推到浮动元素之下。常规流里有两个段落，都有红色边框。左浮动的图片导致了上面的段落的最后三行沿着浮动元素的右边浮动。段落的边框穿过了图片盒子的`margin box`区域，导致图片的非透明部分将覆盖这些边框。第二个段落则正常渲染，开始于图片的下外边距之下。充足的“安全间距”被添加到第二个段落的上外边距之上，因此它的边框接触到之前段落的下外边距（译者注: 实际上，第二个段落的上边框接触到了图片的下外边距）。
+示意图注释: 该示意图说明了浮动图片与常规流里的一个段落的边框发生了重叠: 段落的边框被图片的非透明部分给覆盖了。通过`clear`属性，第二个段落被强制推到浮动元素之下。常规流里有两个段落，都有红色边框。左浮动的图片导致了上面的段落的最后三行沿着浮动元素的右边浮动。段落的边框穿过了图片盒子的`margin box`区域，导致图片的非透明部分将覆盖这些边框。第二个段落则正常渲染，开始于图片的下外边距之下。充足的“安全间距”被添加到第二个段落的上外边距之上，因此它的边框接触到之前段落的下外边距（译者注: 实际上，第二个段落的上边框接触到了图片的下外边距）。
 
 两个段落都有设置`clear: left`，但只导致第二个段落被推到浮动元素的下方 —— 通过在段落顶部添加一段“安全间距（clearance）”来完成这个效果（详见[clear](https://www.w3.org/TR/CSS22/visuren.html#propdef-clear)属性）
 :::
@@ -810,7 +811,7 @@ But in CSS 2.2, if, within the block formatting context, there is an in-flow neg
 
 若是 P 元素足够宽，a 和 b 将各在一边，像下图这样。
 
-![图 8](./img/diagram-8.png)
+![diagram-float-right](./img/diagram-float-right.png)
 :::
 
 ### 9.5.2 控制浮动旁边的流: clear 属性
@@ -870,7 +871,7 @@ Computed value: | as specified
 - B2 的上边框边界: y = max(B1, B2)
 - F 的底部: y = M1 + H
 
-![图 9](./img/diagram-9.png)
+![diagram-clearance](./img/diagram-clearance.png)
 
 我们也假设 B2 不在 F 之下，即假设我们处于规范里描述的需要添加安全间距的情况下，这就是说，
 
@@ -930,4 +931,471 @@ Computed value: | as specified
 
 ::: tip 提示
 该属性可以应用到 CSS 1 里的所有属性。实现可能因此已经支持了所有元素上的该属性。在 CSS 2 和 CSS 2.2 里，`clear`属性，仅应用到块级元素上。因此创作者应该仅在块级元素上使用该属性。如果实现支持在行内元素上清除浮动，但不是如下描述里设置了安全间距，那么实现应该强制打断，插入一或多个空的行盒（或在之下插入 9.5 章节里描述的新的行盒），以将行内元素的顶部移动到与之相关的浮动盒子之下。
+:::
+
+## 9.6 绝对定位
+
+在绝对定位模型里，盒子明确地相对于它的包含块偏移。它将完全地从常规流里移除，不会对后续兄弟盒子产生影响。一个绝对定位的盒子会为它的处于常规流里的子盒子以及绝对定位（不包括`fixed`定位）的后代盒子创建一个新的包含块。而且，绝对定位元素的内容不会流动在任何盒子的周边。绝对定位元素可能会覆盖其他盒子的内容（或者被覆盖），这取决于相互重叠的盒子的堆叠层级（`stack level`）。
+
+该规范里提及的绝对定位元素（或其盒子），是指该元素的`position`属性的值为`absolute`或`fixed`。
+
+### 9.6.1 固定定位
+
+固定定位（`fixed positioning`）是绝对定位的一个子类别，其区别在于，固定定位的盒子，其包含块是由视口创建的。对于连续媒体（`continuous media`），文档滚动时，固定定位的盒子不会移动。这一点，有些类似于固定背景图片的效果。对于分页媒体，固定定位的盒子会重复在每一页上出现，这有利于一些内容的放置，比如每一页底部的签名。固定定位的盒子，比裁剪的页面区域要大。固定定位的盒子在初始包含块里不可见的部分，将不会打印出来。
+
+::: warning 示例
+创作者可能使用固定定位创建类似框架式的呈现，比如如下的框架式布局:
+
+![diagram-frame](./img/diagram-frame.png)
+
+示意图注释: 该示意图说明了使用了`position: fixed`的类似框架式的布局。这个插图显示有四个面板的框架集。顶部面板（`header`）覆盖了框架集的全部宽度，占用了`15%`的垂直空间。在它之下的左边是侧边栏（`sidebar`），`10em`宽; 它的高度是自动计算的。`sidebar`的右边（以及`header`的下边）是`main`区域，它的尺寸是基于剩余可用的空间来计算的。最后，底部是`footer`区域，高`100px`，覆盖了框架集的全部宽度。每个区域都做了标记，非`auto`的尺寸也指明了出来。
+
+这可以通过如下的 HTML 和样式规则来实现。
+
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+  <HEAD>
+    <TITLE>A frame document with CSS</TITLE>
+    <STYLE type="text/css" media="screen">
+      BODY { height: 8.5in } /* Required for percentage heights below */
+      #header {
+        position: fixed;
+        width: 100%;
+        height: 15%;
+        top: 0;
+        right: 0;
+        bottom: auto;
+        left: 0;
+      }
+      #sidebar {
+        position: fixed;
+        width: 10em;
+        height: auto;
+        top: 15%;
+        right: auto;
+        bottom: 100px;
+        left: 0;
+      }
+      #main {
+        position: fixed;
+        width: auto;
+        height: auto;
+        top: 15%;
+        right: 0;
+        bottom: 100px;
+        left: 10em;
+      }
+      #footer {
+        position: fixed;
+        width: 100%;
+        height: 100px;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    </STYLE>
+  </HEAD>
+  <BODY>
+    <DIV id="header"> ...  </DIV>
+    <DIV id="sidebar"> ...  </DIV>
+    <DIV id="main"> ...  </DIV>
+    <DIV id="footer"> ...  </DIV>
+  </BODY>
+</HTML>
+```
+
+:::
+
+## 9.7 display、position、float 之间的关系
+
+这三个属性都会影响和盒子的生成和布局，`display`、`position`和`float`按如下相互作用:
+
+1. 若是`display`的值为`none`，则`position`和`float`将不会应用（译者注: 即不会起作用）。这种情况下，元素不会生成盒子。
+2. 否则，若是`position`的值为`absolute`或`fixed`，盒子将绝对定位，`float`的计算值将为`none`，`display`的值将按照下表设置。盒子的位置将由`top`/`right`/`bottom`/`left`属性以及盒子的包含块决定。
+3. 否则，若`float`的值不为`none`，盒子将浮动，`display`的值将按下表设置。
+4. 否则，若元素是根元素，`display`的值将按下表设置，除了 CSS 2.2 没有定义的一点，即指定值为`list-item`的，其计算值为`block`还是`list-item`。
+5. 否则，`display`的值就为指定的值。
+
+Specified value | Computed value
+--- | ---
+`inline-table` | `table`
+`inline`/`table-row-group`/`table-column`/`table-column-grou`/`table-header-group`/`table-footer-group`/`table-row`/`table-cel`/`table-caption`/`inline-block` | `block`
+others | same as specified
+
+## 9.8 常规流、浮动、绝对定位的对比
+
+为了说明常规流、相对定位、浮动、绝对定位之间的区别，我们将基于以下的 HTML 提供一系列的示例。
+
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+  <HEAD>
+    <TITLE>Comparison of positioning schemes</TITLE>
+  </HEAD>
+  <BODY>
+    <P>
+      Beginning of body contents.
+      <SPAN id="outer">
+        Start of outer contents.
+        <SPAN id="inner"> Inner contents.</SPAN>
+        End of outer contents.
+      </SPAN>
+      End of body contents.
+    </P>
+  </BODY>
+</HTML>
+```
+
+假设该文档有如下的规则:
+
+```css
+body {
+  display: block;
+  font-size:12px;
+  line-height: 200%;
+  width: 400px;
+  height: 400px
+}
+p {
+  display: block
+}
+span {
+  display: inline
+}
+```
+
+在之后的每个示例里，`outer`和`inner`生成的盒子的位置将不一样。在每一个插图里，挨着插图左边的数字表示常规流里行的位置，这些行都是双倍行距的，为了更清晰地说明。
+
+::: tip 提示
+这一章节里的示意图都是解释性的，且没有缩放。这是为了高亮 CSS 2.2 里不同位置方案的区别，且并没有为在实现所给示例的渲染时作为参考的意图。
+:::
+
+### 9.8.1 常规流
+
+考虑如下对`outer`和`inner`的 CSS 声明，并没有改变常规流的盒子:
+
+```css
+#outer { color: red }
+#inner { color: blue }
+```
+
+P 元素包含了所有的内联内容: 匿名行内文本以及两个 SPAN 元素。因此，所有的内容将放置在由 P 元素建立的包含框产生的 IFC 里，其渲染结果如下所示:
+
+![图 11](./img/diagram-flow-generic.png)
+
+示意图注释: 这个图说明了父盒子和兄弟盒子之间文本的常规流。文档窗口里，有 8 行（从 1 到 8），每一行高`24px`，展示了四行文本，占用了行 1 到行 4。在下面的 PRE 元素里，每一个`24px`高的行将由两行模拟，第二行将由确切的行号开始。按照在图片里出现的顺序，包括:
+
+```txt
+1 Beginning of body contents. Start
+
+2 of outer contents. Inner contents.
+
+3 End of outer contents. End of body
+
+4 contents.
+```
+
+默认的文本颜色是黑色，"Start of outer contents"是红色的，"Inner contents"是蓝色的，"End of outer contents"是红色的。
+
+### 9.8.2 相对定位
+
+我们指定如下规则，来看一下相对定位的影响:
+
+```css
+#outer { position: relative; top: -12px; color: red }
+#inner { position: relative; top: 12px; color: blue }
+```
+
+`outer`元素之前的文本都定位正常。`outer`文本在行 1 的结尾处，按常规流的位置和尺寸定位。之后，包含了文本（分布在三行）的行内盒子以`-12px`为单位向上移动了。
+
+`inner`的内容，作为`outer`的子节点，将正常定位在语句"of outer contents"（在 1.5 行）之后。但是，`inner`内容自身相对于`outer`内容向下偏移了`12px`，回到了它们在第 2 行的初始位置。
+
+注意，`outer`之后的内容没有因为`outer`的相对定位而受到影响。
+
+![diagram-flow-relative](./img/diagram-flow-relative.png)
+
+示意图注释: 该示意图说明了相对定位的影响。文档窗口里，有 8 行（从 1 到 8），每一行高 `24px`。`outer`盒子的文本（位于行 1 的结尾，一部分在行 2 里，一部分在行 3 里）向上转移了`12px`。`inner`盒子的文本，也向上转移了，且其自身是相对定位的，导致它定位在其常规流的位置上，即行 2 的结尾处。在下方的 PRE 元素里，每一个`24px`高的行将由两行模拟，第二行将由确切的行号开始。按照在图片里出现的顺序，包括:
+
+```txt
+                              Start
+1 Beginning of body contents.
+
+2 of outer contents.
+                     Inner contents.
+3
+  End of outer contents.
+4                       End of body
+
+5 contents.
+```
+
+默认的文本颜色是黑色，"Start of outer contents"是红色的，"Inner contents"是蓝色的，"End of outer contents"是红色的。
+
+同时注意，若是`outer`偏移的距离是`-24px`，`outer`的文本和`body`的文本将发生重叠。
+
+### 9.8.3 浮动盒子
+
+以下的规则将让`inner`元素向右浮动，我们来考虑下其影响。
+
+```css
+#outer { color: red }
+#inner { float: right; width: 130px; color: blue }
+```
+
+`inner`盒子之前的文本都定位正常。而`inner`盒子则脱离了流并向右浮动，紧挨着右外边距（其宽度已经明确指定）。浮动盒子左边的行盒缩短了，且文档里剩余的文本都分布在这些行盒里。
+
+![diagram-flow-float](./img/diagram-flow-float.png)
+
+示意图注释: 该示意图说明了浮动盒子的影响。文档窗口里，有 8 行（从 1 到 8），每一行高 `24px`。由于`inner`盒子浮动到了右边，所有其他的文本在其周边流动（从行 1 到行 4）。在下方的 PRE 元素里，每一个`24px`高的行将由两行模拟，第二行将由确切的行号开始。竖条代表了浮动盒子的左边界。图片的出现的这些行，包括:
+
+```txt
+1 Beginning of body contents. Start
+
+2 of outer contents. End | Inner
+
+3 of outer contents. End | contents.
+
+4 of body contents.
+```
+
+默认的文本颜色是黑色，"Start of outer contents"是红色的，"Inner contents"是蓝色的，"End of outer contents"是红色的。
+
+为了展示`clear`属性的影响，我们在示例里添加一个兄弟元素:
+
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+  <HEAD>
+    <TITLE>Comparison of positioning schemes II</TITLE>
+  </HEAD>
+  <BODY>
+    <P>
+      Beginning of body contents.
+      <SPAN id=outer>
+        Start of outer contents.
+        <SPAN id=inner> Inner contents.</SPAN>
+        <SPAN id=sibling> Sibling contents.</SPAN>
+        End of outer contents.
+      </SPAN>
+      End of body contents.
+    </P>
+  </BODY>
+</HTML>
+```
+
+CSS 规则为:
+
+```css
+#inner {
+  float: right;
+  width: 130px;
+  color: blue;
+}
+#sibling { color: red }
+```
+
+让`inner`盒子像之前一样浮动到右边，文档里剩下的文本将流入到空出的空间（译者注: 也就是浮动左边的行盒）里。
+
+![diagram-flow-clear](./img/diagram-flow-clear.png)
+
+示意图注释: 该示意图说明了浮动盒子（`inner`）的影响以及它的兄弟盒子如何在它旁边流动。文档窗口里，有 8 行（从 1 到 8），每一行高 `24px`。由于`inner`盒子浮动到了右边，所有其他的文本在其周边流动，包括兄弟盒子（从行 1 到 行 5）。在下方的 PRE 元素里，每一个`24px`高的行将由两行模拟，第二行将由确切的行号开始。竖条代表了浮动盒子的左边界。图片的出现的这些行，包括:
+
+```txt
+1 Beginning of body contents. Start
+
+2 of outer contents.     | Inner
+
+3 Sibling contents. End  | contents.
+
+4 of outer contents. End of body
+
+5 contents.
+```
+
+默认的文本颜色是黑色，"Start of outer contents"是红色的，"Sibling contents"也是红色的，"Inner contents"是蓝色的，"End of outer contents"是红色的。
+
+但是，若是兄弟元素的`clear`属性设置为`right`（这也就是说，生成的兄弟盒子的右边不能有浮动元素），兄弟元素的内容将在浮动元素之下开始流动:
+
+```css
+#inner {
+  float: right;
+  width: 130px;
+  color: blue;
+}
+#sibling {
+  clear: right;
+  color: red
+}
+```
+
+![diagram-flow-clear2](./img/diagram-flow-clear2.png)
+
+示意图注释: 该示意图说明了浮动盒子（`inner`）的影响以及它的兄弟盒子由于`clear`属性被迫在位于其下。文档窗口里，有 8 行（从 1 到 8），每一行高 `24px`。`inner`盒子之前的文本流动在行 1，且有一部分在行 2。`inner`盒子已经浮动到右边，以及占用了行 3 和行 4 的一半。兄弟盒子流动在之后的行 4 里，其后是剩余的文本。在下方的 PRE 元素里，每一个`24px`高的行将由两行模拟，第二行将由确切的行号开始。竖条代表了浮动盒子的左边界。图片的出现的这些行，包括:
+
+```txt
+1 Beginning of body contents. Start
+
+2 of outer contents.     | Inner
+
+3                        | contents.
+
+4 Sibling contents. End of outer
+
+5 contents. End of body contents.
+```
+
+默认的文本颜色是黑色，"Start of outer contents"是红色的，"Sibling contents"也是红色的，"Inner contents"是蓝色的，"End of outer contents"是红色的。
+
+### 9.8.4 绝对定位
+
+最后，我们来看下绝对定位的影响。考虑以下的 CSS 声明:
+
+```css
+#outer {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  width: 200px;
+  color: red;
+}
+#inner { color: blue }
+```
+
+这将导致`outer`盒子的顶部相对于其包含块定位。定位盒子的包含块是由距离定位盒子最近的定位祖先所建立（若没有最近的定位祖先，则是初始包含块所建立，比如在我们的示例里）。`outer`盒子的上边界位于包含块顶部之下`200px`，左边界距离包含块左边界`200px`。`outer`盒子的子盒子在其父盒子内正常流动。
+
+![diagram-flow-absolute](./img/diagram-flow-absolute.png)
+
+示意图注释: 该示意图说明了绝对定位盒子的影响。文档窗口里，有 8 行（从 1 到 8），每一行高 `24px`。`outer`之外的所有文本已经流动在行 1 和行 2 上。`outer`盒子是绝对定位的，因此它占据了文档窗口的右下方区域。`outer`及其后代盒子里的文本占据了行 5 到行 8 的右半部分。在下方的 PRE 元素里，每一个`24px`高的行将由两行模拟，第二行将由确切的行号开始。竖条代表了浮动盒子的左边界。图片的出现的这些行，包括:
+
+```txt
+1 Beginning of body contents. End of
+
+2 body contents.
+
+3
+
+4
+
+5                Start of outer
+
+6                contents. Inner
+
+7                contents. End of
+
+8                outer contents.
+```
+
+默认的文本颜色是黑色，"Start of outer contents"是红色的，"Inner contents"是蓝色的，"End of outer contents"是红色的。
+
+下面的示例显示了一个绝对定位盒子，它的父盒子是一个相对定位的盒子。尽管`outer`父盒子实际上没有偏移，设置它的`position`属性为`relative`意味着，它的盒子将作为它后代定位元素的包含块。由于`outer`盒子是分离为多行的行内盒，第一个行内盒的上边界和左边界（下方的示意图里以粗虚线来表示）将作为`top`和`left`属性偏移的参考点。
+
+```css
+#outer {
+  position: relative;
+  color: red;
+}
+#inner {
+  position: absolute;
+  top: 200px;
+  left: -100px;
+  height: 130px;
+  width: 130px;
+  color: blue;
+}
+```
+
+最终的效果为:
+
+![diagram-flow-abs-rel](./img/diagram-flow-abs-rel.png)
+
+示意图注释: 该示意图说明了绝对定位盒子`inner`的影响，这个绝对定位盒子的包含块是有一个相对定位的祖先盒子`outer`创建的。文档窗口里，有 8 行（从 1 到 8），每一行高 `24px`。所有`body`和`outer`的文本已流动在行 1、2、3 里。`inner`盒子相对于`outer`元素第一个行内盒的上边界和左边界进行相对定位。在下方的 PRE 元素里，每一个`24px`高的行将由两行模拟，第二行将由确切的行号开始。示意图里，定位`inner`盒子的参考边界以粗虚线来指明。`inner`盒子的左上点坐标通过`(+200, -100)`来标示。在下方的 PRE 元素里，`inner`盒子定位的参考边界以竖条和等号标示。方框号里的是`inner`盒子的偏移。图片里这些包含文本的行，大概是这样:
+
+```txt
+                        ====
+                             |
+1 Beginning of body contents.|Start
+
+2 of outer contents. End of outer
+
+3 contents. End of body contents.
+
+4          [(+200, -100)]
+
+5                Inner
+
+6                contents.
+
+7
+
+8
+```
+
+默认的文本颜色是黑色，"Start of outer contents"是红色的，"Inner contents"是蓝色的，"End of outer contents"是红色的。
+
+若是我们不对`outer`盒子进行定位:
+
+```css
+#outer { color: red }
+#inner {
+  position: absolute;
+  top: 200px;
+  left: -100px;
+  height: 130px;
+  width: 130px;
+  color: blue;
+}
+```
+
+`inner`盒子的包含块就变成了初始包含块。下方的插图展示了这种情况下，`inner`盒子将定位在何处。
+
+![diagram-flow-static](./img/diagram-flow-static.png)
+
+示意图注释: 该示意图说明了相对于初始包含块的绝对定位盒子的影响。文档窗口里，有 8 行（从 1 到 8），每一行高 `24px`。所有`body`和`outer`的文本已流动在行 1、2、3 里。`inner`盒子相对于`0, 0`坐标点（文档窗口的左上角），定位在`-100, 200`，因此导致`inner`盒子的大部分内容渲染到文档窗口之外。在下方的 PRE 元素里，每一个`24px`高的行将由两行模拟，第二行将由确切的行号开始。行号左边的文本放置在初始包含块之外。图片里的这些行，大概是这样:
+
+```txt
+      1 Beginning of body contents. [@]Start
+
+      2 of outer contents. End of outer
+
+      3 contents. End of body contents.
+
+      4
+
+Inner 5
+
+Conte 6 nts
+
+      7
+
+      8
+```
+
+默认的文本颜色是黑色，"Start of outer contents"是红色的，"Inner contents"是蓝色的，"End of outer contents"是红色的。
+
+::: warning 示例
+相对定位和绝对定位可能用于实现变更指示符（`change bars`），就像如下这样。文档片段为:
+
+```html
+<P style="position: relative; margin-right: 10px; left: 10px;">
+  I used two red hyphens to serve as a change bar. They will "float" to the left of the line containing THIS
+  <SPAN style="position: absolute; top: auto; left: -1em; color: red;">--</SPAN>
+  word.
+</P>
+```
+
+其效果为:
+
+![diagram-changebar](./img/diagram-changebar.png)
+
+示意图注释: 该示意图说明了使用绝对定位创建变更指示符的影响。变更指示符（图片里以两个两字符即`--`表示）出现在段落左边`10px`宽的空间里。该插图里的垂直线代表了段落的包含块的左边界。示意图里，黑色的段落文本偏移了边界`10px`。变更指示符出现在第四行文本的开头单词`THIS`的左边。下方的 PRE 元素模拟了这个示例，垂直线条代表了包含块的左边界。
+
+```js
+|   I used two red hyphens to serve
+|   as a change bar. They will "float"
+|   to the left of the line containing
+| --THIS word.
+```
+
 :::
