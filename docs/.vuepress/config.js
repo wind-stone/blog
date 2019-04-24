@@ -1,15 +1,23 @@
 module.exports = {
-  title: 'Wind Stone\'s blog',
-  description: '记录工作，记录生活',
-  markdown: {
-    lineNumbers: true,
-    toc: {
-      includeLevel: [2, 3, 4, 5]
-    }
-  },
-  head: [
+  title: 'Wind Stone\'s blog', // 网站的标题
+  description: '记录工作，记录生活', // 网站的描述
+  head: [ // 额外的需要被注入到当前页面的 HTML <head> 中的标签
     ['link', { rel: 'icon', href: `/img/long.png` }]
   ],
+
+  markdown: {
+    lineNumbers: true, // 是否在每个代码块的左侧显示行号
+    toc: { // 控制 [[TOC]] 默认行为
+      includeLevel: [2, 3, 4, 5] // 决定哪些级别的标题会被显示在目录中，默认值为 [2, 3]
+    }
+  },
+
+  // base: '/', // 基础路径，默认值
+  // host: '0.0.0.0', // 指定用于 dev server 的主机名，默认值
+  // port: 8080, // 指定 dev server 的端口，默认值
+  // dest: '.vuepress/dist', // 指定 vuepress build 的输出目录。如果传入的是相对路径，则会基于 process.cwd() 进行解析
+  // ...（另有一些选项，可能不需要重置，就没列在此处）
+
   themeConfig: {
     lastUpdated: 'Last Updated',
     sidebarDepth: 2,

@@ -22,7 +22,7 @@ CLI（command-line interface，命令行界面）
 
 单个`-`后面加单个字母，代表一个参数。Unix风格的参数是从贝尔实验室开发的 AT&T Unix 系统上原有的命令继承下来的。比如
 
-```sh
+```shell
 ls -l
 rm -fr /
 git commit -am "xxx"
@@ -34,7 +34,7 @@ git commit -am "xxx"
 
 两个`--`后面加单词或短语，代表一个参数。
 
-```sh
+```shell
 npm install lodash --save
 npm install express --save-dev
 ```
@@ -49,7 +49,7 @@ npm install express --save-dev
 
 PM2 是进程管理工具，执行 PM2 的`start`命令会间接执行`node`命令，若是想在执行命令时给`node`命令传递参数，可以如下使用`--`：
 
-```sh
+```shell
 pm2 start app.js -- helle world
 ```
 
@@ -74,7 +74,7 @@ for (let i = 0; i <= process.argv.length; i++) {
 
 Linux/Unix 系统下
 
-```sh
+```shell
 # wind-stone 代表用户，server-host 代表服务器
 # 进入服务器，会默认进行 home/wind-stone 目录下
 wind-stone@server-host
@@ -96,7 +96,7 @@ wind-stone@server-host::files/some-directory/
 
 `rsync`命令是一个远程数据同步工具，可通过 LAN/WAN 快速同步多台主机间的文件。`rsync`使用所谓的“rsync算法”来使本地和远程两个主机之间的文件达到同步，这个算法只传送两个文件的不同部分，而不是每次都整份传送，因此速度相当快。
 
-```sh
+```shell
 # rsync [OPTION]... SRC [USER@]HOST::DEST
 # 从本地机器拷贝文件到远程rsync服务器中。当 DST 路径信息包含“::”分隔符时启动该模式
 rsync -av /databack root@192.168.78.192::www

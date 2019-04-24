@@ -22,7 +22,7 @@ sidebarDepth: 0
 
 ### 步骤1. 检查是否已经存在 SSH Key
 
-```sh
+```shell
 ls -al ~/.ssh
 ```
 
@@ -33,13 +33,13 @@ ls -al ~/.ssh
 
 ### 步骤2. 生成 SSH Key
 
-```sh
+```shell
 ssh-keygen -t rsa -C "your_email@example.com"
 ```
 
 输入并执行以上命令，此时终端会显示：
 
-```sh
+```shell
 Generating public/private rsa key pair.
 
 Enter file in which to save the key (/your_home_path/.ssh/id_rsa):
@@ -51,7 +51,7 @@ Enter file in which to save the key (/your_home_path/.ssh/id_rsa):
 
 ### 步骤3. 将 SSH Key 的公钥添加到 gitlab/github 中
 
-```sh
+```shell
 pbcopy < ~/.ssh/id_rsa.pub
 ```
 

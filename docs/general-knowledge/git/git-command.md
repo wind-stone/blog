@@ -10,7 +10,7 @@ sidebarDepth: 0
 
 全局配置
 
-```sh
+```shell
 # 设置
 git config --global user.name wind-stone
 git config --global user.email wind-stone@qq.com
@@ -22,7 +22,7 @@ git config --global user.email
 
 本地（项目）
 
-```sh
+```shell
 # 设置
 git config user.name wind-stone
 git config user.email wind-stone@qq.com
@@ -36,7 +36,7 @@ git config user.email
 
 ### 创建分支
 
-```sh
+```shell
 git branch dev-branch
 ```
 
@@ -44,7 +44,7 @@ git branch dev-branch
 
 ### 检出分支
 
-```sh
+```shell
 git checkout dev-branch
 ```
 
@@ -55,7 +55,7 @@ git checkout dev-branch
 
 ### 创建分支并检出
 
-```sh
+```shell
 git checkout -b dev-branch
 
 等同于
@@ -67,7 +67,7 @@ git checkout dev-branch
 
 ### 合并分支
 
-```sh
+```shell
 git merge dev-branch
 ```
 
@@ -75,7 +75,7 @@ git merge dev-branch
 
 #### squash 参数
 
-```sh
+```shell
 git checkout master
 
 git merge --squash bugfix
@@ -93,7 +93,7 @@ PS：`bugfix`分支不会出现任何变化。
 
 ### 删除分支
 
-```sh
+```shell
 git branch -d dev-branch
 ```
 
@@ -101,7 +101,7 @@ git branch -d dev-branch
 
 ### 查看分支
 
-```sh
+```shell
 git branch
   iss53
 * master
@@ -110,7 +110,7 @@ git branch
 
 注意 master 分支前的 * 字符：它代表现在检出的那一个分支（也就是说，当前 HEAD 指针所指向的分支）
 
-```sh
+```shell
 git branch -v
   iss53   93b412c fix javascript issue
 * master  7a98805 Merge branch 'iss53'
@@ -119,13 +119,13 @@ git branch -v
 
 查看每一个分支及其最后一次提交
 
-```sh
+```shell
 git branch --merged
 ```
 
 查看哪些分支已经合并到当前分支
 
-```sh
+```shell
 git branch --no-merged
 ```
 
@@ -135,19 +135,19 @@ git branch --no-merged
 
 ### 查看
 
-```sh
+```shell
 git remote
 ```
 
 列出指定的每一个远程服务器的简写
 
-```sh
+```shell
 git remote -v
 ```
 
 指定选项 -v，会显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL
 
-```sh
+```shell
 git remote show origin
 ```
 
@@ -155,7 +155,7 @@ git remote show origin
 
 ### 添加
 
-```sh
+```shell
 git remote add pb https://github.com/paulboone/ticgit
 ```
 
@@ -163,7 +163,7 @@ git remote add pb https://github.com/paulboone/ticgit
 
 ### 重命名
 
-```sh
+```shell
 git remote rename origin github-origin
 ```
 
@@ -171,7 +171,7 @@ git remote rename origin github-origin
 
 ### 移除
 
-```sh
+```shell
 git remote rm origin
 ```
 
@@ -179,13 +179,13 @@ git remote rm origin
 
 ### 抓取远程仓库数据
 
-```sh
+```shell
 git fetch origin
 ```
 
 抓取远程仓库 origin 的数据到本地（但不会在本地生成可编辑的副本，也不会合并数据到本地分支）
 
-```sh
+```shell
 git fetch --all
 ```
 
@@ -193,7 +193,7 @@ git fetch --all
 
 ### 合并远程分支
 
-```sh
+```shell
 git merge origin/dev-branch
 ```
 
@@ -201,7 +201,7 @@ git merge origin/dev-branch
 
 ### 创建并检出远程分支的本地分支
 
-```sh
+```shell
 git checkout -b dev-branch origin/dev-branch
 ```
 
@@ -213,7 +213,7 @@ git checkout -b dev-branch origin/dev-branch
 
 #### git push 命令
 
-```sh
+```shell
 # 将本地 local-branch 推动到 origin 远程仓库的 server-branch 分支上
 # 若 origin 远程仓库不存在 server-branch 分支，则会新创建 server-branch 分支
 #
@@ -222,7 +222,7 @@ git checkout -b dev-branch origin/dev-branch
 git push origin local-branch:server-branch
 ```
 
-```sh
+```shell
 git push origin master
 # 等同于
 git push origin master:master
@@ -230,7 +230,7 @@ git push origin master:master
 
 ##### 省略远程仓库名称
 
-```sh
+```shell
 # 将本地当前分支推送到 origin 远程仓库的同名分支上
 git push origin
 
@@ -246,7 +246,7 @@ git push
 
 ##### --set-upstream
 
-```sh
+```shell
 # 将本地 master 分支推动到 origin 远程仓库 master 分支
 # 同时指定 origin 为默认远程仓库，以后就可以不加任何参数使用 git push 了
 git push --set-upstream origin master
@@ -256,14 +256,14 @@ git push -u origin master
 
 ##### --all
 
-```sh
+```shell
 # 将所有本地分支都推送到 origin 远程仓库的同名分支上
 git push --all origin
 ```
 
 ##### --force
 
-```sh
+```shell
 # 强制推送，会覆盖远程分支的提交
 git push --force origin
 # 简写
@@ -274,7 +274,7 @@ git push -f origin
 
 `git push`命令不会推送标签（`tag`），除非使用`--tags`选项。
 
-```sh
+```shell
 git push --tags
 git push origin --tags
 ```
@@ -283,7 +283,7 @@ git push origin --tags
 
 从一个远程跟踪分支检出一个本地分支会自动创建一个叫做 “跟踪分支”（有时候也叫做 “上游分支”）。跟踪分支是与远程分支有直接关系的本地分支。
 
-```sh
+```shell
 git checkout -b dev-branch origin/dev-branch
 
 # 快捷方式
@@ -292,19 +292,19 @@ git checkout --track origin/dev-branch
 
 检出远程分支并追踪
 
-```sh
+```shell
 git checkout -b local-branch origin/server-branch
 ```
 
 检出远程分支并追踪，如果想将本地分支设置为不同于远程分支的名称
 
-```sh
+```shell
 git branch -u origin/dev-branch
 ```
 
 设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支，你可以在任意时间使用 -u 或 --set-upstream-to 选项运行 git branch 来显式地设置
 
-```sh
+```shell
 git branch -vv
   iss53     7e424c3 [origin/iss53: ahead 2] forgot the brackets
   master    1ae2a45 [origin/master] deploying index fix
@@ -316,7 +316,7 @@ git branch -vv
 
 ### 拉取远程分支
 
-```sh
+```shell
 git pull
 ```
 
@@ -326,7 +326,7 @@ git pull
 
 ### 删除远程分支
 
-```sh
+```shell
 git push origin --delete dev-branch
 ```
 
@@ -334,14 +334,14 @@ git push origin --delete dev-branch
 
 ## 变基
 
-```sh
+```shell
 git checkout dev-branch
 git rebase master
 ```
 
 将当前分支 dev-branch 变基到 master 分支
 
-```sh
+```shell
 git rebase master dev-branch
 ```
 
@@ -363,7 +363,7 @@ git rebase master dev-branch
 
 ### 储藏文件
 
-```sh
+```shell
 git stash
 git stash save
 ```
@@ -375,7 +375,7 @@ git stash save
 
 ### 查看储藏
 
-```sh
+```shell
 git stash list
 ```
 
@@ -383,55 +383,55 @@ git stash list
 
 注意：可以在一个分支上保存一个储藏，切换到另一个分支，然后尝试重新应用这些修改
 
-```sh
+```shell
 git stash apply
 ```
 
 应用最近的储藏，储藏还在堆栈上，不会自动移除
 
-```sh
+```shell
 git stash apply stash@{2}
 ```
 
 应用指定的储藏
 
-```sh
+```shell
 git stash apply --index
 ```
 
 应用储藏后，之前暂存的文件没有重新暂存，如果想要重新暂存，带上 --index
 
-```sh
+```shell
 git stash pop
 ```
 
 应用最近的储藏，并将储藏从堆栈上移除
 
-```sh
+```shell
 git stash drop stash@{2}
 ```
 
 应用指定的储藏，并将储藏从堆栈上移除
 
-```sh
+```shell
 git stash --keep-index
 ```
 
 添加 --keep-index 选项，它告诉 Git 不要储藏任何你通过 git add 命令已暂存的东西
 
-```sh
+```shell
 git stash -u
 ```
 
 指定 --include-untracked 或 -u 标记，Git 也会储藏任何创建的未跟踪文件
 
-```sh
+```shell
 git stash --patch
 ```
 
 如果指定了 --patch 标记，Git 不会储藏所有修改过的任何东西，但是会交互式地提示哪些改动想要储藏、哪些改动需要保存在工作目录中
 
-```sh
+```shell
 git stash branch testchanges
 ```
 
@@ -439,25 +439,25 @@ git stash branch testchanges
 
 ## 清理工作目录
 
-```sh
+```shell
 git clean
 ```
 
 从工作目录中移除未被追踪的文件
 
-```sh
+```shell
 git stash --all
 ```
 
 移除每一样东西并存放在栈中
 
-```sh
+```shell
 git clean -f -d
 ```
 
 移除工作目录中所有未追踪的文件以及空的子目录。 -f 意味着 强制 或 “确定移除”
 
-```sh
+```shell
 git clean -d -n
   Would remove test.o
   Would remove tmp/
@@ -465,7 +465,7 @@ git clean -d -n
 
 如果只是想要看看它会做什么，可以使用 -n 选项来运行命令，这意味着 “做一次演习然后告诉你 将要 移除什么”
 
-```sh
+```shell
 git clean -n -d
   Would remove build.TMP
   Would remove tmp/
@@ -488,7 +488,7 @@ git clean -n -d -x
 
 【已修改，未暂存】检查已修改文件与该文件未修改时的差异，即检查`工作区`文件与`本地仓库`文件之间的差异
 
-```sh
+```shell
 # 查看全部
 git diff
 git diff .
@@ -498,7 +498,7 @@ git diff xxx.md
 
 - 【已暂存，未提交】检查已暂存文件与该文件之前已提交时文件的差异，即检查`暂存区`文件与`本地仓库`文件之间的差异
 
-```sh
+```shell
 # 查看全部
 git diff --cached
 git diff --cached .
@@ -508,7 +508,7 @@ git diff --cached xxx.md
 
 - 【已提交，未推送】检查已提交文件与远程仓库里该文件的差异，即检查`本地仓库`文件与`远程仓库`文件之间的差异
 
-```sh
+```shell
 # 查看全部
 git diff master origin/master --cached
 git diff master origin/master --cached .
@@ -522,7 +522,7 @@ git diff master origin/master --cached xxx.md
 
 #### 已修改，未暂存
 
-```sh
+```shell
 # 全部撤销
 git checkout .
 # 单个撤销
@@ -531,21 +531,21 @@ git checkout xxx.md
 
 或者
 
-```sh
+```shell
 # 全部撤销
 git reset --hard
 ```
 
 #### 已暂存，未提交
 
-```sh
+```shell
 git reset
 git checkout .
 ```
 
 或
 
-```sh
+```shell
 git reset --hard
 ```
 
@@ -553,7 +553,7 @@ git reset --hard
 
 `git reset`的使用方法：
 
-```sh
+```shell
 # 全部
 git reset
 git reset .
@@ -565,13 +565,13 @@ git reset xxx.md
 
 #### 已提交，未推送
 
-```sh
+```shell
 git reset --hard origin/master
 ```
 
 #### 已推送
 
-```sh
+```shell
 git reset --hard HEAD^
 git push -f
 ```
@@ -580,7 +580,7 @@ git push -f
 
 假设当前所在提交为`currentCommit`
 
-```sh
+```shell
 git reset --hard
 git reset --hard 某次提交A的hash值
 ```
@@ -590,7 +590,7 @@ git reset --hard 某次提交A的hash值
 - 工作目录改变：当前工作目录里所有已暂存（包括修改后暂存和删除后暂存）文件、已删除（但未暂存）文件、已修改（但未暂存）文件将全部丢失，但是新增（但未暂存）的文件保留下来不会丢失
 - 自提交`A`到提交`currentCommit`里所有的提交都将丢失，工作目录恢复到提交`A`
 
-```sh
+```shell
 git reset --soft
 git reset --soft 某次提交A的hash值
 ```
@@ -600,7 +600,7 @@ git reset --soft 某次提交A的hash值
 - 工作目录不变：原先在暂存区的还在暂存区，在工作区的还在工作区
 - 自提交`A`到提交`currentCommit`里所有的文件修改都放在暂存区（已暂存），不会丢失
 
-```sh
+```shell
 git reset --mixed
 git reset --mixed 某次提交A的hash值
 ```

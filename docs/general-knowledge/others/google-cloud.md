@@ -10,7 +10,7 @@ sidebarDepth: 0
 
 Node 官网已经把 Linux 下载版本更改为已编译好的版本了，我们可以直接下载解压后使用：
 
-```sh
+```shell
 # wget https://nodejs.org/dist/v10.9.0/node-v11.11.0-linux-x64.tar.xz    // 下载
 # tar xf  node-v11.11.0-linux-x64.tar.xz       // 解压
 # cd node-v11.11.0-linux-x64/                  // 进入解压目录
@@ -24,7 +24,7 @@ v10.9.0
 
 修改`/etc/profile`文件，添加下面的配置：
 
-```sh
+```shell
 export NODE_HOME=/home/cxl_windstone/node-v11.11.0-linux-x64/bin
 export PATH=$NODE_HOME:$PATH
 ```
@@ -39,7 +39,7 @@ export PATH=$NODE_HOME:$PATH
 注意，若是配置了`PATH`环境变量，就不需要这一步了。
 :::
 
-```SH
+```shell
 ln -s /home/cxl_windstone/node-v11.11.0-linux-x64/bin/npm /bin/
 ln -s /home/cxl_windstone/node-v11.11.0-linux-x64/bin/npm /bin/
 
@@ -61,7 +61,7 @@ sudo ln -s /home/cxl_windstone/node-v11.11.0-linux-x64/bin/npm /bin/
 
 在本地控制台输入以下命令，来[创建新的 SSH 密钥](https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys#createsshkeys)
 
-```sh
+```shell
 # 格式
 ssh-keygen -t rsa -f ~/.ssh/[KEY_FILENAME] -C [USERNAME]
 
@@ -83,7 +83,7 @@ ssh-keygen -t rsa -f ~/.ssh/google_compute_engine -C cxl_windstone
 
 在本地控制台执行如下命令，来[使用第三方工具进行连接](https://cloud.google.com/compute/docs/instances/connecting-advanced#thirdpartytools)
 
-```sh
+```shell
 # 格式
 ssh -i [PATH_TO_PRIVATE_KEY] [USERNAME]@[EXTERNAL_IP_ADDRESS]
 
@@ -99,7 +99,7 @@ ssh -i ~/.ssh/google_compute_engine cxl_windstone@35.220.249.163
 
 VM 实例所在的[project](https://cloud.google.com/sdk/gcloud/reference/?hl=zh-cn#--project)，即项目 ID。若省略，将使用当前`project`。
 
-```sh
+```shell
 # 列出当前 project
 gcloud config list --format='text(core.project)'
 
@@ -115,7 +115,7 @@ VM 实例所在的区域。执行`scp`命令时，若未指定`--zone`选项，�
 
 你可以如下预先设置`compute/zone`属性，以避免`--zone`选项省略时被提示。
 
-```sh
+```shell
 # 格式
 gcloud config set compute/zone ZONE
 
@@ -125,7 +125,7 @@ gcloud config set compute/zone ZONE
 
 ### 文件传输
 
-```sh
+```shell
 # 格式，
 gcloud compute scp --recurse [INSTANCE_NAME]:[REMOTE_DIR] [LOCAL_DIR]
 gcloud compute scp --recurse [LOCAL_DIR] [INSTANCE_NAME]:[REMOTE_DIR]
@@ -144,7 +144,7 @@ gcloud compute scp --recurse ../koa-nuxt cxl_windstone@nodejs-server-instance:~/
 
 ## 服务器上安装 git
 
-```sh
+```shell
 sudo apt-get install git-core
 ```
 

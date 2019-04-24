@@ -62,7 +62,7 @@ CORS 是一个 W3C 标准，全称是“跨域资源共享”（Cross-origin res
 1. 对于客户端，我们还是正常使用 xhr 对象发送 Ajax 请求。唯一需要注意的是，我们需要设置我们的 xhr 属性 `withCredentials`为`true`，即`xhr.withCredentials = true`，否则 cookie 是带不过去的
 2. 对于服务器端，需要在 response header 中设置如下两个字段，如此便可以跨域请求接口了
 
-```sh
+```shell
 Access-Control-Allow-Origin: http://www.yourhost.com
 Access-Control-Allow-Credentials:true
 ```

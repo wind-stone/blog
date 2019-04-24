@@ -12,12 +12,12 @@ git 默认对文件夹名称/文件名称的大小写是不敏感的，如果仅
 
 配置配置
 
-```sh
+```shell
 core.ignorecase=true
 ```
 
 修改默认配置，使 git 区分大小写
 
-```sh
+```shell
 git config core.ignorecase false
 ```

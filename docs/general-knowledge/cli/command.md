@@ -10,7 +10,7 @@ PS: 以下会列出一些常用的命令及常用的用法，每个命令更加�
 
 ## 查看端口是否被占用
 
-```sh
+```shell
 # 查看 3000 端口是否被占用
 lsof -i :3000
 ```
@@ -21,7 +21,7 @@ Print Working Directory，显示工作目录的路径名称。
 
 ## mkdir：创建目录
 
-```sh
+```shell
 mkdir directory-name
 ```
 
@@ -29,7 +29,7 @@ mkdir directory-name
 
 ## rm：删除文件、目录
 
-```sh
+```shell
 rm -rf director-or-file-name
 ```
 
@@ -51,7 +51,7 @@ rm -rf director-or-file-name
 
 ## cat：查看文件
 
-```sh
+```shell
 cat filename
 ```
 
@@ -59,7 +59,7 @@ cat filename
 
 将源文件复制到目标文件，或将多个源文件复制到目标目录
 
-```sh
+```shell
 cp origin destination
 ```
 
@@ -69,7 +69,7 @@ cp origin destination
 
 ## 仅查看文件
 
-```sh
+```shell
 <!-- 打开文件，输入 -->
 vi filename
 
@@ -79,7 +79,7 @@ vi filename
 
 ## 修改文件
 
-```sh
+```shell
 <!-- 打开文件，输入 -->
 vi filename
 
@@ -96,7 +96,7 @@ shift 键 + Z*2
 
 ## rm 删除文件
 
-```sh
+```shell
 rm filename
 
 <!-- 强制删除文件（无法找回） -->
@@ -111,7 +111,7 @@ Reference: [每天一个linux命令目录](https://www.cnblogs.com/peida/archive
 
 - `-n`: `--line-number`，在显示符合样式的那一行之前，标示出该行的行号。
 
-```sh
+```shell
 # 从 test.txt 文件里查输出含有 linux 的内容行
 grep -n 'linux' test.txt
 # 或

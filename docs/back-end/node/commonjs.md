@@ -87,7 +87,7 @@ for (let i = 0; i < 3; i++) {
 
 在该项目根目录下执行`npm i -g`，全局安装该包。继续执行`npm-bin`命令，则`npm-bin.js`就会执行。
 
-```sh
+```shell
 ➜  npm-bin npm i -g
 /Users/wind-stone/.nvm/versions/node/v11.10.0/bin/npm-bin -> /Users/wind-stone/.nvm/versions/node/v11.10.0/lib/node_modules/npm-bin/bin/npm-bin.js
 + npm-bin@1.0.0
@@ -110,7 +110,7 @@ PS: 系统安装了`nvm`。
 
 在常规项目的`node_modules/.bin`路径下执行`ls -l`命令，可以看到局部安装的`vuepress`和`webpack`等包的符号链接：
 
-```sh
+```shell
 lrwxr-xr-x  1 wind-stone  staff  27 10 30 11:54 vuepress -> ../vuepress/bin/vuepress.js
 lrwxr-xr-x  1 wind-stone  staff  25 10 22 20:15 webpack -> ../webpack/bin/webpack.js
 ```
@@ -118,7 +118,7 @@ lrwxr-xr-x  1 wind-stone  staff  25 10 22 20:15 webpack -> ../webpack/bin/webpac
 ::: warning 警告
 局部安装的包，其命令只能在项目脚本和`package.json`的`scripts`字段里面使用， 如果想在命令行下调用，必须像下面这样。
 
-```sh
+```shell
 # 项目的根目录下执行
 $ node_modules/.bin/vuepress dev
 ```
