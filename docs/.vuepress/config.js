@@ -439,15 +439,17 @@ module.exports = {
           children: [
             'house/',
             'house/tianya-post',
-            'house/zhonghailichunhushu/'
+            'house/beijing/',
+            'house/zhonghailichunhushu/',
+            'house/xishanjinxiufu/'
           ]
         },
         {
           title: '其他',
           collapsable: false,
           children: [
-            'mac-shortcut-keys',
-            'word-pronunciation',
+            // 'mac-shortcut-keys',
+            // 'word-pronunciation',
             'theories',
             'ssr/'
           ]
