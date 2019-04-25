@@ -14,10 +14,8 @@
     "husky": "^1.1.2",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
     "vconsole": "^3.3.0",
-    "vuepress": "^1.0.0-alpha.47"
+    "vuepress": "^0.14.4"
   },
   "dependencies": {
     "fastclick": "^1.0.6"

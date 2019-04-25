@@ -1,7 +1,5 @@
 # 9 视觉格式化模型
 
-[[toc]]
-
 视觉格式化模型，`visual formatting model`。
 
 翻译自 CSS 2.2 官方文档，[Visual formatting model](https://www.w3.org/TR/CSS22/visuren.html)
