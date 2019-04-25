@@ -1496,4 +1496,145 @@ Computed value | as specified
 
 :::
 
-这个示例论证了透明性的概念。（盒子的）背景的默认行为，就是允许其之后的盒子可见。在这个示例里，每一个盒子都透明地覆盖在它后面的盒子之上。这个行为可以通过使用任一已存在的背景属性覆盖。
+这个示例论证了透明性的概念。（盒子的）背景的默认行为，就是允许其之后的盒子可见。在这个示例里，每一个盒子都透明地覆盖在它后面的盒子之上。这个行为可以通过使用背景属性（比如`background-color/image`）覆盖。
+
+## 9.10 文本方向: direction 和 unicode-bidi 属性
+
+不支持双向文本的用户代理可能忽略本章节描述的`direction`和`unicode-bidi`属性。这个例外包括那些简单渲染从右到左的字符的用户代理，因为系统里的字体包含了这些字符，但是不支持从右到左的文本方向的概念。
+
+某些文字里的字符是从右往左书写的。在一些文档里，尤其是使用阿拉伯语（`Arabic`）和希伯来语（`Hebrew`）以及一些混合语言的环境下，单个块里文本可能出现混合的方向性（译者注: 既存在从左往右的文本，也存在从右往左的文本）。这种现象称为双向性`bidirectionality`，简称`bidi`。
+
+Unicode 标准（[UNICODE](https://www.w3.org/TR/CSS22/refs.html#ref-UNICODE)，[UAX9](https://www.w3.org/TR/CSS22/refs.html#ref-UAX9)）定义了复杂的算法来确定文本的正确方向。算法包含了基于字符属性的隐式部分，以及对嵌入和覆盖的显示控制。CSS 2.2 依赖于这个算法来完成正确的双向渲染。`direction`和`unicode-bidi`属性允许创作者指定文档语言的元素和属性如何映射到这个算法上。
+
+支持双向文本的用户代理必须将 Unicode 双向算法应用到每一次（不被强制折断或不受块边界影响的）行内盒子的排序上。在双向算法里，这个次序形成了段落单元。段落的嵌入层级（`embedding level`）是按照包含块的`direction`属性的值来设置的，而不是 Unicode 算法里步骤 P2 和 P3 给出的启发式方法。
+
+因为文本的方向性取决于文档语言的结构和语义，因此在绝大多数情况下，这些属性应该只被文档类型定义（DTD，Document Type Definition）的设计者或者特殊文档的创作者使用。若是默认的样式表指定了这些属性，创作者和用户就不应该指定其他规则来覆盖它们。
+
+[HTML 4](https://www.w3.org/TR/CSS22/refs.html#ref-HTML4)的规范的 8.2 章节定义了 HTML 元素的双向性行为。[简单样式表](https://www.w3.org/TR/CSS22/sample.html#bidi)里的规则可以完成 HTML 4 里确定的双向性行为。HTML 4 规范也包括了更多关于双向性问题的信息。
+
+Name | direction
+--- | ---
+Value | `ltr | rtl | inherit`
+Initial | ltr
+Applies to | all elements, but see prose
+Inherited | yes
+Percentages | N/A
+Media | visual
+Computed value | as specified
+
+该属性指定了块元素里书写方向的基础，以及 Unicode 双向性算法的嵌入和覆盖的方向（详见`unicode-bidi`）。并且，它还指定了这些事情:
+
+- 表格列布局的方向
+- 水平溢出的方向
+- 块元素设置为`text-align: justify`时且其最后一行不完整时文本的位置
+
+该属性的取值及含义如下:
+
+- `ltr`
+  - 方向为，由左到右
+- `rtl`
+  - 方向为，由右向左
+
+由于`direction`属性会影响到行内元素的重新排序，因此`unicode-bidi`属性的值必须为`embed`或`override`。
+
+::: tip 提示
+当为表格列元素指定`direction`属性时，将不会被列里的表格单元元素继承，因为在文档树里，列元素不是表格单元元素的祖先。因此，CSS 不能轻易地控制 HTML 4 里 11.3.2.1 章节里描述的`dir`特性的继承规则。
+:::
+
+Name | unicode-bidi
+--- | ---
+Value | `normal | embed | bidi-override | inherit`
+Initial | normal
+Applies to | all elements, but see prose
+Inherited | no
+Percentages | N/A
+Media | visual
+Computed value | as specified
+
+该属性的取值和含义如下:
+
+- `normal`
+  - 对双向算法，元素不会打开一个额外的嵌入级别。对于行内元素，隐式的重新排序将在元素的边界上起作用。
+- `embed`
+  - 若是行内元素，该值会为双向算法打开一个额外的嵌入级别。这个嵌入级别的方向是由`direction`属性给定的。在元素里，重新排序将隐式完成。这相应地会在元素的开始处添加一个 LRE（U+202A; for 'direction: ltr'）或 RLE（U+202B; for 'direction: rtl'），以及在元素的结尾处添加一个 PDF（U+202C）
+- `bidi-override`
+  - 对于行内元素来说，这将创建一个覆盖（`override`）。对于块容器元素，这将为那些不在另一个块容器元素的行内级后代元素创建一个覆盖。这也就是说，在元素里，重新排序会严格按照`direction`属性按序排列，双向算法的隐式部分将忽略。这相应地会在元素的开始处添加一个 LRO（U+202D; for 'direction: ltr'）或 RLO（U+202E; for 'direction: rtl'），以及在元素的结尾处添加一个 PDF（U+202C）
+
+每一个块容器里的字符的最终顺序就像是，如上述描述的那样添加了双向性控制代码、剥去了标记、且作为结果的字符顺序被传递给一个 Unicode 双向性算法的实现，这个算法为普通文本产生与有样式的文本一样的断行。在这个过程里，`display: inline`的替换元素会被当做中立的字符对待，除非它们的`unicode-bidi`属性的值不为`normal`（在这种情况下，在为元素指定的`diretion`里，它们会被当做加粗字符）。所有其他的原子行内级盒子始终被当做中立的字符看待。
+
+需要注意的是，为了能够在一个统一的方向（要不完全地由左向右，要不完全地由右向左）里流动行内盒子，有可能必须创建更多的行内盒子（包括匿名行内盒子），而且有些行内盒子在流动之前，可能必须分离以及重新排序。
+
+因为 Unicode 算法有 61个嵌入层级的限制，要注意不要使用非`normal`的`unicode-bidi`属性，除非特定的情况。尤其是，值`inherit`的使用要格外注意。但是，通常对于那些意图像块一样显示的元素，将`unicode-bidi`设置为`embed`比起将元素保持在一起，会有更高的优先级，以防被改变为行内显示（请见下方的示例）。
+
+下方的示例展示了包含双向文本的 XML 文档。它说明了一个重要的设计原则: DTD 设计者应该将双向性纳入到语言本体`language proper`（元素和特性）以及与之相随的样式表的考虑中。样式表应该设计为，将双向性与其他样式规则分离开。双向性规则也不应该被其他样式表覆盖，以便保留文档语言或 DTD 的双向性行为。
+
+::: warning 示例
+在这个示例里，小写字母代表固有的由左向右的字符，大写字母代表固有的由右向左的字符:
+
+```html
+<HEBREW>
+  <PAR>HEBREW1 HEBREW2 english3 HEBREW4 HEBREW5</PAR>
+  <PAR>HEBREW6 <EMPH>HEBREW7</EMPH> HEBREW8</PAR>
+</HEBREW>
+<ENGLISH>
+  <PAR>english9 english10 english11 HEBREW12 HEBREW13</PAR>
+  <PAR>english14 english15 english16</PAR>
+  <PAR>english17 <HE-QUO>HEBREW18 english19 HEBREW20</HE-QUO></PAR>
+</ENGLISH>
+```
+
+由于这是 XML，样式表将负责设置书写方向。样式表为:
+
+```css
+/* Rules for bidi */
+HEBREW, HE-QUO  {direction: rtl; unicode-bidi: embed}
+ENGLISH         {direction: ltr; unicode-bidi: embed}
+
+/* Rules for presentation */
+HEBREW, ENGLISH, PAR  {display: block}
+EMPH                  {font-weight: bold}
+```
+
+HEBREW 元素是块级元素，且基础方向是由右向左。ENGLISH 元素也是块级元素，且基础方向是由左向右。PAR 元素也是块级元素，且从它们的父级元素那里继承了基础方向。因此，前两个 PAR 元素是从右上方读起的，最后三个 PAR 元素是从左上方读起的。请注意，HEBREW 和 ENGLISH 是为了明确性而仅仅作为元素的名称而已；而通常情况下，元素名称应该在不参考语言的情况下表达出结构信息。
+
+EMPH 元素是行内级元素，且由于它的`unicode-bidi`的值为初始值`normal`，因此它对文本的顺序没有影响。HE-QUO 元素，创建了一个嵌入层级。
+
+如果行足够长，这些文本的格式化看起来可能是这样:
+
+```txt
+               5WERBEH 4WERBEH english3 2WERBEH 1WERBEH
+
+                                8WERBEH 7WERBEH 6WERBEH
+
+english9 english10 english11 13WERBEH 12WERBEH
+
+english14 english15 english16
+
+english17 20WERBEH english19 18WERBEH
+```
+
+注意，HE-QUO 嵌入导致 HEBREW18 位于 english19 的右边。
+
+若是行必须折断，看起来可能是这样:
+
+```txt
+       2WERBEH 1WERBEH
+  -EH 4WERBEH english3
+                 5WERB
+
+   -EH 7WERBEH 6WERBEH
+                 8WERB
+
+english9 english10 en-
+glish11 12WERBEH
+13WERBEH
+
+english14 english15
+english16
+
+english17 18WERBEH
+20WERBEH english19
+```
+
+因为 HEBREW18 必须在 english19 之前阅读，因此它在`english19`之上的一行里，而不是仅仅从之前的格式化里将长行折断。注意，`english19`的第一个音节可能已经装进上一行，但是在由右向左的环境里，由左向右的单词的断字通常被禁止，以防止必须在一行的中间位置展示连字符。
+:::
