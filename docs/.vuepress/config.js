@@ -23,7 +23,7 @@ module.exports = {
     sidebarDepth: 2,
     nav: [
       { text: 'Vue 源码学习', link: '/vue/source-study/' },
-      { text: 'CSS 2.2 规范', link: '/css-spec/9-visual-formatting-model/' },
+      { text: 'CSS 规范', link: '/css-spec/css2.2/9-visual-formatting-model/' },
       { text: 'Front End', link: '/front-end/' },
       { text: 'Back End', link: '/back-end/'},
       { text: 'General Knowledge', link: '/general-knowledge/'},
@@ -143,7 +143,7 @@ module.exports = {
           title: 'CSS 2.2 规范',
           collapsable: true,
           children: [
-            '9-visual-formatting-model/'
+            'css2.2/9-visual-formatting-model/'
           ]
         },
       ],
