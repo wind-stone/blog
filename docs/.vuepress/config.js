@@ -248,6 +248,7 @@ module.exports = {
             'node/pm2',
             'node/koa/',
             'node/commonjs',
+            'node/package-json',
             'node/third-party-package',
             'node/'
           ]
