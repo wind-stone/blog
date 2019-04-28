@@ -224,6 +224,7 @@ module.exports = {
             'webpack/',
             'webpack/config',
             'webpack/webpack-runtime',
+            'webpack/tapable/',
             'webpack/webpack4-import'
           ]
         },
