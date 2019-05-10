@@ -247,4 +247,5 @@ location / {
 
 ## Reference
 
+- [8分钟带你深入浅出搞懂Nginx](https://zhuanlan.zhihu.com/p/34943332)
 - [Nginx 基本配置详解](https://juejin.im/post/5aa7704c6fb9a028bb18a993)

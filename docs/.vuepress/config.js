@@ -283,7 +283,8 @@ module.exports = {
           children: [
             'nginx/',
             'nginx/nginx-conf',
-            'nginx/ngx_http_proxy_module'
+            'nginx/ngx_http_proxy_module',
+            'nginx/ngx_http_upstream_module'
           ]
         },
         {
