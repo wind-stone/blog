@@ -281,7 +281,9 @@ module.exports = {
           title: 'Nginx',
           collapsable: true,
           children: [
-            'nginx/'
+            'nginx/',
+            'nginx/nginx-conf',
+            'nginx/ngx_http_proxy_module'
           ]
         },
         {
