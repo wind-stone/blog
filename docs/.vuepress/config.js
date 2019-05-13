@@ -459,13 +459,20 @@ module.exports = {
           ]
         },
         {
+          title: '户外',
+          collapsable: false,
+          children: [
+            'outdoor/',
+          ]
+        },
+        {
           title: '其他',
           collapsable: false,
           children: [
             // 'mac-shortcut-keys',
             // 'word-pronunciation',
-            'theories',
-            'ssr/'
+            'others/theories',
+            'others/ssr/'
           ]
         }
       ]
