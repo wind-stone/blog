@@ -155,14 +155,38 @@ sidebarDepth: 0
 - `opacity`作用于元素，以及元素内的所有内容的透明度
 - `rgba()`只作用于元素的颜色或其背景色，子元素不会继承透明效果
 
-### display: none 与 visibility: hidden
+### display: none 与 visibility: hidden 与 opacity: 0
 
 - `display: none`
-  - 元素不会影响布局，不会生成`box`，即不会出现在`formatting structure`里
-  - 后代元素上设置`display`不为`none`，无法覆盖这种行为
+  - DOM 结构
+    - 不会生成`box`，即不会出现在`formatting structure`里（可以理解为不会出现在`DOM Tree`里）
+    - 不会占据空间，即不会影响布局
+  - 事件监听
+    - 无法进行 DOM 事件监听
+  - 继承
+    - 不会被子元素继承，且后代元素上设置`display`不为`none`，无法覆盖这种行为
+  - 性能
+    - 切换该属性值，会导致`reflow`
 - `visibility: hidden`
-  - 元素会生成`box`，但是不可见（全透明，不会绘制任何东西），会影响布局
-  - 后代元素可通过设置`visibility: visible`使得后代元素可见
+  - DOM 结构
+    - 元素会生成`box`，会出现在`formatting structure`里，但是不可见（全透明，不会绘制任何东西）
+    - 会占据空间，会影响布局
+  - 事件监听
+    - 无法进行 DOM 事件监听
+  - 继承
+    - 会被子元素继承，且后代元素可通过设置`visibility: visible`使得后代元素可见
+  - 性能
+    - 切换该属性值，会导致`repaint`
+- `opacity: 0`
+  - DOM 结构
+    - 元素会生成`box`，会出现在`formatting structure`里
+    - 会占据空间，会影响布局
+  - 事件监听
+    - 可以进行 DOM 事件监听
+  - 继承
+    - 不会被子元素继承，且后代元素设置`opacity`大于`0`，无法覆盖这种行为
+  - 性能
+    - 切换该属性值，会导致`repaint`
 
 ## z-index
 
