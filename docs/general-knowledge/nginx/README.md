@@ -6,6 +6,84 @@ sidebarDepth: 0
 
 [[toc]]
 
+## 基本操作
+
+### MAC 下安装 nginx
+
+```shell
+# 请先确保安装了 homebrew
+
+# 检查 nginx 是否已经安装
+brew search nginx
+
+# 安装 nginx
+brew install nginx
+```
+
+`nginx`的安装目录为`/usr/local/etc/nginx/`，`nginx.conf`文件就在该目录下。
+
+`nginx`主页的文件在`/usr/local/var/www`目录下。
+
+### nginx 基本命令
+
+```shell
+➜ nginx -h
+nginx version: nginx/1.15.2
+Usage: nginx [-?hvVtTq] [-s signal] [-c filename] [-p prefix] [-g directives]
+
+Options:
+  -?,-h         : this help
+  -v            : show version and exit
+  -V            : show version and configure options then exit
+  -t            : test configuration and exit
+  -T            : test configuration, dump it and exit
+  -q            : suppress non-error messages during configuration testing
+  -s signal     : send signal to a master process: stop, quit, reopen, reload
+  -p prefix     : set prefix path (default: /usr/local/Cellar/nginx/1.15.2/)
+  -c filename   : set configuration file (default: /usr/local/etc/nginx/nginx.conf)
+  -g directives : set global directives out of configuration file
+```
+
+常用的命令有:
+
+```shell
+# 启动 nginx
+nginx
+
+# 停止 nginx
+nginx -s stop
+
+# 重启 nginx
+nginx -s reload
+
+# 重新打开 nginx
+nginx -s reopen
+
+# 设置配置文件，默认为 /usr/local/etc/nginx/nginx.conf
+nginx -c filename
+```
+
+## 模块
+
+### core functionality
+
+#### include
+
+::: tip include 使用
+Syntax: `include file | mask;`
+
+Default: —
+
+Context: any
+:::
+
+将另一个文件或匹配特定`mask`的文件包含到配置里。被包含的文件应该由语法正确的指令和块组成。示例:
+
+```conf
+include mime.types;
+include vhosts/*.conf;
+```
+
 ## 健康检查
 
 Nginx 主要有两种主流的健康检查模式：被动检查模式、主动检查模式。
@@ -18,7 +96,7 @@ Nginx 在代理请求过程中会自动地监测每个后端服务器对请求�
 
 被动检查模式是 Nginx 内置的功能，可以直接通过参数设置来开启。
 
-```
+```conf
 upstream backend {
     server backend1.example.com;
     server backend2.example.com max_fails=3 fail_timeout=30s;
