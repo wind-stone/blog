@@ -24,11 +24,16 @@ sidebarDepth: 0
 
 ## 深入理解 CSS：字体度量、line-height 和 vertical-align
 
-[深入理解 CSS：字体度量、line-height 和 vertical-align](/front-end/css/layouts/font/css-font-metrics-line-height-and-vertical-align.html)
-
-## Reference
+请详细阅读本文[深入理解 CSS：字体度量、line-height 和 vertical-align](/front-end/css/layouts/font/css-font-metrics-line-height-and-vertical-align.html)
 
 - [字型排版中的名詞解釋](http://otischou.tw/notes/2015/11/28/basic-of-typography.html)
-- [
-只知道baseline是远远不够的——字体资料1](https://csbabel.wordpress.com/2010/01/05/baseline-is-only-the-beginning/)
+- [只知道baseline是远远不够的——字体资料1](https://csbabel.wordpress.com/2010/01/05/baseline-is-only-the-beginning/)
 - [深入理解 CSS：字体度量、line-height 和 vertical-align](https://zhuanlan.zhihu.com/p/25808995)
+
+## 深入理解 font-weight
+
+参考文章[深入了解font-weight](https://aotu.io/notes/2016/11/08/css3fontweight/index.html)，其解释了：
+
+- 为什么 UI 在设计时，字重最好只选用`bold`、`regular`（`normal`）？
+- 字体的字重不存在时，如何匹配别的字重？
+- 字体合成[font-synthesis](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis)属性
