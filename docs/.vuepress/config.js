@@ -174,6 +174,7 @@ module.exports = {
             'css/layouts/',
             'css/layouts/ifc/',
             'css/layouts/font/',
+            'css/ui/',
             'css/flex-image/',
             'css/text-wrap-and-ellipsis/'
           ]
