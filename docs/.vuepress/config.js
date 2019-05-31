@@ -25,9 +25,9 @@ module.exports = {
       { text: 'Vue 源码学习', link: '/vue/source-study/' },
       { text: 'CSS 规范', link: '/css-spec/css2.2/9-visual-formatting-model/' },
       { text: 'Front End', link: '/front-end/' },
+      { text: '移动端', link: '/mobile/feature/' },
       { text: 'Back End', link: '/back-end/'},
       { text: 'General Knowledge', link: '/general-knowledge/'},
-      { text: '移动端', link: '/mobile/feature/' },
       { text: 'ES6+', link: '/es6/' },
       { text: '代码片段', link: '/code-snippet/' },
       { text: '算法', link: '/algorithm/sorting-algorithm/' },
@@ -242,6 +242,59 @@ module.exports = {
         },
       ],
 
+      // 移动端
+      '/mobile/': [
+        {
+          title: '移动端 - 独有特性',
+          collapsable: false,
+          children: [
+            'feature/'
+          ]
+        },
+        {
+          title: '移动端 - Hybrid',
+          collapsable: false,
+          children: [
+            'hybrid/h52app',
+            'hybrid/jsbridge'
+          ]
+        },
+        {
+          title: '移动端 - 通用兼容性',
+          collapsable: false,
+          children: [
+            'compatibility/general/',
+            'compatibility/general/input-delay/',
+            'compatibility/general/media',
+            'compatibility/general/video'
+          ]
+        },
+        {
+          title: '移动端 - JS 兼容性',
+          collapsable: false,
+          children: [
+            'compatibility/js/',
+          ]
+        },
+        {
+          title: '移动端 - CSS 兼容性',
+          collapsable: false,
+          children: [
+            'compatibility/css/',
+            'compatibility/css/ios',
+            'compatibility/css/ie',
+            'compatibility/css/android-small-fontsize'
+          ]
+        },
+        {
+          title: '用户体验',
+          collapsable: false,
+          children: [
+            'user-experience/',
+          ]
+        }
+      ],
+
       // Back End
       '/back-end/': [
         {
@@ -308,58 +361,6 @@ module.exports = {
           children: [
             'others/glob',
             'others/google-cloud'
-          ]
-        }
-      ],
-
-      // 移动端
-      '/mobile/': [
-        {
-          title: '移动端 - 独有特性',
-          collapsable: false,
-          children: [
-            'feature/'
-          ]
-        },
-        {
-          title: '移动端 - Hybrid',
-          collapsable: false,
-          children: [
-            'hybrid/h52app',
-            'hybrid/jsbridge'
-          ]
-        },
-        {
-          title: '移动端 - 通用兼容性',
-          collapsable: false,
-          children: [
-            'compatibility/general/',
-            'compatibility/general/input-delay/',
-            'compatibility/general/media',
-            'compatibility/general/video'
-          ]
-        },
-        {
-          title: '移动端 - JS 兼容性',
-          collapsable: false,
-          children: [
-            'compatibility/js/',
-          ]
-        },
-        {
-          title: '移动端 - CSS 兼容性',
-          collapsable: false,
-          children: [
-            'compatibility/css/',
-            'compatibility/css/ie',
-            'compatibility/css/android-small-fontsize'
-          ]
-        },
-        {
-          title: '用户体验',
-          collapsable: false,
-          children: [
-            'user-experience/',
           ]
         }
       ],
