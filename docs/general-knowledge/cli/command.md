@@ -63,7 +63,19 @@ cat filename
 cp origin destination
 ```
 
-## mv 移动文件
+## mv 移动、重命名文件
+
+`mv`是`move`的缩写，可以用来移动（`move`）文件或重命名（`rename`）文件。
+
+```shell
+# 将文件 test.log 重命名为 test1.txt
+mv test.log test1.txt
+
+# 将 test1.txt 文件移到目录 test3 中
+mv test1.txt test3
+```
+
+详情请见: [每天一个linux命令（7）：mv命令](https://www.cnblogs.com/peida/archive/2012/10/27/2743022.html)
 
 ## vi
 
