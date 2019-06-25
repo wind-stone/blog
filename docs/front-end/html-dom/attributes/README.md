@@ -32,3 +32,12 @@ sidebarDepth: 0
 ## 超链接 rel = noopener
 
 超链接里打开外部网站时，要在超链接上添加`res="noopener"`，详见[网站使用 rel="noopener" 打开外部锚](https://developers.google.com/web/tools/lighthouse/audits/noopener?hl=zh-cn)
+
+## 首字母自动大写 autocapitalize
+
+- none等同于off。
+- autocapitalize="words"：每个单词的开头字母会自动大写。
+- autocapitalize="characters"：每个字母都会大写。
+- autocapitalize="sentences"：每句开头字母会自动大写。
+
+Reference: [为移动而生的 HTML 属性 #3](https://github.com/yisibl/blog/issues/3)

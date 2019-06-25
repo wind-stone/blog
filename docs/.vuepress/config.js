@@ -24,8 +24,16 @@ module.exports = {
     nav: [
       { text: 'Vue 源码学习', link: '/vue/source-study/' },
       { text: 'CSS 规范', link: '/css-spec/css2.2/9-visual-formatting-model/' },
-      { text: 'Front End', link: '/front-end/' },
-      { text: '移动端', link: '/mobile/feature/' },
+      {
+        text: 'Front End',
+        items: [
+          { text: 'JavaScript', link: '/front-end/js/' },
+          { text: 'CSS', link: '/front-end/css/' },
+          { text: 'HTML-DOM', link: '/front-end/html-dom/' },
+          { text: '浏览器环境', link: '/front-end/browser-env/' },
+          { text: '工具', link: '/front-end/tools/eslint' }
+        ]
+      },
       { text: 'Back End', link: '/back-end/'},
       { text: 'General Knowledge', link: '/general-knowledge/'},
       { text: 'ES6+', link: '/es6/' },
@@ -149,74 +157,140 @@ module.exports = {
         },
       ],
 
-      // 前端知识点
-      '/front-end/': [
+      // Front End - JavaScript
+      '/front-end/js/': [
         {
           title: 'JavaScript',
           collapsable: true,
           children: [
-            'js/',
-            'js/data-structure/',
-            'js/event-loop',
-            'js/prototype',
-            'js/this',
-            'js/functional-programming',
-            'js/performance'
+            '',
+            'data-structure/',
+            'event-loop',
+            'prototype',
+            'this',
+            'functional-programming',
+            'performance'
           ]
         },
+        {
+          title: '兼容性',
+          collapsable: true,
+          children: [
+            'compatibility/'
+          ]
+        }
+      ],
+
+      // Front End - CSS
+      '/front-end/css/': [
         {
           title: 'CSS',
           collapsable: true,
           children: [
-            'css/',
-            'css/selectors/',
-            'css/properties/',
-            'css/layouts/',
-            'css/layouts/ifc/',
-            'css/layouts/font/',
-            'css/ui/',
-            'css/flex-image/',
-            'css/text-wrap-and-ellipsis/'
+            '',
+            'selectors/',
+            'properties/',
+            'layouts/',
+            'layouts/ifc/',
+            'layouts/font/',
+            'ui/',
+            'text-wrap-and-ellipsis/'
           ]
         },
+        {
+          title: '视口',
+          collapsable: true,
+          children: [
+            'viewport/a-tale-of-viewports-one',
+            'viewport/a-tale-of-viewports-two'
+          ]
+        },
+        {
+          title: '特性',
+          collapsable: true,
+          children: [
+            'feature/',
+            'feature/flex-image/',
+          ]
+        },
+        {
+          title: '兼容性',
+          collapsable: true,
+          children: [
+            'compatibility/',
+            'compatibility/ios',
+            'compatibility/ie',
+            'compatibility/android-small-fontsize'
+          ]
+        }
+      ],
+
+      // Front End - HMLT-DOM
+      '/front-end/html-dom/': [
         {
           title: 'HMLT-DOM',
           collapsable: true,
           children: [
-            'html-dom/',
-            'html-dom/elements/',
-            'html-dom/attributes/',
-            'html-dom/properties/',
-            'html-dom/image/'
+            '',
+            'elements/',
+            'attributes/',
+            'properties/',
+            'image/'
           ]
         },
+        {
+          title: '兼容性',
+          collapsable: true,
+          children: [
+            'compatibility/video',
+            'compatibility/media',
+            'compatibility/input-delay/'
+          ]
+        }
+      ],
+
+      // Front End - 浏览器环境
+      '/front-end/browser-env/': [
         {
           title: '浏览器环境',
           collapsable: true,
           children: [
-            'browser-env/',
-            'browser-env/https/',
-            'browser-env/process-thread',
-            'browser-env/console/',
-            'browser-env/debug/',
-            'browser-env/error-handler',
-            'browser-env/log',
-            'browser-env/memory',
-            'browser-env/cross-domain',
-            'browser-env/security',
-            'browser-env/file-system',
-            'browser-env/file-download/',
-            'browser-env/pwa',
-            'browser-env/web-components',
-            'browser-env/image-lazy-load'
+            '',
+            'https/',
+            'process-thread',
+            'console/',
+            'debug/',
+            'error-handler',
+            'log',
+            'memory',
+            'cross-domain',
+            'security',
+            'file-system',
+            'file-download/',
+            'pwa',
+            'web-components',
+            'image-lazy-load',
+            'keyboard'
           ]
         },
+        {
+          title: 'Hybrid',
+          collapsable: false,
+          children: [
+            'hybrid/h52app',
+            'hybrid/jsbridge'
+          ]
+        }
+      ],
+
+      // Front End - 工具
+      '/front-end/tools/': [
         {
           title: '工具',
           collapsable: true,
           children: [
-            'tools/eslint',
-            'tools/rollup'
+            'eslint',
+            'rollup'
           ]
         },
         {
@@ -229,68 +303,19 @@ module.exports = {
             'webpack/tapable/',
             'webpack/webpack4-import'
           ]
-        },
+        }
+      ],
+
+      // Front End - 专题
+      '/front-end/topics/': [
         {
-          title: '专题 - 滚动',
+          title: '滚动',
           collapsable: true,
           children: [
             'scroll/',
             'scroll/touch-event',
             'scroll/click-delay',
             'scroll/fastclick'
-          ]
-        },
-      ],
-
-      // 移动端
-      '/mobile/': [
-        {
-          title: '移动端 - 独有特性',
-          collapsable: false,
-          children: [
-            'feature/'
-          ]
-        },
-        {
-          title: '移动端 - Hybrid',
-          collapsable: false,
-          children: [
-            'hybrid/h52app',
-            'hybrid/jsbridge'
-          ]
-        },
-        {
-          title: '移动端 - 通用兼容性',
-          collapsable: false,
-          children: [
-            'compatibility/general/',
-            'compatibility/general/input-delay/',
-            'compatibility/general/media',
-            'compatibility/general/video'
-          ]
-        },
-        {
-          title: '移动端 - JS 兼容性',
-          collapsable: false,
-          children: [
-            'compatibility/js/',
-          ]
-        },
-        {
-          title: '移动端 - CSS 兼容性',
-          collapsable: false,
-          children: [
-            'compatibility/css/',
-            'compatibility/css/ios',
-            'compatibility/css/ie',
-            'compatibility/css/android-small-fontsize'
-          ]
-        },
-        {
-          title: '用户体验',
-          collapsable: false,
-          children: [
-            'user-experience/',
           ]
         }
       ],

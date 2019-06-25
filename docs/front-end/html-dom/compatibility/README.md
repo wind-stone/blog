@@ -1,16 +1,8 @@
----
-sidebarDepth: 0
----
-
 # 总览
 
-[[toc]]
+## 文档滚动距离
 
-## DOM 相关
-
-### 文档滚动距离
-
-#### 标准模式
+### 标准模式
 
 以垂直方向为例：
 
@@ -21,7 +13,7 @@ pageYOffset | undefined | 正确 | 正确 | 正确 | 正确 | 正确
 body.scrollTop | 0 | 0 | 0 | 0 | 正确 | 正确
 documentElement.scrollTop | 正确 | 正确 | 正确 | 正确 | 0 | 0
 
-#### quirk 模式
+### quirk 模式
 
 以垂直方向为例：
 
@@ -34,7 +26,7 @@ documentElement.scrollTop | 0 | 正确 | 0 | 0 | 0 | 0
 
 Reference：[http://blog.sina.com.cn/s/blog_8ff228d50101n4y7.html](http://blog.sina.com.cn/s/blog_8ff228d50101n4y7.html)
 
-#### 兼容性写法
+### 兼容性写法
 
 ```js
 // Reference: JavaScript 权威指南（第 6 版）--P390
@@ -63,7 +55,7 @@ function getScrollOffset(win = window) {
 }
 ```
 
-### 视口尺寸
+## 视口尺寸
 
 ```js
 // Reference: JavaScript 权威指南（第 6 版）--P391
@@ -91,9 +83,9 @@ function getViewportSize(win = window) {
 }
 ```
 
-### 元素相对于文档的位置
+## 元素相对于文档的位置
 
-#### getBoundingClientRect
+### getBoundingClientRect
 
 ```js
 // Reference: JavaScript 权威指南（第 6 版）--P392
@@ -107,7 +99,7 @@ function getElementPosition(el) {
 }
 ```
 
-#### 向上递归 offsetTop/offsetLeft
+### 向上递归 offsetTop/offsetLeft
 
 ```js
 // Reference: JavaScript 权威指南（第 6 版）--P394

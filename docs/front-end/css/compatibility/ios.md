@@ -34,3 +34,11 @@ input {
 添加`padding`或`margin`，即可解决。
 
 此外，经测试，在 iOS 和部分 Android 浏览器上，若是不添加固定的`height`，输入内容前后`input`会有细微的高度变化，因此最好加上`height`。
+
+## iOS Safari 上 :active 不生效
+
+iOS Safari 里，需要在按钮元素或`body`/`html`上绑定一个`touchstart`事件，才能激活`:active`状态。
+
+```js
+document.body.addEventListener('touchstart', function () {});
+```
