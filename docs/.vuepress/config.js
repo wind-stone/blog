@@ -228,13 +228,39 @@ module.exports = {
       // Front End - HMLT-DOM
       '/front-end/html-dom/': [
         {
-          title: 'HMLT-DOM',
+          title: '未分类',
           collapsable: true,
           children: [
-            '',
+            'general/',
+            'general/differences-between-properties-and-attributes'
+          ]
+        },
+        {
+          title: '元素',
+          collapsable: true,
+          children: [
             'elements/',
-            'attributes/',
-            'properties/',
+            'elements/meta'
+          ]
+        },
+        {
+          title: '特性',
+          collapsable: true,
+          children: [
+            'attributes/'
+          ]
+        },
+        {
+          title: '属性',
+          collapsable: true,
+          children: [
+            'properties/'
+          ]
+        },
+        {
+          title: '图片',
+          collapsable: true,
+          children: [
             'image/'
           ]
         },
