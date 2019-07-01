@@ -1,3 +1,7 @@
+---
+sidebarDepth: 0
+---
+
 # propertie 和 attribute 的区别
 
 当写 HTML 源代码时，你可以在 HTML 元素上定义特性`attribute`。一旦浏览器解析了你的代码，将产生一个对应的 DOM 节点。这个节点是个对象，因而它具有属性`property`。

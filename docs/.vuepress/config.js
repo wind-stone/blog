@@ -23,7 +23,7 @@ module.exports = {
     sidebarDepth: 2,
     nav: [
       { text: 'Vue 源码学习', link: '/vue/source-study/' },
-      { text: 'CSS 规范', link: '/css-spec/css2.2/9-visual-formatting-model/' },
+      { text: 'CSS 规范-翻译', link: '/css-spec/css2.2/9-visual-formatting-model/' },
       {
         text: 'Front End',
         items: [
@@ -184,7 +184,7 @@ module.exports = {
       // Front End - CSS
       '/front-end/css/': [
         {
-          title: '专题',
+          title: 'CSS 专题',
           collapsable: true,
           children: [
             'topics/flex-image/',
@@ -260,11 +260,11 @@ module.exports = {
       // Front End - HMLT-DOM
       '/front-end/html-dom/': [
         {
-          title: '未分类',
+          title: 'HTML 专题',
           collapsable: true,
           children: [
-            'general/',
-            'general/differences-between-properties-and-attributes'
+            'topics/preload-and-prefetch',
+            'topics/differences-between-properties-and-attributes'
           ]
         },
         {

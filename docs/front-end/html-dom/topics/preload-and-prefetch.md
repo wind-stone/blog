@@ -2,11 +2,7 @@
 sidebarDepth: 0
 ---
 
-# 未分类
-
-[[toc]]
-
-## preload、prefetch
+# preload、prefetch
 
 - `preload`
   - 高优先级
