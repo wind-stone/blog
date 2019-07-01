@@ -1,14 +1,12 @@
 ---
-sidebarDepth: 0
+sidebarDepth: 1
 ---
 
-# 总览
+# 问答篇
 
 [[toc]]
 
-## 问答篇
-
-### CSS 中可以通过哪些属性定义，使得一个DOM元素不显示在浏览器可视范围内？
+## CSS 中可以通过哪些属性定义，使得一个DOM元素不显示在浏览器可视范围内？
 
 - 设置`display: none`
 - 设置`visibility: hidden`
@@ -19,9 +17,9 @@ sidebarDepth: 0
 - 若是文本元素，设置`text-indent: -9999px`
 - ...
 
-### 如何实现自适应的正方形？
+## 如何实现自适应的正方形？
 
-#### 解决思路一：`padding-top/bottom`百分比取值
+### 解决思路一：`padding-top/bottom`百分比取值
 
 `padding-top/bottom`取值为百分比时，是相对父元素的宽度进行计算的，因此可以这样：
 
@@ -52,7 +50,7 @@ sidebarDepth: 0
 
 但是，在`.placeholder`元素里添加内容，依然会增加`height`，可以将内容单独放在其他标签内，并绝对定位
 
-#### 解决思路二：CSS3 vw 单位
+### 解决思路二：CSS3 vw 单位
 
 CSS3 中新增了一组相对于可视区域百分比的长度单位`vw`, `vh`, `vmin`, `vmax`。其中`vw`是相对于视口宽度百分比的单位，1`vw` = 1% viewport width，`vh`是相对于视口高度百分比的单位，1`vh` = 1% viewport height；`vmin`是相对当前视口宽高中`较小`的一个的百分比单位，同理`vmax`是相对当前视口宽高中`较大`的一个的百分比单位。
 

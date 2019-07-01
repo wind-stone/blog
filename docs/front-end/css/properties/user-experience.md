@@ -1,4 +1,8 @@
-# 特性集合
+---
+sidebarDepth: 1
+---
+
+# 用户体验相关属性
 
 ## pointer-events: none
 

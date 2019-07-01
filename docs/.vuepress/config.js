@@ -184,17 +184,34 @@ module.exports = {
       // Front End - CSS
       '/front-end/css/': [
         {
-          title: 'CSS',
+          title: '专题',
           collapsable: true,
           children: [
-            '',
-            'selectors/',
+            'topics/flex-image/',
+            'topics/text-wrap-and-ellipsis/'
+          ]
+        },
+        {
+          title: '选择器',
+          collapsable: true,
+          children: [
+            'selectors/'
+          ]
+        },
+        {
+          title: '属性',
+          collapsable: true,
+          children: [
             'properties/',
-            'layouts/',
-            'layouts/ifc/',
-            'layouts/font/',
-            'ui/',
-            'text-wrap-and-ellipsis/'
+            'properties/properties-order',
+            'properties/user-experience'
+          ]
+        },
+        {
+          title: '屏幕',
+          collapsable: true,
+          children: [
+            'screen/'
           ]
         },
         {
@@ -206,11 +223,19 @@ module.exports = {
           ]
         },
         {
-          title: '特性',
+          title: '布局',
           collapsable: true,
           children: [
-            'feature/',
-            'feature/flex-image/',
+            'layouts/',
+            'layouts/ifc/'
+          ]
+        },
+        {
+          title: '字体',
+          collapsable: true,
+          children: [
+            'font/',
+            'font/css-font-metrics-line-height-and-vertical-align'
           ]
         },
         {
@@ -221,6 +246,13 @@ module.exports = {
             'compatibility/ios',
             'compatibility/ie',
             'compatibility/android-small-fontsize'
+          ]
+        },
+        {
+          title: '实践',
+          collapsable: true,
+          children: [
+            'practices/'
           ]
         }
       ],
