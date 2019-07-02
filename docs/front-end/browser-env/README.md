@@ -73,58 +73,6 @@ console.log(searchParams.get('name')); // jawil
 
 详情请见[利用 URLSearchParams 对象获取URL之中的查询字符串，即问号之后的部分 #31](https://github.com/justjavac/the-front-end-knowledge-you-may-not-know/issues/31#issuecomment-422712267)
 
-## preload/prefetch
-
-### preload
-
- `<link>`元素的`rel`属性的属性值`preload`能够让你在你的HTML页面中`<head>`元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即刻需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。
-
-```html
-<head>
-  <meta charset="utf-8">
-  <title>JS and CSS preload example</title>
-  <link rel="preload" href="style.css" as="style">
-  <link rel="preload" href="hello-world.png" as="script">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<!-- ... -->
-</body>
-```
-
-通俗的解释：
-
-- 假设在如下的 HTML 文件里，`style.css`有张背景图片`hello-world.png`
-- 无`preload`时，数据请求的顺序为：HTML -> `style.css` -> `hello-world.png`
-- 有针对`hello-world.png`的`preload`时，数据请求的顺序为：HTML -> `style.css`、`hello-world.png`
-
-Reference: [通过rel="preload"进行内容预加载](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Preloading_content)
-
-### prefetch
-
-链接预取是一种浏览器机制，其利用浏览器空闲时间来下载或预取用户在不久的将来可能访问的文档。网页向浏览器提供一组预取提示，并在浏览器完成当前页面的加载后开始静默地拉取指定的文档并将其存储在缓存中。当用户访问其中一个预取文档时，便可以快速的从浏览器缓存中得到。
-
-Reference: [Link prefetching FAQ](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Link_prefetching_FAQ)
-
-## mouseover/mouseout 与 mouseenter/mouseleave 的区别
-
-- `mouseover`/`mouseout`
-  - 指针移动到/离开元素或离开元素的后代（即使指针仍在元素内）会触发。
-  - 当指针从它的子元素上移动到它上时会触发。
-  - 事件被发送到 DOM 树的最深层元素，然后它将层次结构向上冒泡，直到它被处理程序取消或到达根目录。
-- `mouseenter`/`mouseleave`
-  - 指针移动到/离开元素及其所有后代时触发。
-  - 不会冒泡，即当指针从它的子元素上移动到它上时不会触发。
-  - 会向层次结构的每个元素发送一个`mouseenter`/`mouseleave`事件，无论各层级元素的事件处理程序是否取消。
-
-## 图片的性能优化
-
-- 图片懒加载：在页面上的未可视区域可以添加一个滚动事件，判断图片位置与浏览器顶端的距离与页面的距离，如果前者小于后者，优先加载
-- 图片预加载：幻灯片、相册等可以使用技术，将当前展示图片的前一张和后一张优先下载
-- CSS Sprite，SVG Sprite，Iconfont，Base64
-- 如果图片过大，可以使用特殊编码的图片，加载时会先加载一张压缩的特别厉害的缩略图，以提高用户体验
-- 如果图片展示区域小于图片的真实大小，则因在服务器端根据业务需要先行进行图片压缩，图片压缩后大小与展示一致
-
 ## JS Base64 编码/解码
 
 ### Base64 编码

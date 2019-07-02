@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# 文件下载
+# a 标签 - 文件下载
 
 ## 实现方式
 
@@ -48,4 +48,4 @@ Reference: [`<a>`标签中download属性无法使用重命名下载文件名怎�
 
 ### vue 组件
 
-<!-- <<< @/docs/knowledge/browser-env/file-download/download-link.vue -->
+<<< @/docs/front-end/html-dom/elements/file-download/download-link.vue

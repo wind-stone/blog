@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# 浏览器多进程和 JS 单线程
+# 多进程和 JS 单线程
 
 [[toc]]
 

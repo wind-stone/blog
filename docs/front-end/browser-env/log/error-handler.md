@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# 错误处理
+# JS 错误处理
 
 [[toc]]
 

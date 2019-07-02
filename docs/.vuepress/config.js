@@ -272,7 +272,8 @@ module.exports = {
           collapsable: true,
           children: [
             'elements/',
-            'elements/meta'
+            'elements/meta',
+            'elements/file-download/'
           ]
         },
         {
@@ -293,7 +294,15 @@ module.exports = {
           title: '图片',
           collapsable: true,
           children: [
-            'image/'
+            'image/',
+            'image/image-lazy-load'
+          ]
+        },
+        {
+          title: 'DOM 事件',
+          collapsable: true,
+          children: [
+            'events/'
           ]
         },
         {
@@ -310,30 +319,58 @@ module.exports = {
       // Front End - 浏览器环境
       '/front-end/browser-env/': [
         {
+          title: '浏览器',
+          collapsable: true,
+          children: [
+            'browser/process-thread'
+          ]
+        },
+        {
           title: '浏览器环境',
           collapsable: true,
           children: [
             '',
-            'https/',
-            'process-thread',
-            'console/',
-            'debug/',
-            'error-handler',
-            'log',
             'memory',
-            'cross-domain',
-            'security',
             'file-system',
-            'file-download/',
             'pwa',
-            'web-components',
-            'image-lazy-load',
-            'keyboard'
+            'web-components'
+          ]
+        },
+        {
+          title: '日志 & 错误处理 & 调试',
+          collapsable: true,
+          children: [
+            'log/error-handler',
+            'log/image-log',
+            'log/console/',
+            'log/debug/'
+          ]
+        },
+        {
+          title: '网络',
+          collapsable: true,
+          children: [
+            'network/https/'
+          ]
+        },
+        {
+          title: '安全',
+          collapsable: true,
+          children: [
+            'security/',
+            'security/cross-domain'
+          ]
+        },
+        {
+          title: '键盘',
+          collapsable: true,
+          children: [
+            'keyboard/'
           ]
         },
         {
           title: 'Hybrid',
-          collapsable: false,
+          collapsable: true,
           children: [
             'hybrid/h52app',
             'hybrid/jsbridge'
