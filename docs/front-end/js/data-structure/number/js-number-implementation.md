@@ -180,6 +180,17 @@ Math.pow(2, 53) + 10 | 9007199254741002 | `exponent`: 52 + 1023，`mantissa`: 00
 
 ### 小数
 
+#### Number.EPSILON
+
+ES6 在`Number`对象上面，新增一个极小的常量`Number.EPSILON`。根据规格，它表示 1 与大于 1 的最小浮点数之间的差。
+
+1 的二进制科学计算法表示为：1.00...00 * 2<sup>0</sup>，其中`mantissa`为 52 个 0
+比 1 大的最小浮点数为：1.00...01 * 2<sup>0</sup>，其中`mantissa`为 51 个 0 和 1 个 1。
+
+因此，`Number.EPSILON` = (1 + 2<sup>-52</sup>) - 1 = 2<sup>-52</sup>
+
+即 IEEE 754 双精度浮点数在转为十进制时，最小精度为 2<sup>-52</sup>，即 2.220446049250313e-16，这也就意味着，(1 + 2<sup>-52</sup>, 1 +  2 * 2<sup>-52</sup> )之间的十进制数，对应的是同一个双精度浮点数。
+
 #### 小数误差
 
 我们先以 0.1 为例，解析浮点误差的原因。0.1 转换为二进制表示为 0.0001100110011001100（1100 循环），表示为二进制的科学计数法为，1.100110011001100 * 2<sup>-4</sup>，所以`exponent`为`-4 + 1023 = 1019`；`mantissa`舍去小数点左边的 1，得到 100110011001100（1100 循环），且`mantissa`的第 53 位是 1，因此会进位，最终存储时就是:
@@ -236,8 +247,30 @@ JavaScript 里关于数字的运算，都是先转为二进制，再转成二进
 
 ## IEEE 754是按照什么规则来实现双精度浮点数的截断的？
 
+在`Number.EPSILON`一节我们知道，双精度浮点数的小数精度为 2<sup>-52</sup>，即 2.220446049250313e-16，但是在将双精度浮点数转换为十进制的数字字符串时，小数点后要保留多少位有效数字呢？我们先来看看浏览器控制台的一组计算及其返回：
 
+```
+0.1 + 0.2 = 0.30000000000000004     // 17 位有效数字
+100.27 * 0.41 = 41.110699999999994  // 17 位有效数字
+0.95 * 1 / 3 = 0.31666666666666665  // 17 位有效数字
+300.73 - 300 = 0.7300000000000182   // 16 位有效数字
+```
 
+事实上以上例子打印出的结果均是真实算数结果的近似值，然而却有不同的有效数字位；在浏览器控制台里输入`0.1` ，而我们也明白这个不是精确的值，而控制台依然显示的是`0.1`，不显示`0.10000000000000001`。很明显，在控制台输出的浮点数近似值都是经过一定的规则来截断的。同时这种表现不仅限于 JS，大家可以在 Terminal 中尝试一下，所有采用 IEEE 754 双精度浮点数标准的语言如 Node 和 Python 都有同样的表现。那么，IEEE 754是按照什么规则来实现双精度浮点数的截断的？
+
+在 IEEE 754 规范的 Wiki 页面里看到对浮点数和十进制字符串转换的描述有这么一段：
+
+> The standard requires operations to convert between basic formats and external character sequence formats. Conversions to and from a decimal character format are required for all formats. Conversion to an external character sequence must be such that conversion back using round to even will recover the original number. There is no requirement to preserve the payload of a NaN or signaling NaN, and conversion from the external character sequence may turn a signaling NaN into a quiet NaN. The original binary value will be preserved by converting to decimal and back again using 17 decimal digits for binary64.
+
+IEEE 754 规定，浮点数被转成十进制数字字符串，当这个字符串（使用 Round to Even 向偶舍入）转回浮点数时，必须要跟原来的数相同。对双精度浮点数来说，十进制字符串使用17位有效数字即可保存原始二进制值。
+
+我们来做个实验，以`0.1`为例，它在内存中的二进制表示转换为十进制的数字字符串为：`0.1000000000000000055511151231257827021181583404541015625`
+
+当我们获取它的 17 位(经过舍入的)有效数为`0.10000000000000001`，那为什么控制台不显示`0.10000000000000001`而显示`0.1`？事实上，有许多不同的十进制数共享相同的最接近的近似二进制小数，在这个例子里，`0.1`、`0.10000000000000001`、`0.1000000000000000055511151231257827021181583404541015625`分别在内存中的 64bit 都是完全相同的，在大多数系统上现在能够选择这些表示中最短的来展示，也就是`0.1`。因此可以推断出：截断判断的依据是截断后的数在`console`里打印成字符串，这个字符串再转回浮点数后，是否还是同一个数。
+
+说人话就是：在`console`里打印出来的，就是可以表示这个浮点数的最短的字符串！
+
+这就解释了为啥`console`里有些浮点数的计算得出 17 位有效位，有些只有 16 位，有些直接显示自己本身。
 
 ## TODO
 
