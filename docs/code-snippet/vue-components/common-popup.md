@@ -59,10 +59,15 @@ PS：请在手机端打开该页面进行体验
 
 ### 参数说明
 
+#### 特性 attribute
+
 - `v-model`：`Boolean`类型，控制弹窗是否显示，默认为`false`
 - `forbid-bg-scroll`：`Boolean`类型，控制是否禁止蒙层之下的内容滚动，默认为`true`
 - `scroll-area-selector`：`String`类型，弹窗内可滚动的元素选择器，比如`.scroll-area`，仅在`forbid-bg-scroll`为`true`时有效
 - `show-close`：`Boolean`类型，是否显示关闭按钮
+
+#### 事件
+
 - `close`事件：点击“关闭 ❎”按钮时触发
 
 ## 代码

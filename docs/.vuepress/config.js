@@ -164,12 +164,39 @@ module.exports = {
           collapsable: true,
           children: [
             '',
-            'data-structure/',
-            'event-loop',
-            'prototype',
-            'this',
             'functional-programming',
-            'performance'
+          ]
+        },
+        {
+          title: '数据结构',
+          collapsable: true,
+          children: [
+            'data-structure/number/',
+            'data-structure/number/js-number-implementation',
+            'data-structure/object/',
+
+          ]
+        },
+        {
+          title: '事件循环',
+          collapsable: true,
+          children: [
+            'event-loop/'
+          ]
+        },
+        {
+          title: '性能',
+          collapsable: true,
+          children: [
+            'performance/'
+          ]
+        },
+        {
+          title: '原型',
+          collapsable: true,
+          children: [
+            'prototype/',
+            'prototype/this'
           ]
         },
         {
@@ -485,6 +512,7 @@ module.exports = {
         }
       ],
 
+      // ES6
       '/es6/': [
         {
           title: 'ES6+',
@@ -494,14 +522,15 @@ module.exports = {
             'babel/',
             'let-const/',
             'destructuring-assignment/',
+            'function/',
             'array/',
-            'object/',
+            'regexp/',
             'class/',
+            'module/',
             'iterator/',
             'generator/',
             'promise/',
-            'async-await/',
-            'module/'
+            'async-await/'
           ]
         },
         {
