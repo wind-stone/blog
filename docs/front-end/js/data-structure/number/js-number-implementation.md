@@ -189,7 +189,9 @@ ES6 在`Number`对象上面，新增一个极小的常量`Number.EPSILON`。根�
 
 因此，`Number.EPSILON` = (1 + 2<sup>-52</sup>) - 1 = 2<sup>-52</sup>
 
-即 IEEE 754 双精度浮点数在转为十进制时，最小精度为 2<sup>-52</sup>，即 2.220446049250313e-16，这也就意味着，(1 + 2<sup>-52</sup>, 1 +  2 * 2<sup>-52</sup> )之间的十进制数，对应的是同一个双精度浮点数。
+即 IEEE 754 双精度浮点数在转为十进制时，最小精度为 2<sup>-52</sup>，即 2.220446049250313e-16，这也就意味着，(1, 1 +  2<sup>-52</sup> )之间的十进制数，对应的是同一个双精度浮点数。
+
+进一步我们可以知道，当数字越来越大时，一个双精度浮点数对应的十进制的数值范围就越大，比如比 1023 大的最小浮点数是 1023 + 2<sup>-43</sup>，因此（1023, 1023 + 2<sup>-43</sup>）之间的十进制数，对应的是同一个双精度浮点数。
 
 #### 小数误差
 
@@ -282,3 +284,4 @@ TODO: 如何在 Javascript 数字计算中保证精度正确？ [number-precisio
 - [IEEE 754 双精度浮点数可视化工具](http://bartaz.github.io/ieee754-visualization/)
 - [从计组课到前端深坑：IEEE 754双精度浮点数的那些事](https://jacelyn.fish/2019/06/08/ieee-floating-point-number/)
 - [IEEE 754 round-to-nearest-even](https://blog.csdn.net/qq_16097611/article/details/52373936)
+- [前端应该知道的JavaScript浮点数和大数的原理](https://zhuanlan.zhihu.com/p/66949640)
