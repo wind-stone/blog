@@ -6,25 +6,21 @@ sidebarDepth: 0
 
 [[toc]]
 
-`async`函数就是 Generator 函数的语法糖。
-
-Generator 函数如果想实现自动执行，依赖我们外部（自行实现）的执行器，而`async`函数内置了执行器。
-
+`async`函数就是 Generator 函数的语法糖。Generator 函数如果想实现自动执行，依赖我们外部（自行实现）的执行器，而`async`函数内置了执行器。
 
 占位词说明
-- `returnedPromise`：`async`函数返回的 Promise 对象
-- `promise`：`await`后面的 Promise 对象，即 `promise = new Promise(fn)`
-- `fn`：创建 Promise 实例的函数参数，形如`function(resolve, reject) {...}`
 
+- `returnedPromise`：`async`函数返回的 Promise 实例对象
+- `promise`：`await`后面的 Promise 实例对象，即 `promise = new Promise(fn)`
+- `fn`：创建 Promise 实例对象时传给构造函数的参数，形如`function(resolve, reject) {...}`
 
-## 调用`async`函数
+## 调用 async 函数
 
+### async 函数返回时机
 
-### `async`函数返回时机
+- 当`async`函数执行的时候，一旦遇到`await`就会先返回一 Promise 实例对象即`returnedPromise`
 
-- 当`async`函数执行的时候，一旦遇到`await`就会先返回一 Promise 对象即`returnedPromise`
-
-注意这里的语句执行顺序，`await`后面的`new Promise(fn)`构建函数的函数参数`fn`会先执行，`new Promise(fn)`会返回一个 Promise 实例即`promise`，等到异步操作完成即`promise`的状态`resolved/rejected`后，计算`await promise`的值，再接着执行`await promise`之后的语句
+注意这里的语句执行顺序，`await`后面的`new Promise(fn)`构建函数的参数`fn`会先执行，`new Promise(fn)`会返回一个 Promise 实例对象即`promise`，等到异步操作完成即`promise`的状态`resolved/rejected`后，计算`await promise`的值，再接着执行`await promise`之后的语句
 
 ```js
 // 执行顺序的示例
@@ -60,7 +56,7 @@ console.log(4)
 ```
 
 
-### `async`函数的返回值：Promise 对象
+### async 函数的返回值：Promise 实例对象
 
 ```js
 async function f() {
@@ -83,28 +79,24 @@ f().then(
 // Error: 出错了
 ```
 
-- `async`函数返回一个 Promise 对象即`returnedPromise`
-- `returnedPromise`可以调用`then`方法添加回调函数
-- `async`函数内部`return`语句返回的值，会成为`then`方法回调函数的参数（注意，是`return`返回的值，而不是函数内部其他 Promise 实例`resolve`的值）
-- `async`函数内部抛出错误，会导致返回的 Promise 对象变为`rejected`状态。抛出的错误对象会被`catch`方法回调函数接收到。
+- `async`函数返回一个 Promise 实例对象即`returnedPromise`，可以调用`returnedPromise`的`then`方法添加回调函数
+- `async`函数内部`return`语句返回的值，会成为`then`方法添加的`resolved`回调函数的参数（注意，是`return`返回的值，而不是`async`函数内部其他 Promise 实例对象`resolve`的值）
+- `async`函数内部抛出错误，会导致返回的 Promise 对象变为`rejected`状态，抛出的错误对象会被`catch`方法的回调函数接收到。
 
+### `async`函数返回的 Promise 实例对象的状态变化
 
-### `async`函数返回的 Promise 对象的状态变化
-
-`async`函数返回的 Promise 对象，必须等到内部所有`await`命令后面的 Promise 对象执行完，才会发生状态改变，除非遇到`return`语句或者抛出错误。也就是说，只有`async`函数内部的异步操作执行完，才会执行`then`方法指定的回调函数。
+`async`函数返回的 Promise 实例对象，必须等到内部所有`await`命令后面的 Promise 实例对象执行完，才会发生状态改变，除非遇到`return`语句或者抛出错误。也就是说，只有`async`函数内部的异步操作执行完，才会执行`then`方法指定的回调函数。
 
 - `async`函数内部执行完不抛错，则`returnedPromise`变为`resolve`状态
     - 有`return`语句，`returnPromise`的`resolve`回调函数的参数即为`return`返回的值
     - 无`return`语句，`returnPromise`的`resolve`回调函数的参数则为`undefined`
 - 抛错且未被处理，则`returnedPromise`变为`reject`状态，`reject`的参数为`async`函数内部抛错的错误对象
 
+## async 函数内部
 
-## `async`函数内部
+###  await 命令
 
-
-### `await`命令
-
-- 正常情况下，`await`命令后面是一个 Promise 对象。如果不是，会被转成一个立即`resolved`的 Promise 对象
+- 正常情况下，`await`命令后面是一个 Promise 实例对象。如果不是，会被转成一个立即`resolved`的 Promise 实例对象
 
 ```js
 async function f() {
@@ -115,7 +107,7 @@ f().then(v => console.log(v))
 // 123
 ```
 
-- `await`命令后面的 Promise 对象如果变为`rejected`状态，则`reject`的参数会被`catch`方法的回调函数接收到。
+- `await`命令后面的 Promise 实例对象如果变为`rejected`状态，则`reject`的参数会被`catch`方法的回调函数接收到。
 
 ```js
 async function f() {
@@ -128,7 +120,7 @@ f()
 // 出错了
 ```
 
-- 只要一个`await`语句后面的 Promise 变为`rejected`，那么整个`async`函数都会中断执行
+- 只要一个`await`语句后面的 Promise 实例对象变为`rejected`状态，那么整个`async`函数都会中断执行
 
 ```js
 async function f() {
@@ -233,7 +225,7 @@ let pro = asyncFn()
 
 ## 使用注意点
 
-- `await`命令后面的 Promise 对象，运行结果可能是`rejected`，所以最好把`await`命令放在`try...catch`代码块中
+- `await`命令后面的 Promise 实例对象，最终的状态可能是`rejected`，所以最好把`await`命令放在`try...catch`代码块中
 
 ```js
 async function myFunction() {
@@ -284,7 +276,6 @@ async function dbFuc(db) {
   });
 }
 ```
-
 
 ## Reference
 - [阮一峰-ECMAScript 6 入门：async 函数](http://es6.ruanyifeng.com/#docs/async)
