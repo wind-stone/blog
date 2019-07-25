@@ -606,7 +606,8 @@ module.exports = {
             'house/tianya-post',
             'house/beijing/',
             'house/zhonghailichunhushu/',
-            'house/xishanjinxiufu/'
+            'house/xishanjinxiufu/',
+            'house/comparison'
           ]
         },
         {

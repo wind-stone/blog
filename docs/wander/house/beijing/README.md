@@ -8,10 +8,15 @@ sidebarDepth: 0
 
 ![北京各区示意图](./img/beijing-districts.jpg)
 
+## 地铁
+
+![北京地铁 2015-2021](./img/beijingditie-2015-2021.jpg)
+
 ## 可考虑楼盘
 
 - 西山锦绣府
-- 萬橡华府/萬橡悦府
+- 中海丽春湖墅
+- 萬橡悦府
 
 ## 海淀
 
