@@ -10,6 +10,12 @@ sidebarDepth: 0
 
 - [Webpack 是如何做到 Tree Shaking 的？](https://mp.weixin.qq.com/s/Ue0kNOMQS7mH-2-9BhYk8Q)
 
+## 插件
+
+### 分析依赖关系
+
+`webpack-bundle-analyzer`
+
 ## 概念名词
 
 ### module、chunk、bundle、asset
