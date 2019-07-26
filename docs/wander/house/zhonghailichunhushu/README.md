@@ -33,7 +33,7 @@ sidebarDepth: 0
   - 南丰路：紧挨着，2020年完工，可达定泗路
   - 京藏高速：距离四五公里，可直达北三环
 
-![昌平线南延](./changpingxian.jpg)
+![昌平线南延](../ditie/changpingxiannanyan.jpg)
 
 昌平线南延示意图
 
