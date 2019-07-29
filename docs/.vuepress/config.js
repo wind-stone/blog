@@ -300,7 +300,8 @@ module.exports = {
           children: [
             'elements/',
             'elements/meta',
-            'elements/file-download/'
+            'elements/file-download/',
+            'elements/script'
           ]
         },
         {
