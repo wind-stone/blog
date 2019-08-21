@@ -214,6 +214,8 @@ clickDiv1() {
 
 通过`new MouseEvent('click')`创建的事件，默认的`event.cancelable`和`event.cancelBubble`都为`false`，因此走到`onMouse`里会直接返回`true`，没有机会执行之后的`needsClick`以及阻止事件捕获的逻辑，会让事件进一步传播到`div2`上，进而触发了`div2`的`click`事件。
 
+注意：`div2`上的事件，不能是采用事件代理注册在其祖先元素上的`click`事件。
+
 #### Reference
 
 - [记录fastclick中一次手动触发click事件失败](https://segmentfault.com/a/1190000009246194)
