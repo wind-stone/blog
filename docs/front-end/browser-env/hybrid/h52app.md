@@ -11,7 +11,7 @@ h5 里若是想唤起指定 APP，一般会出现两种情况：
 1. 设备里安装了该 APP，期望可以直接唤起该 APP。
 2. 设置里没安装该 APP，期望（跳转到应用市场/App Store）下载 APP。
 
-而 h5 唤起 APP 的能力或者说方式，一般称之为 Deep linking： 跳转到原生 iOS 和 Android 移动应用内部特定页面的能力。
+而 h5 唤起 APP 的能力或者说方式，一般称之为 Deep linking: 跳转到原生 iOS 和 Android 移动应用内部特定页面的能力。
 
 目前，Deep linking 实现的方式有：
 
@@ -21,12 +21,6 @@ h5 里若是想唤起指定 APP，一般会出现两种情况：
 - Chrome Intent
 
 ## Deep Linking
-
-### Universal Links
-
-跳转到 Universal Links 时，若是设备里安装了 APP，则直接唤起；否则，跳转到网页上。详见[Allowing Apps and Websites to Link to Your Content](https://developer.apple.com/documentation/uikit/core_app/allowing_apps_and_websites_to_link_to_your_content)
-
-使用 Universal Links，不需要像 URL scheme 那样手动判断设备里是否安装了 APP。
 
 ### URL scheme
 
