@@ -8,6 +8,11 @@ sidebarDepth: 0
 
 ## video 标签属性
 
+Reference:
+
+- [视频H5 video最佳实践 #11](https://github.com/gnipbao/iblog/issues/11)
+- [视频H5のVideo标签在微信里的坑和技巧](https://aotu.io/notes/2017/01/11/mobile-video/)
+
 ```html
 <video
   src="video.mp4"
@@ -66,5 +71,3 @@ window.onresize = function(){
 - `x5-video-orientation`：
   - 声明播放器支持的方向，可选值`landscape`横屏,`portraint`竖屏。默认值`portraint`
   - 无论是直播还是全屏H5一般都是竖屏播放，但是这个属性需要x5-video-player-type开启 H5 模式
-
-Reference: [视频H5のVideo标签在微信里的坑和技巧](https://aotu.io/notes/2017/01/11/mobile-video/)
