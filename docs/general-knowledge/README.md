@@ -12,6 +12,10 @@ sidebarDepth: 0
 - Operating System
 - Network
 
+## 领域内知识
+
+- DSP、互联网广告相关，[宋星：半小时读懂互联网广告新生态](http://www.199it.com/archives/290277.html)
+
 ## 配置本地 hosts 文件
 
 在浏览器中输入`www.baidu.com`域名，操作系统会先检查自己本地的`hosts`文件查看是否有这个网址映射关系，如果有，就先调用这个 IP 地址映射，完成域名解析。完整的 DNS 解析过程，请查看[知乎 - DNS解析的过程是什么，求详细的？](https://www.zhihu.com/question/23042131)
