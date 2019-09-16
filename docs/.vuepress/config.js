@@ -31,6 +31,7 @@ module.exports = {
           { text: 'CSS', link: '/front-end/css/' },
           { text: 'HTML-DOM', link: '/front-end/html-dom/' },
           { text: '浏览器环境', link: '/front-end/browser-env/' },
+          { text: '兼容性', link: '/front-end/compatibility/' },
           { text: '工具', link: '/front-end/tools/eslint' }
         ]
       },
@@ -198,13 +199,6 @@ module.exports = {
             'prototype/',
             'prototype/this'
           ]
-        },
-        {
-          title: '兼容性',
-          collapsable: true,
-          children: [
-            'compatibility/'
-          ]
         }
       ],
 
@@ -266,16 +260,6 @@ module.exports = {
           ]
         },
         {
-          title: '兼容性',
-          collapsable: true,
-          children: [
-            'compatibility/',
-            'compatibility/ios',
-            'compatibility/ie',
-            'compatibility/android-small-fontsize'
-          ]
-        },
-        {
           title: '实践',
           collapsable: true,
           children: [
@@ -331,15 +315,6 @@ module.exports = {
           collapsable: true,
           children: [
             'events/'
-          ]
-        },
-        {
-          title: '兼容性',
-          collapsable: true,
-          children: [
-            'compatibility/video',
-            'compatibility/media',
-            'compatibility/input-delay/'
           ]
         }
       ],
@@ -402,6 +377,42 @@ module.exports = {
           children: [
             'hybrid/h52app',
             'hybrid/jsbridge'
+          ]
+        }
+      ],
+
+      '/front-end/compatibility/': [
+        {
+          title: '概述',
+          collapsable: true,
+          children: [
+            ''
+          ]
+        },
+        {
+          title: 'JS 兼容性',
+          collapsable: true,
+          children: [
+            'js/'
+          ]
+        },
+        {
+          title: 'CSS 兼容性',
+          collapsable: true,
+          children: [
+            'css/',
+            'css/ios',
+            'css/ie',
+            'css/android-small-fontsize'
+          ]
+        },
+        {
+          title: '兼容性',
+          collapsable: true,
+          children: [
+            'html-dom/video',
+            'html-dom/media',
+            'html-dom/input-delay/'
           ]
         }
       ],
