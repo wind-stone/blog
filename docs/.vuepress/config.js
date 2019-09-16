@@ -460,12 +460,13 @@ module.exports = {
           title: 'Node',
           collapsable: true,
           children: [
+            'node/',
             'node/pm2',
             'node/koa/',
             'node/commonjs',
-            'node/package-json',
-            'node/third-party-package',
-            'node/'
+            'node/package.json',
+            'node/package-lock.json',
+            'node/third-party-package'
           ]
         }
       ],
