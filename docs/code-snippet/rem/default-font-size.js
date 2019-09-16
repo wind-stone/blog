@@ -16,6 +16,20 @@
 
     setRootElementFontSize();
 
+
+    /**
+     * 获取系统默认字体大小
+     */
+    function getSystemDefaultFontSize(){
+        var d = window.document.createElement('p');
+        d.style.width = '1rem';
+        d.style.display = "none";
+        var head = window.document.getElementsByTagName('head')[0];
+        head.appendChild(d);
+        var defaultFontSize = parseFloat(window.getComputedStyle(d, null).getPropertyValue('width'));
+        return defaultFontSize
+    };
+
     /**
      * 设置 html 根元素的 font-size
      */
@@ -27,7 +41,9 @@
         // var rootElementWidth = document.documentElement.clientWidth
         var rootElementWidth = rootElement.getBoundingClientRect().width;
         var pxPerRem = rootElementWidth / 10;
-        rootElement.style.fontSize = pxPerRem + 'px';
+
+        // rootElement.style.fontSize = pxPerRem + 'px';
+        rootElement.style.fontSize = rootElementWidth / getSystemDefaultFontSize() * 100 + '%';
     }
 
     /**
