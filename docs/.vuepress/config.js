@@ -32,7 +32,8 @@ module.exports = {
           { text: 'HTML-DOM', link: '/front-end/html-dom/' },
           { text: '浏览器环境', link: '/front-end/browser-env/' },
           { text: '兼容性', link: '/front-end/compatibility/' },
-          { text: '工具', link: '/front-end/tools/eslint' }
+          { text: '工具', link: '/front-end/tools/eslint' },
+          { text: '奇技淫巧', link: '/front-end/skills/android-weixin-auto-open-browser' }
         ]
       },
       { text: 'Back End', link: '/back-end/'},
@@ -450,6 +451,17 @@ module.exports = {
             'scroll/touch-event',
             'scroll/click-delay',
             'scroll/fastclick'
+          ]
+        }
+      ],
+
+      // Front End - 奇技淫巧
+      '/front-end/skills/': [
+        {
+          title: '奇技淫巧',
+          collapsable: true,
+          children: [
+            'android-weixin-auto-open-browser'
           ]
         }
       ],
