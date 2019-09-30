@@ -10,7 +10,7 @@ PS: 以下会列出一些常用的命令及常用的用法，每个命令更加�
 
 ## 查看端口是否被占用
 
-```shell
+```sh
 # 查看 3000 端口是否被占用
 lsof -i :3000
 ```
@@ -21,7 +21,7 @@ Print Working Directory，显示工作目录的路径名称。
 
 ## mkdir：创建目录
 
-```shell
+```sh
 mkdir directory-name
 ```
 
@@ -29,7 +29,7 @@ mkdir directory-name
 
 ## rm：删除文件、目录
 
-```shell
+```sh
 rm -rf director-or-file-name
 ```
 
@@ -51,7 +51,7 @@ rm -rf director-or-file-name
 
 ## cat：查看文件
 
-```shell
+```sh
 cat filename
 ```
 
@@ -59,7 +59,7 @@ cat filename
 
 将源文件复制到目标文件，或将多个源文件复制到目标目录
 
-```shell
+```sh
 cp origin destination
 ```
 
@@ -67,7 +67,7 @@ cp origin destination
 
 `mv`是`move`的缩写，可以用来移动（`move`）文件或重命名（`rename`）文件。
 
-```shell
+```sh
 # 将文件 test.log 重命名为 test1.txt
 mv test.log test1.txt
 
@@ -81,7 +81,7 @@ mv test1.txt test3
 
 ## 仅查看文件
 
-```shell
+```sh
 <!-- 打开文件，输入 -->
 vi filename
 
@@ -91,7 +91,7 @@ vi filename
 
 ## 修改文件
 
-```shell
+```sh
 <!-- 打开文件，输入 -->
 vi filename
 
@@ -108,7 +108,7 @@ shift 键 + Z*2
 
 ## rm 删除文件
 
-```shell
+```sh
 rm filename
 
 # 强制删除文件（无法找回）
@@ -121,7 +121,7 @@ Reference: [每天一个linux命令目录](https://www.cnblogs.com/peida/archive
 
 ### 设置命令的别名
 
-```shell
+```sh
 # alias [别名]=[指令名称]
 alias vi='vim'
 alias post-review='xxx'
@@ -129,7 +129,7 @@ alias post-review='xxx'
 
 ### 清除别名
 
-```shell
+```sh
 # unalias [别名]
 alias vi
 # 清除所有别名
@@ -140,7 +140,7 @@ unalias -a
 
 判断给定的名字是否是`alias`、`keyword`、`function`、`builtin`、`file`，或者都不是。
 
-```shell
+```sh
 type ls        # ls is an alias for ls -G
 type if        # if is a reserved word
 type type      # type is a shell builtin
@@ -153,7 +153,7 @@ type ssh-add   # ssh-add is /usr/bin/ssh-add
 
 - `-n`: `--line-number`，在显示符合样式的那一行之前，标示出该行的行号。
 
-```shell
+```sh
 # 从 test.txt 文件里查输出含有 linux 的内容行
 grep -n 'linux' test.txt
 # 或

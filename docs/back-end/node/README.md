@@ -18,7 +18,7 @@ test-project
 
 ### 在 test-project 目录下执行
 
-```shell
+```sh
 ➜  test-project node src/path.js
 __dirname:  /Users/wind-stone/github/test-project/src
 __filename:  /Users/wind-stone/github/test-project/src/path.js
@@ -28,7 +28,7 @@ path.resolve("./") /Users/wind-stone/github/test-project
 
 ### 在 src 目录下执行
 
-```shell
+```sh
 ➜  test-project cd src
 ➜  src node path.js
 __dirname:  /Users/wind-stone/github/test-project/src

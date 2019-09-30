@@ -10,7 +10,7 @@ sidebarDepth: 0
 
 ### MAC 下安装 nginx
 
-```shell
+```sh
 # 请先确保安装了 homebrew
 
 # 检查 nginx 是否已经安装
@@ -26,7 +26,7 @@ brew install nginx
 
 ### nginx 基本命令
 
-```shell
+```sh
 ➜ nginx -h
 nginx version: nginx/1.15.2
 Usage: nginx [-?hvVtTq] [-s signal] [-c filename] [-p prefix] [-g directives]
@@ -46,7 +46,7 @@ Options:
 
 常用的命令有:
 
-```shell
+```sh
 # 启动 nginx
 nginx
 

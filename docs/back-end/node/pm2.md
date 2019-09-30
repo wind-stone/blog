@@ -10,13 +10,13 @@ Reference: [PM2 英文官网](https://pm2.io/doc/en/runtime/overview/)
 
 ### 安装 PM2
 
-```shell
+```sh
 npm install pm2 -g
 ```
 
 ### 开启/重启进程
 
-```shell
+```sh
 # 开启新的进程，并添加到进程列表里
 pm2 start app.js
 
@@ -24,7 +24,7 @@ pm2 start app.js
 pm2 start app.js --watch [--ignore-watch /*/]
 ```
 
-```shell
+```sh
 # 重启进程，相当于先停止进程再开启进程，即是如下两条命令的合成：
 # 1. pm2 stop app
 # 2. pm2 start app
@@ -34,7 +34,7 @@ pm2 restart app
 NODE_ENV=production pm2 restart app --update-env
 ```
 
-```shell
+```sh
 # 启动应用，并设置应用的名称
 pm2 start app.js --name="name"
 # 重启应用，更新应用名称
@@ -43,19 +43,19 @@ $ pm2 restart app --name="new-name"
 
 ### 停止、删除进程
 
-```shell
+```sh
 # 停止进程（杀掉进程，但是将其保留在进程列表里）
 pm2 stop app
 ```
 
-```shell
+```sh
 # 停止进程，并将其从进程列表里删除
 pm2 delete app
 ```
 
 ### 显示进程列表
 
-```shell
+```sh
 # 显示进程列表
 pm2 list
 # 简写
@@ -64,7 +64,7 @@ pm2 ls
 
 ### 显示进程详细信息
 
-```shell
+```sh
 pm2 show app
 ```
 
@@ -72,7 +72,7 @@ pm2 show app
 
 PS: 日志文件位于`~/.pm2/logs`目录
 
-```shell
+```sh
 # 显示所有应用的日志
 pm2 logs
 
@@ -82,32 +82,32 @@ pm2 logs app
 
 ### 显示环境
 
-```shell
+```sh
 # 显示进程的环境
 pm2 env <pm_id>
 ```
 
 ### 从 boot 启动 PM2
 
-```shell
+```sh
 pm2 startup
 ```
 
 ### Reset Restart Counters
 
-```shell
+```sh
 pm2 reset all
 ```
 
 ### 监控
 
-```shell
+```sh
 pm2 monitor
 ```
 
 ### Dump all process data
 
-```shell
+```sh
 $ pm2 prettylist
 # or
 $ pm2 show <pm_id|app_name>
@@ -121,7 +121,7 @@ PM2 是运行在后台的守护进程，负责管理你所有运行的进程。�
 
 所有运行的应用都会注册在进程列表。可以用如下命令管理进程列表：
 
-```shell
+```sh
 # start and add a process to your list
 pm2 start app.js
 
@@ -141,7 +141,7 @@ pm2 delete app
 
 一旦注册在进程列表里之后，以后的所有操作都将使用进程名称来完成。
 
-```shell
+```sh
 # kill the process but keep it in the process list
 pm2 stop app
 
@@ -162,7 +162,7 @@ pm2 restart /app/
 
 你可以保存或恢复你的进程列表，进程列表数据保存在`$HOME/.pm2/dump.pm2`文件里
 
-```shell
+```sh
 # save your list in hard disk memory
 pm2 save
 
@@ -192,7 +192,7 @@ PM2 适用于其他编程语言，对应如下：
 
 启动`python`脚本：
 
-```shell
+```sh
 pm2 start echo.py
 ```
 
@@ -212,7 +212,7 @@ module.exports = {
 
 本地监控工具可以让你观察到 CPU 使用率，内存使用率，循环延迟`loop delay`，每个进程的请求信息
 
-```shell
+```sh
 pm2 monit
 ```
 
@@ -230,7 +230,7 @@ pm2 monit
 
 ### 生成默认生态系统文件
 
-```shell
+```sh
 pm2 init
 ```
 
@@ -253,7 +253,7 @@ module.exports = {
 
 ### 启动所有应用
 
-```shell
+```sh
 pm2 start
 ```
 
@@ -261,7 +261,7 @@ pm2 start
 
 ### 仅启动单个应用
 
-```shell
+```sh
 pm2 start --only app
 ```
 
@@ -271,7 +271,7 @@ pm2 start --only app
 
 若是更改了生态系统文件，需要如下命令使得新的生态系统文件生效。
 
-```shell
+```sh
 pm2 restart/reload ecosystem.config.js
 ```
 
@@ -281,7 +281,7 @@ pm2 restart/reload ecosystem.config.js
 
 ### 自定义生态系统文件
 
-```shell
+```sh
 pm2 start /path/to/my.ecosystem.config.js
 ```
 
@@ -310,7 +310,7 @@ module.exports = {
 
 若是想要以特定的环境来启动`app`应用，需要添加`--env`选项。
 
-```shell
+```sh
 # 不添加 --env 选项，默认使用 env 环境
 pm2 start ecosystem.config.js
 # 使用 developent 环境
@@ -321,7 +321,7 @@ pm2 start ecosystem.config.js --env developent
 
 要是想强制更新环境，就必须使用`--update-env`选项：
 
-```shell
+```sh
 # 更新环境
 pm2 restart ecosystem.config.js --update-env
 
@@ -364,7 +364,7 @@ PM2 内置的负载均衡器为网络类型的 Node.js 应用提供了基于所�
 - 数字，为应用指定确定数量的实例
 - 字符串`max`，为应用指定尽可能多的实例（根据可用 CPU 数量）
 
-```shell
+```sh
 # 实例数为 4
 pm2 start app.js -i 4
 
@@ -386,7 +386,7 @@ pm2 start app.js -i max
 
 而若是使用`reload`命令，PM2 会一个接一个地重启所有进程，总是保持至少一个进程是在运行的。
 
-```shell
+```sh
 # 重载 app 应用
 pm2 reload app
 
@@ -403,7 +403,7 @@ pm2 reload ecosystem.config.js --only app
 
 当前目录或子目录下的文件改变时，PM2 可以自动重启（`restart`）应用。
 
-```shell
+```sh
 pm2 start app.js --watch
 ```
 
@@ -452,7 +452,7 @@ PS: 仅在 PM2 >= 3.2 可用
 
 PM2 运行时实现了新的重启模式，可以使你的应用以一种更好的方式重启。当出现异常时（比如数据库关闭了），`exponential backoff restart`会慢慢增加重启的时间间隔，以减少数据或外部服务的压力，而不是像原先那样疯狂地重启你的应用。通过以下方式使用`exponential backoff restart`：
 
-```shell
+```sh
 # CLI 方式
 pm2 start app.js --exp-backoff-restart-delay=100
 ```
@@ -469,7 +469,7 @@ module.exports = [{
 
 通过执行`pm2 logs`你可以见到重启时延是慢慢增加的：
 
-```shell
+```sh
 PM2      | App [throw:0] will restart in 100ms
 PM2      | App [throw:0] exited with code [1] via signal [SIGINT]
 PM2      | App [throw:0] will restart in 150ms
@@ -487,7 +487,7 @@ PS: PM2 >= 0.9 时，可用
 
 你还可以使用`restart_delay`选项来设置固定的重启时延：
 
-```shell
+```sh
 pm2 start app.js --restart-delay=3000
 ```
 
@@ -507,7 +507,7 @@ Simply running these scripts from bash would terminate the script in case the ss
 
 PM2 is perfect for such cases, providing robust monitoring and logging
 
-```shell
+```sh
 pm2 start app.js --no-autorestart
 ```
 
@@ -519,7 +519,7 @@ pm2 start app.js --no-autorestart
 
 #### 实时日志
 
-```shell
+```sh
 # 所有应用的日志
 pm2 logs
 
@@ -554,7 +554,7 @@ module.exports = {
 
 若是你想将日志分离到多个文件而不是一个总的大的文件里，你可以使用`logrotate`。
 
-```shell
+```sh
 pm2 install pm2-logrotate
 ```
 
@@ -632,7 +632,7 @@ module.exports = {
 
 执行以下命令，来检测你机器上可用的初始化系统，并生成一个配置文件。
 
-```shell
+```sh
 pm2 startup
 [PM2] Init System found: launchd
 [PM2] To setup the Startup Script, copy/paste the following command:
@@ -653,7 +653,7 @@ sudo env PATH=$PATH:/Users/wind-stone/.nvm/versions/node/v11.10.0/bin /Users/win
 
 若是你之前保存过进程列表，`startup`钩子会自动加载进程列表。
 
-```shell
+```sh
 # 保存进程列表
 pm2 save
 ```
@@ -664,13 +664,13 @@ pm2 save
 
 若是你想创建空的`dump`文件，你应该执行：
 
-```shell
+```sh
 pm2 cleartdump
 ```
 
 ### 禁用 startup 系统
 
-```shell
+```sh
 pm2 unstartup
 ```
 
@@ -678,7 +678,7 @@ pm2 unstartup
 
 若是你想要`startup`钩子在其他用户下执行，使用`-u <username>`选项和`--hp <user_home>`选项：
 
-```shell
+```sh
 pm2 startup ubuntu -u www --hp /home/ubuntu
 ```
 
@@ -686,7 +686,7 @@ pm2 startup ubuntu -u www --hp /home/ubuntu
 
 执行以下命令来升级`startup`钩子：
 
-```shell
+```sh
 pm2 unstartup
 pm2 startup
 ```
@@ -704,7 +704,7 @@ pm2 startup
 
 你可以指定你使用的平台：
 
-```shell
+```sh
 pm2 [startup | unstartup] [platform]
 ```
 
@@ -744,7 +744,7 @@ PM2 允许在内存到达指定的阈值后，重载`reload`应用（若不是`c
 
 需要注意的是，PM2 内部负责检查内存的`worker`每 30s 重启一次，因此可能在应用达到内存阈值之后，还需要等一会儿才会自动重载应用。
 
-```shell
+```sh
 # 通过 CLI 设置最大内存阈值
 pm2 start api.js --max-memory-restart 300M
 ```
@@ -793,7 +793,7 @@ PM2 可以以编程方式使用，这意味着你可以将进程管理直接内�
 
 如下示例将展示，如何启动`app.js`，并传入一些配置属性。传入`pm2.start`方法的参数与在生态系统文件里声明的完全一样。
 
-```shell
+```sh
 npm install pm2 --save
 ```
 
@@ -976,7 +976,7 @@ PM2 部署工具的目的就是自动完成这些任务。
 
 确保在你的本地机器上有公钥：
 
-```shell
+```sh
 # 生成 SSH 公钥/私钥 对
 ssh-keygen -t rsa
 
@@ -1032,7 +1032,7 @@ module.exports = {
 
 #### Setup
 
-```shell
+```sh
 pm2 deploy production setup
 ```
 
@@ -1055,7 +1055,7 @@ pm2 deploy production setup
 
 这里是一些实用的命令：
 
-```shell
+```sh
 # 1. Setup deployment at remote location
 pm2 deploy production setup
 
@@ -1076,7 +1076,7 @@ pm2 deploy production exec "pm2 reload all"
 
 执行`pm2 deploy help`显示部署帮助。
 
-```shell
+```sh
 pm2 deploy <configuration_file> <environment> <command>
 
   Commands:
@@ -1107,7 +1107,7 @@ Deploy failed
 
 若是你想要部署但不需要推送任何数据，你可以添加`--force`选项：
 
-```shell
+```sh
 pm2 deploy ecosystem.json production --force
 ```
 
@@ -1126,7 +1126,7 @@ pm2 deploy ecosystem.json production --force
 2. `ssh-copy-id`默认会复制名为`id_rsa`的公钥文件。如果这不是正确的公钥文件，执行`ssh-copy-id -i path/to/my/key your_username@server.com`将你的公钥添加到（服务器上的）`~/.ssh/authorized_keys`文件里
 3. 若是你获得了如下的错误：
 
-```shell
+```sh
 --> Deploying to production environment
 --> on host mysite.com
   ○ hook pre-setup
@@ -1145,7 +1145,7 @@ Deploy failed
 
 你可能需要创建一个 SSH 配置文件。这肯定能确保正确的 SSH 公钥被用于你想要克隆的任何给定仓库。详见[示例](https://gist.github.com/Protosac/c3fb459b1a942f161f23556f61a67d66)
 
-```shell
+```sh
 # ~/.ssh/config
 Host alias
     HostName myserver.com
@@ -1288,7 +1288,7 @@ mongoose.connect('mongodb://mongosA:27501,mongosB:27501', (err) => {
 
 执行 PM2 的命令时，加上`PM2_HOME`环境变量：
 
-```shell
+```sh
 PM2_HOME=/tmp/.pm2 pm2 start echo.js
 PM2_HOME=/tmp/.pm3 pm2 start echo.js
 ```
@@ -1347,7 +1347,7 @@ CLI 里，可通过`pm2 start app.js --watch`启用监测模式。
 
 PM2 可以基于 HTTP 提供静态文件服务，就像前端应用一样。
 
-```shell
+```sh
 pm2 serve <path> <port>
 ```
 
@@ -1375,7 +1375,7 @@ module.exports = {
 静态文件服务启动时会另起一个进程，因此在配置时，也要`apps`新增一个配置对象，而不是在已有的其他应用的`env`里配置`PM2_SERVE_PATH`和`PM2_SERVE_PORT`。
 :::
 
-```shell
+```sh
 pm2 start ecosystem.config.js
 ```
 
@@ -1393,13 +1393,13 @@ pm2 start ecosystem.config.js
 
 可通过 CLI 设置环境变量：
 
-```shell
+```sh
 ENV_VAR=value pm2 start app.js
 ```
 
 若更新环境变量，你必须在`restart`/`reload`命令后追加`--update-env`选项：
 
-```shell
+```sh
 ENV_VAR=somethingnew pm2 restart app --update-env
 ```
 
@@ -1426,13 +1426,13 @@ module.exports = {
 
 之后，启动：
 
-```shell
+```sh
 pm2 start ecosystem.config.js
 ```
 
 可以看到，在生态系统文件里，还有`env_production`的配置。若是你想使用`env_production`环境而不是默认环境，你只需传入`--env <env_name>`选项：
 
-```shell
+```sh
 pm2 start ecosystem.config.js --env production
 ```
 
@@ -1442,7 +1442,7 @@ pm2 start ecosystem.config.js --env production
 
 If you are using Ecosystem file to manage your application environment variables under the env: attribute, the updated ones will always be updated on pm2 <restart/reload> app.
 
-```shell
+```sh
 pm2 restart/reload ecosystem.config.js [--env production]
 ```
 
