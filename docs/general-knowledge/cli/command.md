@@ -111,11 +111,41 @@ shift 键 + Z*2
 ```shell
 rm filename
 
-<!-- 强制删除文件（无法找回） -->
+# 强制删除文件（无法找回）
 rm -rf filename
 ```
 
 Reference: [每天一个linux命令目录](https://www.cnblogs.com/peida/archive/2012/12/05/2803591.html)
+
+## 命令别名
+
+### 设置命令的别名
+
+```shell
+# alias [别名]=[指令名称]
+alias vi='vim'
+alias post-review='xxx'
+```
+
+### 清除别名
+
+```shell
+# unalias [别名]
+alias vi
+# 清除所有别名
+unalias -a
+```
+
+## type 命令
+
+判断给定的名字是否是`alias`、`keyword`、`function`、`builtin`、`file`，或者都不是。
+
+```shell
+type ls        # ls is an alias for ls -G
+type if        # if is a reserved word
+type type      # type is a shell builtin
+type ssh-add   # ssh-add is /usr/bin/ssh-add
+```
 
 ## grep 搜索
 
