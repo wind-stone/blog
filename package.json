@@ -3,20 +3,26 @@
     "start": "npm run dev",
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
-    "deploy": "sh deploy.sh"
+    "deploy": "sh deploy.sh",
+    "eslint": "sh eslint.sh"
   },
   "husky": {
     "hooks": {
+      "pre-commit": "npm run eslint",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "devDependencies": {
     "@commitlint/cli": "^7.2.1",
     "@commitlint/config-conventional": "^7.1.2",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.5.1",
+    "eslint-plugin-vue": "^5.2.3",
     "husky": "^1.1.2",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "vconsole": "^3.3.0",
+    "vue-eslint-parser": "^6.0.4",
     "vuepress": "^0.14.4"
   },
   "dependencies": {

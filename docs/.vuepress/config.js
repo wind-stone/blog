@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Wind Stone\'s blog', // 网站的标题
+  title: '风动之石的博客', // 网站的标题
   description: '记录工作，记录生活', // 网站的描述
   head: [ // 额外的需要被注入到当前页面的 HTML <head> 中的标签
     ['link', { rel: 'icon', href: `/img/long.png` }]
@@ -32,7 +32,7 @@ module.exports = {
           { text: 'HTML-DOM', link: '/front-end/html-dom/' },
           { text: '浏览器环境', link: '/front-end/browser-env/' },
           { text: '兼容性', link: '/front-end/compatibility/' },
-          { text: '工具', link: '/front-end/tools/eslint' },
+          { text: '工程化', link: '/front-end/engineering/project-init' },
           { text: '奇技淫巧', link: '/front-end/skills/android-weixin-auto-open-browser' }
         ]
       },
@@ -418,14 +418,37 @@ module.exports = {
         }
       ],
 
-      // Front End - 工具
-      '/front-end/tools/': [
+      // Front End - 专题
+      '/front-end/topics/': [
         {
-          title: '工具',
+          title: '滚动',
           collapsable: true,
           children: [
-            'eslint',
+            'scroll/',
+            'scroll/touch-event',
+            'scroll/click-delay',
+            'scroll/fastclick'
+          ]
+        }
+      ],
+
+      // Front End - 工程化
+      '/front-end/engineering/': [
+        {
+          title: '工程化',
+          collapsable: true,
+          children: [
+            'project-init',
             'rollup'
+          ]
+        },
+        {
+          title: 'ESlint',
+          collapsable: true,
+          children: [
+            'eslint/',
+            'eslint/vscode-eslint',
+            'eslint/vue-eslint'
           ]
         },
         {
@@ -437,20 +460,6 @@ module.exports = {
             'webpack/webpack-runtime',
             'webpack/tapable/',
             'webpack/webpack4-import'
-          ]
-        }
-      ],
-
-      // Front End - 专题
-      '/front-end/topics/': [
-        {
-          title: '滚动',
-          collapsable: true,
-          children: [
-            'scroll/',
-            'scroll/touch-event',
-            'scroll/click-delay',
-            'scroll/fastclick'
           ]
         }
       ],
@@ -470,7 +479,7 @@ module.exports = {
       '/back-end/': [
         {
           title: 'Node',
-          collapsable: true,
+          collapsable: false,
           children: [
             'node/',
             'node/pm2',
@@ -479,6 +488,15 @@ module.exports = {
             'node/package.json',
             'node/package-lock.json',
             'node/third-party-package'
+          ]
+        },
+        {
+          title: 'NPM',
+          collapsable: false,
+          children: [
+            'npm/npm-command',
+            'npm/npmrc',
+            'npm/npm-config'
           ]
         }
       ],
