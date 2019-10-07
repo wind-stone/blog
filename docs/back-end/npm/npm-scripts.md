@@ -1,5 +1,7 @@
 # npm-scripts
 
+Copy and tran from [npm-scripts](https://www.npmjs.cn/misc/scripts/)
+
 ## 描述
 
 `npm`支持`package.json`文件里的`scripts`属性的以下脚本：
@@ -175,3 +177,32 @@ process.env.npm_package_scripts_install === "foo.js"
 - 检查环境以确定将文件放置在何处。比如，若是`npm_config_binroot`环境变量设置为`/home/user/bin`，则不要试图往`/usr/local/bin`里安装可执行文件。用户如此设置可能是有理由的。
 - 不要以`sudo`前缀执行你的脚本命令。若是因为一些原因需要`root`权限，且因为没有`root`权限而失败，则用户将根据提示切换权限来执行`npm`命令。
 - 不要使用`install`脚本。使用一个`.gyp`文件来编译，其他任何情况都使用`prepublish`。你几乎应该从来不要明确地设置`preinstall`或`install`脚本。若是你设置了，请考虑下是否有其他的选择。唯一合理地使用`install`或`preinstall`脚本，是为了要在目标体系结构里必须要完成某项编译的情况下。
+
+## 补充知识
+
+Reference: [阮一峰 - npm scripts 使用指南](http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html)
+
+### npm run
+
+不带参数执行`npm run`命令，可以查看当前项目的所有`npm`脚本命令:
+
+```sh
+➜  blog git:(master) npm run
+Lifecycle scripts included in blog:
+  start
+    npm run dev
+
+available via `npm run-script`:
+  dev
+    vuepress dev docs
+  build
+    vuepress build docs
+  deploy
+    sh deploy.sh
+  eslint
+    sh eslint.sh
+```
+
+### npm run env
+
+你可以运行`npm run env`（类 Unix 下）或`npm run env-windows`（Windows 下）查看所有的环境变量。
