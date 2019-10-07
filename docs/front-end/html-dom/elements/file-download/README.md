@@ -29,13 +29,20 @@ Reference: [`<a>`标签中download属性无法使用重命名下载文件名怎�
 - 仅显示文本
 
 ```html
-<download-link :url="excelTemplateUrl" text="素材 Excel 文件规范" name="素材 Excel 文件规范"></download-link>
+<download-link
+  :url="excelTemplateUrl"
+  text="素材 Excel 文件规范"
+  name="素材 Excel 文件规范"
+/>
 ```
 
 - 显示 slot
 
 ```html
-<download-link :url="excelTemplateUrl" name="素材 Excel 文件规范">
+<download-link
+  :url="excelTemplateUrl"
+  name="素材 Excel 文件规范"
+>
   <span>素材 Excel 文件规范</span>
 </download-link>
 ```
@@ -48,4 +55,4 @@ Reference: [`<a>`标签中download属性无法使用重命名下载文件名怎�
 
 ### vue 组件
 
-<<< @/docs/front-end/html-dom/elements/file-download/download-link.vue
+<<< @/docs/.vuepress/components/code/download/download-link.vue

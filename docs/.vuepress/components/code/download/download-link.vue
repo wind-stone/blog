@@ -10,7 +10,7 @@
 </template>
 
 <script>
-export const isSupportDownload = 'download' in document.createElement('a')
+const isSupportDownload = 'download' in document.createElement('a')
 
 export default {
   name: 'download-link',
