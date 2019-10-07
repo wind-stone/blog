@@ -496,7 +496,8 @@ module.exports = {
           children: [
             'npm/npm-command',
             'npm/npmrc',
-            'npm/npm-config'
+            'npm/npm-config',
+            'npm/npm-scripts'
           ]
         }
       ],
