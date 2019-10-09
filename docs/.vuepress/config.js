@@ -494,6 +494,7 @@ module.exports = {
           title: 'NPM',
           collapsable: false,
           children: [
+            'npm/',
             'npm/npm-command',
             'npm/npmrc',
             'npm/npm-config',
