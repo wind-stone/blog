@@ -51,7 +51,7 @@ nvm use xxx
 $ node-modules/.bin/vuepress dev
 ```
 
-而`npx`就是让调用项目内部安装模块更加方便：
+而`npx`就是方便直接调用项目内部安装的模块：
 
 ```sh
 npx vuepress dev

@@ -9,30 +9,38 @@
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
     "deploy": "sh deploy.sh",
-    "eslint": "sh eslint.sh"
+    "lint": "lint-staged"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run eslint",
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "fastclick": "^1.0.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^7.1.2",
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.5.1",
+    "eslint": "^5.0.0",
     "eslint-plugin-vue": "^5.2.3",
     "husky": "^1.1.2",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "lint-staged": "^9.4.2",
+    "node-sass": "^4.12.0",
     "sass": "^1.23.0",
     "sass-loader": "^8.0.0",
     "vconsole": "^3.3.0",
     "vue-eslint-parser": "^6.0.4",
     "vuepress": "^1.1.0"
-  },
-  "dependencies": {
-    "fastclick": "^1.0.6"
   }
 }
