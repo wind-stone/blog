@@ -1,5 +1,5 @@
 module.exports = {
-    // Front End - JavaScript
+    // JavaScript
     '/front-end/js/': [
         {
             title: 'JavaScript',
@@ -43,7 +43,7 @@ module.exports = {
         }
     ],
 
-    // Front End - CSS
+    // CSS
     '/front-end/css/': [
         {
             title: 'CSS 专题',
@@ -109,7 +109,7 @@ module.exports = {
         }
     ],
 
-    // Front End - HMLT-DOM
+    // HMLT-DOM
     '/front-end/html-dom/': [
         {
             title: 'HTML 专题',
@@ -160,7 +160,7 @@ module.exports = {
         }
     ],
 
-    // Front End - 浏览器环境
+    // 浏览器环境
     '/front-end/browser-env/': [
         {
             title: '浏览器',
@@ -222,12 +222,13 @@ module.exports = {
         }
     ],
 
+    // 兼容性
     '/front-end/compatibility/': [
         {
-            title: '概述',
+            title: '浏览器兼容性',
             collapsable: true,
             children: [
-                ''
+                'browser/safari/'
             ]
         },
         {
@@ -248,7 +249,7 @@ module.exports = {
             ]
         },
         {
-            title: '兼容性',
+            title: 'HTML-DOM 兼容性',
             collapsable: true,
             children: [
                 'html-dom/video',
@@ -258,7 +259,7 @@ module.exports = {
         }
     ],
 
-    // Front End - 专题
+    // 专题
     '/front-end/topics/': [
         {
             title: '滚动',
@@ -272,7 +273,7 @@ module.exports = {
         }
     ],
 
-    // Front End - 工程化
+    // 工程化
     '/front-end/engineering/': [
         {
             title: '工程化',
@@ -304,13 +305,24 @@ module.exports = {
         }
     ],
 
-    // Front End - 奇技淫巧
+    // 奇技淫巧
     '/front-end/skills/': [
         {
             title: '奇技淫巧',
             collapsable: true,
             children: [
                 'android-weixin-auto-open-browser'
+            ]
+        }
+    ],
+
+    // 踩过的坑
+    '/front-end/pitfall/': [
+        {
+            title: '踩过的坑',
+            collapsable: true,
+            children: [
+                ''
             ]
         }
     ]

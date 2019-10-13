@@ -35,7 +35,8 @@ module.exports = {
           { text: '浏览器环境', link: '/front-end/browser-env/' },
           { text: '兼容性', link: '/front-end/compatibility/' },
           { text: '工程化', link: '/front-end/engineering/project-init' },
-          { text: '奇技淫巧', link: '/front-end/skills/android-weixin-auto-open-browser' }
+          { text: '奇技淫巧', link: '/front-end/skills/android-weixin-auto-open-browser' },
+          { text: '踩过的坑', link: '/front-end/pitfall/' }
         ]
       },
       { text: 'Back End', link: '/back-end/' },
