@@ -1,5 +1,13 @@
 # 项目初始化
 
+## 添加 .npmrc 文件
+
+项目根目录下添加`.npmrc`文件，以设置项目独有的`npm`配置，比如`registry`，可按照需求选择使用公司的、淘宝的或是官方的`registry`。
+
+```
+registry=https://registry.npmjs.org/
+```
+
 ## 使用 husky 添加 git hooks
 
 - 官方文档: [ESLint - 中文](https://cn.eslint.org/)
