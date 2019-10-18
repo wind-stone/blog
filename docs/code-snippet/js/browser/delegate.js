@@ -7,31 +7,26 @@
  */
 function addEventDelegate(element, type, selector, cb) {
   element.addEventListener(type, evt => {
-    let node = evt.target
-    const elements = element.querySelectorAll(selector)
+    let node = evt.target;
+    const elements = element.querySelectorAll(selector);
     while (node && !contains(elements, node)) {
-      node = node.parentNode
+      node = node.parentNode;
       if (node === element) {
-        return
+        return;
       }
     }
-    node && cb(evt, node)
-  })
-}
-function contains(elements, element) {
-  return [...elements].some((el) => {
-    return el === element
-  })
+    node && cb(evt, node);
+  });
 }
 
 // 判断祖先关系
-function contains (container, contained) {
+function contains(container, contained) {
   if (contained) {
-    while (contained = contained.parentNode) {
+    while ((contained = contained.parentNode)) {
       if (contained === container) {
-        return true
+        return true;
       }
     }
   }
-  return false
+  return false;
 }

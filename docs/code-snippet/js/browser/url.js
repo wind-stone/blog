@@ -1,4 +1,4 @@
-import objectAssign from 'object-assign'
+import objectAssign from 'object-assign';
 
 /**
  * 解析 url 查询字符串里的参数，返回查询参数对象
@@ -6,19 +6,19 @@ import objectAssign from 'object-assign'
  * @return {Object} 查询参数对象，形如 {a: '12345', b: 'tgd'}
  */
 export function urlParse(givenUrl) {
-  const url = givenUrl || window.location.search
-  const reg = /[?&][^?&]+=[^?&]+/g
-  const queries = url.match(reg)
-  let queryHash = {}
+  const url = givenUrl || window.location.search;
+  const reg = /[?&][^?&]+=[^?&]+/g;
+  const queries = url.match(reg);
+  let queryHash = {};
   if (queries) {
-    queries.forEach((query) => {
-      let queryPair = query.substring(1).split('=')
-      let queryKey = decodeURIComponent(queryPair[0])
-      let queryVal = decodeURIComponent(queryPair[1])
-      queryHash[queryKey] = queryVal
-    })
+    queries.forEach(query => {
+      let queryPair = query.substring(1).split('=');
+      let queryKey = decodeURIComponent(queryPair[0]);
+      let queryVal = decodeURIComponent(queryPair[1]);
+      queryHash[queryKey] = queryVal;
+    });
   }
-  return queryHash
+  return queryHash;
 }
 
 /**
@@ -29,36 +29,36 @@ export function urlParse(givenUrl) {
  */
 export function getNewUrlWithGivenParams(url, params) {
   if (!params) {
-    return url
+    return url;
   }
 
   // 获取 hash
-  const hashMarkIndex = url.indexOf('#')
-  let hash, originAndPath
+  const hashMarkIndex = url.indexOf('#');
+  let hash, originAndPath;
   if (hashMarkIndex > -1) {
-    hash = url.slice(hashMarkIndex)
-    originAndPath = url.slice(0, hashMarkIndex)
+    hash = url.slice(hashMarkIndex);
+    originAndPath = url.slice(0, hashMarkIndex);
   } else {
-    hash = ''
-    originAndPath = url
+    hash = '';
+    originAndPath = url;
   }
 
   // 最终查询串对象
-  const finalQuery = {}
+  const finalQuery = {};
 
   // 获取旧 query，并复制到 finalQuery
-  const questionMarkIndex = originAndPath.indexOf('?')
+  const questionMarkIndex = originAndPath.indexOf('?');
   if (questionMarkIndex > -1) {
-    let search = originAndPath.slice(questionMarkIndex)
-    originAndPath = originAndPath.slice(0, questionMarkIndex)
-    const oldParams = urlParse(search)
-    objectAssign(finalQuery, oldParams)
+    let search = originAndPath.slice(questionMarkIndex);
+    originAndPath = originAndPath.slice(0, questionMarkIndex);
+    const oldParams = urlParse(search);
+    objectAssign(finalQuery, oldParams);
   }
 
   // 将新增 params 复制到 finalQuery
-  objectAssign(finalQuery, params)
+  objectAssign(finalQuery, params);
 
-  return originAndPath + '?' + urlParams(finalQuery) + hash
+  return originAndPath + '?' + urlParams(finalQuery) + hash;
 }
 
 /**
@@ -68,26 +68,26 @@ export function getNewUrlWithGivenParams(url, params) {
  * @return {String} 查询字符串 query string
  */
 export function urlParams(queryHash, ifEncode) {
-  let queryString = ''
+  let queryString = '';
 
   let handleQueryValue = (function(ifEncode) {
     if (ifEncode === false) {
       return function(value) {
-        return value
-      }
+        return value;
+      };
     }
     return function(value) {
-      return encodeURIComponent(value)
-    }
-  })(ifEncode)
+      return encodeURIComponent(value);
+    };
+  })(ifEncode);
 
   if (Object.prototype.toString.call(queryHash) === '[object Object]') {
     for (let key in queryHash) {
       if (queryHash.hasOwnProperty(key)) {
-        let value = queryHash[key] || ''
-        queryString += '&' + key + '=' + handleQueryValue(value)
+        let value = queryHash[key] || '';
+        queryString += '&' + key + '=' + handleQueryValue(value);
       }
     }
   }
-  return queryString ? queryString.substring(1) : ''
+  return queryString ? queryString.substring(1) : '';
 }

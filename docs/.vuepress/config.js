@@ -4,7 +4,7 @@ module.exports = {
   title: '风动之石的博客', // 网站的标题
   description: '记录工作，记录生活', // 网站的描述
   head: [ // 额外的需要被注入到当前页面的 HTML <head> 中的标签
-    ['link', { rel: 'icon', href: `/img/long.png` }]
+    ['link', { rel: 'icon', href: '/img/long.png' }]
   ],
 
   markdown: {
@@ -49,4 +49,4 @@ module.exports = {
     ],
     sidebar
   }
-}
+};

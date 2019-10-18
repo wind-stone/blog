@@ -8,6 +8,39 @@
 registry=https://registry.npmjs.org/
 ```
 
+## 代码格式化、校验
+
+### VS Code 配置
+
+下载如下插件：
+
+- ESlint 插件
+- Vetur 插件: 可对 Vue 文件进行语法高亮、代码片段、Emmet 支持、Lint/错误检查、格式化、智能提示、等等功能
+
+需要作出如下配置:
+
+```json
+{
+  "editor.formatOnSave": true, // 
+  // Eslint 插件配置，详见 https://github.com/microsoft/vscode-eslint
+  "eslint.autoFixOnSave": true, // Enables auto fix on save. Please note auto fix on save is only available if VS Code's files.autoSave is either off, onFocusChange or onWindowChange. It will not work with afterDelay.
+  "eslint.validate": [ // An array of language ids which should be validated by ESLint，详见
+    "html",
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ],
+  // Vetur 插件配置，详见 https://vuejs.github.io/vetur/
+  "vetur.validation.template": false, // 关闭 vetur 对 <template> 的 lint 校验，交给 ESlint 来做校验，详见 https://vuejs.github.io/vetur/linting-error.html#linting-for-template
+  "vetur.format.defaultFormatter.html": "prettier", // 设置使用 prettier 来对 <template> 做格式化，详见 https://vuejs.github.io/vetur/formatting.html#formatters
+}
+```
+
+
+
 ## 使用 husky 添加 git hooks
 
 - 官方文档: [ESLint - 中文](https://cn.eslint.org/)

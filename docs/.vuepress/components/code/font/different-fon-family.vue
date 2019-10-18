@@ -11,21 +11,27 @@
 
 <script>
 export default {
-  name: 'different-fon-family'
-}
+  name: 'DifferentFonFamily'
+};
 </script>
 
 <style lang="less" scoped>
 .ctn {
-  margin: 0;
-  padding: 0;
-  font-size: 100px;
-  color: #f03e37;
-  > span {
-    background-color: #851e1f;
-  }
+    margin: 0;
+    padding: 0;
+    font-size: 100px;
+    color: #f03e37;
+    > span {
+        background-color: #851e1f;
+    }
 }
-.a { font-family: Helvetica }
-.b { font-family: Gruppo }
-.c { font-family: Catamaran }
+.a {
+    font-family: Helvetica;
+}
+.b {
+    font-family: Gruppo;
+}
+.c {
+    font-family: Catamaran;
+}
 </style>

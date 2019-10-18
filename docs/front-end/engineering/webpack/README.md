@@ -16,6 +16,47 @@ sidebarDepth: 0
 
 `webpack-bundle-analyzer`
 
+### 分离代码块
+
+`splitChunk`
+
+#### 默认配置
+
+```js
+module.exports = {
+  //...
+  optimization: {
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      automaticNameMaxLength: 30,
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
+  }
+};
+```
+
+#### 待解决疑问
+
+- `splitChunk`的默认的`cacheGroups`是怎么配置的？
+- 
+
 ## 概念名词
 
 ### module、chunk、bundle、asset

@@ -1,10 +1,18 @@
 <template>
-    <div ref="mask" v-show="visible" class="common-popup-mask">
-        <div class="common-popup-content">
-            <a v-if="showClose" class="close-btn" @click="close"></a>
-            <slot></slot>
-        </div>
+  <div
+    v-show="visible"
+    ref="mask"
+    class="common-popup-mask"
+  >
+    <div class="common-popup-content">
+      <a
+        v-if="showClose"
+        class="close-btn"
+        @click="close"
+      />
+      <slot />
     </div>
+  </div>
 </template>
 
 <script>
@@ -12,114 +20,137 @@ import { contains } from '../common/js/util';
 
 const CLOSE = 'close';
 export default {
-    name: 'common-popup',
-    model: {
-        prop: 'visible',
-        event: CLOSE,
+  name: 'CommonPopup',
+  model: {
+    prop: 'visible',
+    event: CLOSE
+  },
+  props: {
+    visible: {
+      type: Boolean,
+      required: false,
+      default: false
     },
-    props: {
-        visible: {
-            type: Boolean,
-            required: false,
-            default: false,
-        },
-        showClose: {
-            type: Boolean,
-            required: false,
-            default: true,
-        },
-        // 禁止弹窗任何区域滚动
-        forbidBgScroll: {
-            type: Boolean,
-            required: false,
-            default: true,
-        },
-        // 滚动区域 DOM 元素的类名，仅在 forbidBgScroll 为真值时有效
-        scrollAreaSelector: {
-            type: String,
-            required: false,
-            default: '',
-        },
+    showClose: {
+      type: Boolean,
+      required: false,
+      default: true
     },
-    data() {
-        return {
-            // 滚动区域 DOM 元素
-            scrollArea: '',
-            // 滚动开始时的 Y 坐标
-            touchStartY: 0,
-            // 滚动区域 offsetHeight、scrollHeight
-            scrollAreaOffsetHeight: 0,
-            scrollAreaScrollHeight: 0,
-        };
+    // 禁止弹窗任何区域滚动
+    forbidBgScroll: {
+      type: Boolean,
+      required: false,
+      default: true
     },
-    mounted() {
-        if (this.forbidBgScroll) {
-            this.scrollArea = this.scrollAreaSelector && this.$refs.mask.querySelector(this.scrollAreaSelector);
-            this.bindForbidBgScrollEvent();
-        }
+    // 滚动区域 DOM 元素的类名，仅在 forbidBgScroll 为真值时有效
+    scrollAreaSelector: {
+      type: String,
+      required: false,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      // 滚动区域 DOM 元素
+      scrollArea: '',
+      // 滚动开始时的 Y 坐标
+      touchStartY: 0,
+      // 滚动区域 offsetHeight、scrollHeight
+      scrollAreaOffsetHeight: 0,
+      scrollAreaScrollHeight: 0
+    };
+  },
+  mounted() {
+    if (this.forbidBgScroll) {
+      this.scrollArea =
+        this.scrollAreaSelector &&
+        this.$refs.mask.querySelector(this.scrollAreaSelector);
+      this.bindForbidBgScrollEvent();
+    }
+  },
+  destroyed() {
+    if (this.forbidBgScroll) {
+      this.removeForbidBgScrollEvent();
+    }
+  },
+  methods: {
+    close() {
+      this.$emit(CLOSE, false);
     },
-    destroyed() {
-        if (this.forbidBgScroll) {
-            this.removeForbidBgScrollEvent();
-        }
+    bindForbidBgScrollEvent() {
+      this.$refs.mask &&
+        this.$refs.mask.addEventListener(
+          'touchmove',
+          this.maskTouchMove
+        );
+      if (this.scrollArea) {
+        this.scrollArea.addEventListener(
+          'touchstart',
+          this.scrollAreaTouchStart
+        );
+        this.scrollArea.addEventListener(
+          'touchmove',
+          this.scrollAreaTouchMove
+        );
+      }
     },
-    methods: {
-        close() {
-            this.$emit(CLOSE, false);
-        },
-        bindForbidBgScrollEvent() {
-            this.$refs.mask && this.$refs.mask.addEventListener('touchmove', this.maskTouchMove);
-            if (this.scrollArea) {
-                this.scrollArea.addEventListener('touchstart', this.scrollAreaTouchStart);
-                this.scrollArea.addEventListener('touchmove', this.scrollAreaTouchMove);
-            }
-        },
-        removeForbidBgScrollEvent() {
-            this.$refs.mask && this.$refs.mask.removeEventListener('touchmove', this.maskTouchMove);
-            if (this.scrollArea) {
-                this.scrollArea.removeEventListener('touchstart', this.scrollAreaTouchStart);
-                this.scrollArea.removeEventListener('touchmove', this.scrollAreaTouchMove);
-            }
-        },
-        maskTouchMove(evt) {
-            const target = evt.target;
-            if (!this.scrollArea || !contains(this.scrollArea, target)) {
-                evt.preventDefault();
-            }
-        },
-        scrollAreaTouchStart(evt) {
-            const targetTouches = evt.targetTouches || [];
-            if (targetTouches.length > 0) {
-                const touch = targetTouches[0] || {};
-                this.touchStartY = touch.clientY;
-                this.scrollAreaOffsetHeight = this.scrollArea.offsetHeight;
-                this.scrollAreaScrollHeight = this.scrollArea.scrollHeight;
-            }
-        },
-        scrollAreaTouchMove(evt) {
-            const changedTouches = evt.changedTouches;
-            let canMove = false;
-            const scrollTop = this.scrollArea.scrollTop;
-            if (changedTouches.length > 0) {
-                const touch = changedTouches[0] || {};
-                const moveY = touch.clientY;
+    removeForbidBgScrollEvent() {
+      this.$refs.mask &&
+        this.$refs.mask.removeEventListener(
+          'touchmove',
+          this.maskTouchMove
+        );
+      if (this.scrollArea) {
+        this.scrollArea.removeEventListener(
+          'touchstart',
+          this.scrollAreaTouchStart
+        );
+        this.scrollArea.removeEventListener(
+          'touchmove',
+          this.scrollAreaTouchMove
+        );
+      }
+    },
+    maskTouchMove(evt) {
+      const target = evt.target;
+      if (!this.scrollArea || !contains(this.scrollArea, target)) {
+        evt.preventDefault();
+      }
+    },
+    scrollAreaTouchStart(evt) {
+      const targetTouches = evt.targetTouches || [];
+      if (targetTouches.length > 0) {
+        const touch = targetTouches[0] || {};
+        this.touchStartY = touch.clientY;
+        this.scrollAreaOffsetHeight = this.scrollArea.offsetHeight;
+        this.scrollAreaScrollHeight = this.scrollArea.scrollHeight;
+      }
+    },
+    scrollAreaTouchMove(evt) {
+      const changedTouches = evt.changedTouches;
+      let canMove = false;
+      const scrollTop = this.scrollArea.scrollTop;
+      if (changedTouches.length > 0) {
+        const touch = changedTouches[0] || {};
+        const moveY = touch.clientY;
 
-                if (moveY > this.touchStartY && scrollTop <= 0) {
-                    canMove = false;
-                } else if (
-                    moveY < this.touchStartY
-                    && scrollTop + this.scrollAreaOffsetHeight >= this.scrollAreaScrollHeight
-                ) {
-                    canMove = false;
-                } else {
-                    canMove = true;
-                }
-                if (!canMove) {
-                    evt.preventDefault();
-                }
-            }
-        },
-    },
+        if (moveY > this.touchStartY && scrollTop <= 0) {
+          canMove = false;
+        } else if (
+          moveY < this.touchStartY &&
+          scrollTop + this.scrollAreaOffsetHeight >=
+          this.scrollAreaScrollHeight
+        ) {
+          canMove = false;
+        } else {
+          canMove = true;
+        }
+        if (!canMove) {
+          evt.preventDefault();
+        }
+      }
+    }
+  }
 };
 </script>
 
@@ -130,7 +161,7 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, .6);
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 1000;
     > .common-popup-content {
         position: absolute;
