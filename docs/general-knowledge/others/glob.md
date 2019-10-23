@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# glob 匹配模式
+# glob 匹配模式 #
 
 [[toc]]
 
@@ -10,7 +10,7 @@ sidebarDepth: 0
 
 `glob`命令，是`global`的缩写，起源于贝尔实验室的 Unix 最早期的版本。后来，这项功能以库函数`glob()`的形式提供，被用于`shell`等程序。
 
-## 语法
+## 语法 ##
 
 最常用的通配符是`*`、`?`、`[...]`。
 
@@ -23,7 +23,7 @@ sidebarDepth: 0
 
 上述所有情况里，路径分隔符（Unix 里是`/`，Windows 里是`/`）被不会被匹配。
 
-## Unix
+## Unix ##
 
 在 Linux 和 POSIX 系统里，`*`、`?`与上述定义一样，但`[...]`有两个额外的含义：
 
@@ -35,3 +35,18 @@ sidebarDepth: 0
 一些`shell`比如`C shell`和`Bash`支持额外的语法，比如[Brace expansion](https://en.wikipedia.org/wiki/Bash_(Unix_shell)#Brace_expansion)。
 
 `Bash shell`还支持`Extended Globbing`，允许其他模式匹配操作符被用于匹配多个被圆括号（`(`和`)`）包裹的模式，这可以通过设置`extglob`的选项来启用。
+
+## 文件/文件夹匹配 ##
+
+在命令行里经常会使用`**`和`*`来匹配文件和文件夹，一些常用的方式为:
+
+- `*`: 在单个路径部分里，匹配 0 或多个字符
+- `**`: 若是`**`独自存在在路径的某个部分，则它将匹配 0 或多个目录以及子目录。
+
+示例:
+
+- `a/*.js`: 匹配`a/b.js`、`a/bc.js`、`a/bcd.js`等等
+- `**/*.js`: 配置根目录下所有文件夹及其子文件里的`.js`文件
+- `*.js`: 在设置了`matchBase:true`时，等同于`**/*.js`
+
+详见: [github - node-glob](https://github.com/isaacs/node-glob)
