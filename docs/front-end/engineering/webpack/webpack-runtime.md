@@ -813,7 +813,7 @@ function webpackJsonpCallback(data) {
 
 ## 疑难点
 
-### 为什么要保留原 window["webpackJsonp"].push 的引用？
+### 为什么要保留原 window["webpackJsonp"].push 的引用
 
 在`runtime.js`的最底部，会保留原`window["webpackJsonp"].push`的引用，并将新的`window["webpackJsonp"].push`设置为`webpackJsonpCallback`，以便能在全局范围内使用`webpackJsonpCallback`。而且在`webpackJsonpCallback`函数的最后，还会执行老的`window["webpackJsonp"].push`。
 

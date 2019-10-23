@@ -4,7 +4,7 @@
 
 项目根目录下添加`.npmrc`文件，以设置项目独有的`npm`配置，比如`registry`，可按照需求选择使用公司的、淘宝的或是官方的`registry`。
 
-```
+```txt
 registry=https://registry.npmjs.org/
 ```
 
@@ -21,7 +21,7 @@ registry=https://registry.npmjs.org/
 
 ```json
 {
-  "editor.formatOnSave": true, // 
+  "editor.formatOnSave": true, //
   // Eslint 插件配置，详见 https://github.com/microsoft/vscode-eslint
   "eslint.autoFixOnSave": true, // Enables auto fix on save. Please note auto fix on save is only available if VS Code's files.autoSave is either off, onFocusChange or onWindowChange. It will not work with afterDelay.
   "eslint.validate": [ // An array of language ids which should be validated by ESLint，详见
@@ -38,8 +38,6 @@ registry=https://registry.npmjs.org/
   "vetur.format.defaultFormatter.html": "prettier", // 设置使用 prettier 来对 <template> 做格式化，详见 https://vuejs.github.io/vetur/formatting.html#formatters
 }
 ```
-
-
 
 ## 使用 husky 添加 git hooks
 
