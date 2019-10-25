@@ -1,12 +1,16 @@
-# package.json
+# package.json #
 
 `package.json`文件是 NPM 包的描述文件，NPM 包的所有行为与包描述文件的字段息息相关。
 
 与 CommonJS 包规范相比，NPM 的实现里的包描述文件多了`author`、`bin`、`main`、`devDependencies`四个字段。
 
-## scripts
+## version ##
 
-### scripts 里的参数传递
+
+
+## scripts ##
+
+### scripts 里的参数传递 ###
 
 假设`package.json`文件里如下配置了`scripts`属性：
 
@@ -31,7 +35,7 @@ console.log('2', process.argv[2]) // 2 hello
 console.log('3', process.argv[3]) // 3 world
 ```
 
-## bin
+## bin ##
 
 若是在`package.json`文件下定义了如下示例里的`bin`属性，该包安装时将建立符号链接，全局安装时将链接到`prefix/bin`，局部安装时将链接到`./node_modules/.bin/`。
 
@@ -82,13 +86,13 @@ process.argv[1]: /Users/wind-stone/.nvm/versions/node/v11.10.0/bin/npm-bin
 process.argv[2]: undefined
 ```
 
-### 全局安装的 bin
+### 全局安装的 bin ###
 
 可以看到，执行`npm i -g`之后，建立起了从`/Users/wind-stone/.nvm/versions/node/v11.10.0/bin/npm-bin`到`/Users/wind-stone/.nvm/versions/node/v11.10.0/lib/node_modules/npm-bin/bin/npm-bin.js`的符号链接。
 
 PS: 系统安装了`nvm`。
 
-### 局部安装的 bin
+### 局部安装的 bin ###
 
 在常规项目的`node_modules/.bin`路径下执行`ls -l`命令，可以看到局部安装的`vuepress`和`webpack`等包的符号链接：
 
@@ -102,7 +106,7 @@ lrwxr-xr-x  1 wind-stone  staff  25 10 22 20:15 webpack -> ../webpack/bin/webpac
 
 ```sh
 # 项目的根目录下执行
-$ node_modules/.bin/vuepress dev
+node_modules/.bin/vuepress dev
 ```
 
 :::

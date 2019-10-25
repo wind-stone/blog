@@ -1,6 +1,6 @@
-# npm 命令
+# npm 命令 #
 
-## npm config 命令
+## npm config 命令 ##
 
 `npm config`命令是一组设置`npm`配置的命令。通过`npm config -h`可以查看到所有这些命令，详见[官方文档 - npm-config](https://docs.npmjs.com/cli/config)。
 
@@ -15,7 +15,7 @@ npm set <key> <value>
 npm get [<key>]
 ```
 
-### npm config set
+### npm config set ###
 
 ```sh
 # 设置某项配置项
@@ -25,7 +25,7 @@ npm config set registry https://npm.corp.kuaishou.com/
 npm config set registry=https://npm.corp.kuaishou.com/
 ```
 
-### npm config get
+### npm config get ###
 
 ```sh
 # 获取某配置项的值
@@ -42,7 +42,7 @@ npm config get registry
 npm config get prefix
 ```
 
-### npm config delete
+### npm config delete ###
 
 ```sh
 # 删除某配置项
@@ -50,14 +50,14 @@ npm config get prefix
 npm config get registry
 ```
 
-### npm config list
+### npm config list ###
 
 ```sh
 # 查看 npm 的所有配置，包括默认配置
 npm config ls -l
 ```
 
-### npm config edit
+### npm config edit ###
 
 `npm`提供了方便快捷的修改方式，在不知道`.npmrc`这个文件的位置的情况下，也可以修改该文件。
 
@@ -65,6 +65,38 @@ npm config ls -l
 npm config edit
 ```
 
-### npm set/get
+### npm set/get ###
 
 `npm set`和`npm get`可能是`npm config set`和`npm config get`的简写方式，官网未说明，待验证。
+
+### npm dist-tag ###
+
+详见[npm-dist-tag](https://docs.npmjs.com/cli/dist-tag.html)
+
+#### 查看包的发布 tag ####
+
+```sh
+# 语法
+npm dist-tag ls [<pkg>]
+
+# 示例
+npm dist-tag ls vue
+# 结果
+# beta: 2.6.0-beta.3
+# csp: 1.0.28-csp
+# latest: 2.6.10
+```
+
+#### 添加包的发布 tag ####
+
+```sh
+# 语法
+npm dist-tag add <pkg>@<version> [<tag>]
+```
+
+#### 删除包的发布 tag ####
+
+```sh
+# 语法
+npm dist-tag rm <pkg> <tag>
+```
