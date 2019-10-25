@@ -1,8 +1,8 @@
-# npm #
+# npm
 
-## 问题汇总 ##
+## 问题汇总
 
-### 修改 registry 后 package-lock.json 里的 resolved 没更新 ###
+### 修改 registry 后 package-lock.json 里的 resolved 没更新
 
 若是在项目里修改`registry`，在`npm i`之后，`package-lock.json`文件里的`resolved`仍为原来的`registry`，可通过如下步骤修复这个问题:
 
