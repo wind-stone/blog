@@ -284,12 +284,13 @@ module.exports = {
       ]
     },
     {
-      title: 'ESlint',
+      title: 'ESLint',
       collapsable: true,
       children: [
         'eslint/',
         'eslint/vscode-eslint',
-        'eslint/vue-eslint'
+        'eslint/vue-eslint',
+        'eslint/prettier-eslint'
       ]
     },
     {
