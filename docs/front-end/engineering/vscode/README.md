@@ -8,7 +8,7 @@
 
 TODO:
 
-### ESlint
+### ESLint
 
 ```json
 {
@@ -29,7 +29,7 @@ TODO:
 }
 ```
 
-注意，VS Code 的 ESlint 插件，默认会相对于工作目录来解析配置文件（比如`.eslintrc`/`.eslintignore`文件），可通过`eslint.workingDirectories`进行修改，但是一般不需要。
+注意，VS Code 的 ESLint 插件，默认会相对于工作目录来解析配置文件（比如`.eslintrc`/`.eslintignore`文件），可通过`eslint.workingDirectories`进行修改，但是一般不需要。
 
 ### Vetur
 

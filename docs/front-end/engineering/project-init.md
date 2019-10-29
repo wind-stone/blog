@@ -44,7 +44,7 @@ module.exports = {
 
 下载如下插件：
 
-- ESlint 插件
+- ESLint 插件
 - Vetur 插件: 可对 Vue 文件进行语法高亮、代码片段、Emmet 支持、Lint/错误检查、格式化、智能提示、等等功能
 
 需要作出如下配置:
@@ -64,17 +64,17 @@ module.exports = {
     }
   ],
   // Vetur 插件配置，详见 https://vuejs.github.io/vetur/
-  "vetur.validation.template": false, // 关闭 vetur 对 <template> 的 lint 校验，交给 ESlint 来做校验，详见 https://vuejs.github.io/vetur/linting-error.html#linting-for-template
+  "vetur.validation.template": false, // 关闭 vetur 对 <template> 的 lint 校验，交给 ESLint 来做校验，详见 https://vuejs.github.io/vetur/linting-error.html#linting-for-template
   "vetur.format.defaultFormatter.html": "prettier", // 设置使用 prettier 来对 <template> 做格式化，详见 https://vuejs.github.io/vetur/formatting.html#formatters
 }
 ```
 
-注意，VS Code 的 ESlint 插件会使用项目根目录下的`.eslintrc.*`文件。
+注意，VS Code 的 ESLint 插件会使用项目根目录下的`.eslintrc.*`文件。
 
 ## 使用 husky 添加 git hooks ##
 
 - 官方文档: [ESLint - 中文](https://cn.eslint.org/)
-- [风动之石的博客 - ESlint](../tools/eslint.md)
+- [风动之石的博客 - ESLint](../tools/eslint.md)
 
 [husky](https://github.com/typicode/husky)可以让我们更加简单地添加一些钩子函数，比如在提交代码前校验代码风格和校验提交说明等。
 

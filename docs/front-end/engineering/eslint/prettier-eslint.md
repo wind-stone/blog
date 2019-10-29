@@ -50,10 +50,20 @@
 
 ## 推荐配置
 
-以上这种方式的集成配置较为繁琐，`eslint-plugin-prettier`提供了一种简单的配置方式:
+以上这种方式的集成配置较为繁琐，`eslint-plugin-prettier`提供了一种简单的配置方式。
+
+### 安装依赖
+
+```sh
+npm install -S --save-exact prettier
+npm install -S eslint-plugin-prettier eslint-config-prettier
+```
+
+### 配置 .eslintrc.\*
+
+`.eslintrc.*`文件:
 
 ```json
-// .eslintrc.*
 {
   "extends": ["plugin:prettier/recommended"]
 }
@@ -82,7 +92,17 @@ module.exports = {
 };
 ```
 
-现在，你可以在`.prettierrc`文件里设置 Prettier 的格式化规则了。
+即`"extends": ["plugin:prettier/recommended"]`这一行实际上是以下配置的缩写方式。
+
+```json
+{
+  "extends": ["prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}
+```
 
 ### 配置 Prettier 规则
 
@@ -131,7 +151,7 @@ module.exports = {
 
 ## VS Code 配置
 
-安装 Prettier - Code formatter 插件，并在 Code -> 首选项（`Preferences`） -> 设置（`Settings`），添加如下配置：
+安装 VS Code 的 ESLint 插件和 Prettier - Code formatter 插件，并在 Code -> 首选项（`Preferences`） -> 设置（`Settings`），添加如下配置：
 
 ```json
 {
@@ -167,7 +187,7 @@ module.exports = {
     }
   ],
 
-  // Vetur
+  // Vetur（若安装了此插件的话）
   // 关闭 vetur 的格式化功能
   "vetur.format.enable": false,
   // 关闭 vetur 对 template 的检查，交给 eslint，详见：https://vuejs.github.io/vetur/linting-error.html#linting-for-template

@@ -5,9 +5,7 @@
         "eslint:recommended",
         // 使用 eslint-plugin-vue 插件，并继承 eslint-config-vue 的 recommended 配置，并会设置 parser、plugins、env 等选项，详见下方说明
         "plugin:vue/recommended"
-        // 使用 eslint-plugin-prettier 插件，并继承 eslint-config-prettier 里的 recommended 配置
-        // （注意，这是一种简写方式，需要手动 install 这两个依赖，详见 https://prettier.io/docs/en/integrating-with-linters.html#recommended-configuration）
-        // eslint-plugin-prettier 插件会调用 Prettier 对你的代码风格进行检查，其原理是先使用 Prettier 对你的代码进行格式化，然后与格式化之前的代码进行对比，如果出现了不一致，这个地方就会被 Prettier 进行标记
+        // 使用 eslint-plugin-prettier 插件和 ，并继承 eslint-config-prettier 里的 recommended 配置
         // "plugin:prettier/recommended",
         // "prettier/babel", // 继承 eslint-config-prettier 里的 babel 配置
         // "prettier/vue" // 继承 eslint-config-prettier 里的 vue 配置
