@@ -2,9 +2,11 @@
 
 ## Prettier 简介
 
-Prettier 是`opinionated`的代码格式化工具，它移除了代码的原始风格，并确保所有输出的代码遵守一致的风格。
+Prettier 是由 Facebook 公司开发的`opinionated`的代码格式化工具，它移除了代码的原始风格，并确保所有输出的代码遵守一致的风格。
 
-所谓`opinionated`，就是指 Prettier 强制规定了一些风格，你必须按照它指定的方式去组织代码。要是不赞成 Prettier 的风格，就不要使用它。Prettier 只给出了极少的、必要的配置项，其他的都不允许你配置，因为配置项越多，关于风格的争吵就会越多。
+所谓`opinionated`，就是指 Prettier 强制规定了一些风格，你必须按照它指定的方式去组织代码。要是不赞成 Prettier 的风格，就不要使用它。
+
+Prettier 也提供了极少的、必要的配置项，允许用户对一些较有争议的选项进行定制，除此之外的大部分规则都不允许配置，因为配置项越多，关于风格的争吵就会越多。
 
 Prettier 会忽略代码的原始风格，并将代码解析为 AST，按照 Prettier 自己的规则并将最大行长度纳入考虑范围内，将 AST 重新输出为新的风格的代码。
 
@@ -178,6 +180,31 @@ module.exports = {
   }
 }
 ```
+
+#### Prettier 所有配置项
+
+| 配置项                    | 默认值      | 建议取值    | 意义                                                         |
+| ------------------------- | ----------- | ----------- | ------------------------------------------------------------ |
+| printWidth                | 80          | 120         | 行宽                                                         |
+| tabWidth                  | 2           | 4           | 指定每个缩进的空格数量                                       |
+| useTabs                   | false       | false       | 行的缩进是否使用 Tab 而不是空格                              |
+| semi                      | true        | true        | 语句行尾是否添加分号                                         |
+| singleQuote               | false       | true        | 字符串是否使用单引号而不是双引号                             |
+| quoteProps                | "as-needed" | "as-needed" | 对象的属性是否要加引号                                       |
+| jsxSingleQuote            | false       | false       | JSX 里是否使用单引号而不是双引号                             |
+| trailingComma             | "none"      | "es5"       | 多行时任何可能的地方是否添加尾逗号                           |
+| bracketSpacing            | true        | true        | 对象字面量的大括号内部是否添加空格                           |
+| jsxBracketSameLine        | true        | false       | 是否将`>`放置在多行 JSX 元素最后一行的结尾，而不是放在下一行 |
+| arrowParens               | "avoid"     | "avoid"     | 箭头函数只有一个参数时，参数是否使用圆括号                   |
+| rangeStart                | 0           | 0           | 被格式化文件的行起点                                         |
+| rangeEnd                  | Infinity    | Infinity    | 被格式化文件的行终点                                         |
+| parser                    | -           | -           | 指定使用的解析器                                             |
+| filepath                  | -           | -           | 指定使用哪个文件来指明使用哪个解析器                         |
+| requirePragma             | false       | false       | 是否在文件顶部包含`@prettier`或`@format`的注释时才格式化     |
+| insertPragma              | false       | false       | 是否在文件顶部添加`@format`标记来指明该文件已经被格式化      |
+| proseWrap                 | "preserve"  | "preserve"  | 指定如何处理 Markdown 文本的换行                             |
+| htmlWhitespaceSensitivity | "css"       | "strict"    | 指定如何 HTML 文件里的全局空白敏感的行为                     |
+| endOfLine                 | "auto"      | "lf"        | 采用哪一种行尾换行符                                         |
 
 ## 集成其他 ESLint 插件
 
