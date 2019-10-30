@@ -1,59 +1,59 @@
 <template>
-  <a
-    v-if="isSupportDownload"
-    class="download-link"
-    :href="url"
-    :download="name"
-  >
-    <slot v-if="$slots.default" />
-    <span
-      v-else
-      v-text="text"
-    />
-  </a>
-  <a
-    v-else
-    class="download-link"
-    href="#"
-    @click.stop.prevent="download(url)"
-  >
-    <slot v-if="$slots.default" />
-    <span
-      v-else
-      v-text="text"
-    />
-  </a>
+    <a
+        v-if="isSupportDownload"
+        class="download-link"
+        :href="url"
+        :download="name"
+    >
+        <slot v-if="$slots.default" />
+        <span
+            v-else
+            v-text="text"
+        />
+    </a>
+    <a
+        v-else
+        class="download-link"
+        href="#"
+        @click.stop.prevent="download(url)"
+    >
+        <slot v-if="$slots.default" />
+        <span
+            v-else
+            v-text="text"
+        />
+    </a>
 </template>
 
 <script>
 const isSupportDownload = 'download' in document.createElement('a');
 
 export default {
-  name: 'DownloadLink',
-  props: {
-    url: {
-      type: String,
-      required: true
+    name: 'DownloadLink',
+    props: {
+        url: {
+            type: String,
+            required: true
+        },
+        name: {
+            type: String,
+            default: '下载文件'
+        },
+        text: {
+            type: [String, Number],
+            required: true
+        }
     },
-    name: {
-      type: String,
-      default: '下载文件'
+    data() {
+        return {
+            isSupportDownload
+        };
     },
-    text: {
-      type: [String, Number],
-      required: true
+    methods: {
+        download(url) {
+            window.open(url, '_blank', 'fullscreen=no,width=400,height=300');
+        }
     }
-  },
-  data() {
-    return {
-      isSupportDownload
-    };
-  },
-  methods: {
-    download(url) {
-      window.open(url, '_blank', 'fullscreen=no,width=400,height=300');
-    }
-  }
 };
 </script>
 

@@ -1,58 +1,58 @@
 <template>
-  <div
-    ref="simpleMarquee"
-    class="simple-marquee"
-  >
     <div
-      ref="marqueeList"
-      class="marquee-list"
-      :class="{'transition-top': transition}"
-      @transitionend="transitionend"
+        ref="simpleMarquee"
+        class="simple-marquee"
     >
-      <slot />
+        <div
+            ref="marqueeList"
+            class="marquee-list"
+            :class="{'transition-top': transition}"
+            @transitionend="transitionend"
+        >
+            <slot />
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
-  name: 'SimpleMarquee',
-  data() {
-    return {
-      timer: null,
-      liHeight: 0,
-      transition: false
-    };
-  },
-  mounted() {
-    this.initSize();
-    this.timer = setInterval(this.showMarquee, 3000);
-  },
-  destroyed() {
-    clearInterval(this.timer);
-  },
-  methods: {
-    initSize() {
-      this.liHeight = this.$refs.marqueeList.firstChild.offsetHeight || 0;
-      this.$refs.simpleMarquee.style.height = this.liHeight + 'px';
+    name: 'SimpleMarquee',
+    data() {
+        return {
+            timer: null,
+            liHeight: 0,
+            transition: false
+        };
     },
-    setMarqueeUlMarginTop(height) {
-      this.$refs.marqueeList.style.marginTop = -height + 'px';
+    mounted() {
+        this.initSize();
+        this.timer = setInterval(this.showMarquee, 3000);
     },
-    showMarquee() {
-      this.transition = true;
-      this.setMarqueeUlMarginTop(this.liHeight);
+    destroyed() {
+        clearInterval(this.timer);
     },
-    transitionend() {
-      this.transition = false;
-      setTimeout(() => {
-        // 放在异步操作里，防止闪跳（第一条滚动后，先闪现第三条，再稳定在第二条上）
-        const marqueeList = this.$refs.marqueeList;
-        marqueeList.appendChild(marqueeList.firstChild);
-        this.setMarqueeUlMarginTop(0);
-      }, 0);
+    methods: {
+        initSize() {
+            this.liHeight = this.$refs.marqueeList.firstChild.offsetHeight || 0;
+            this.$refs.simpleMarquee.style.height = this.liHeight + 'px';
+        },
+        setMarqueeUlMarginTop(height) {
+            this.$refs.marqueeList.style.marginTop = -height + 'px';
+        },
+        showMarquee() {
+            this.transition = true;
+            this.setMarqueeUlMarginTop(this.liHeight);
+        },
+        transitionend() {
+            this.transition = false;
+            setTimeout(() => {
+                // 放在异步操作里，防止闪跳（第一条滚动后，先闪现第三条，再稳定在第二条上）
+                const marqueeList = this.$refs.marqueeList;
+                marqueeList.appendChild(marqueeList.firstChild);
+                this.setMarqueeUlMarginTop(0);
+            }, 0);
+        }
     }
-  }
 };
 </script>
 

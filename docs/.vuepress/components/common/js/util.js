@@ -5,13 +5,13 @@
  * @return {Boolean}           是否是后代
  */
 export function contains(container, contained) {
-  if (contained) {
-    while (contained.parentNode) {
-      contained = contained.parentNode;
-      if (contained === container) {
-        return true;
-      }
+    if (contained) {
+        while (contained.parentNode) {
+            contained = contained.parentNode;
+            if (contained === container) {
+                return true;
+            }
+        }
     }
-  }
-  return false;
+    return false;
 }

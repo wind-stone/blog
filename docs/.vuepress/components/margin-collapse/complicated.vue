@@ -1,20 +1,20 @@
 <template>
-  <div class="example">
-    <div class="ctn">
-      <div class="float">
-        浮动元素
-      </div>
-      <div class="clear-float" />
-      <div class="last" />
-      <div>这是 .ctn 元素的最后一个子元素</div>
+    <div class="example">
+        <div class="ctn">
+            <div class="float">
+                浮动元素
+            </div>
+            <div class="clear-float" />
+            <div class="last" />
+            <div>这是 .ctn 元素的最后一个子元素</div>
+        </div>
+        <p>这是 .ctn 元素的兄弟元素</p>
     </div>
-    <p>这是 .ctn 元素的兄弟元素</p>
-  </div>
 </template>
 
 <script>
 export default {
-  name: 'MarginCollapseComplicated'
+    name: 'MarginCollapseComplicated'
 };
 </script>
 

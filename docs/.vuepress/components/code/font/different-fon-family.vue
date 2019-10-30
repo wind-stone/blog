@@ -1,17 +1,17 @@
 <template>
-  <div>
-    <p class="ctn">
-      <span class="a">Ba</span>
-      <span class="b">Ba</span>
-      <span class="c">Ba</span>
-    </p>
-    <p>译者注：这几款字体你的设备上可能没有，导致显示的结果与图 1 略有区别</p>
-  </div>
+    <div>
+        <p class="ctn">
+            <span class="a">Ba</span>
+            <span class="b">Ba</span>
+            <span class="c">Ba</span>
+        </p>
+        <p>译者注：这几款字体你的设备上可能没有，导致显示的结果与图 1 略有区别</p>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'DifferentFonFamily'
+    name: 'DifferentFonFamily'
 };
 </script>
 
