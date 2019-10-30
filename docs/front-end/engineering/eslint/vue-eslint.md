@@ -1,167 +1,79 @@
-# Vue 项目配置 ESlint
+# Vue 项目配置 ESLint
+
+[`eslint-plugin-vue`](https://github.com/vuejs/eslint-plugin-vue)，是针对 Vue.js 的官方 ESLint 插件。
+
+该插件允许我们使用 ESLint 来检查`.vue`文件里的`<template>`和`<script>`模块。
+
+- 发现语法错误
+- 发现[Vue.js 指令](https://vuejs.org/v2/api/#Directives)的使用错误
+- 发现违反[Vue.js 样式指南](https://vuejs.org/v2/style-guide/)的用法
+
+ESLint 编辑器集成对实时检查代码是非常有用的。
 
 ## 安装依赖
 
-Vue 项目配置`ESlint`，除了基本的`eslint`和`babel-eslint`依赖之外，还需要:
-
-- [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue)，官方的针对`Vue.js`的`ESlint`插件。
-- [vue-eslint-parser](https://github.com/mysticatea/vue-eslint-parser)，`ESlint`的第三方解析器，用于解析`.vue`文件。
-
 ```sh
-npm install -D eslint babel-eslint eslint-plugin-vue eslint-config-vue vue-eslint-parser
+npm install -S eslint eslint-plugin-vue babel-eslint
 ```
 
 ## .eslintrc 配置
 
 ```json
 {
-    // ESLint 一旦发现配置文件中有 root: true，它就会停止在父级目录中寻找
-    "root": true,
-    "extends": [
-        "eslint:recommended",
-        // 使用 eslint-plugin-vue 插件，并继承 eslint-config-vue 的 recommended 配置，并会设置 parser、plugins、env 等选项，详见下方说明
-        "plugin:vue/recommended"
-        // 使用 eslint-plugin-prettier 插件，并继承 eslint-config-prettier 里的 recommended 配置
-        // （注意，这是一种简写方式，需要手动 install 这两个依赖，详见 https://prettier.io/docs/en/integrating-with-linters.html#recommended-configuration）
-        // eslint-plugin-prettier 插件会调用 Prettier 对你的代码风格进行检查，其原理是先使用 Prettier 对你的代码进行格式化，然后与格式化之前的代码进行对比，如果出现了不一致，这个地方就会被 Prettier 进行标记
-        // "plugin:prettier/recommended",
-        // "prettier/babel", // 继承 eslint-config-prettier 里的 babel 配置
-        // "prettier/vue" // 继承 eslint-config-prettier 里的 vue 配置
-    ],
-    "plugins": [
-        // "vue" // 已包含在 eslint-plugin-vue 插件里
-        // "prettier"
-    ],
-    // parser: "vue-eslint-parser", // 已包含在 eslint-plugin-vue 插件里
-    // If you want to use custom parsers such as babel-eslint or @typescript-eslint/parser, you have to use parserOptions.parser option instead of parser option. Because the eslint-plugin-vue plugin requires vue-eslint-parser to parse .vue files, so the eslint-plugin-vue plugin doesn"t work if you overwrote parser option.
-    "parserOptions": {
-        "parser": "babel-eslint"
-    },
-    "env": {
-        "node": true
-        // browser: true, // 已包含在 eslint-plugin-vue 插件里
-        // es6: true // 已包含在 eslint-plugin-vue 插件里
-    },
-    "rules": {
-        // 针对 Prettier 标记的地方，抛出错误信息
-        // "prettier/prettier": ["error", {}, {
-        //   // 使用 prettier 配置文件
-        //   usePrettierrc: true
-        // }],
-        "no-console": "warn",
-        "no-unused-vars": "warn",
-        "semi": "error",
-        "no-multiple-empty-lines": [
-            "error",
-            {
-                "max": 2,
-                "maxEOF": 0,
-                "maxBOF": 0
-            }
-        ],
-        "indent": [
-            "error",
-            2
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        // 覆盖 eslint-plugin-vue 配置的规则
-        // "vue/comment-directive": "error", // 已包含在 eslint-plugin-vue 插件里
-        // "vue/jsx-uses-vars": "error", // 已包含在 eslint-plugin-vue 插件里
-        // eslint-plugin-vue, Priority B: Strongly Recommended
-        "vue/attribute-hyphenation": "error",
-        "vue/html-closing-bracket-newline": "error",
-        "vue/html-closing-bracket-spacing": "error",
-        "vue/html-end-tags": "error",
-        "vue/html-indent": [
-            "error",
-            2,
-            {
-                "attribute": 1,
-                "baseIndent": 1,
-                "closeBracket": 0,
-                "alignAttributesVertically": true,
-                "ignores": []
-            }
-        ],
-        "vue/html-quotes": "error",
-        "vue/html-self-closing": "error",
-        "vue/max-attributes-per-line": [
-            "error",
-            {
-                "singleline": 1,
-                "multiline": {
-                    "max": 1,
-                    "allowFirstLine": false
-                }
-            }
-        ],
-        "vue/multiline-html-element-content-newline": "error",
-        "vue/mustache-interpolation-spacing": "error",
-        "vue/name-property-casing": "error",
-        "vue/no-multi-spaces": "error",
-        "vue/no-spaces-around-equal-signs-in-attribute": "error",
-        "vue/no-template-shadow": "error",
-        "vue/prop-name-casing": "error",
-        "vue/require-default-prop": "error",
-        "vue/require-prop-types": "error",
-        "vue/singleline-html-element-content-newline": "error",
-        "vue/v-bind-style": "error",
-        "vue/v-on-style": "error",
-        // eslint-plugin-vue, Priority C: Recommended
-        "vue/attributes-order": "error",
-        "vue/no-v-html": "error",
-        "vue/order-in-components": "error",
-        "vue/this-in-template": "error",
-        // eslint-plugin-vue, Uncategorized
-        "vue/array-bracket-spacing": "error",
-        "vue/arrow-spacing": "error",
-        "vue/block-spacing": "error",
-        "vue/brace-style": "error",
-        "vue/camelcase": "error",
-        "vue/comma-dangle": "error",
-        "vue/component-name-in-template-casing": "error",
-        // "vue/dot-location": "error",
-        "vue/eqeqeq": "error",
-        "vue/key-spacing": "error",
-        // "vue/keyword-spacing": "error",
-        "vue/match-component-file-name": "error",
-        "vue/no-boolean-default": "off",
-        // "vue/no-deprecated-scope-attribute": "error",
-        // "vue/no-empty-pattern": "error",
-        "no-restricted-syntax": [
-            "error",
-            "WithStatement"
-        ], // 待补充
-        "vue/object-curly-spacing": "error",
-        "vue/require-direct-export": "off",
-        "vue/script-indent": [
-            "error",
-            2
-        ],
-        "vue/space-infix-ops": "error",
-        "space-unary-ops": [
-            "error",
-            {
-                "words": true,
-                "nonwords": false
-            }
-        ],
-        "vue/v-on-function-call": "error",
-        // "vue/v-slot-style": "error",
-        // "vue/valid-v-slot": "error",
-        "overrides": [
-            {
-                "files": [
-                    "*.vue"
-                ],
-                "rules": {
-                    "indent": "off" // 特殊处理，详见 https://eslint.vuejs.org/rules/script-indent.html
-                }
-            }
-        ]
-    }
+  "root": true,
+  "extends": [
+    // add more generic rulesets here, such as:
+    // 'eslint:recommended',
+
+    // 使用 eslint-plugin-vue 插件，并继承 eslint-config-vue 的 recommended 配置
+    "plugin:vue/recommended"
+  ],
+  // 自定义 parser，详见 https://eslint.vuejs.org/user-guide/#how-to-use-custom-parser
+  "parserOptions": {
+    "parser": "babel-eslint"
+  },
+  "rules": {
+    // 覆盖 ESLint 的规则
+    // ...
+    // 覆盖 eslint-plugin-vue 配置的规则
+    // ...
+  }
 }
+```
+
+### plugin:vue/recommended 隐含的配置
+
+打开`node_modules/eslint-plugin-vue`可以看到，若是在`extends`里添加了`plugin:vue/recommended`，默认会包含以下配置，因此这些配置我们都不需要显示写在`.eslintrc`里。
+
+```js
+// node_modules/eslint-plugin-vue/lib/configs/base.js
+// recommended 继承了 base
+module.exports = {
+  parser: require.resolve("vue-eslint-parser"),
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true
+    }
+  },
+  env: {
+    browser: true,
+    es6: true
+  },
+  plugins: ["vue"],
+  rules: {
+    "vue/comment-directive": "error",
+    "vue/jsx-uses-vars": "error"
+  }
+};
+```
+
+## 命令行运行
+
+若是想在命令行运行 ESLint，确保使用`--ext`选项包含`.vue`扩展名，或使用 glob 模式，因为 ESLint 默认只校验`.js`文件。
+
+```sh
+eslint --ext .js,.vue src
+eslint "src/**/*.{js,vue}"
 ```
