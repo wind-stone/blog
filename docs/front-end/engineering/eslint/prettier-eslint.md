@@ -97,8 +97,8 @@ Prettier 可以完全消除对整个格式化类规则的需要！Prettier 将�
 ### 安装依赖
 
 ```sh
-npm install -S --save-exact prettier
-npm install -S eslint-plugin-prettier eslint-config-prettier
+npm install -D --save-exact prettier
+npm install -D eslint-plugin-prettier eslint-config-prettier
 ```
 
 ### 配置 .eslintrc.\*
