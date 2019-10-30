@@ -1,5 +1,45 @@
 # Prettier 与 ESLint 的集成
 
+## Prettier 简介
+
+Prettier 是`opinionated`的代码格式化工具，它移除了代码的原始风格，并确保所有输出的代码遵守一致的风格。
+
+所谓`opinionated`，就是指 Prettier 强制规定了一些风格，你必须按照它指定的方式去组织代码。要是不赞成 Prettier 的风格，就不要使用它。Prettier 只给出了极少的、必要的配置项，其他的都不允许你配置，因为配置项越多，关于风格的争吵就会越多。
+
+Prettier 会忽略代码的原始风格，并将代码解析为 AST，按照 Prettier 自己的规则并将最大行长度纳入考虑范围内，将 AST 重新输出为新的风格的代码。
+
+### 为什么使用 Prettier
+
+- 构建和强制一套风格指南
+  - 到目前为止，采用 Prettier 最大的原因是，停止一切正在进行的关于风格的争吵。众所周知，通用的风格指南对项目和团队都是特别有价值的，但是达成通用的风格指南是非常痛苦的过程，也是不值得的。人们对以一种特定的方式写代码是非常有情绪的，没有人愿意花时间写和接受`nits`。
+  - 因此，选择 Prettier 而不是其他风格指南的原因是，它是唯一自动化的风格指南。即使 Prettier 不能 100% 按照你想要的方式格式化所有的代码，但是鉴于 Prettier 独一无二的优势，有一些“牺牲”也是值得的。
+- 帮助新手，比如
+  - 以前使用另一个代码风格指南的人
+  - 从其他编程语言转过的人
+- 编写代码
+  - 帮助开发者自动格式化代码，节省大量时间
+- 易于采用
+- ...
+
+### Prettier 与 Linters
+
+校验工具如 ESLint 等，一般有两类规则：
+
+- 格式化类的规则，比如
+  - [max-len](https://eslint.org/docs/rules/max-len)
+  - [no-mixed-spaces-and-tabs](https://eslint.org/docs/rules/no-mixed-spaces-and-tabs)
+  - [keyword-spacing](https://eslint.org/docs/rules/keyword-spacing)
+  - [comma-style](https://eslint.org/docs/rules/comma-style)
+- 代码质量类的规则，比如
+  - [no-unused-vars](https://eslint.org/docs/rules/no-unused-vars)
+  - [no-extra-bind](https://eslint.org/docs/rules/no-extra-bind)
+  - [no-implicit-globals](https://eslint.org/docs/rules/no-implicit-globals)
+  - [prefer-promise-reject-errors](https://eslint.org/docs/rules/prefer-promise-reject-errors)
+
+Prettier 可以完全消除对整个格式化类规则的需要！Prettier 将以一致化的风格重新输出整个项目，因此程序员再也不会有格式化方面的错误了。
+
+但是 Prettier 对代码质量类的规则毫无用处，这也是校验工具提供的最重要的功能，因为它们可以捕获你代码里真正的 bug。
+
 ## eslint-config-prettier
 
 [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier)是 ESLint 的配置库，用于关闭那些不需要或与 Prettier 冲突的 ESLint 规则。这可以让你在使用 Prettier 时，可以使用你最喜欢的 ESLint 共享配置而不使用该共享配置里有关样式的规则。注意，这个配置只是关闭规则，因此仅在与其他配置一起使用时才有意义。
