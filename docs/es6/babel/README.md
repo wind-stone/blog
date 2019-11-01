@@ -6,7 +6,7 @@ sidebarDepth: 0
 
 [[toc]]
 
-Babel 是处于构建时（也就是传统Java等语言的编译时），转译出来的结果在默认情况下并不包括 ES6 对运行时的扩展，例如，builtins（内建，包括 Promise、Set、Map 等）、内建类型上的原型扩展（如 ES6 对 Array、Object、String 等内建类型原型上的扩展）以及Regenerator（用于generators / yield）等都不包括在内。
+Babel 是处于构建时（也就是传统 Java 等语言的编译时），转译出来的结果在默认情况下并不包括 ES6 对运行时的扩展，例如，builtins（内建，包括 Promise、Set、Map 等）、内建类型上的原型扩展（如 ES6 对 Array、Object、String 等内建类型原型上的扩展）以及 Regenerator（用于 generators / yield）等都不包括在内。
 
 以下所有内容，都是基于 Babel 6。
 
@@ -32,7 +32,7 @@ Babel 本身不具有任何转化功能，它把转化的功能都分解到一�
 
 - babel-core：Babel 的核心，包含各个核心的 API，供 Babel 插件和打包工具使用
 - babel-cli：命令行对 js 文件进行换码的工具
-- babel-node：命令行 REPL，支持 ES6 的js执行环境
+- babel-node：命令行 REPL，支持 ES6 的 js 执行环境
 - babel-register：Babel 的一个注册器，它在底层改写了 node 的`require`方法，所有通过`require`并以`.es6`、`.es`、`.jsx`和`.js`为后缀引入的模块都会经过 Babel 的转译
 
 ## 运行时
@@ -93,7 +93,7 @@ Babel 本身不具有任何转化功能，它把转化的功能都分解到一�
 
 ```js
 // 应用程序的入口点顶部或打包配置中引入
-import 'babel-polyfill'
+import "babel-polyfill";
 ```
 
 ## 模块
@@ -105,23 +105,23 @@ Babel 默认是将 ES6 规范的代码转化成 CommonJS 规范的代码
 
 ```js
 // 转化前
-import { bar } from './b';
-bar()
+import { bar } from "./b";
+bar();
 export default {
   a: 1,
   b: 2
-}
+};
 ```
 
 ```js
 // 转换后
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _b = require('./b');
+var _b = require("./b");
 
 exports.default = {
   a: 1,
@@ -135,31 +135,31 @@ exports.default = {
 
 ```js
 // 转换前
-import a from './a'
-import { b } from './b'
-import * as c from './c'
-console.log(a)
+import a from "./a";
+import { b } from "./b";
+import * as c from "./c";
+console.log(a);
 export default {
   foo: 1,
   bar: 2
-}
+};
 ```
 
 ```js
 // 转换后
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _a = require('./a');
+var _a = require("./a");
 
 var _a2 = _interopRequireDefault(_a);
 
-var _b = require('./b');
+var _b = require("./b");
 
-var _c = require('./c');
+var _c = require("./c");
 
 var c = _interopRequireWildcard(_c);
 
@@ -194,16 +194,16 @@ exports.default = {
 };
 ```
 
-### 为什么可以用 CommonJS 的`require`去引用 ES6 的模块？
+### 为什么可以用 CommonJS 的`require`去引用 ES6 的模块
 
 - ES6 的模块会经过 Babel 转换成 CommonJS 的模块，因此最终通过`require`引入的是 CommonJS 模块
 - 所以，如果 ES6 模块里定义了`default`，通过`require`引入后想使用`default`的值，需要显示获取`default`属性，即`require('./a').default`
 
-### 为什么可以使用 ES6 的`import`去引用 CommonJS 定义的模块？
+### 为什么可以使用 ES6 的`import`去引用 CommonJS 定义的模块
 
 ```js
-import a from './a' // 引入 _interopRequireDefault
-import * as c from './c' // 引入_interopRequireWildcard
+import a from "./a"; // 引入 _interopRequireDefault
+import * as c from "./c"; // 引入_interopRequireWildcard
 ```
 
 ES6 的模块，最终会转换为 CommonJS 的模块，且在转换时如果遇到上面的两种 ES6 引入方式，会在转换后的代码里添加
@@ -236,11 +236,11 @@ ES6 的模块，最终会转换为 CommonJS 的模块，且在转换时如果遇
 }
 ```
 
-#### `"modules": false`：
+#### "modules": false
 
 webpack 2 开始引入`tree-shaking`技术，通过静态分析 ES6 语法，可以删除没有被使用的模块，但是这只对 ES6 的模块有效，所以一旦 Babel 将 ES6 的模块转换成 CommonJS 的模块，webpack 2 将无法使用这项优化。所以要使用这项技术，我们只能使用 webpack 的模块处理，加上 Babel 的 ES6 转换能力（即需要关闭模块转换`"modules": false`）
 
-### 有些 UI 组件库比如 element-ui 和 cube-ui 可以用`import`或`require`按需引入单个模块，是如何做到的？
+### 有些 UI 组件库比如 element-ui 和 cube-ui 可以用`import`或`require`按需引入单个模块，是如何做到的
 
 1. 组件库发布时，webpack 等打包工具会将单个模块（如`button.js`）模块导出成 CommonJS 模块，放在 lib 目录下（如`lib/button.js`）
 2. Babel 里使用`babel-plugin-component`插件或类似插件，并做一些配置
@@ -342,7 +342,7 @@ Babel 会在正在被转录的文件的当前目录中查找一个`.babelrc`文�
 
 Reference:
 
-- [前端早读课【第1378期】 一口(很长的)气了解 Babel](https://mp.weixin.qq.com/s/qetiJo47IyssYWAr455xHQ)
-- [babel到底该如何配置？](https://juejin.im/post/59ec657ef265da431b6c5b03)
+- [前端早读课【第 1378 期】 一口(很长的)气了解 Babel](https://mp.weixin.qq.com/s/qetiJo47IyssYWAr455xHQ)
+- [babel 到底该如何配置？](https://juejin.im/post/59ec657ef265da431b6c5b03)
 - [知乎——Babel 编译出来还是 ES 6？难道只能上 polyfill？](https://www.zhihu.com/question/49382420)
 - [import、require、export、module.exports 混合使用详解](https://github.com/ShowJoy-com/showjoy-blog/issues/39)
