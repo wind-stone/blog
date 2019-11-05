@@ -25,7 +25,9 @@ module.exports = {
             children: [
                 'babel/',
                 'babel/babel-v7',
-                'babel/@babel/plugin-transform-runtime'
+                'babel/@babel/plugin-transform-runtime',
+                'babel/@babel/runtime',
+                'babel/@babel/runtime-corejs2'
             ]
         },
         {
