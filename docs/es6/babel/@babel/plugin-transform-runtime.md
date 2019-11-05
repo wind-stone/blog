@@ -327,7 +327,58 @@ var Person = function Person() {
 
 ### 术语解释
 
-`helper`是指 Babel 使用的一些辅助函数，比如`_extend`函数把一个对象的属性赋值到另一个对象上，这里的`_extend`就是`helper`。
+`helper`是指 Babel 使用的一些辅助工具函数，比如`_extend`函数把一个对象的属性赋值到另一个对象上，这里的`_extend`就是`helper`。
+
+再比如`class`的编译，编译后代码里的`_classCallCheck`就是`helper`。
+
+```js
+// Babel 编译前
+class People{
+}
+
+// Babel 编译后
+'use strict';
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+var People = function People() {
+    _classCallCheck(this, People);
+};
+```
+
+而`@babel/plugin-transform-runtime`的作用就是，将这些辅助工具函数转换成引入`@babel/runtime`模块的形式，进而消除掉各个文件都引入同一辅助工具函数导致的重复。
+
+```sh
+npm i @babel/runtime -S
+npm i @babel/plugin-transform-runtime -D
+```
+
+```js
+module.exports = {
+    presets: ['@babel/preset-env'],
+    plugins: ['@babel/plugin-transform-runtime']
+};
+```
+
+安装`@babel/plugin-transform-runtime`和`@babel/runtime`并配置好之后，再经过 Babel 转换的结果为：
+
+```js
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var People = function People() {
+  (0, _classCallCheck2["default"])(this, People);
+};
+```
+
+`_classCallCheck2`这个辅助工具函数已经变成从`@babel/runtime`包中引入，不会再产生单独的工具函数代码。正因为该辅助工具函数是从`@babel/runtime`包中引入，所以要安装`@babel/runtime`这个生产依赖包，在项目打包的时候才不会报错。
 
 ### 使用 @babel/plugin-transform-runtime 的原因
 
@@ -338,3 +389,67 @@ var Person = function Person() {
 ### 缺点
 
 因为`@babel/plugin-transform-runtime`没有污染全局内置对象，对于实例方法如`"foobar".includes("foo")`就无法进行转换或兼容了。
+
+### 关于 @babel/plugin-transform-runtime 和 @babel/polyfill 的区别
+
+参考：[Babel 快速上手使用指南](https://juejin.im/post/5cf45f9f5188254032204df1)
+
+`@babel/polyfill`是引入相关文件来模拟 ES2015+ 的环境进而实现`polyfill`，但是其会污染全局变量。
+
+但`@babel/plugin-transform-runtime`通过配置`corejs`选项，提供一种`runtime`的`polyfill`。
+
+```js
+module.exports = {
+    plugins: [['@babel/plugin-transform-runtime', { corejs: 2 }]]
+};
+```
+
+这里的`corejs`与`presets`里设置的`corejs`是不同的，这里的`corejs`指定了一个`runtime-corejs`的版本，因此使用时也需要通过 NPM 安装对应的包。
+
+```sh
+npm i @babel/runtime-corejs2 -S
+```
+
+#### 示例
+
+如下以`Array.from`静态方法为例，说明二者的差异。
+
+```js
+// Babel 编译前
+const a = Array.from([1])
+```
+
+```js
+// Babel 编译后（使用 @babel/polyfill）
+"use strict";
+
+require("core-js/modules/es6.string.iterator");
+
+require("core-js/modules/es6.array.from");
+
+var a = Array.from([1]);
+```
+
+```js
+// Babel 编译后（使用 @babel/plugin-transform-runtime）
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
+
+var _from = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/from"));
+
+var a = (0, _from["default"])([1]);
+```
+
+经过与`@babel/polyfill`对比可以发现，`@babel/plugin-transform-runtime`并没有改变原生的内置`Array.from`方法，而是创建了一个`_from`来模拟`Array.from`的功能，编译前代码里调用`Array.from`的地方会被编译成调用`_from`方法，这样做的好处显而易见：不会污染`Array`上的静态方法`from`。`@babel/plugin-transform-runtime`提供的`runtime`形式的`polyfill`都是这种形式。
+
+除了如`Array.prototype.includes`这样的内置对象实例方法，其他的内置函数如`Promise`、`Set`、`Map`，静态方法如`Array.from`、`Object.assign`都可以采用`@babel/plugin-transform-runtime`的这种形式。
+
+#### 使用场景的区别
+
+- 写类库时，使用`@babel/plugin-transform-runtime`。
+- 写应用时，使用`@babel/polyfill`。
+
+`@babel/plugin-transform-runtime`不会污染全局变量，但是会导致多个文件出现重复代码。例如你的库是使用`runtime-corejs`做 Promise 兼容，但是使用你的库的人可能用的是 bulebird 的兼容库, 这里面就有两份 Promise 代码，虽然不影响使用,但是产生了冗余了。
+
+若是我们在写类库时，使用了`Array.prototype.includes`这类内置对象实例方法，而我们的依赖库 B 也定义了这个函数，此时若是我们全局引入`@babel/polyfill`就会出问题，其会覆盖掉依赖库 B 的`Array.prototype.includes`。若是我们使用`@babel/plugin-transform-runtime`就安全了（cxl：但是就不能使用`Array.prototype.includes`这种实例方法了呀..），会默认创建一个沙盒，这种情况 Promise 尤其明显，很多库会依赖于 bluebird 或者其他的 Promise 实现,一般写库的时候不应该提供任何的 polyfill 方案，而是在使用手册中说明用到了哪些新特性，让使用者自己去`polyfill`。
