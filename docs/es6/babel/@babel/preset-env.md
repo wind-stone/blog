@@ -374,3 +374,20 @@ Builtins
 Features
 
 - None
+
+## @vue/babel-preset-env
+
+[@vue/babel-preset-env](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/babel-preset-app)是针对 Vue.js 项目，基于`@babel/preset-env`、`@vue/babel-preset-jsx`、`@babel/plugin-transform-runtime`等等预设和插件的封装，主要包含了以下内容：
+
+- [@babel/preset-env](https://github.com/vuejs/vue-cli/blob/9272ead6e8d36257d530f6bec00a290220e9c62a/packages/%40vue/babel-preset-app/index.js#L141)：主要使用该预设，并基于用户输入和目标环境等对参数进行了处理。
+  - `polyfills`
+    - `@vue/babel-preset-env`里默认包含了以下`polyfill`，详见[源码](https://github.com/vuejs/vue-cli/blob/9272ead6e8d36257d530f6bec00a290220e9c62a/packages/%40vue/babel-preset-app/index.js#L3)，但是这些`polyfill`会根据目标环境来确定最终是否会传入`@babel/preset-env`预设里。假设目标环境都实现了这些内置对象或特性，则最终不会包含这些`polyfill`。详见[源码](https://github.com/vuejs/vue-cli/blob/9272ead6e8d36257d530f6bec00a290220e9c62a/packages/%40vue/babel-preset-app/index.js#L110)。
+      - `es6.array.iterator`
+      - `es6.promise`
+      - `es6.object.assign`
+      - `es7.promise.finally`
+- [@babel/plugin-transform-runtime](https://github.com/vuejs/vue-cli/blob/9272ead6e8d36257d530f6bec00a290220e9c62a/packages/%40vue/babel-preset-app/index.js#L156)：仅使用了该插件引入模块化的`helpers`替换内联的 Babel`helpers`。
+- `@babel/plugin-syntax-dynamic-import`
+- `@babel/plugin-proposal-decorators`
+- `@babel/plugin-proposal-class-properties`
+- 等等
