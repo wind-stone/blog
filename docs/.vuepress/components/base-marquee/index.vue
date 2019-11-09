@@ -1,7 +1,7 @@
 <template>
     <div
-        ref="simpleMarquee"
-        class="simple-marquee"
+        ref="baseMarquee"
+        class="base-marquee"
     >
         <div
             ref="marqueeList"
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    name: 'SimpleMarquee',
+    name: 'BaseMarquee',
     data() {
         return {
             timer: null,
@@ -34,7 +34,7 @@ export default {
     methods: {
         initSize() {
             this.liHeight = this.$refs.marqueeList.firstChild.offsetHeight || 0;
-            this.$refs.simpleMarquee.style.height = this.liHeight + 'px';
+            this.$refs.baseMarquee.style.height = this.liHeight + 'px';
         },
         setMarqueeUlMarginTop(height) {
             this.$refs.marqueeList.style.marginTop = -height + 'px';
@@ -56,22 +56,17 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-ul {
-    margin: 0;
-    padding: 0;
-}
-.simple-marquee {
+<style lang="scss" scoped>
+.base-marquee {
     width: 100%;
     padding: 0 15px;
     margin: 0 auto;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 100px;
+    background: rgba(0, 0, 0, 0.30);
     box-sizing: border-box;
     overflow: hidden;
     .marquee-list {
         &.transition-top {
-            transition: all 0.5s;
+            transition: all .5s;
         }
     }
 }

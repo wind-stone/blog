@@ -12,19 +12,19 @@ sidebarDepth: 0
 
 ## 示例
 
-<simple-marquee-example></simple-marquee-example>
+<base-marquee-example></base-marquee-example>
 
 ## 调用
 
 ```html
-<simple-marquee>
+<base-marquee>
     <!-- 请确保此处的 slot 内容是个 v-for 循环的标签，且必须存在 key -->
     <div v-for="i in 10" :key="i" class="marquee-item">{{ new Array(10).fill(i).join(' ') }}</div>
-</simple-marquee>
+</base-marquee>
 ```
 
 ## 代码
 
 ### 组件源码
 
-<<< @/docs/.vuepress/components/simple-marquee/index.vue
+<<< @/docs/.vuepress/components/base-marquee/index.vue
