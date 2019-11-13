@@ -251,6 +251,19 @@ parent.parent.location.hash = self.location.hash.substring(1)
 
 WebSocket 是一种通信协议，使用ws://（非加密）和wss://（加密）作为协议前缀。该协议不实行同源政策，只要服务器支持，就可以通过它进行跨源通信。
 
+## XMLHttpRequest 之 withCredentials
+
+当通过 XMLHttpRequest 实例发送跨域 Ajax 请求时，可以设置`withCredentials`属性为`true`，其作用是请求可以携带目标页面所在域的 Cookie。
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://b.com/api');
+xhr.withCredentials = true;
+xhr.send();
+```
+
+假设上述代码所在的页面为`https://a.com/page`，向`https://b.com/api`发送了跨域 Ajax 请求，若是设置`withCredentials`为`true`，则会将`https://b.com`域下的 Cookie 都携带上。
+
 ## Reference
 
 - [知乎专栏-跨域的那些事儿](https://zhuanlan.zhihu.com/p/28562290)
