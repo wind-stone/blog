@@ -10,7 +10,6 @@ module.exports = {
                 'destructuring-assignment/',
                 'function/',
                 'array/',
-                'regexp/',
                 'class/',
                 'module/',
                 'iterator/',

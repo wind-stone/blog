@@ -13,14 +13,14 @@ sidebarDepth: 0
 
 ## 基本数据类型
 
-数据类型 | `Object.prototype.toString().call(value)` | `typeof value`
---- | --- | ---
-`Number` | `[object Number]` | `number`
-`Boolean` | `[object Boolean]` | `boolean`
-`String` | `[object String]` | `string`
-`null` | `[object Null]` | `object`
-`undefined` | `[object Undefined]` | `undefined`
-`Symbol` | `[object Symbol]` | `symbol`
+| 数据类型    | `Object.prototype.toString().call(value)` | `typeof value` |
+| ----------- | ----------------------------------------- | -------------- |
+| `Number`    | `[object Number]`                         | `number`       |
+| `Boolean`   | `[object Boolean]`                        | `boolean`      |
+| `String`    | `[object String]`                         | `string`       |
+| `null`      | `[object Null]`                           | `object`       |
+| `undefined` | `[object Undefined]`                      | `undefined`    |
+| `Symbol`    | `[object Symbol]`                         | `symbol`       |
 
 ### Number
 
@@ -37,17 +37,17 @@ sidebarDepth: 0
 
 ## 引用数据类型
 
-数据类型 | `Object.prototype.toString().call(value)` | `typeof value`
---- | --- | ---
-`Object` | `[object Object]` | `object`
-`Array` | `[object Array]` | `object`
-`Date` | `[object Date]` | `object`
-`RegExp` | `[object RegExp]` | `object`
-`Function` | `[object Function]` | `function`
-`Set` | `[object Set]` | `object`
-`WeakSet` | `[object WeakSet]` | `object`
-`Map` | `[object Map]` | `object`
-`WeakMap` | `[object WeakMap]` | `object`
+| 数据类型   | `Object.prototype.toString().call(value)` | `typeof value` |
+| ---------- | ----------------------------------------- | -------------- |
+| `Object`   | `[object Object]`                         | `object`       |
+| `Array`    | `[object Array]`                          | `object`       |
+| `Date`     | `[object Date]`                           | `object`       |
+| `RegExp`   | `[object RegExp]`                         | `object`       |
+| `Function` | `[object Function]`                       | `function`     |
+| `Set`      | `[object Set]`                            | `object`       |
+| `WeakSet`  | `[object WeakSet]`                        | `object`       |
+| `Map`      | `[object Map]`                            | `object`       |
+| `WeakMap`  | `[object WeakMap]`                        | `object`       |
 
 ### 数组
 
@@ -433,19 +433,19 @@ ECMAScript 中的相等操作符由两个等于号（==）表示，如果两个�
 - 如果两个操作数都是对象，则比较它们是不是同一个对象。如果两个操作数都指向同一个对象，则相等操作符返回`true`；否则，返回`false`。
 
 下表列出了一些特殊情况及比较结果：
-表达式 | 值
---- | ---
-null == undefined | true
-"NaN" == NaN | false
-5 == NaN | false
-NaN == NaN | false
-NaN != NaN | true
-false == 0 | true
-true == 1 | true
-true == 2  | false
-undefined == 0 | false
-null == 0 | false
-"5"==5 | true
+| 表达式            | 值    |
+| ----------------- | ----- |
+| null == undefined | true  |
+| "NaN" == NaN      | false |
+| 5 == NaN          | false |
+| NaN == NaN        | false |
+| NaN != NaN        | true  |
+| false == 0        | true  |
+| true == 1         | true  |
+| true == 2         | false |
+| undefined == 0    | false |
+| null == 0         | false |
+| "5"==5            | true  |
 
 ### 对象转换成原始值
 

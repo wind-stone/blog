@@ -1,4 +1,4 @@
-# RegExp
+# 正则表达式
 
 ## 正则方法
 
@@ -60,9 +60,9 @@
     - `result.input`：所检索的字符串
     - 如果设置了全局匹配，`reg.lastIndex`将是下一次匹配开始的位置（初始为0）
 
-#### 实例
+## 实例
 
-##### 千分位表示法
+### 千分位表示法
 
 ```js
 function thousandsFormat(str) {
@@ -91,13 +91,34 @@ console.log(formatCash('1234567890')) // 1,234,567,890
 
 ```js
 function format(num) {
-  num = num + ''
-  const arr = num.split('').reverse()
-  for(let i = 3; i < arr.length + 1; i += 4) {
-    if (arr[i] !== undefined) {
-      arr.splice(i, 0, ',')
+    num = num + '';
+    const arr = num.split('').reverse();
+    for (let i = 3; i < arr.length + 1; i += 4) {
+        if (arr[i] !== undefined) {
+            arr.splice(i, 0, ',');
+        }
     }
-  }
-  return arr.reverse().join('')
+    return arr.reverse().join('');
 }
+```
+
+### 去掉小数点后面多余的 0
+
+```js
+// 正则
+const regexp = /(?:\.0*|(\.\d+?)0+)$/
+
+// 测试用例
+const arr = [
+    '1200.00100',
+    '1200.00000',
+    '1200.',
+    '1200',
+    '1200.10000',
+    '0.120010000',
+    '0.000011111'
+]
+arr.forEach((item)=>{
+    console.log(item.replace(regexp,'$1'))
+})
 ```
