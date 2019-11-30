@@ -6,8 +6,7 @@ module.exports = {
             collapsable: false,
             children: [
                 'vue-series/vuejs/',
-                'vue-series/vuejs/scoped-css',
-                'vue-series/vue-router/',
+                'vue-series/vuejs/scoped-css'
             ]
         },
         {
@@ -98,6 +97,13 @@ module.exports = {
                 'vue-series/vuex/reset-child-module-state',
                 'vue-series/vuex/register-module',
                 'source-study/vuex/'
+            ]
+        },
+        {
+            title: 'vue-router',
+            collapsable: false,
+            children: [
+                'vue-series/vue-router/'
             ]
         }
     ]
