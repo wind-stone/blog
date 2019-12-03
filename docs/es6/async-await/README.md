@@ -30,7 +30,6 @@ asyncReadFile();
 
 `async`函数的返回值是 Promise 对象，这比 Generator 函数的返回值是 Iterator 对象方便多了。你可以用`then`方法指定下一步的操作。进一步说，`async`函数完全可以看作多个异步操作，包装成的一个 Promise 对象，而`await`命令就是内部`then`命令的语法糖。
 
-
 ## 基本用法
 
 占位词说明
@@ -290,16 +289,15 @@ f()
 // hello world
 ```
 
-
 ### result = await promise 里 result 的值
 
 - `await`是运算符，`await promise`是表达式，该表达式返回的是`promise`异步操作的结果
 - `promise`的状态变为`resolved`时，`result`的值即为`resolved`时传递的参数值
 - `promise`的状态变为`rejected`时
-    - `promise`有错误处理，进行错误处理
-        - 处理方式一`try...catch`：`promise`的状态改为`rejected`后直接`catch`处理，无法执行到赋值操作及`await`后面的代码，`result`保持原值
-        - 处理方式二`promise.then/catch`：`result`的值为`then/catch`方法里的`rejected`函数`return`的值
-    - `promise`无错误处理，则会结束`async`函数的执行，改变`returnedPromise`的状态为`rejected`
+  - `promise`有错误处理，进行错误处理
+    - 处理方式一`try...catch`：`promise`的状态改为`rejected`后直接`catch`处理，无法执行到赋值操作及`await`后面的代码，`result`保持原值
+    - 处理方式二`promise.then/catch`：`result`的值为`then/catch`方法里的`rejected`函数`return`的值
+  - `promise`无错误处理，则会结束`async`函数的执行，改变`returnedPromise`的状态为`rejected`
 
 ```js
 // promise 状态变为 rejected 且通过 try...catch 的方式进行错误处理
@@ -480,4 +478,9 @@ const a = async () => {
 上面代码中，`b()`运行的时候，`a()`是暂停执行，上下文环境都保存着。一旦`b()`或`c()`报错，错误堆栈将包括`a()`。
 
 ## Reference
+
 - [阮一峰-ECMAScript 6 入门：async 函数](http://es6.ruanyifeng.com/#docs/async)
+
+## 使用技巧
+
+- [如何在使用async & await 时优雅的处理异常](https://juejin.im/post/5dd1498df265da0bd315cca8)
