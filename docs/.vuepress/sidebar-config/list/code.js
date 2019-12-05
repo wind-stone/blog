@@ -6,7 +6,8 @@ module.exports = {
             collapsable: false,
             children: [
                 'vue-components/common-popup',
-                'vue-components/base-marquee'
+                'vue-components/base-marquee',
+                'vue-components/cascade-visibility'
             ]
         },
         {
