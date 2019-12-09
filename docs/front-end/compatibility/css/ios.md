@@ -42,3 +42,9 @@ iOS Safari 里，需要在按钮元素或`body`/`html`上绑定一个`touchstart
 ```js
 document.body.addEventListener('touchstart', function () {});
 ```
+
+## iOS 10 上 flex item 元素的子元素的 height: 100% 未生效
+
+详情可见：[100% height doesn't work within a flex item in a flex-item child (Chrome / Safari) #197](https://github.com/philipwalton/flexbugs/issues/197)
+
+解决方法：将 flex item 元素也变成 flexbox 元素。
