@@ -44,10 +44,6 @@ sidebarDepth: 0
 - 通过`position: absolute`
 - 通过`display: table`
 
-## fixed + transform
-
-- [经过 transform 后的元素的子元素的 fixed 定位将以 transform 的元素为包含块进行定位，并失去固定效果](http://meyerweb.com/eric/thoughts/2011/09/12/un-fixing-fixed-elements-with-css-transforms/)
-
 ## box
 
 `box`是 CSS 布局的对象和基本单位，直观点说就是一个页面是由很多个`box`组成的，元素的类型和`display`属性决定了`box`的类型。
