@@ -1,6 +1,4 @@
-# Safari
-
-## Mobile Safari 页面底部脚本下载会阻塞首屏渲染
+# Mobile Safari 页面底部脚本下载会阻塞首屏渲染
 
 前端项目里，页面的`script`标签通常会放在`body`标签的底部，以防止先加载`script`文件而阻塞了页面的渲染。
 

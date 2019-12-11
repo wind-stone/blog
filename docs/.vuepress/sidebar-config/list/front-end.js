@@ -225,13 +225,6 @@ module.exports = {
     // 兼容性
     '/front-end/compatibility/': [
         {
-            title: '浏览器兼容性',
-            collapsable: true,
-            children: [
-                'browser/safari/'
-            ]
-        },
-        {
             title: 'JS 兼容性',
             collapsable: true,
             children: [
@@ -243,7 +236,6 @@ module.exports = {
             collapsable: true,
             children: [
                 'css/',
-                'css/ios',
                 'css/ie',
                 'css/android-small-fontsize'
             ]
@@ -255,6 +247,14 @@ module.exports = {
                 'html-dom/video',
                 'html-dom/media',
                 'html-dom/input-delay/'
+            ]
+        },
+        {
+            title: 'iOS',
+            collapsable: true,
+            children: [
+                'ios/',
+                'ios/safari-script-block-render',
             ]
         }
     ],
