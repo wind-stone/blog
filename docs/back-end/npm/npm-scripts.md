@@ -206,3 +206,22 @@ available via `npm run-script`:
 ### npm run env
 
 你可以运行`npm run env`（类 Unix 下）或`npm run env-windows`（Windows 下）查看所有的环境变量。
+
+### npm scripts 参数
+
+#### 方式一
+
+```json
+{
+    "scripts": {
+        "build": "node version.js -v ${V}"
+    }
+}
+```
+
+```sh
+# 执行此行命令，实际执行的是 node version.js -v 123456
+V=123456 npm run build
+```
+
+详见: [npm run 执行package.json中的scripts配置时如何参数传递？ - 草依山的回答 - 知乎](https://www.zhihu.com/question/54471504/answer/139521430)
