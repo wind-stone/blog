@@ -49,7 +49,7 @@ function debounce(func, wait, immediate) {
             timeout = null;
             if (!immediate) func.apply(context, args);
         };
-        var callNow = immediate &amp; !timeout;
+        var callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
@@ -63,6 +63,8 @@ var myEfficientFn = debounce(function() {
 // 绑定监听
 window.addEventListener('resize', myEfficientFn);
 ```
+
+更多丰富的功能，可以参考`lodash`的`debounce`方法[_.debounce](https://lodash.com/docs/4.17.15#debounce)。
 
 ## 节流阀（Throttling）
 
@@ -85,7 +87,7 @@ function throttle(func, wait, mustRun) {
 
         clearTimeout(timeout);
         // 如果达到了规定的触发时间间隔，触发 handler
-        if(curTime - startTime &gt;= mustRun){
+        if(curTime - startTime >= mustRun){
             func.apply(context,args);
             startTime = curTime;
         // 没达到触发间隔，重新设定定时器
@@ -102,11 +104,14 @@ function realFunc(){
 window.addEventListener('scroll',throttle(realFunc,500,1000));
 ```
 
+更多丰富的功能，可以参考`lodash`的`throttle`方法[_.throttle](https://lodash.com/docs/4.17.15#throttle)。
+
 ## requestAnimationFrame
 
 上面介绍的抖动与节流实现的方式都是借助了定时器`setTimeout`，但是如果页面只需要兼容高版本浏览器或应用在移动端，又或者页面需要追求高精度的效果，那么可以使用浏览器的原生方法`requestAnimationFrame`。
 
 ## Reference
 
+- [Debouncing and Throttling Explained Through Examples](https://css-tricks.com/debouncing-throttling-explained-examples/)
 - [【前端性能】高性能滚动 scroll 及页面渲染优化 #12](https://github.com/chokcoco/cnblogsArticle/issues/12)
 - [实例解析防抖动（Debouncing）和节流阀（Throttling）](http://jinlong.github.io/2016/04/24/Debouncing-and-Throttling-Explained-Through-Examples/)
