@@ -259,6 +259,16 @@ module.exports = {
         }
     ],
 
+    '/front-end/mvvm/': [
+        {
+            title: 'MVVM',
+            collapsable: true,
+            children: [
+                'virtual-dom/'
+            ]
+        }
+    ],
+
     // 专题
     '/front-end/topics/': [
         {
