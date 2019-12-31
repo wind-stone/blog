@@ -1,6 +1,6 @@
-# 项目初始化 #
+# 项目初始化
 
-## 添加 .npmrc 文件 ##
+## 添加 .npmrc 文件
 
 项目根目录下添加`.npmrc`文件，以设置项目独有的`npm`配置，比如`registry`，可按照需求选择使用公司的、淘宝的或是官方的`registry`。
 
@@ -8,9 +8,9 @@
 registry=https://registry.npmjs.org/
 ```
 
-## 代码格式化、校验 ##
+## 代码格式化、校验
 
-### .eslintrc 配置 ###
+### .eslintrc 配置
 
 项目根目录下添加`.eslintrc.js`，再按需进行配置。
 
@@ -40,7 +40,7 @@ module.exports = {
 }
 ```
 
-### VS Code 配置 ###
+### VS Code 配置
 
 下载如下插件：
 
@@ -71,14 +71,14 @@ module.exports = {
 
 注意，VS Code 的 ESLint 插件会使用项目根目录下的`.eslintrc.*`文件。
 
-## 使用 husky 添加 git hooks ##
+## 使用 husky 添加 git hooks
 
 - 官方文档: [ESLint - 中文](https://cn.eslint.org/)
 - [风动之石的博客 - ESLint](../tools/eslint.md)
 
 [husky](https://github.com/typicode/husky)可以让我们更加简单地添加一些钩子函数，比如在提交代码前校验代码风格和校验提交说明等。
 
-### 安装依赖 ###
+### 安装依赖
 
 ```sh
 # 安装 husky，以更加容易地使用各个钩子
@@ -117,7 +117,7 @@ npm install -D eslint babel-eslint eslint-plugin-vue vue-eslint-parser
 }
 ```
 
-### commitlint 配置 ###
+### commitlint 配置
 
 项目根目录下添加`commitlint.config.js`文件：
 
@@ -130,7 +130,7 @@ module.exports = {
 };
 ```
 
-#### 提交说明里的 type ####
+#### 提交说明里的 type
 
 - `feat`：新功能（`feature`）
 - `fix`：修补`bug`
