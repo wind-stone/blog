@@ -294,6 +294,13 @@ module.exports = {
             ]
         },
         {
+            title: '命名规范',
+            collapsable: true,
+            children: [
+                'naming-convention/js-naming'
+            ]
+        },
+        {
             title: 'ESLint',
             collapsable: true,
             children: [
