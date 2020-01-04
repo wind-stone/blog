@@ -131,6 +131,39 @@ git branch --no-merged
 
 查看所有包含未合并工作的分支
 
+### 查找丢失的 commit 或 branch
+
+`git log`和`git reflog`的区别（详见[Stack Overflow - What's the difference between git reflog and log?](https://stackoverflow.com/questions/17857723/whats-the-difference-between-git-reflog-and-log)）：
+
+> git log shows the current HEAD and its ancestry. That is, it prints the commit HEAD points to, then its parent, its parent, and so on. It traverses back through the repo's ancestry, by recursively looking up each commit's parent.
+>
+>(In practice, some commits have more than one parent. To see a more representative log, use a command like git log --oneline --graph --decorate.)
+>
+> git reflog doesn't traverse HEAD's ancestry at all. The reflog is an ordered list of the commits that HEAD has pointed to: it's undo history for your repo. The reflog isn't part of the repo itself (it's stored separately to the commits themselves) and isn't included in pushes, fetches or clones; it's purely local.
+>
+> Aside: understanding the reflog means you can't really lose data from your repo once it's been committed. If you accidentally reset to an older commit, or rebase wrongly, or any other operation that visually "removes" commits, you can use the reflog to see where you were before and git reset --hard back to that ref to restore your previous state. Remember, refs imply not just the commit but the entire history behind it.
+
+因此，`git reflog`命令显示的是个顺序列表，列表里的每一项都是 HEAD 曾经指向的提交，包括已经丢失的提交，因此当你意外地重置到一个更早的提交，或者错误的变基，或者其他任何操作导致一些提交丢失，你都可以使用`git reflog`查看 HEAD 曾经所在的提交，并使用`git reset --hard`来恢复到你之前的状态上。
+
+操作步骤：
+
+```sh
+$ git reflog
+# 以下是 HEAD 曾经所处的提交，现在假设想恢复到“740692f HEAD@{5}: commit: feat(命名规范): js 命名规范”这个提交
+fb7a578 (HEAD -> master, origin/master, origin/HEAD) HEAD@{0}: pull origin master: Fast-forward
+db9198d HEAD@{1}: reset: moving to head~1
+fb7a578 (HEAD -> master, origin/master, origin/HEAD) HEAD@{2}: reset: moving to HEAD
+fb7a578 (HEAD -> master, origin/master, origin/HEAD) HEAD@{3}: commit: docs: update
+db9198d HEAD@{4}: commit: docs: update
+740692f HEAD@{5}: commit: feat(命名规范): js 命名规范
+bb9c824 HEAD@{6}: commit: docs: update
+4590770 HEAD@{7}: commit: feat(mvvm): 添加 virtual dom 相关
+43e5b1c HEAD@{8}: commit: feat(webpack): preload & prefetch
+
+$ git reset --hard 740692f
+# 恢复完成，现在 HEAD 就会处于“740692f HEAD@{5}: commit: feat(命名规范): js 命名规范”这个提交了
+```
+
 ## 远程仓库
 
 ### 查看
