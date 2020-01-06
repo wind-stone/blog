@@ -166,7 +166,10 @@ module.exports = {
             title: '浏览器',
             collapsable: true,
             children: [
-                'browser/process-thread'
+                'browser/http',
+                'browser/working-principle',
+                'browser/process-thread',
+                'browser/open-url-process'
             ]
         },
         {
@@ -259,6 +262,7 @@ module.exports = {
         }
     ],
 
+    // MVVM
     '/front-end/mvvm/': [
         {
             title: 'MVVM',
