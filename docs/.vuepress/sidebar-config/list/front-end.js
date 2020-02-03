@@ -166,21 +166,11 @@ module.exports = {
             title: '浏览器',
             collapsable: true,
             children: [
-                'browser/http',
+                'browser/',
                 'browser/working-principle',
                 'browser/process-thread',
-                'browser/open-url-process'
-            ]
-        },
-        {
-            title: '浏览器环境',
-            collapsable: true,
-            children: [
-                '',
-                'memory',
-                'file-system',
-                'pwa',
-                'web-components'
+                'browser/open-url-process',
+                'browser/browser-api'
             ]
         },
         {
@@ -197,6 +187,7 @@ module.exports = {
             title: '网络',
             collapsable: true,
             children: [
+                'network/http',
                 'network/https/'
             ]
         },
@@ -221,6 +212,16 @@ module.exports = {
             children: [
                 'hybrid/h52app',
                 'hybrid/jsbridge'
+            ]
+        },
+        {
+            title: '未分类',
+            collapsable: true,
+            children: [
+                'memory',
+                'file-system',
+                'pwa',
+                'web-components'
             ]
         }
     ],
