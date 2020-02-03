@@ -53,7 +53,7 @@ h5 页面里即可通过各种方式大概该 scheme，比如`a`标签：
 - [android-Scheme与网页跳转原生的三种方式](https://blog.csdn.net/sinat_31057219/article/details/78362326)
 - [iOS scheme跳转机制](https://www.jianshu.com/p/138b44833cda)
 
-一般会优先使用`iframe`打开自定义的`schema`：
+一般会优先使用`iframe`打开自定义的`scheme`：
 
 ```js
 const iframe = document.createElement('iframe');
@@ -62,7 +62,7 @@ iframe.style.display = 'none';
 document.body.appendChild(iframe);
 ```
 
-有些系统会拦截`iframe`的`src`（这只是造成唤醒 APP 失败的其中一种原因）,因为这个src属性是一个法外`hacker`，很多漏洞都是利用他造成的。所以这时候就要判断跳转 APP 失败的情况了。
+有些系统会拦截`iframe`的`src`（这只是造成唤醒 APP 失败的其中一种原因）,因为这个`src`属性是一个法外`hacker`，很多漏洞都是利用他造成的。所以这时候就要判断跳转 APP 失败的情况了。
 
 ```js
 const timer = 1000;
@@ -75,7 +75,7 @@ setTimeout(function() {
         // 执行失败函数
         // 也有可能是浏览器弹窗询问是否跳转 APP，导致时间超过 2000 ms
     } else {
-           //  执行成功函数
+        //  执行成功函数
     }
 }, timer);
 ```
@@ -84,7 +84,7 @@ setTimeout(function() {
 
 若是唤起 APP 失败，定时器会按预期时间执行，这时候绝大多数情况下都是小于 2s 的。（主线程长时间执行可能会导致定时器延迟，因此此处不是 100% 正确，但是基本相差不大）
 
-#### 如何判断设备里是否安装指定的 APP？
+#### 如何判断设备里是否安装指定的 APP
 
 实际上，不管是 iOS 还是 Android，我们都无法通过浏览器预知本地是否安装了指定的 APP。
 （即使浏览器可以读取本地安装的应用列表，但是目前没有任何一家浏览器实现了提供查询的 API）
@@ -145,6 +145,15 @@ Tips：
 - iOS 9+ 不支持通过`iframe`跳转到自定义协议
   - [Stack Overflow - iOS 9 safari iframe src with custom url scheme not working](https://stackoverflow.com/questions/31891777/ios-9-safari-iframe-src-with-custom-url-scheme-not-working)
 
+#### URL scheme 的兼容性问题
+
+Android 原生的 Chrome 浏览器（Chrome for Android）里，如下两种情况下，给定一个 Intent URI 时，Chrome 将不会拉起外部应用：
+
+- Intent URI 是根据键入的 URL 重定向得到的
+- 在未经过用户交互（比如用户点击）的情况下，初始化 Intent URI
+
+详见：[Android Intents with Chrome](https://developer.chrome.com/multidevice/android/intents)
+
 ## 跳转到应用市场/App Store
 
 ### iOS，跳转到 App Store
@@ -168,34 +177,38 @@ Tips：
 
 （猜测：针对每个 APP，App Store 都会生成类似上面的唯一链接）
 
+### Android，跳转到应用市场
+
+通过`window.location.href = 'market://details?id=com.smile.gifmaker'`可以吊起应用市场，其中`id`参数是要定位到的 APP 的包名，比如快手的包名为`com.smile.gifmaker`。
+
 ## 兼容性问题
 
 ### 兼容性概括
 
 Android:
 
-微信、QQ：「URL Scheme」不可用，可通过「应用宝」中转，app必须在腾讯商店上架。
-浏览器：「URL Scheme」可用。
+微信、QQ：URL Scheme 不可用，可通过应用宝中转，APP 必须在腾讯商店上架。
+浏览器：URL Scheme 可用。
 其他APP：提示用浏览器打开。
 
-iOS>=9（支持「Universal Links」）：
+iOS >= 9（支持 Universal Links）：
 
-微信：「URL Scheme」和「Universal Links」均不可用，通过「应用宝」中转。
-QQ：「Universal Links」尚且可用。
-QQ浏览器：「Universal Links」不可用，但「URL Scheme」可用。
-其他APP：「Universal Links」可用。
+微信：URL Scheme 和 Universal Links 均不可用，通过应用宝中转。
+QQ：Universal Links 尚且可用。
+QQ浏览器：Universal Links 不可用，但 URL Scheme 可用。
+其他APP：Universal Links 可用。
 
-iOS<9（不支持「Universal Links」）：
+iOS < 9（不支持 Universal Links）：
 
-微信、QQ：「URL Scheme」不可用，提示用浏览器打开。
-各浏览器：「URL Scheme」可用。
+微信、QQ：URL Scheme 不可用，提示用浏览器打开。
+各浏览器：URL Scheme 可用。
 其他APP：提示用浏览器打开。
 
 以上兼容性数据来源于：[H5唤醒APP或打开应用商店下载（未完成）](https://blog.csdn.net/weixin_39921345/article/details/79892920?utm_source=copy)
 
 ### 微信
 
-微信对 URL scheme 协议做了屏蔽，无法通过 URL scheme 的方式唤起其他 APP。（除非 schema 在微信的白名单里）
+微信对 URL scheme 协议做了屏蔽，无法通过 URL scheme 的方式唤起其他 APP。（除非`scheme`在微信的白名单里）
 
 微信也不支持 Universal Links。
 
