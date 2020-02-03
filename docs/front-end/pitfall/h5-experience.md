@@ -7,5 +7,32 @@
 
 ## 实现阶段
 
+- 防爆击，使用`lodash.throttle`进行节流处理
+
+```js
+import throttle from 'lodash.throttle';
+// 300ms 内只触发一次回调，且第一次点击有效
+ele.addEventListener('click', throttle(() => {
+    // click ..
+}, 300, {
+    leading: true,
+    trailing: false
+}));
+```
+
+- 防止频繁触发事件回调，使用`lodash.debounce`进行防抖动处理
+
+```js
+import debounce from 'lodash.debounce';
+// 若 300ms 内连续触发多次 scroll 事件，则以最后一次触发事件的时间作为延迟 300ms 触发的开始时间
+// 若 300ms 内只触发一次 scroll 事件，则在触发 scroll 事件后 300ms 后执行回调
+window.addEventListener('scroll', debounce(() => {
+    // scroll ..
+}, 300);
+```
+
+- 关键路径要添加埋点
+- 调用第三方服务时，需要第三方服务提供对应接口请求曲线，如有必要，在业务里针对第三方服务的结果进行埋点统计异常
 - iOS UIWebView 在页面滑动时会导致计时器暂停
+  - 简单解决方法：计时器开始时记录一个本地时间
 - 使用`url-polyfill`获取`url`上的参数时，在某些机型上（比如 iOS 10.3.3）会将`%2B`（对应`+`字符）解码成`20%`（对应空格字符）
