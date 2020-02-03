@@ -2,7 +2,10 @@
 
 ## 符号
 
-- `brace`:大括号`{`和`}`
+- `brace`: 大括号`{`和`}`
+- `square brackets`: 中括号`[`和`]`
+- `parentheses`: 小括号`(`和`)`
+- `underscore`: 下划线`_`
 
 ## 命名方式
 
