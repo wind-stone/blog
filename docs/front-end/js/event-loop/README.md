@@ -18,6 +18,28 @@ setTimeout/setInterval(function () {
 
 注意，`delayTime`的时间，是指在`delayTime`时间后将函数放入事件队列中，而不是立即放入事件队列中等待`delay`时间后执行
 
+### 堆积未执行的 setInterval 回调只会执行一个
+
+```js
+let count = 5;
+let timer;
+let countdown = () => {
+    console.log(--count);
+    if (count <= 0) {
+        clearInterval(timer);
+        console.log('计时结束')
+    }
+}
+timer = setInterval(countdown, 1000);
+
+const init = Date.now();
+while(Date.now() - init < 10000) {}
+```
+
+尝试执行以上代码你会发现，尽管因为`while`语句阻塞了 10s，期间可能有 10 个回调函数进入了事件队列里，但是在阻塞结束后，仍然只输出了`4`，之后每隔 1s 依次输出`3`、`2`..
+
+这是因为，尽管在主线程阻塞的过程中有多个回调函数进入了事件队列，发生了回调函数的堆积，但是在阻塞结束后执行事件队列里的回调函数时，只会执行一个。因此使用`setInterval`进行倒计时是不太准确的。
+
 ### 示例
 
 ```js
