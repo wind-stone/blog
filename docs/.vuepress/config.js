@@ -35,6 +35,7 @@ module.exports = {
                     { text: '浏览器环境', link: '/front-end/browser-env/' },
                     { text: 'MVVM', link: '/front-end/mvvm/virtual-dom/' },
                     { text: '兼容性', link: '/front-end/compatibility/' },
+                    { text: '用户体验', link: '/front-end/user-experience/' },
                     { text: '工程化', link: '/front-end/engineering/project-init' },
                     { text: '奇技淫巧', link: '/front-end/skills/android-weixin-auto-open-browser' },
                     { text: '踩过的坑', link: '/front-end/pitfall/' }

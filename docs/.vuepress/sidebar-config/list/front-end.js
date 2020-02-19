@@ -72,8 +72,7 @@ module.exports = {
             collapsable: true,
             children: [
                 'properties/',
-                'properties/properties-order',
-                'properties/user-experience'
+                'properties/properties-order'
             ]
         },
         {
@@ -266,6 +265,17 @@ module.exports = {
             children: [
                 'ios/',
                 'ios/safari-script-block-render',
+            ]
+        }
+    ],
+
+    // 用户体验
+    '/front-end/user-experience/': [
+        {
+            title: '用户体验',
+            collapsable: true,
+            children: [
+                ''
             ]
         }
     ],
