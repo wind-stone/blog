@@ -40,7 +40,14 @@ module.exports = {
                 'prototype/',
                 'prototype/this'
             ]
-        }
+        },
+        {
+            title: '运算符',
+            collapsable: true,
+            children: [
+                'operators/bitwise-operators'
+            ]
+        },
     ],
 
     // CSS
