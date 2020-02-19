@@ -84,6 +84,13 @@ module.exports = {
             ]
         },
         {
+            title: '全局 API',
+            collapsable: false,
+            children: [
+                'source-study/global-api/use'
+            ]
+        },
+        {
             title: 'Util',
             collapsable: false,
             children: [
