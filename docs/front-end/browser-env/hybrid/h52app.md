@@ -177,6 +177,18 @@ Android 原生的 Chrome 浏览器（Chrome for Android）里，如下两种情�
 
 （猜测：针对每个 APP，App Store 都会生成类似上面的唯一链接）
 
+#### iOS APP 内显示 APP Store 详情页
+
+在有些 iOS APP 内，APP 内实现了对 App Store 链接的拦截功能，其会阻止你跳转到 App Store；取而代之的是，在 APP 内弹出另一个 APP 在 App Store 的应用详情页。
+
+![快手极速版-视频广告](./img/kuaishou-nebula-app-detail.jpg)
+
+比如在快手极速版里，图一是个广告的视频；图二是点击第一张图里的“玩游戏”后从页面底部弹出来的广告 APP 对应的 App Store 应用详情页；滑动应用详情页可以修改页面显示区域或滚动应用详情页里的内容区域，如图三所示。
+
+更多信息可参考：
+
+- [iOS在应用内显示App的详情以及评分内容](https://blog.csdn.net/NB_Token/article/details/78674618)
+
 ### Android，跳转到应用市场
 
 通过`window.location.href = 'market://details?id=com.smile.gifmaker'`可以吊起应用市场，其中`id`参数是要定位到的 APP 的包名，比如快手的包名为`com.smile.gifmaker`。
