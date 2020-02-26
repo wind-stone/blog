@@ -5,6 +5,16 @@
 以下讨论的 JS/CSS 文件都是指页面里同步的 JS/CSS 文件。
 
 - CSS 文件加载会阻塞页面渲染
+- JS 文件的加载和执行，会阻塞其后 DOM 节点的解析和渲染
+  - `<script>`标签里的 JS 代码执行完，才会继续解析之后的 DOM；一个常见的应用是，`<script>`里的代码执行时，查询到的最后一个`<script>`标签即是代码所在的`<script>`标签对应的 DOM 节点。
+
+```js
+const scripts = document.getElementsByTagName('script');
+// 当前代码所在 script 标签对应的 DOM 节点
+const currentScript = scripts[scripts.length - 1];
+// 获取 script 标签上的 attributes
+// ...
+```
 
 ### 为什么要将 JS 文件放在文档底部
 
