@@ -1,6 +1,10 @@
 {
+    // https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md
     "MD003": {
         "style": "atx"
     },
-    "MD013": false
+    "MD013": false,
+    "MD024": {
+        "siblings_only": true
+    }
 }
