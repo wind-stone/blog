@@ -340,7 +340,8 @@ module.exports = {
                 'webpack/config',
                 'webpack/webpack-runtime',
                 'webpack/tapable/',
-                'webpack/webpack4-import'
+                'webpack/webpack4-import',
+                'webpack/practices'
             ]
         }
     ],
