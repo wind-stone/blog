@@ -155,3 +155,7 @@ node_modules/.bin/vuepress dev
 ```
 
 :::
+
+## module
+
+`module`字段要指向的应该是一个基于 ES6 模块规范的使用 ES5 语法书写的模块。详见[聊聊 package.json 文件中的 module 字段](https://loveky.github.io/2018/02/26/tree-shaking-and-pkg.module/)
