@@ -6,12 +6,9 @@ sidebarDepth: 0
 
 [[toc]]
 
-## video 标签属性
+## 属性
 
-Reference:
-
-- [视频H5 video最佳实践 #11](https://github.com/gnipbao/iblog/issues/11)
-- [视频H5のVideo标签在微信里的坑和技巧](https://aotu.io/notes/2017/01/11/mobile-video/)
+更多详情请见[MDN - video 元素](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/video)
 
 ```html
 <video
@@ -58,7 +55,7 @@ Reference:
   - 注： 声明此属性，需要页面自己重新适配新的视口大小变化。可以通过监听resize 事件来实现
 
 ```html
-<video id="test_video" src="xxx" x5-video-player-type="h5" x5-video-player-fullscreen="true"/>
+<video id="test_video" src="xxx" x5-video-player-type="h5" x5-video-player-fullscreen="true" />
 ```
 
 ```js
@@ -71,3 +68,21 @@ window.onresize = function(){
 - `x5-video-orientation`：
   - 声明播放器支持的方向，可选值`landscape`横屏,`portraint`竖屏。默认值`portraint`
   - 无论是直播还是全屏H5一般都是竖屏播放，但是这个属性需要x5-video-player-type开启 H5 模式
+
+## 事件
+
+详细的事件列表可参考[MDN - 媒体相关事件](https://developer.mozilla.org/zh-CN/docs/Web/Guide/Events/Media_events)。
+
+主要注意的是，按照参考链接[视频H5 video最佳实践 #11](https://github.com/gnipbao/iblog/issues/11)里说的，在移动端除了`ended`、`timeupdate`、`event`事件之外，不要轻易使用媒体元素的其他事件。
+
+### 查询视频的缓冲时间
+
+有时候会遇到对`video`添加了`autoplay`但是无法自动播放的情况，这时候可以查看下`video`的缓冲时间是否足够播放，可使用`video`的`buffered`属性查看，详情可参考[Media buffering, seeking, and time ranges](https://developer.mozilla.org/zh-CN/docs/Web/Guide/Audio_and_video_delivery/buffering_seeking_time_ranges)。
+
+## 参考链接
+
+- [MDN - video 元素](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/video)
+- [MDN - 媒体相关事件](https://developer.mozilla.org/zh-CN/docs/Web/Guide/Events/Media_events)
+- [视频H5 video最佳实践 #11](https://github.com/gnipbao/iblog/issues/11)
+- [视频H5のVideo标签在微信里的坑和技巧](https://aotu.io/notes/2017/01/11/mobile-video/)
+- [Media buffering, seeking, and time ranges](https://developer.mozilla.org/zh-CN/docs/Web/Guide/Audio_and_video_delivery/buffering_seeking_time_ranges)
