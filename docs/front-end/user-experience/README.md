@@ -21,7 +21,10 @@
   - Use momentum-based scrolling, where the content continues to scroll for a while after finishing the scroll gesture and removing your finger from the touchscreen. The speed and duration of the continued scrolling is proportional to how vigorous the scroll gesture was. Also creates a new stacking context.
   - 翻译：使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。同时也会创建一个新的堆栈上下文。 |
 
-需要注意的是，对容器添加了`-webkit-overflow-scrolling: touch`后，可能会导致容器内使用`position:fixed;`固定定位的元素随着页面一起滚动。
+需要注意的是，对容器添加了`-webkit-overflow-scrolling: touch`后，可能会存在以下问题：
+
+- 导致容器内使用`position:fixed;`固定定位的元素随着页面一起滚动。
+- （iOS UIWebview 里）容器内溢出的内容（比如弹窗）将被隐藏，效果类似于`overflow: hidden`，google 未找到原因
 
 ### 文字不可选中
 
@@ -45,6 +48,14 @@ div {
 div {
     -webkit-tap-highlight-color: transparent;
 }
+```
+
+### 类似电话号码的数字不可点击拨号
+
+在`<head>`标签里添加：
+
+```html
+<meta name="format-detection" content="telephone=no">
 ```
 
 ## 其他
