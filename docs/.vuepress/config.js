@@ -32,7 +32,7 @@ module.exports = {
                     { text: 'JavaScript', link: '/front-end/js/' },
                     { text: 'CSS', link: '/front-end/css/' },
                     { text: 'HTML-DOM', link: '/front-end/html-dom/' },
-                    { text: '浏览器环境', link: '/front-end/browser-env/' },
+                    { text: '浏览器环境', link: '/front-end/browser-env/browser/' },
                     { text: 'MVVM', link: '/front-end/mvvm/virtual-dom/' },
                     { text: '兼容性', link: '/front-end/compatibility/' },
                     { text: '用户体验', link: '/front-end/user-experience/' },
