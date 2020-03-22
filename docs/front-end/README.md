@@ -15,3 +15,7 @@ sidebarDepth: 0
 
 - kebab-case: 短横线隔开
 - camelCased: 驼峰命名，分为大驼峰（CamelCased 或 PascalCase）和小驼峰（camelCased）
+
+## 项目里使用到的单词
+
+- 挽留（`detainment`）弹窗，可参考[https://zhuanlan.zhihu.com/p/68477476](https://zhuanlan.zhihu.com/p/68477476)
