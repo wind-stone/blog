@@ -49,6 +49,13 @@ window.addEventListener('scroll', debounce(() => {
 - iOS UIWebView 在页面滑动时会导致计时器暂停
   - 简单解决方法：计时器开始时记录一个本地时间
 
+## 纯前端实现
+
+- 尽量使用`await/async`，少使用 Promise
+- 尽可能使用解构赋值
+- Vue
+  - 使用 composition API，让原先以 UI 组件为单位的组件，改进为用功能为单位的组件
+
 ## 坑
 
 - 使用`url-polyfill`获取`url`上的参数时，在某些机型上（比如 iOS 10.3.3）会将`%2B`（对应`+`字符）解码成`20%`（对应空格字符）
