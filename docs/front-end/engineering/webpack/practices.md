@@ -26,3 +26,25 @@ module.exports = {
     ],
 }
 ```
+
+### 审查项目的 webpack 配置
+
+`vue-cli-service inspect`命令可以用于审查一个 Vue CLI 项目的 Webpack 配置。
+
+- 可通过`--mode`参数指定不同的环境模式（比如`production`/`development`，默认是`development`）。
+- 可将配置输出到文件里方便查阅
+
+```sh
+# 查看 production 模式的配置，并将结果输出到 output.js 里
+vue inspect --mode production > output.js
+
+# 或
+npx vue-cli-service inspect --mode development > output.js
+```
+
+参考:
+
+- [随笔 - 1079, 文章 - 1, 评论 - 8, 引用 - 0
+使用 vue-cli-service inspect 来查看一个 Vue CLI 3 项目的 webpack 配置信息（包括：development、production）](https://www.cnblogs.com/cag2050/p/10523096.html)
+- [Vue CLI - vue-cli-service inspect](https://cli.vuejs.org/zh/guide/cli-service.html#vue-cli-service-inspect)
+- [Vue CLI - 审查项目的 webpack 配置](https://cli.vuejs.org/zh/guide/webpack.html#%E5%AE%A1%E6%9F%A5%E9%A1%B9%E7%9B%AE%E7%9A%84-webpack-%E9%85%8D%E7%BD%AE)
