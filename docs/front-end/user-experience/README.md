@@ -58,6 +58,40 @@ div {
 <meta name="format-detection" content="telephone=no">
 ```
 
+### 网页置灰
+
+一般遇到国家公祭日、国难日或者默哀日等情况，都需要将整个页面置灰。这可通过`filter: grayscale(1)`来实现。
+
+若是想要全站都置灰，直接在文档根元素`html`上添加滤镜。
+
+```css
+html {
+  -webkit-filter: grayscale(100%); /* webkit */
+  -moz-filter: grayscale(100%); /*firefox*/
+  -ms-filter: grayscale(100%); /*ie9*/
+  -o-filter: grayscale(100%); /*opera*/
+  filter: grayscale(100%);
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+  filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+  filter:gray; /*ie9- */
+}
+```
+
+尤其需要注意的是，若是将这段 CSS 应用到`body`而不是`html`上，会导致页面里使用`position: fixed/absolute`定位的元素，会以`body`为包含框进行定位（换句话说，就是固定定位可能失效了），其原因是：
+
+> A value other than none for the filter property results in the creation of a containing block for absolute and fixed positioned descendants unless the element it applies to is a document root element in the current browsing context. The list of functions are applied in the order provided. -- [filter-effects 规格文档](https://drafts.fxtf.org/filter-effects/#FilterProperty)
+
+若是不想子孙元素的`fix/absolute`定位元素以这个添加了`filter`属性的元素为基准来定位，就需要将`filter`属性应用到当前文档的根元素即`html`上。
+
+若是想局部页面置灰，比如某个路由页面，则需要给页面上的元素单独添加`filter: grayscale(1)`，且不要给`fixed/absolute`的祖先元素添加。
+
+参考文档：
+
+- [Stack Overflow - CSS-Filter on parent breaks child positioning](https://stackoverflow.com/questions/52937708/css-filter-on-parent-breaks-child-positioning)
+- [掘金 - 明天全国哀悼日，一段css让全站变灰](https://juejin.im/post/5e86e221e51d4546ce27b99c)
+- [filter-effects 规格文档](https://drafts.fxtf.org/filter-effects/#FilterProperty)
+- [MDN - filter](https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter)
+
 ## 其他
 
 ### iOS 页面顶部边界下拉出现白色空白
