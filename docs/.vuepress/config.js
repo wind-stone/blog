@@ -30,7 +30,7 @@ module.exports = {
                 text: 'Front End',
                 items: [
                     { text: 'JavaScript', link: '/front-end/js/' },
-                    { text: 'CSS', link: '/front-end/css/' },
+                    { text: 'CSS', link: '/front-end/css/topics/position-fixed' },
                     { text: 'HTML-DOM', link: '/front-end/html-dom/' },
                     { text: '浏览器环境', link: '/front-end/browser-env/browser/' },
                     { text: 'MVVM', link: '/front-end/mvvm/virtual-dom/' },

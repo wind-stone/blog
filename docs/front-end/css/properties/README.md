@@ -65,7 +65,6 @@ sidebarDepth: 1
 
 简单说就是：一个`inline-block`元素，如果里面没有`inline`内联元素，或者`overflow`不是`visible`，则该元素的基线就是其`margin`底边缘，否则，其基线就是元素里面最后一行内联元素的基线。
 
-
 ## z-index
 
 现在我们来说说什么情况下会产生新的层：
@@ -95,6 +94,7 @@ CSS 的属性`vertical-align`用来指定行内元素（inline）或表格单元
 也就意味着，`vertical-align`属性对块级元素是无效的。
 
 ## perspective
+
 ### 设置 perspective 之后子元素的大小
 
 如果父元素设置了 perspective 属性，且子元素设置了 translateZ，则子元素的大小公式为：
@@ -138,12 +138,12 @@ perspective / (perspective - distance)
 
 CSS 3 里，`width`属性又多了几个关键字取值：
 
-“关键字”值 | 说明
---- | ---
-`fill-available` | 元素自动充满剩余的空间（类似`div`元素默认宽度为父元素的`100%`），但是其`display`属性可以取其他任意值，比如`display: inline-block`
-`max-content` | 先假设容器元素有足够的宽度，其内部元素将按容器元素有足够的空间来布局，`max-content`的值就是宽度最大的那个内部元素的宽度
-`min-content` | 采用内部元素最小宽度值最大的那个元素的宽度作为最终容器的宽度
-`fit-content` | 类似于`shrink-to-fit`，可以实现元素收缩效果，同时能保持原本的`display`属性特性
+| “关键字”值       | 说明                                                                                                                              |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `fill-available` | 元素自动充满剩余的空间（类似`div`元素默认宽度为父元素的`100%`），但是其`display`属性可以取其他任意值，比如`display: inline-block` |
+| `max-content`    | 先假设容器元素有足够的宽度，其内部元素将按容器元素有足够的空间来布局，`max-content`的值就是宽度最大的那个内部元素的宽度           |
+| `min-content`    | 采用内部元素最小宽度值最大的那个元素的宽度作为最终容器的宽度                                                                      |
+| `fit-content`    | 类似于`shrink-to-fit`，可以实现元素收缩效果，同时能保持原本的`display`属性特性                                                    |
 
 Reference: [张鑫旭 - 理解CSS3 max/min-content及fit-content等width值
 ](https://www.zhangxinxu.com/wordpress/2016/05/css3-width-max-contnet-min-content-fit-content/)
@@ -152,13 +152,13 @@ Reference: [张鑫旭 - 理解CSS3 max/min-content及fit-content等width值
 
 CSS 有些属性的属性值可以使用百分比值，那么这些百分比值都是相对哪些元素的哪些属性来说的呢？
 
-属性 | 相对元素和属性 | 说明
---- | --- | ---
-`width` | 包含块宽度`width` |
-`padding` | 包含块的宽度`width` |
-`margin` | 包含块的宽度`width` |
-`left`/`right` | 包含块的宽度`width` |
-`height` | 包含块高度`height` |
-`top`/`bottom` | 包含块的高度`height` |
-`vertical-align` | 该元素的`line-height` |
-`font-size` | 父元素`font-size` |
+| 属性             | 相对元素和属性        | 说明 |
+| ---------------- | --------------------- | ---- |
+| `width`          | 包含块宽度`width`     |
+| `padding`        | 包含块的宽度`width`   |
+| `margin`         | 包含块的宽度`width`   |
+| `left`/`right`   | 包含块的宽度`width`   |
+| `height`         | 包含块高度`height`    |
+| `top`/`bottom`   | 包含块的高度`height`  |
+| `vertical-align` | 该元素的`line-height` |
+| `font-size`      | 父元素`font-size`     |

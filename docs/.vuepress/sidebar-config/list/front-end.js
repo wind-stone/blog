@@ -56,6 +56,7 @@ module.exports = {
             title: 'CSS 专题',
             collapsable: true,
             children: [
+                'topics/position-fixed',
                 'topics/flex-image/',
                 'topics/text-wrap-and-ellipsis/'
             ]
