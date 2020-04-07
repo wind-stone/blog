@@ -38,6 +38,25 @@ const currentScript = scripts[scripts.length - 1];
 
 ### 为什么要将 CSS 文件放在文档顶部
 
+### CSS 的加载可能阻塞 DOM 的解析吗
+
+```html
+<html>
+    <head>
+        <style type="text/css" src = "theme.css" />
+    </head>
+    <body>
+        <p>极客时间</p>
+        <script>
+            let e = document.getElementsByTagName('p')[0]
+            e.style.color = 'blue'
+        </script>
+    </body>
+</html>
+```
+
+当在 JavaScript 中访问了某个元素的样式，那么这时候就需要等待这个样式被下载完成才能继续往下执行，所以在这种情况下，CSS 也会阻塞 DOM 的解析。
+
 ## 异步脚本
 
 ### defer VS async
