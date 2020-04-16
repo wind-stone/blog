@@ -6,9 +6,9 @@ sidebarDepth: 0
 
 [[toc]]
 
-# 编写原生 JavaScript 插件
+## 编写原生 JavaScript 插件
 
-## 插件需要满足的条件
+### 插件需要满足的条件
 
 一个可复用的插件需要满足以下条件：
 
