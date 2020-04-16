@@ -21,7 +21,6 @@ module.exports = {
     // ...（另有一些选项，可能不需要重置，就没列在此处）
 
     themeConfig: {
-        lastUpdated: 'Last Updated',
         sidebarDepth: 2,
         nav: [
             { text: 'Vue 源码学习', link: '/vue/source-study/' },
