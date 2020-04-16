@@ -152,13 +152,13 @@ Reference: [张鑫旭 - 理解CSS3 max/min-content及fit-content等width值
 
 CSS 有些属性的属性值可以使用百分比值，那么这些百分比值都是相对哪些元素的哪些属性来说的呢？
 
-| 属性             | 相对元素和属性        | 说明 |
-| ---------------- | --------------------- | ---- |
-| `width`          | 包含块宽度`width`     |
-| `padding`        | 包含块的宽度`width`   |
-| `margin`         | 包含块的宽度`width`   |
-| `left`/`right`   | 包含块的宽度`width`   |
-| `height`         | 包含块高度`height`    |
-| `top`/`bottom`   | 包含块的高度`height`  |
-| `vertical-align` | 该元素的`line-height` |
-| `font-size`      | 父元素`font-size`     |
+| 属性             | 相对元素和属性        | 说明                                                                                                                                   |
+| ---------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `width`          | 包含块宽度`width`     | 详见[https://www.w3.org/TR/CSS22/visudet.html#the-width-property](https://www.w3.org/TR/CSS22/visudet.html#the-width-property)         |
+| `padding`        | 包含块的宽度`width`   | 详见[https://www.w3.org/TR/CSS22/box.html#padding-properties](https://www.w3.org/TR/CSS22/box.html#padding-properties)                 |
+| `margin`         | 包含块的宽度`width`   | 详见[https://www.w3.org/TR/CSS22/box.html#margin-properties](https://www.w3.org/TR/CSS22/box.html#margin-properties)                   |
+| `left`/`right`   | 包含块的宽度`width`   | 详见[https://www.w3.org/TR/CSS22/visuren.html#position-props](https://www.w3.org/TR/CSS22/visuren.html#position-props)                 |
+| `height`         | 包含块高度`height`    | 详见[https://www.w3.org/TR/CSS22/visudet.html#the-height-property](https://www.w3.org/TR/CSS22/visudet.html#the-height-property)       |
+| `top`/`bottom`   | 包含块的高度`height`  | 详见[https://www.w3.org/TR/CSS22/visuren.html#position-props](https://www.w3.org/TR/CSS22/visuren.html#position-props)                 |
+| `vertical-align` | 该元素的`line-height` | 详见[https://www.w3.org/TR/CSS22/visudet.html#propdef-vertical-align](https://www.w3.org/TR/CSS22/visudet.html#propdef-vertical-align) |
+| `font-size`      | 父元素`font-size`     | 详见[https://www.w3.org/TR/CSS22/fonts.html#propdef-font-size](https://www.w3.org/TR/CSS22/fonts.html#propdef-font-size)               |
