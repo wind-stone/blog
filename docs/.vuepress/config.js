@@ -37,7 +37,8 @@ module.exports = {
                     { text: '用户体验', link: '/front-end/user-experience/' },
                     { text: '工程化', link: '/front-end/engineering/project-init' },
                     { text: '奇技淫巧', link: '/front-end/skills/android-weixin-auto-open-browser' },
-                    { text: '踩过的坑', link: '/front-end/pitfall/' }
+                    { text: '踩过的坑', link: '/front-end/pitfall/' },
+                    { text: '前端面试题', link: '/front-end/interview/js-interview' }
                 ]
             },
             { text: 'Back End', link: '/back-end/' },

@@ -367,5 +367,15 @@ module.exports = {
                 ''
             ]
         }
+    ],
+
+    '/front-end/interview/': [
+        {
+            title: '前端面试题',
+            collapsable: true,
+            children: [
+                'js-interview'
+            ]
+        }
     ]
 };
