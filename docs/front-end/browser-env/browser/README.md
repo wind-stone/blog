@@ -2,11 +2,14 @@
 
 ## 关于 JS 文件和 CSS 文件加载和执行是否阻塞页面解析和渲染的问题
 
+请先了解[浏览器的渲染阶段](https://blog.windstone.cc/front-end/browser-env/browser/open-url-process.html#_5-%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5)。
+
 以下讨论的 JS/CSS 文件都是指页面里同步的 JS/CSS 文件。
 
-- CSS 文件加载会阻塞页面渲染
-- JS 文件的加载和执行，会阻塞其后 DOM 节点的解析和渲染
-  - `<script>`标签里的 JS 代码执行完，才会继续解析之后的 DOM；一个常见的应用是，`<script>`里的代码执行时，查询到的最后一个`<script>`标签即是代码所在的`<script>`标签对应的 DOM 节点。
+- CSS 文件的加载，不会阻塞 HTML 的解析（即不会阻塞 DOM 树的构建），但是会阻塞页面渲染
+- JS 文件的加载和执行，会阻塞其后 HTML 的解析（即阻塞了 DOM 树的构建，肯定也会阻塞页面渲染）
+  - `<script>`标签里的 JS 代码执行完，才会继续解析之后的 HTML；一个常见的应用是，`<script>`里的代码执行时，查询到的最后一个`<script>`标签即是代码所在的`<script>`标签对应的 DOM 节点。
+  - 【疑问】既然 JS 文件的加载和执行会阻塞之后 HTML 的解析，那为什么会出现并行请求 JS 文件？浏览器的优化？
 
 ```js
 const scripts = document.getElementsByTagName('script');
@@ -16,7 +19,7 @@ const currentScript = scripts[scripts.length - 1];
 // ...
 ```
 
-### 为什么要将 JS 文件放在文档底部
+### 为什么要将 JS 文件放文档底部 </body> 之前
 
 先说结论：JS 文件的加载和执行，会阻塞 JS 文件之后 DOM 节点的解析和渲染，但不会影响其之前 DOM 节点的解析和渲染，因此要将 JS 文件放到页面尽可能底部的地方。
 
@@ -36,9 +39,15 @@ const currentScript = scripts[scripts.length - 1];
 
 正是因为 JS 文件的加载和执行会阻塞其后 DOM 节点的解析和渲染，因此若是将 JS 文件置于文档顶部会导致首屏白屏时间增加；置于文档中部，可能会导致页面只渲染一部分后阻塞渲染后一部分。因此，将 JS 文件置于文档尽可能底部的地方是最优的方式。
 
-### 为什么要将 CSS 文件放在文档顶部
+### 为什么要将 CSS 文件放在 head 标签之间
+
+若是将 CSS 文件放在页面底部即`</body>`之前，浏览器会先解析 HTML 并构建 DOM 树，解析到文件底部 CSS 文件所在位置时，DOM 树基本构建完成，而此时才开始构建 CSSOM 树，因此 DOM 树的构建和 CSSOM 树的构建基本上是串行的。而且在这种情况下，底部的 CSS 文件加载时，浏览器会先渲染出一个没有样式的页面（内联样式不会渲染，否则等 CSS 文件加载好后，又要结合全部样式再渲染一次），等 CSS 文件加载完后会再渲染成一个有样式的页面，页面会出现明显的闪动的现象。
+
+而将 CSS 文件放在`<head>`标签之间，CSSOM 树的构建可以更早地进行。
 
 ### CSS 的加载可能阻塞 DOM 的解析吗
+
+答案是，有可能。
 
 ```html
 <html>
@@ -55,7 +64,7 @@ const currentScript = scripts[scripts.length - 1];
 </html>
 ```
 
-当在 JavaScript 中访问了某个元素的样式，那么这时候就需要等待这个样式被下载完成才能继续往下执行，所以在这种情况下，CSS 也会阻塞 DOM 的解析。
+当在 JavaScript 中访问了某个元素的样式，那么这时候就需要等待这个样式被下载完成才能继续往下执行。所以在这种情况下，CSS 也会阻塞 DOM 的解析。
 
 ## 异步脚本
 
