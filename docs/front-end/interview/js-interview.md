@@ -1,6 +1,21 @@
 # JavaScript 面试题
 
-## 调用栈
+## 执行机制
+
+### 变量提升
+
+```js
+function varTest() {
+  var x = 1;
+  if (true) {
+    var x = 2;  // 同样的变量!
+    console.log(x);  // 2
+  }
+  console.log(x);  // 2
+}
+```
+
+### 调用栈
 
 以下这段代码，可能存在什么问题？如何改进？
 
@@ -27,4 +42,101 @@ function trampoline(f) {
   return f;
 }
 trampoline(runStack(1000000))
+```
+
+## 原型/继承
+
+```js
+function Parent() {
+    this.a = 1;
+    this.b = [1, 2, this.a];
+    this.c = { demo: 5 };
+    this.show = function () {
+      console.log(this.a , this.b , this.c.demo);
+    }
+}
+
+function Child() {
+    this.a = 2;
+    this.change = function () {
+      this.b.push(this.a);
+      this.a = this.b.length;
+      this.c.demo = this.a++;
+    }
+}
+
+Child.prototype = new Parent();
+var parent = new Parent();
+var child = new Child();
+
+child.a = 10;
+
+parent.show(); // 1  [1, 2, 1] 5
+child.show();  // 10 [1, 2, 1] 5
+
+child.change();
+
+parent.show(); // 1 [1, 2, 1] 5
+child.show(); //  5 [1, 2, 1, 10] 4
+```
+
+## 算法类
+
+```js
+// 题目已知部分，栈的实现
+class Stack {
+    items = [];
+    push(item) {
+        return this.items.push(item);
+    }
+    pop() {
+        return this.items.pop();
+    }
+    isEmpty() {
+        return this.items.length === 0;
+    }
+}
+
+const stack1 = new Stack();
+const stack2 = new Stack();
+```
+
+答:
+
+```js
+// 队列的实现
+class Queue {
+    push(item) {
+        stack1.push(item);
+    }
+    pop() {
+        if (stack1.isEmpty() && stack2.isEmpty()) {
+            console.log('the queue is empty')
+        }
+        if (stack2.isEmpty()) {
+            while(!stack1.isEmpty()) {
+                stack2.push(stack1.pop());
+            }
+        }
+        return stack2.pop();
+    }
+}
+
+// 测试输出
+const queue = new Queue();
+queue.push(1);
+queue.push(2);
+queue.push(3);
+queue.push(4);
+console.log(queue.pop());
+console.log(queue.pop());
+queue.push(5);
+queue.push(6);
+queue.push(7);
+console.log(queue.pop());
+console.log(queue.pop());
+console.log(queue.pop());
+console.log(queue.pop());
+console.log(queue.pop());
+console.log(queue.pop());
 ```
