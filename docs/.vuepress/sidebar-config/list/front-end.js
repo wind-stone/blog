@@ -48,6 +48,13 @@ module.exports = {
                 'operators/bitwise-operators'
             ]
         },
+        {
+            title: '执行机制',
+            collapsable: true,
+            children: [
+                'execution-mechanism/'
+            ]
+        }
     ],
 
     // CSS
