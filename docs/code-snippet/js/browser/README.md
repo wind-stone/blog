@@ -26,10 +26,6 @@
 
 <<< @/docs/code-snippet/js/browser/version.js
 
-## 事件代理
-
-<<< @/docs/code-snippet/js/browser/delegate.js
-
 ## 异步加载 JS 文件
 
 <<< @/docs/code-snippet/js/browser/load-script.js
