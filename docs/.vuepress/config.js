@@ -45,7 +45,6 @@ module.exports = {
             { text: 'General Knowledge', link: '/general-knowledge/' },
             { text: 'ES6+', link: '/es6/' },
             { text: '代码片段', link: '/code-snippet/' },
-            { text: '算法', link: '/algorithm/sorting-algorithm/' },
             { text: 'GitHub', link: 'https://github.com/wind-stone' },
             { text: '随记', link: '/wander/house/' }
         ],

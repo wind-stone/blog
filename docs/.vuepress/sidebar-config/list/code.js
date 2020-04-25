@@ -29,6 +29,17 @@ module.exports = {
             ]
         },
         {
+            title: '算法',
+            collapsable: false,
+            children: [
+                'algorithm/sorting-algorithm/bubble-sort/',
+                'algorithm/sorting-algorithm/selection-sort/',
+                'algorithm/sorting-algorithm/insertion-sort/',
+                'algorithm/sorting-algorithm/merge-sort/',
+                'algorithm/sorting-algorithm/quick-sort/'
+            ]
+        },
+        {
             title: '其他',
             collapsable: false,
             children: [
