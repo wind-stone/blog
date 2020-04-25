@@ -381,7 +381,8 @@ module.exports = {
             title: '前端面试题',
             collapsable: true,
             children: [
-                'js-interview'
+                'js-interview',
+                'browser-interview'
             ]
         }
     ]
