@@ -24,7 +24,7 @@ module.exports = {
             title: 'CSS 代码片段',
             collapsable: false,
             children: [
-                // 'css/',
+                'css/',
                 'css/dog-ear'
             ]
         },
