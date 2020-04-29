@@ -182,6 +182,7 @@ module.exports = {
             children: [
                 'browser/',
                 'browser/working-principle',
+                'browser/event-loop',
                 'browser/process-thread',
                 'browser/open-url-process',
                 'browser/browser-api'
