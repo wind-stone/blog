@@ -80,18 +80,18 @@ for (let i = 0; i < 10; i++) {
 }
 ```
 
-## Macrotask/Microtask Quque
+## 宏任务/微任务队列
 
-Event Loop 里存在两类队列，分别为 Macrotask 和 Microtask
+Event Loop 里存在两类队列，分别为宏任务（Macrotask）和微任务（Microtask）。每一个宏任务都有一个微任务队列。
 
-- macrotasks
+- 宏任务
   - script(整体代码)
   - setTimeout
   - setInterval
   - setImmediate
   - I/O
   - UI rendering
-- microtasks
+- 微任务
   - process.nextTick
   - Promises
   - Object.observe
@@ -99,19 +99,15 @@ Event Loop 里存在两类队列，分别为 Macrotask 和 Microtask
 
 执行过程如下：
 
-- JavaScript 引擎首先从 macrotask queue 中取出第一个任务
-- 执行完毕后，将 microtask queue 中的所有任务取出，按顺序全部执行（注意：当这些 microtask 执行过程中还能继续添加 microtask 到 microtask queue 里，直到 microtask queue 为空）
-- 然后再从 macrotask queue 中取下一个
-- 执行完毕后，再次将 microtask queue 中的全部取出
-- 循环往复，直到两个 queue 中的任务都取完
+- JavaScript 引擎首先从消息队列中取出第一个宏任务执行。该宏任务执行过程中，若是产生另一个宏任务则将其加入消息队列；若是产生微任务，则加入到该宏任务的微任务队列。
+- 宏任务执行完毕后，依次按序执行该宏任务的微任务队列里的每一个微任务。微任务执行过程中，若是产生宏任务则将其加入消息队列；若是产生微任务，则继续加入到当前的微任务队列里。
+- 继续从消息队列中取出下一个宏任务执行，重复以上步骤。
 
-## macrotask、microtask 与 render 的关系
+## 宏任务、微任务与渲染的关系
 
-macrotask 按序执行，浏览器将在每个 macrotask 执行后进行 render。即
-
-1. 执行一个 macrotask 任务
-2. 执行所有的 microtask 任务
-3. 最后（如有必要）浏览器进行 render
+1. 执行一个宏任务
+2. 执行该宏任务的所有的微任务
+3. 最后，（如有必要）浏览器进行渲染
 
 浏览器循环进行以上步骤。
 

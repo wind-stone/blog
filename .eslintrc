@@ -30,16 +30,16 @@
         "quotes": [
             "error",
             "single"
-        ],
-        "overrides": [
-            {
-                "files": [
-                    "*.vue"
-                ],
-                "rules": {
-                    "indent": "off" // 特殊处理，详见 https://eslint.vuejs.org/rules/script-indent.html
-                }
-            }
         ]
-    }
+    },
+    "overrides": [
+        {
+            "files": [
+                "*.vue"
+            ],
+            "rules": {
+                "indent": "off" // 特殊处理，详见 https://eslint.vuejs.org/rules/script-indent.html
+            }
+        }
+    ]
 }
