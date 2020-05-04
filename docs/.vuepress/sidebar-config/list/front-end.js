@@ -129,7 +129,6 @@ module.exports = {
             title: 'HTML 专题',
             collapsable: true,
             children: [
-                'topics/preload-and-prefetch',
                 'topics/differences-between-properties-and-attributes'
             ]
         },
@@ -183,6 +182,7 @@ module.exports = {
                 'browser/',
                 'browser/working-principle',
                 'browser/event-loop',
+                'browser/request-priority',
                 'browser/process-thread',
                 'browser/open-url-process',
                 'browser/browser-api'
