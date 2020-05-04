@@ -12,7 +12,6 @@ Cookie 是一个神奇的机制，同域内浏览器中发出的任何一个请�
 
 Ajax 跨域请求，默认情况下无法带上目标域的会话（Cookie 等），这是需要设置 xhr 实例的`withCredentials`属性为 `true`。
 
-
 ## XSS
 
 跨站脚本（Cross Site Scripting），为不和层叠样式表（Cascading Style Sheets, CSS）的缩写混淆，故将跨站脚本缩写为 XSS。
@@ -24,6 +23,7 @@ XSS，发生在目标网站中目标用户的浏览器层面上，当用户浏�
 ### XSS 分类
 
 XSS 有三类：
+
 - 反射型 XSS（非持久型 XSS）
 - 存储型 XSS（持久型 XSS）
 - DOM XSS
@@ -52,7 +52,6 @@ XSS 有三类：
 `http://www.foo.com/xss/reflect2.php?x=data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ%2b`，跳转到`data:`协议上，`text/html`是 MIME 或`Content-Type`，表明文档类型，`base64`是指后面字符串的编码方式，后面这段`base64`解码后的值为：
 `<script>alert(document.domain)</script>`，于是，当发生跳转时，就会执行这段 JS。
 
-
 #### 存储型 XSS
 
 存储型 XSS 和 反射型 XSS 的区别仅在于：提交的 XSS 代码会存储在服务端（不管是数据库、内存还是文件系统等），下次请求目标页面时不用再提交 XSS 代码。
@@ -60,7 +59,6 @@ XSS 有三类：
 最典型的例子是留言板 XSS，用户提交一条包含 XSS 代码的留言存储到数据库，目标用户查看留言板时，那些留言的内容会从数据库查询出来并显示，浏览器发现有 XSS 代码，就当做正常的 HTML 与 JS 解析执行，于是就触发了 XSS 攻击。
 
 存储型 XSS 的攻击是最隐蔽的。
-
 
 #### DOM XSS
 
@@ -79,6 +77,7 @@ XSS 有三类：
 这个 URL#后的内容是不会发送到服务端的，仅仅是在客户端被接收并解析执行。
 
 针对于 DOM XSS，常见的输入点有：
+
 - document.URL
 - document.URLUnencoded
 - document.location（以及 location 的多个属性）
@@ -90,59 +89,58 @@ XSS 有三类：
 - 表单项的值
 
 常见的输出点有：
+
 - 直接输出 HTML 内容，如
-    - document.write(...)
-    - document.writeln(...)
-    - document.body.innerHTML = ...
+  - document.write(...)
+  - document.writeln(...)
+  - document.body.innerHTML = ...
 - 直接修改 DOM 树（包括 DHTML 事件），如
-    - document.form[0].action = ...（以及其他集合，如：一些对象的 src/href 属性等）
-    - document.attachEvent(...)
-    - document.create(...)
-    - document.execCommand(...)
-    - document.body.xxx （直接通过 body 对象访问 DOM）
-    - window.attachEvent(...)
+  - document.form[0].action = ...（以及其他集合，如：一些对象的 src/href 属性等）
+  - document.attachEvent(...)
+  - document.create(...)
+  - document.execCommand(...)
+  - document.body.xxx （直接通过 body 对象访问 DOM）
+  - window.attachEvent(...)
 - 替换 document URL，如
-    - document.location = ...（以及直接赋值给 location 的 href、host、hostname 属性）
-    - document.location.hostname = ...
-    - document.location.replace(...)
-    - document.location.assign(...)
-    - document.URL = ...
-    - window.navigate(...)
+  - document.location = ...（以及直接赋值给 location 的 href、host、hostname 属性）
+  - document.location.hostname = ...
+  - document.location.replace(...)
+  - document.location.assign(...)
+  - document.URL = ...
+  - window.navigate(...)
 - 打开或修改新窗口，如
-    - document.open(...)
-    - window.open(...)
-    - window.location.href = ...（以及直接赋值给 location 的 href、host、hostname 属性）
+  - document.open(...)
+  - window.open(...)
+  - window.location.href = ...（以及直接赋值给 location 的 href、host、hostname 属性）
 - 直接执行脚本，如
-    - eval(...)
-    - window.execScript(...)
-    - window.setInterval(...)
-    - window.setTimeout(...)
+  - eval(...)
+  - window.execScript(...)
+  - window.setInterval(...)
+  - window.setTimeout(...)
 
 这些都是 JavaScript 的基本点，从这些输入/输出点我们可以看到，DOM XSS 的处理逻辑就在客户端。
-
 
 ### 防范措施
 
 - 不要引入任何不可信的第三方 JavaScript 到页面里
 - 不要往 HTML 页面里插入任何不可信数据，如果一定要往 HTML 页面插入数据，一定要：
-    - 插入到 HTML 标签之间的数据，要进行 HTML Entity 编码
-    - 插入到 HTML 属性里的数据，要进行 HTML 属性编码
-    - 插入到 SCRIPT 里的数据，要进行 SCRIPT 编码
-    - 插入到 STYLE 属性里的数据，要进行 CSS 编码
-    - 插入到 HTML URL 里的数据，要进行 URL 编码
+  - 插入到 HTML 标签之间的数据，要进行 HTML Entity 编码
+  - 插入到 HTML 属性里的数据，要进行 HTML 属性编码
+  - 插入到 SCRIPT 里的数据，要进行 SCRIPT 编码
+  - 插入到 STYLE 属性里的数据，要进行 CSS 编码
+  - 插入到 HTML URL 里的数据，要进行 URL 编码
 - 使用富文本时，使用 XSS 规则引擎进行编码过滤
 
 Reference: [防御 XSS 攻击的七条原则](http://blog.jobbole.com/47372/)
-
 
 ## CSRF
 
 CSRF（Cross-site request forgery）跨站请求伪造，也被称为“One Click Attack”或者“Session Riding”，通常缩写为 CSRF 或者 XSRF，是一种对网站的恶意利用。尽管听起来像跨站脚本（XSS），但它与XSS非常不同，XSS 利用站点内的信任用户，而 CSRF 则通过伪装来自受信任用户的请求来利用受信任的网站。与 XSS 攻击相比，CSRF 攻击往往不大流行（因此对其进行防范的资源也相当稀少）和难以防范，所以被认为比 XSS 更具危险性。
 
 CSRF 有两个关键点：
+
 - 跨站点的请求：从字面上看，跨站点请求的来源是其他站点，比如，目标网站的删除文章功能接收到来自恶意网站客户端（JavaScript、Flash、HTML等）发出的删除文章请求，这个请求就是跨站点的请求，目标网站应该区分请求来源。字面上的定义总是狭义的，这样恶意的请求也有可能来自本站。
 - 请求是伪造的：伪造的定义很模糊，一般情况下，我们可以认为：如果请求的发出不是用户的意愿，那么这个请求就是伪造的。而对于 XSS 来说，发起的任何请求实际上都是目标网站同域内发出的，此时已经没有同源策略的限制，虽然这样，我们同样认为这些请求也是伪造的，因为它们不是用户的意愿。
-
 
 ### 示例
 
@@ -159,15 +157,15 @@ CSRF 有两个关键点：
 
 上述是通过 XSS 漏洞使得 JS 脚本在没有同源策略限制的情况下执行的，即请求时会自动带上会话（Cookie等）。
 
-
 如果不用这种方式，或者目标网站 A 根本不存在 XSS 漏洞，还可以如何删除文章？看看 CSRF 的思路，步骤如下：
 
 - 在恶意网站 B 上编写一个 CSRF 页面（`www.b.com.csrf.html`），想想有什么办法可以发出一个 GET 请求到目标网站 A 上？
-    - 利用 AJAX 跨域时带上目标域的会话
-    - 更简单的：用代码`<img src="http://www.a.com/blog/del?id=1">`
+  - 利用 AJAX 跨域时带上目标域的会话
+  - 更简单的：用代码`<img src="http://www.a.com/blog/del?id=1">`
 - 然后欺骗已经登录目标网站 A 的用户访问`www.b.com/csrf.html`页面，则攻击发生
 
 这个攻击过程有三个关键点：
+
 - 跨域发出了一个 GET 请求
 - 可以无 JavaScript 参与
 - 请求是身份认证后的
@@ -180,22 +178,23 @@ CSRF 有两个关键点：
 
 安全风险总是出现在正常的流程中，现在我们发出的是一个删除文章的 GET 请求，对于合法的跨域请求，浏览器会放行。
 
-
 #### 可以无 JavaScript 参与
 
 CSRF 这个过程与 XSS 不一样，可以不需要 JavaScript 参与，当然也可以有 JavaScript 参与，比如在`www.b.com/csrf.html`中使用 JavaScript 动态生成一个 img 对象：
+
 ```html
 <script>
   new Image().src = 'http://www.a.com/blog/del?id=1'
 </script>
 ```
-同样可以达到攻击效果。需要特别注意的是：这里并不是 JavaScript 跨域操作目标网站 A 的数据，而是间接生成了 img 对象，由 img 对象发起一个合法的跨域 GET 请求而已，这个过程和上面直接用一个 img 标签一样。
 
+同样可以达到攻击效果。需要特别注意的是：这里并不是 JavaScript 跨域操作目标网站 A 的数据，而是间接生成了 img 对象，由 img 对象发起一个合法的跨域 GET 请求而已，这个过程和上面直接用一个 img 标签一样。
 
 #### 请求是身份认证后的
 
 这一点非常关键，跨域发出的请求类似这样：
-```
+
+```request
 GET /blog/del?id=1 HTTP/1.1
 Host: www.a.com
 User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:5.0) Gecko/20100101 Firefox/5.0
@@ -205,7 +204,8 @@ Cookie:sid=0951abe6d508dab60357804519a61b999;JSESSIONID=abcTePo2Ori_k-pWt5net;
 ```
 
 而如果是目标网站 A，用户自己单击删除链接时发出的请求类似这样：
-```
+
+```request
 GET /blog/del?id=1 HTTP/1.1
 Host: www.a.com
 User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:5.0) Gecko/20100101 Firefox/5.0
@@ -252,12 +252,12 @@ _f.submit()
 
 构造完成，当目标网站 A 的用户被欺骗访问了恶意网站 B 的该页面时，一个跨域的伪造的 POST 表单请求就发出了。同样，这个请求带上了目标网站 A 的用户 Cookie
 
-
 ### CSRF 攻击类型
 
 按照请求类型区分，上面介绍的这个场景中其实已经提到，GET 型与 POST 型的 CSRF 攻击。
 
 若按照攻击方式分类，CSRF 可分为：
+
 - HTML CSRF 攻击
 - JSON HiJacking 攻击
 - Flash CSRF 攻击
@@ -293,12 +293,11 @@ CSS 样式中的：
 
 还有通过 JavaScript 动态生成的标签对象或 CSS 对象发起的 GET 请求，而发出 POST 请求只能通过 form 提交方式。
 
-
 ### JSON HiJacking 攻击
+
 ### Flash CSRF 攻击
 
 请查看《Web前端黑客技术揭秘》相关章节
-
 
 ### 危害
 
@@ -307,10 +306,8 @@ CSS 样式中的：
 - 作为其他攻击向量的辅助攻击手段
 - 传播 CSRF 蠕虫
 
-
 ## 界面操作劫持
 
 界面操作劫持攻击是一种基于视觉欺骗的 Web 会话劫持攻击，它通过在网页的可见输入控件上覆盖一个不可见的框（iframe），使得用户误以为在操作可见控件，而实际上用户的操作行为被其不可见的框所劫持，执行不可见框中的恶意劫持代码，从而完成在用户不知情的情况下窃取敏感信息、篡改数据等攻击。
 
 具体详情，请查看《Web前端黑客技术揭秘》第 5 章。
-
