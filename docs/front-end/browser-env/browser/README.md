@@ -226,6 +226,20 @@ const currentScript = scripts[scripts.length - 1];
 
 一旦使用了`async`属性，`<script type="module">`就不会按照在页面出现的顺序执行，而是只要该模块加载完成，就执行该模块。
 
+## 优化技巧
+
+- 预解析 DNS
+
+```html
+<link rel="dns-prefetch" href="https://blog.windstone.cc">
+```
+
+- 预建立 TCP 连接
+
+```html
+<link rel="preconnect" href="https://blog.windstone.cc">
+```
+
 ## 参考文章
 
 - [再谈 load 与 DOMContentLoaded](https://juejin.im/post/5b2a508ae51d4558de5bd5d1)

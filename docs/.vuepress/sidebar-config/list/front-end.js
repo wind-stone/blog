@@ -182,7 +182,7 @@ module.exports = {
                 'browser/',
                 'browser/working-principle',
                 'browser/event-loop',
-                'browser/request-priority',
+                'browser/browser-requests',
                 'browser/process-thread',
                 'browser/open-url-process',
                 'browser/browser-api'
