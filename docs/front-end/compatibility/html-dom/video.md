@@ -79,6 +79,14 @@ window.onresize = function(){
 
 有时候会遇到对`video`添加了`autoplay`但是无法自动播放的情况，这时候可以查看下`video`的缓冲时间是否足够播放，可使用`video`的`buffered`属性查看，详情可参考[Media buffering, seeking, and time ranges](https://developer.mozilla.org/zh-CN/docs/Web/Guide/Audio_and_video_delivery/buffering_seeking_time_ranges)。
 
+## 兼容性问题汇总
+
+- 华为/Vivo 等系统浏览器
+  - 当`video`元素设置了`object-fit: cover`后，在`video`所在区域内播放时，视频会位于最顶层，覆盖其他所有东西。
+  - 当`video`元素滚动到屏幕上方时，`video`宽度会变成屏幕宽度
+  - 播放控件无法隐藏
+- Android 微信里不能监听`ended`事件后调用`video.play()`进行循环播放，需要给`video`元素添加`loop`属性
+
 ## 参考链接
 
 - [MDN - video 元素](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/video)
