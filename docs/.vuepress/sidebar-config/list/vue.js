@@ -102,9 +102,9 @@ module.exports = {
             title: 'Vuex',
             collapsable: false,
             children: [
+                'vue-series/vuex/',
                 'vue-series/vuex/reset-child-module-state',
                 'vue-series/vuex/register-module',
-                'source-study/vuex/'
             ]
         }
     ]
