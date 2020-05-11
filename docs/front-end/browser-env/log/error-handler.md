@@ -6,6 +6,39 @@ sidebarDepth: 0
 
 [[toc]]
 
+## 错误分类
+
+## try catch
+
+`try...catch`无法捕获异步错误和语法错误。
+
+```js
+window.onerror = err => {
+    console.log('全局捕获错误', err)
+}
+
+// 测试异步错误
+try {
+    let x = 1;
+    setTimeout(() => {
+        x = x + y
+    })
+} catch (err) {
+    console.log('异步错误', err)
+}
+// 抛错: Uncaught ReferenceError: y is not defined
+
+
+// 测试语法错误
+try {
+    const a = '1;
+} catch(err) {
+    console.log('语法错误', err)
+}
+
+// 抛错: Uncaught SyntaxError: Invalid or unexpected token
+```
+
 ## JavaScript 运行时错误
 
 当 JavaScript 运行时错误（包括语法错误）发生时，`window`会触发一个[`ErrorEvent`](https://developer.mozilla.org/zh-CN/docs/Web/API/ErrorEvent)接口的`error`事件，并执行`window.onerror()`。
