@@ -28,7 +28,9 @@ Chrome 浏览器里会将资源分为 14 类，如下表所示。
 | kManifest       | HTML5 应用程序缓存资源                                                                                                              |
 | kMock           | 预留的测试类型                                                                                                                      |
 
-## 预处理请求
+## 资源请求
+
+### 预处理请求
 
 浏览器在对资源开始请求之前，需要先对请求做预处理。预处理主要做两件事情: 检查请求是否合法和更改请求。
 
@@ -77,9 +79,19 @@ Mixed Content 是指在`https`的页面里请求`http`的内容，通常这种`h
 
 源码里会检查这种请求是否同源，包括协议、域名、端口号。注意这里的同源与同源策略不同，若不是同源的话，就会连请求都发不出去，而同源策略可以发出请求但是阻止请求的返回结果。
 
-## 资源请求优先级
+### 资源排队的原因
 
-### 最终的优先级
+页面里发出资源请求后，可能不会立马进行加载资源，而是会进入请求队列，其原因可能有
+
+- 根据资源请求的优先级，判断出该请求具有较低的优先级
+- 该域名下已经打开了 6 个 TCP 链接。（仅适用于 HTTP/1.0 和 1.1）
+- 浏览器分配磁盘空间
+
+详见[https://developers.google.com/web/tools/chrome-devtools/network/reference#timing-explanation](https://developers.google.com/web/tools/chrome-devtools/network/reference#timing-explanation)
+
+### 资源请求优先级
+
+#### 最终的优先级
 
 ![Chrome 资源请求优先级](./img/chrome-resource-priorities.png)
 
@@ -98,7 +110,7 @@ Mixed Content 是指在`https`的页面里请求`http`的内容，通常这种`h
 
 是不是跟星巴克咖啡的中杯、大杯、超大杯类似？
 
-#### script 优先级
+##### script 优先级
 
 `script`脚本的优先级取决于它们在文档里的位置以及它们是否是`async`异步的、`defer`延迟的或`blocking`阻塞的。
 
@@ -108,21 +120,21 @@ Mixed Content 是指在`https`的页面里请求`http`的内容，通常这种`h
 
 这里的`第一个图片`的定义是，在任何非`proload`的图片被请求之前的第一个被请求的图片。
 
-#### image 优先级
+##### image 优先级
 
 可见且位于视口内的`image`图片（Net:Medium）比那些不在视口内的图片（Net:Lowest）具有更高的优先级，因此在某些程度上 Chrome 会尽量为你（伪）懒加载这些图片。一开始具有低优先级的图片（Net:Lowest）在布局完成之后被发现位于视口内时，将获得优先级提升（Net:Medium）。但是当布局完成时已经在请求中的图片不会重新更改优先级。
 
-#### preload & as
+##### preload & as
 
 `preload`且使用`as`属性的资源，将获得与该资源类型相同的资源优先级。比如，`<link rel="preload" as="style">`将和样式表一样获得 Net:Highest 的优先级；`<link rel="preload" as="script">`将获得 Net:Medium/Low 的优先级。这些资源仍然遵从着相同的 CSP 政策。
 
 `preload`且没有使用`as`属性的资源的请求优先级与异步 XHR 的优先级一致。
 
-### 计算资源加载优先级
+#### 计算资源加载优先级
 
 上一节尽管已经给出了最终的资源加载优先级，但是这些优先级是如何一步步计算得到的呢？
 
-#### 资源的默认优先级
+##### 资源的默认优先级
 
 首先，每一类资源都有个默认的优先级，这个默认的优先级将作为初始化的优先级。
 
@@ -166,7 +178,7 @@ ResourceLoadPriority TypeToPriority(Resource::Type type) {
 
 注意上面的`switch-case`设定资源优先级有一个顺序，若资源既是`script`又是`prefetch`的话得到的优化级是 High，而不是`prefetch`的 VeryLow，因为`prefetch`是最后一个判断。所以在设定了资源默认的优先级之后，会再对一些情况做一些调整，主要是对`prefetch`/`preload`的资源。
 
-#### 优先级调整
+##### 优先级调整
 
 - **降低`preload`的字体的优先级**
 
@@ -192,7 +204,7 @@ TODO: 这里的`preload`是指推测加载，跟`<link rel="preload">`貌似不�
 
 在构建 ResourceRequest 对象时所有资源的优先级都是最低的 VeryLow，但是同步请求在初始化时优先级会设置为最高的 VeryHigh。
 
-### 转换成 Net 的优先级
+#### 转换成 Net 的优先级
 
 上一节`计算资源加载优先级`里提到的优先级都是浏览器内核 Blink 层面的优先级，而这些资源的优先级在发送请求之前会被转换为网络层面的 Net 优先级。二者的对应关系如下:
 
@@ -200,7 +212,7 @@ TODO: 这里的`preload`是指推测加载，跟`<link rel="preload">`貌似不�
 
 Net Priority 是请求资源的时候使用的，这个是在 Chrome 的网络进程里面进行的。
 
-### 资源加载
+#### 资源加载
 
 资源加载的优先级已经确定，那么网络进程是如何根据优先级触发加载资源呢？
 
@@ -249,7 +261,7 @@ void LoadAnyStartablePendingRequests(RequestStartTrigger trigger) {
 - 每个请求完成之后，触发加载`pending_requests`里的请求
 - 网络进程定时循环未完成的任务，触发加载
 
-### 示例
+#### 示例
 
 ```html
 <!DOCType html>
@@ -407,9 +419,9 @@ static const net::RequestPriority
 
 在`2.js`刚开始加载时，`9.css`还未加载完成，且`3.js`仍是`delayable`的，因此`3.js`还是不能加载，需要等待`9.css`加载完成，之后`3.js`和图片等`delayable`的资源才能开始加载。
 
-## preload、prefetch
+### preload、prefetch
 
-### preload
+#### preload
 
  `<link>`元素的`rel`属性的属性值`preload`能够让你在你的 HTML 页面`<head>`元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即刻需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。
 
@@ -434,13 +446,13 @@ static const net::RequestPriority
 
 Reference: [MDN - 通过rel="preload"进行内容预加载](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Preloading_content)
 
-### prefetch
+#### prefetch
 
 链接预取是一种浏览器机制，其利用浏览器空闲时间来下载或预取用户在不久的将来可能访问的文档。网页向浏览器提供一组预取提示，并在浏览器完成当前页面的加载后开始静默地拉取指定的文档并将其存储在缓存中。当用户访问其中一个预取文档时，便可以快速的从浏览器缓存中得到。
 
 Reference: [MDN - Link prefetching FAQ](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Link_prefetching_FAQ)
 
-### 对比
+#### 对比
 
 - `preload`
   - 高优先级
@@ -453,6 +465,6 @@ Reference: [MDN - Link prefetching FAQ](https://developer.mozilla.org/zh-CN/docs
   - 低优先级
   - 浏览器在后台（空闲时）获取将来可能用得到的资源，并且将他们存储在浏览器的缓存中
 
-### 应用
+#### 应用
 
 - 使用`preload`加载字体，解决文字闪动的问题
