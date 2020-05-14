@@ -4,7 +4,6 @@
 
 ## 无衬线字体、有衬线字体
 
-
 ## 各平台默认字体
 
 在不同操作系统、不同游览器里面默认显示的字体是不一样的，并且相同字体在不同操作系统里面渲染的效果也不尽相同。
@@ -211,3 +210,48 @@ body {
 - 为什么 UI 在设计时，字重最好只选用`bold`、`regular`（`normal`）？
 - 字体的字重不存在时，如何匹配别的字重？
 - 字体合成[font-synthesis](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis)属性
+
+## font-face
+
+- [张鑫旭 - 真正了解CSS3背景下的@font face规则](https://www.zhangxinxu.com/wordpress/2017/03/css3-font-face-src-local/)
+
+### src 里文件格式的选择
+
+- [Using @font-face](https://css-tricks.com/snippets/css/using-font-face/) 
+- [The Missing Guide to Font Formats: TTF, OTF, WOFF, EOT & SVG](https://creativemarket.com/blog/the-missing-guide-to-font-formats)
+- 上一篇的译文: [知乎 - Web 字体简介: TTF, OTF, WOFF, EOT & SVG](https://zhuanlan.zhihu.com/p/28179203)
+
+`Using @font-face`这篇文章里介绍了如何最大程度的兼容各个浏览器:
+
+```css
+@font-face {
+  font-family: 'MyWebFont';
+  src: url('webfont.eot'); /* IE9 Compat Modes */
+  src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+```
+
+其中，[`.eot`](https://caniuse.com/#feat=eot)仅 IE 支持，[`.svg`](https://caniuse.com/#feat=mdn-css_at-rules_font-face_svg_fonts)主要为了兼容老版本的 iOS。
+
+### 移动端的选择
+
+| 字体格式 | iOS Safari              | Android Browser | CAN I use                                                          |
+| -------- | ----------------------- | --------------- | ------------------------------------------------------------------ |
+| `.ttf`   | 4.2+                    | 2.2+            | [https://caniuse.com/#feat=ttf](https://caniuse.com/#feat=ttf)     |
+| `.woff`  | 5+                      | 4.4+            | [https://caniuse.com/#feat=woff](https://caniuse.com/#feat=woff)   |
+| `.woff2` | 12+（10-11.1 部分支持） | 5+              | [https://caniuse.com/#feat=woff2](https://caniuse.com/#feat=woff2) |
+
+因此在移动端上若只选择一种，则可以选择`.ttf`和`.woff`，但是`.woff`比`.ttf`体积小 40%，而`woff2`又比`woff`体积小 30%，因此在移动端上还是同时使用`.woff2`、`woff`和`.ttf`比较好。
+
+```css
+@font-face {
+  font-family: 'MyWebFont';
+  src: url('webfont.woff2') format('woff2'),
+       url('webfont.woff') format('woff'),
+       url('webfont.ttf')  format('truetype'),
+}
+```
