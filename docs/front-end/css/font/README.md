@@ -8,6 +8,8 @@
 
 在不同操作系统、不同游览器里面默认显示的字体是不一样的，并且相同字体在不同操作系统里面渲染的效果也不尽相同。
 
+- [CSS Font Stack](https://www.cssfontstack.com/) 可知道字体在 Windows 和 Mac 下的预装比例。
+
 ### Windows 下
 
 - `宋体`（`SimSun`）: Windows 下大部分游览器的默认字体，宋体在小字号下（如`12px`、`14px`）的显示效果还可以接受，但是字号一大就非常糟糕了，所以使用的时候要注意。
@@ -215,9 +217,11 @@ body {
 
 - [张鑫旭 - 真正了解CSS3背景下的@font face规则](https://www.zhangxinxu.com/wordpress/2017/03/css3-font-face-src-local/)
 
+该文章里解释了`font-family`、`src`、`font-style`、`font-weight`、`unicode-range`等属性的使用。
+
 ### src 里文件格式的选择
 
-- [Using @font-face](https://css-tricks.com/snippets/css/using-font-face/) 
+- [Using @font-face](https://css-tricks.com/snippets/css/using-font-face/)
 - [The Missing Guide to Font Formats: TTF, OTF, WOFF, EOT & SVG](https://creativemarket.com/blog/the-missing-guide-to-font-formats)
 - 上一篇的译文: [知乎 - Web 字体简介: TTF, OTF, WOFF, EOT & SVG](https://zhuanlan.zhihu.com/p/28179203)
 
