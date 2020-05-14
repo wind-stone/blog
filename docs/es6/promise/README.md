@@ -9,17 +9,17 @@ sidebarDepth: 0
 ## Promise 构造函数
 
 ```js
-const fn = (resolve, reject) {
+const executor = (resolve, reject) {
   if (条件为真) {
     resolve()
   } else {
     reject()
   }
 }
-const promiseInstance = new Promise(fn)
+const promiseInstance = new Promise(executor)
 ```
 
-通过`new Promise(fn)`创建 Promise 实例时，需要给`Promise`构造函数传递一函数作为参数，该函数有两个参数，分别是`resolve`和`reject`，调用`resolve`或`reject`将 Promise 实例的状态改变为`resolved`或`rejected`状态。
+通过`new Promise(executor)`创建 Promise 实例时，需要给`Promise`构造函数传递一函数作为参数，该函数有两个参数，分别是`resolve`和`reject`，调用`resolve`或`reject`将 Promise 实例的状态改变为`resolved`或`rejected`状态。
 
 ### resolve 的参数是 Promise 实例
 
