@@ -54,6 +54,13 @@ module.exports = {
             children: [
                 'execution-mechanism/'
             ]
+        },
+        {
+            title: 'TypeScript',
+            collapsable: true,
+            children: [
+                'typescript/'
+            ]
         }
     ],
 
