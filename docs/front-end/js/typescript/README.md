@@ -390,3 +390,12 @@ const foo: any = {};
 // ERROR: 索引签名必须为 string, number....
 foo[obj] = 'World';
 ```
+
+## 发布和使用
+
+发布声明文件到 NPM 主要有两种方式:
+
+- 与 NPM 包捆绑在一起发布
+- 发布到 NPM 上的[@types organization](https://www.npmjs.com/~types)
+
+若你能控制要使用你发布的声明文件的那个 NPM 包的话，推荐第一种方式。
