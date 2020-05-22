@@ -32,3 +32,21 @@ body {
   height: calc(20px + env(safe-area-inset-bottom) !important;
 }
 ```
+
+## 单行省略
+
+```scss
+@mixin one-line-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+```
+
+```stylus
+one-line-ellipsis(maxWidth = 100%)
+    max-width maxWidth
+    white-space nowrap
+    text-overflow ellipsis
+    overflow hidden
+```
