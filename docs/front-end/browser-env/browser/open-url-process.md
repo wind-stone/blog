@@ -29,11 +29,22 @@
 3. 建立 TCP 连接。
 4. 发送请求：构建请求行、请求头等信息，并把和该域名相关的 Cookie 等数据附加到请求头中，然后向服务器发送构建的请求信息。
 5. 服务器返回响应数据
-6. 根据响应码和响应头里的 Content-Type 判断如何处理响应数据
+6. 根据响应码和响应头里的`Content-Type`判断如何处理响应数据
    1. 响应码为 301、302 等，重定向到新的 URL，重新进行**2. URL 请求过程**过程。
-   2. 响应码为 200，且 Content-type 为`text/html`，进入下一步准备渲染进程。
-   3. Content-type 为下载类型，提交给浏览器的下载管理器
+   2. 响应码为 200，且`Content-Type`为`text/html`，进入下一步准备渲染进程。
+   3. `Content-Type`为下载类型，提交给浏览器的下载管理器
    4. 其他各种情况
+
+::: warning 注意
+当网络进程接收到响应头并判断`Content-Type`是`text/html`之后，浏览器进程会让当前页面执行退出前的清理操作，比如执行 JavaScript 中的`visibilitychange`，`beforunload`事件，清理操作执行结束之后，就进入下一步：准备渲染进程。
+
+关于浏览器关闭页面时要执行的事件，可参考:
+
+- [阮一峰 - Page Visibility API 教程](http://www.ruanyifeng.com/blog/2018/10/page_visibility_api.html)
+- [阮一峰 - Page Lifecycle API 教程](http://www.ruanyifeng.com/blog/2018/11/page_lifecycle_api.html)
+
+尤其需要注意的是，关闭页面时，可能会触发`visibilitychange`事件，`document.visibilityState`会变为`hidden`。
+:::
 
 ## 3. 准备渲染进程
 
