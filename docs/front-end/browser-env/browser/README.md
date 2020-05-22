@@ -187,6 +187,7 @@ const currentScript = scripts[scripts.length - 1];
         <p>极客时间</p>
         <script>
             let e = document.getElementsByTagName('p')[0]
+            /* 此处访问了元素的样式，需要等待样式文件加载完成并解析之后，才能继续执行 */
             e.style.color = 'blue'
         </script>
     </body>
