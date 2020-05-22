@@ -191,7 +191,7 @@ module.exports = {
                 'browser/event-loop',
                 'browser/browser-requests',
                 'browser/process-thread',
-                'browser/open-url-process',
+                'browser/open-page-process',
                 'browser/browser-api'
             ]
         },

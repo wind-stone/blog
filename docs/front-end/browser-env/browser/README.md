@@ -131,7 +131,7 @@ MDN 的解释并不是那么地清楚，从上一节“页面首次渲染”来�
 
 ## 关于 JS 文件和 CSS 文件加载和执行是否阻塞页面解析和渲染的问题
 
-请先了解[浏览器的渲染阶段](https://blog.windstone.cc/front-end/browser-env/browser/open-url-process.html#_5-%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5)。
+请先了解[浏览器的渲染阶段](https://blog.windstone.cc/front-end/browser-env/browser/open-page-process.html#_5-%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5)。
 
 以下讨论的 JS/CSS 文件都是指页面里同步的 JS/CSS 文件。
 
