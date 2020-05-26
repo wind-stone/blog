@@ -49,12 +49,16 @@ window.addEventListener('scroll', debounce(() => {
 - iOS UIWebView 在页面滑动时会导致计时器暂停
   - 简单解决方法：计时器开始时记录一个本地时间
 
-## 纯前端实现
+## 纯前端实现最佳实践
 
 - 尽量使用`await/async`，少使用 Promise
 - 尽可能使用解构赋值
 - Vue
   - 使用 composition API，让原先以 UI 组件为单位的组件，改进为用功能为单位的组件
+
+## 性能优化
+
+- 使用`will-change`提前告诉渲染引擎元素将要做特效变换，比如`transform`
 
 ## 坑
 
