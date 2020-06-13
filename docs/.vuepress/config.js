@@ -41,6 +41,7 @@ module.exports = {
                     { text: '前端面试题', link: '/front-end/interview/js-interview' }
                 ]
             },
+            { text: '小程序', link: '/mini-program/weixin/' },
             { text: 'Back End', link: '/back-end/' },
             { text: 'General Knowledge', link: '/general-knowledge/' },
             { text: 'ES6+', link: '/es6/' },
