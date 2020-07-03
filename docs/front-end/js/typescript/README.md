@@ -412,3 +412,13 @@ const Component = Vue.extend({
   }
 })
 ```
+
+## 操作符
+
+- 非空断言操作符`!`
+  - 确定变量值一定不为空时使用，比如`m!.id`，这告诉 TypeScript `m`一定不是`null`或`undefined`
+  - [Non-null assertion operator - TypeScript 2.0](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator)
+- 可选链操作符`?.`
+  - 可选链操作符`?.`可以按照操作符之前的属性是否有效，链式读取对象的属性或者使整个对象链返回`undefined`。
+  - [可选链操作符 - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E5%8F%AF%E9%80%89%E9%93%BE)
+  - [Optional Chaining - TypeScript 3.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#optional-chaining)
