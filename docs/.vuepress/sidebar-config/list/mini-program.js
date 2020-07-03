@@ -13,6 +13,7 @@ module.exports = {
             collapsable: false,
             children: [
                 'uni-app/',
+                'uni-app/v-for-key',
             ]
         }
     ]
