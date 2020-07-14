@@ -45,6 +45,7 @@ module.exports = {
             title: '运算符',
             collapsable: true,
             children: [
+                'operators/',
                 'operators/bitwise-operators'
             ]
         },
