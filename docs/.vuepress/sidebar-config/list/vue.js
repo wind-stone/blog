@@ -95,7 +95,8 @@ module.exports = {
             title: 'Util',
             collapsable: false,
             children: [
-                'source-study/util/next-tick'
+                'source-study/util/next-tick',
+                'source-study/util/lifecycle-hook-event',
             ]
         },
         {
