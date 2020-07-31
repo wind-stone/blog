@@ -2,10 +2,18 @@
 
 ## 符号
 
-- `brace`: 大括号`{`和`}`
+- `curly brackets`: 大括号`{`和`}`
+  - `left curly bracket`: 左大括号
+  - `right curly bracket`: 右大括号
 - `square brackets`: 中括号`[`和`]`
+  - `left square bracket`: 左中括号
+  - `right square bracket`: 右中括号
 - `parentheses`: 小括号`(`和`)`
 - `underscore`: 下划线`_`
+- `colon`: 冒号`:`
+- `commas`: 逗号`,`
+
+- `escape sequence`: 转义字符串
 
 ## 命名方式
 
