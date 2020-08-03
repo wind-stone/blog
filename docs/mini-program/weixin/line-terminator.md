@@ -1,4 +1,4 @@
-# 接口返回数据包含行分隔符导致 JSON.parse 解析错误
+# 微信小程序接口返回数据包含行分隔符导致 JSON.parse 解析错误问题的探究
 
 ## 背景
 
@@ -223,7 +223,7 @@ a line terminator character to be part of the string value of a string literal i
 说了这么多，不如用更简单的方式验证一下，在浏览器控制台输入以下代码观看结果:
 
 ```js
-const a = '{"x", "\n"}'
+const a = '{"x":"\n"}'
 JSON.parse(a)
 // Uncaught SyntaxError: Unexpected token
 // in JSON at position 6
