@@ -1156,8 +1156,8 @@ acorn-jsx@^5.0.0, acorn-jsx@^5.1.0:
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.1.0.tgz#294adb71b57398b0680015f0a38c563ee1db5384"
 
 acorn@^5.0.0, acorn@^5.6.2:
-  version "5.7.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.1.tgz#f095829297706a7c9776958c0afc8930a9b9d9d8"
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.4.tgz#3e8d8a9947d0599a1796d10225d7432f4a4acf5e"
 
 acorn@^6.0.2, acorn@^6.0.7:
   version "6.3.0"
@@ -3020,9 +3020,9 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-eslint-config-windstone-vue@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-windstone-vue/-/eslint-config-windstone-vue-0.1.0.tgz#9a6e34f381dcefb99833667ada63420d6b807997"
+eslint-config-windstone-vue@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-windstone-vue/-/eslint-config-windstone-vue-0.1.1.tgz#0647f074e730211c62da6c842068ec4603946ba6"
   dependencies:
     eslint "^6.6.0"
     eslint-plugin-vue "^5.2.3"
