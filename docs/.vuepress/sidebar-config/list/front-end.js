@@ -15,6 +15,7 @@ module.exports = {
             children: [
                 'data-structure/number/',
                 'data-structure/number/js-number-implementation',
+                'data-structure/string/',
                 'data-structure/object/',
                 'data-structure/reg-exp/'
             ]
