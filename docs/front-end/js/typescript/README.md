@@ -425,3 +425,9 @@ const Component = Vue.extend({
 - 空合并运算符`??`
   - `let x = foo ?? bar();`，当`foo`为`null`或`undefined`时，`x`兜底取值为`bar()`。
   - [Nullish Coalescing - TypeScript 3.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing)
+
+## 工具类型
+
+详情：[Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+
+- `Partial<Type>`: Constructs a type with all properties of Type set to optional.
