@@ -253,4 +253,5 @@ LineTerminatorSequence ::
 - [从 RegExp 构造器看 JS 字符串转义设计](https://cloud.tencent.com/developer/article/1186832)
 - [ECMA 262 - JSON.stringify - QuoteJSONString](https://tc39.es/ecma262/#sec-quotejsonstring)
 - [ECMA 262 - JSON.parse](https://tc39.es/ecma262/#sec-json.parse)
+- [ECMA 262 - LineContinuation](https://tc39.es/ecma262/#prod-LineContinuation)
 - [Standard ECMA-404 The JSON Data Interchange Syntax](https://www.ecma-international.org/publications/standards/Ecma-404.htm)
