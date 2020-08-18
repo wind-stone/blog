@@ -1,12 +1,12 @@
 # 字符串
 
-## JavaScript 中字符串的转义
+## JavaScript 中字符串字面量的计算
 
 ### 背景
 
 在 JavaScript 中，字符串字面量是由单引号或双引号括起来的字符序列。单引号括起来的字符串字面量内可以包含双引号，但不能包含单引号；双引号括起来的字符串字面量内可以包含单引号，但不能包含双引号。
 
-那么，如果我们想要在单引号字符串内包含单引号，或者双引号字符串内包含双引号，应该怎么做呢？
+那么，如果我们想要在单引号括起来的字符串字面量内包含单引号，或者双引号括起来的字符串字面量内包含双引号，应该怎么做呢？
 
 比如，我们想定义这样一个字符串，`' is a single quote, and " is a double quote.`，该字符串无论是用单引号括起来还是用双引号括起来，都会有问题。
 
@@ -15,9 +15,9 @@ const strA = "' is a single quote, and " is a double quote."
 const strB = '' is a single quote, and " is a double quote.'
 ```
 
-### 特殊字符及转义
+### 特殊字符及转义序列
 
-鉴于此，针对像单引号和双引号这些特殊用途的字符，或者像换行符这种非打印字符，JavaScript 允许其通过以反斜线`\`开头的转义序列的形式来代表单个字符，可以放在字符串字面量内的任意位置。
+针对这种情况，针对像单引号和双引号这些特殊用途的字符，或者像换行符这种非打印字符，JavaScript 允许其通过以反斜线`\`开头的转义序列的形式来代表单个字符，可以放在字符串字面量内的任意位置。
 
 反斜线`\`在 JavaScript 字符串字面量里具有特殊用途，它与其后的字符结合之后，就不再表示该字符的字面含义了。比如`\n`，表示的是换行符。
 
@@ -41,32 +41,17 @@ const strB = '' is a single quote, and " is a double quote.'
 
 `\uXXXX`是指在`\u`后紧跟着四个十六进制数`XXXX`，代表一个字符，`XXXX`是字符的 Unicode 码位，取值范围`0000`~`FFFF`，能输出[Unicode 基本多文种平面](https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%B9%B3%E9%9D%A2%E6%98%A0%E5%B0%84#%E5%9F%BA%E6%9C%AC%E5%A4%9A%E6%96%87%E7%A7%8D%E5%B9%B3%E9%9D%A2)里的字符。
 
-举例: （可将输入复制到浏览器控制台里，打印出结果查看）
-
-| 输入（以单引号包裹的字符串字面量） | 输出（以双引号包裹的 JavaScript 字符串） | 说明                              |
-| ---------------------------------- | ---------------------------------------- | --------------------------------- |
-| `'\0'`                             | `""`                                     | -                                 |
-| `'\''`                             | `"'"`                                    | -                                 |
-| `'\"'`                             | `"""`                                    | -                                 |
-| `'\\'`                             | `"\"`                                    | -                                 |
-| `'\n'`                             | `"↵"`                                    | 不可见的非打印字符，`↵`仅用于示例 |
-| `'\v'`                             | `""`                                    | 不可见的非打印字符                |
-| `'\t'`                             | `"	"`                                    | 不可见的非打印字符                |
-| `'\x79'`                           | `"y"`                                    | -                                 |
-| `'\u0079'`                         | `"y"`                                    | -                                 |
-| `'\uD87E\uDC04'`                   | `"你"`                                    | -                                 |
-
 由此可知，我们可以如下这样声明之前的那个字符串:
 
 ```js
 const str = '\' is a single quote, and \" is a double quote.'
 ```
 
-### JavaScript 是如何转义字符串的
+### JavaScript 是如何计算字符串字面量的
 
-上一节说明了我们可以将一些特殊字符以转义序列的形式放置在字符串中，那么 JavaScript 是如何对这类字符串进行转义的呢？
+既然我们可以将一些特殊字符以转义序列的形式放置在字符串字面量中，那么 JavaScript 引擎是如何将字符串字面量计算成 JavaScript 字符串的呢？
 
-JavaScript 引擎会对代码里定义的每一个字符串字面量进行转义，将字符串字面量里的转义序列转换成其所表示的字符，最终将字符串字面量解析为 JavaScript 里字符串类型的值。
+JavaScript 引擎会对代码里定义的每一个字符串字面量进行计算，将字符串字面量里的转义序列转换成其所表示的字符，最终将字符串字面量计算为 JavaScript 里字符串类型的值。
 
 那 JavaScript 是如何处理字符串字面量里的每个字符以得到最终的 JavaScript 字符串的呢？主要分为以下几种情况。
 
@@ -90,6 +75,8 @@ JavaScript 引擎会对代码里定义的每一个字符串字面量进行转义
 < "你好"
 ```
 
+第一种和第二种是[ECMA 262 - String Literals](https://tc39.es/ecma262/#sec-literals-string-literals)规定的；而下面的第三种和第四种情况，规范里并没有规定如何处理，具体的处理方式还得看 JavaScript 引擎的实现。[从一个 JSON.parse 错误深入研究 JavaScript 的转义字符](https://zhuanlan.zhihu.com/p/31030352)这篇文章分析了 V8 源码，并给出了如下两种情况。
+
 第三种，若字符串前有反斜杠`\`，且`\`与该字符（或者其后多个字符）不能组合成上表里的转义序列，且该字符不是`u`或者`x`，则将`\`和该字符串转义为该字符本身。
 
 ```js
@@ -110,13 +97,93 @@ JavaScript 引擎会对代码里定义的每一个字符串字面量进行转义
 × Uncaught SyntaxError: Invalid hexadecimal escape sequence
 ```
 
-以上几种情况，是笔者参考规范和实验得出的结果，其他更多的不同情况，需要详细翻阅规范和阅读 JavaScript Parser 的源码。
+### 哪些场景需要考虑字符串字面量的计算
 
-#### 哪些情况不需要 JavaScript 转义
+理论上来说，但凡涉及到字符串字面量的地方，都需要考虑字符串字面的计算问题。
 
-之前的章节里，我们经常提到`字符串字面量`，`字符串字面量`和 JavaScript 字符串还是略有区别的。因为在字符串字面量允许使用转义序列来代表另一个字符，因此在将字符串
+字符串字面量，是定义在 JavaScript 代码里的字符串类型的固定值。因此只要是定义在 JavaScript 代码里的字符串字面量，都要经过 JavaScript 计算才能成为 JavaScript 字符串。
 
-### 哪些场景会遇到字符串字面量的转义问题
+如下介绍两种必须要考虑字符串字面量计算的场景。
+
+#### 动态创建正则表达式
+
+若我们知道正则表达式模式将会改变，或者我们事先不知道什么模式而是从另一个来源获取（比如用户输入、接口返回），通常我们会选择动态创建正则表达式，而`RegExp`构造函数允许传入一个字符串参数来创建一个正则对象。
+
+假设我们给`RegExp`构造函数传入一个字符串字面量来生成一个正则对象，该正则对象用于判断当前页面域名是否是`windstone.cc`的三级域名。
+
+```js
+const host = location.host;
+
+const regA = new RegExp('\w+\.windstone\.cc', 'i');
+const regB = new RegExp('\\w+\\.windstone\\.cc', 'i')
+
+// 当 host 为 blog.windstone.cc 时，
+regA.test(host); // false
+regB.test(host); // true
+
+// 当 host 为 www-windstone-cc.windstone.com 时，
+regA.test(host); // true
+regB.test(host); // false
+```
+
+因为示例里`RegExp`的第一个参数是字符串字面量，需要经过计算才能得到字符串，所以：
+
+- `regA`的正则对象等价于`/w+.windstone.cc/i`
+- `regB`的正则对象等价于`/\w+\.windstone\.cc/i`
+
+因此，在使用字符串字面量生成期望的正则对象时，尤其要注意字符串字面量的计算问题。
+
+PS: 常规情况下，尽量避免使用字符串字面量生成正则对象，而应该使用正则表达式字面量。
+
+#### eval
+
+```js
+const word = '\\u0077';
+const str = 'console.log("' + word + '")';
+console.log(word) // \u0077
+console.log(str) // console.log("\u0077")
+eval(str) // w
+```
+
+以上代码里，赋值给常量`word`的`'\\u0077'`，以及`'console.log("'`和`'")'`都是字符串字面量。`'\\u0077'`经过计算后变成字符串`\u0077`并赋值给常量`word`，经过`+`运算与另外两个字符串字面量生成字符串`console.log("\u0077")`并赋给常量`str`。
+
+观察最后一行代码的打印结果。`eval()`函数会将传入的字符串当做 JavaScript 代码进行执行。这也就是说，此时字符串`console.log("\u0077")`成为了一段源代码，而其中的`"\u0077"`也就变成了字符串字面量，需要先经过 JavaScript 计算，因此最终要执行的代码其实是`console.log("w")`，所以最终打印出`w`。
+
+### 哪些场景不需要考虑 JavaScript 计算
+
+#### 表单项输入的字符串
+
+表单项输入的字符串，已经是 JavaScript 字符串，不需要再经过 JavaScript 计算。
+
+```html
+<!-- 在此输入框里输入: \u0077 -->
+<input type="text" id="input">
+```
+
+```js
+const input = document.getElementById('input');
+console.log(input) // \u0077
+```
+
+#### 接口返回的字符串
+
+接口返回的字符串，也已经是 JavaScript 字符串，不需要再经过 JavaScript 计算。
+
+```js
+fetch('http://windstone.cc/test')
+  .then(res => res.text())
+  .then(data => {
+      console.log(typeof data);
+      console.log('data', data)
+  })
+```
+
+若接口返回的文本是`{"x":"\u0077"}`，则打印结果为：
+
+```js
+string
+{"x":"\u0077"}
+```
 
 ### JSON 字符串
 
@@ -255,3 +322,4 @@ LineTerminatorSequence ::
 - [ECMA 262 - JSON.parse](https://tc39.es/ecma262/#sec-json.parse)
 - [ECMA 262 - LineContinuation](https://tc39.es/ecma262/#prod-LineContinuation)
 - [Standard ECMA-404 The JSON Data Interchange Syntax](https://www.ecma-international.org/publications/standards/Ecma-404.htm)
+- [ECMA 262 - String Literals](https://tc39.es/ecma262/#sec-literals-string-literals)
