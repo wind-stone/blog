@@ -6,6 +6,7 @@ module.exports = {
             collapsable: false,
             children: [
                 'string-literal/',
+                'line-terminator/',
             ]
         }
     ]

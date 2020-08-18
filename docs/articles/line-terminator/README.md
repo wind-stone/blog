@@ -258,6 +258,53 @@ wx.request({
 - 本文描述的问题只出现在 iOS 手机上，Android 手机没问题。
 - 文章里所说的接口返回数据里包含行分隔符是指返回的 JSON 文本的`string`里包含行分隔符。
 
+### 接口返回数据里为什么会包含行分隔符
+
+经过上面的分析，我们知道是接口返回的 JSON 文本里的某个`string`里包含行分隔符导致了 iOS JavaScriptCore 将行分隔符替换为换行符，进而导致`JSON.parse`解析失败。
+
+但是，接口返回的 JSON 文本里为什么会包含行分隔符呢？经过与相关同学的共同排查发现，运营人员在管理系统页面的输入框里输入的内容，是从某个文件里直接复制过去的，而行分隔符也是复制过去的。
+
+尽管管理系统前端传给后端的是经过`JSON.stringify`后的 JSON 格式的数据，但是`JSON.stringify`是无法将行分隔符字符串化为转义序列的形式，因此传给后端存在数据库里的数据仍包含行分隔符。
+
+#### JSON.stringify 无法转换行分隔符
+
+参考规范文档[ECMA 262 - JSON.stringify - QuoteJSONString](https://tc39.es/ecma262/#sec-quotejsonstring)，`JSON.stringify`可以将换行符转换为`"\n"`，但是不能将行分隔符转成转义序列的形式，而是保持行分隔符这个字符不变。
+
+以下操作可以直观地看到这一事实。
+
+```js
+> a = '\n'
+< "
+  "
+> b = JSON.stringify(a)
+< ""\n""
+> b.charCodeAt(0).toString(16)
+< "22"
+> b.charCodeAt(1).toString(16)
+< "5c"
+> b.charCodeAt(2).toString(16)
+< "6e"
+> b.charCodeAt(3).toString(16)
+< "22"
+```
+
+```js
+> a = '\u2028'
+< " "
+> b = JSON.stringify(a)
+< "" ""
+> b.length
+< 3
+> b.charCodeAt(0).toString(16)
+< "22"
+> b.charCodeAt(1).toString(16)
+< "2028"
+> b.charCodeAt(2).toString(16)
+< "22"
+```
+
+注意，码位为`\u2028`的字符是非打印字符，我们能看到的可能是个类似乱码的符号。
+
 ## 参考文档
 
 - [ECMAScript Language Specification Edition 3 Final](https://www-archive.mozilla.org/js/language/E262-3.pdf)

@@ -6,7 +6,6 @@ module.exports = {
             collapsable: false,
             children: [
                 'weixin/',
-                'weixin/line-terminator',
             ]
         },
         {
