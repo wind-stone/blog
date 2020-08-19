@@ -178,7 +178,7 @@ be placed within the quotation marks except for the code points that must be esc
 
 但是，我们的运行结果显示，无法对`"↵"`这个 JSON `string`解析，这是为什么呢？
 
-问题出在`↵`这个字符上。根据 JSON `string`的定义，当双引号`"`和反斜线`\`和控制字符出现在 JSON `string`里时必须要经过转义，而换行符`↵`恰恰是个未转义的控制字符，包含了未转义控制字符的文本不是有效的 JSON 文本，进而在`JSON.parse`时会报错。
+问题出在`↵`这个字符上。根据 JSON `string`的定义，当双引号`"`、反斜线`\`和控制字符出现在 JSON `string`里时必须要经过转义，而换行符`↵`恰恰是个未转义的控制字符，这导致`"↵"`不是有效的 JSON `string`，进而在`JSON.parse`时会报错。
 
 ```js
 const a = '"\\n"';
@@ -186,7 +186,7 @@ const b = JSON.parse(a);
 b.codePointAt(0).toString(16); // a
 ```
 
-我们修改字符串字面量为`'"\\n"'`，其经过计算后变为要解析的字符串`"\n"`，此时该字符串内包含的是转义后的换行符，经过`JSON.parse()`后，会得到一个 JavaScript 字符串，该字符串包含单个字符，即换行符。
+我们修改字符串字面量为`'"\\n"'`，其经过计算后变为要解析的字符串`"\n"`，此时该字符串内包含的是转义后的换行符，经过`JSON.parse()`后，会得到一个 JavaScript 字符串，该字符串包含单个字符，即换行符。（换行符的 Unicode 码位转为 16 进制的结果为`a`）
 
 ## 哪些场景不需要考虑 JavaScript 计算
 
@@ -245,7 +245,7 @@ string
 > to wrap across multiple lines because \
 > otherwise my code is unreadable.";
 
-以上是 MDN 里关于[长字符串](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String#%E9%95%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)的描述，而我们标题里所说的行继续符，其实就是与上面的第二种方法有关。
+以上是 MDN 里关于[长字符串](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String#%E9%95%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)的描述，而我们标题里所说的行继续符，就出现在第二种方法的字符串里。
 
 ECMA 262 规范里对[行继续符](https://tc39.es/ecma262/#prod-LineContinuation)的定义是：
 
@@ -275,11 +275,20 @@ LineTerminatorSequence ::
 
 这就是说，在字符串字面量里，`\`与其后的`行终止符序列`表示行继续符。而更为奇妙的是，行继续符是零长度的。
 
-实践出真知，我们利用上一小结里的行分隔符，来组成行继续符并打印出它的长度。
+我们尝试构造一个仅包含反斜线`\`和换行符`↵`的字符串字面量`"\↵"`，并打印出它的长度。
 
-![行继续符的长度](./images/line-continuation.png)
+```js
+const lineFeed = JSON.parse('"\\n"');                // ↵
+const reverseSolidus  = '\\';                        // \
+const lineContinuation = reverseSolidus + lineFeed;  // \↵
 
-可见，行分隔符的长度是`1`，而行继续符的长度是`0`，因此当行继续符加在字符串字面量里连接多行字符串时，我们丝毫不用担心字符串的长度会因为行继续符的存在而变长。
+const stringLiteral = `console.log("${lineContinuation}".length)`; // console.log("\↵".length)
+eval(stringLiteral) // 0
+```
+
+先通过`JSON.parse()`得到字符串`↵`，再拼接`\`得到字符串`\↵`，最后通过`eval()`函数，将字符串`console.log("\↵".length)`当做 JavaScript 代码运行，此时字符串字面量`"\↵"`就会计算为行继续符，打印出行继续符的`length`为`0`。
+
+由此可见，行继续符的长度是`0`，因此当行继续符加在字符串字面量里连接多行字符串时，字符串的长度不会因为行继续符的存在而变长。
 
 ### 参考文档
 
