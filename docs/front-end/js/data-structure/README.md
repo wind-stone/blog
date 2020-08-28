@@ -22,19 +22,6 @@ sidebarDepth: 0
 | `undefined` | `[object Undefined]`                      | `undefined`    |
 | `Symbol`    | `[object Symbol]`                         | `symbol`       |
 
-### Number
-
-#### 关于 X.toString()，X 是数字直接量
-
-- 3.toString() 会按照从左到右的顺序解析
-- 3.会被计算成 3
-
-所以 3.toString() 等同于(3)toString() ，这显然是语法有问题。
-
-而 3..toString() 会被计算成 (3.).toString()，OK！
-
-3...toString() 等同于 (3.)..toString()，语法问题。
-
 ## 引用数据类型
 
 | 数据类型   | `Object.prototype.toString().call(value)` | `typeof value` |
