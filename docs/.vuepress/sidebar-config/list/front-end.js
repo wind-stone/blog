@@ -17,7 +17,8 @@ module.exports = {
                 'data-structure/number/js-number-implementation',
                 'data-structure/string/',
                 'data-structure/object/',
-                'data-structure/reg-exp/'
+                'data-structure/reg-exp/',
+                'data-structure/type-conversion',
             ]
         },
         {
