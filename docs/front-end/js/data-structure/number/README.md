@@ -8,6 +8,16 @@
 
 Referrence: [http://justjavac.com/javascript/2015/01/08/why-parseint-0-00000008-euqal-8-in-js.html](http://justjavac.com/javascript/2015/01/08/why-parseint-0-00000008-euqal-8-in-js.html)
 
+### 0.1 + 0.2 = 0.3
+
+因为浮点数运算的精度问题导致`0.1 + 0.2 = 0.3`这个等式不成立。正确的比较方法是使用 JavaScript 提供的最小精度值：
+
+```js
+console.log(Math.abs(0.1 + 0.2 - 0.3) <= Number.EPSILON);
+```
+
+检查等式左右两边差的绝对值是否小于最小精度，才是正确的比较浮点数的方法。
+
 ## 关于 3.toString()
 
 - `3.toString()`会按照从左到右的顺序解析
