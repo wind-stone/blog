@@ -8,6 +8,13 @@ module.exports = {
                 'string-literal/',
                 'line-terminator/',
             ]
+        },
+        {
+            title: '日常阅读文章',
+            collapsable: false,
+            children: [
+                'good-articles',
+            ]
         }
     ]
 };
