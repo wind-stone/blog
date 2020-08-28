@@ -11,7 +11,7 @@ sidebarDepth: 0
 - `Number`
   - [JavaScript 关于 IEEE 754 双精度浮点数的实现](/front-end/js/data-structure/js-number-implementation.html)
 
-## 基本数据类型
+## 基本类型
 
 | 数据类型    | `Object.prototype.toString().call(value)` | `typeof value` |
 | ----------- | ----------------------------------------- | -------------- |
@@ -22,7 +22,39 @@ sidebarDepth: 0
 | `undefined` | `[object Undefined]`                      | `undefined`    |
 | `Symbol`    | `[object Symbol]`                         | `symbol`       |
 
-## 引用数据类型
+### 基本包装类型
+
+每一种基本类型 Number、String、Boolean、Symbol 都有对应的基本包装类型。当在基本类型上调用方法时，会临时先将该基本类型转换成对应的基本包装类型对象，待操作完成后，再销毁这个基本包装类型对象，转换成基本类型。
+
+调用基本包装类型对象的`valueOf()`方法，会返回对应的基本类型的值。
+
+### undefined
+
+#### 为什么有的编程规范要求用 void 0 代替 undefined
+
+Undefined 类型表示未定义，它的类型只有一个值，就是`undefined`。任何变量在赋值前是 Undefined 类型、值为`undefined`，一般我们可以用全局变量`undefined`（就是名为`undefined`的这个变量）来表达这个值，或者`void`运算来把任意一个表达式变成`undefined`值。
+
+但是，因为 JavaScript 的代码`undefined`是一个变量，而并非是一个关键字，这是 JavaScript 语言公认的设计失误之一。所以，我们为了避免无意中被篡改，通常建议使用`void 0`来获取`undefined`值。BTW，在代码压缩时，`undefined`也会被替换成`void 0`。
+
+```js
+// undefined 被篡改
+const test = () => {
+  var undefined = 5;
+  console.log(typeof undefined); // number
+}
+
+test();
+```
+
+注意，给全局的`undefined`赋值总是会失败，但是可以在函数内给声明`undefined`变量并赋值。
+
+Undefined 跟 Null 有一定的表意差别，Null 表示的是：“定义了但是为空”。所以，在实际编程时，我们一般不会把变量赋值为`undefined`，这样可以保证所有值为`undefined`的变量，都是从未赋值的自然状态。
+
+### null
+
+Null 类型也只有一个值，就是`null`，它的语义表示空值，与`undefined`不同，`null`是 JavaScript 关键字，所以在任何代码中，你都可以放心用`null`关键字来获取`null`值。
+
+## 引用类型
 
 | 数据类型   | `Object.prototype.toString().call(value)` | `typeof value` |
 | ---------- | ----------------------------------------- | -------------- |
