@@ -38,6 +38,26 @@ PS: 本人熟悉 h5 和 Vue.js 开发，不熟悉小程序和 uni-app 开发，�
 
 若是子组件先`detached`、父组件后`detached`，因此没办法做到跟 Vue 一样的销毁顺序？
 
+### 子组件上添加样式
+
+若是想在子组件上添加样式，比如`background-color`、`margin`等，请先将子组件的`display`置为非`inline`即可。但是理论上来说，即使是`display: inline`，`background-color`也是能生效的，没明白是怎么回事。
+
+```vue
+<template>
+    <div>
+        <child-component class="child-component"></child-componet>
+    </div>
+</template>
+
+
+<style lang="less" scoped>
+    .child-component {
+        display: block; // 只要不是 inline 即可
+        margin-top: 12rpx;
+    }
+</style>
+```
+
 ### 列表循环里的 key 不生效
 
 [列表循环里的 key 不生效](./v-for-key.md)
