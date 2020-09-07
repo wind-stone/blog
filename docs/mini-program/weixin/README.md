@@ -59,3 +59,46 @@
 - [微信小程序如何隐藏scroll-view滚动条](https://developers.weixin.qq.com/community/develop/doc/00006473cf08f8c29da606b2d56c00)
 
 以`scroll-view`为横向滚动为例，该方式是给`scroll-view`增加一个父元素，父元素的高度固定，并设置`overflow: hidden`；`scroll-view`作为子元素，其高度超过父元素高度，以便将滚动条置于父元素高度之外。注意，若是直接给`scroll-view`增加`padding-bottom`不能将滚动条置于最底部，可尝试给`scroll-view`的子元素添加`padding-bottom`。
+
+### 子组件上添加样式
+
+若是想在子组件上添加样式，比如`background-color`、`margin`等，请先将子组件的`display`置为非`inline`即可。但是理论上来说，即使是`display: inline`，`background-color`也是能生效的，没明白是怎么回事。
+
+```vue
+<template>
+    <div>
+        <child-component class="child-component"></child-componet>
+    </div>
+</template>
+
+
+<style lang="less" scoped>
+    .child-component {
+        display: block; // 只要不是 inline 即可
+        margin-top: 12rpx;
+    }
+</style>
+```
+
+### 包含自定义组件的元素的 opacity 的 transition 无效
+
+```html
+<view class="ctn">
+    <child-component></child-component>
+</view>
+```
+
+```css
+.ctn {
+    position: absolute;
+    transition: opacity .5;
+    opacity: 0;
+    /* 解决 opacity 不生效的问题 */
+    z-index: 1;
+}
+.ctn.visible {
+    opacity: 1;
+}
+```
+
+当元素是`position: absolute/fixed`时，且包含了自定义组件，若不设置`z-index`为大于`0`的数值，则`opacity`的`transition`对自定义组件不会生效。
