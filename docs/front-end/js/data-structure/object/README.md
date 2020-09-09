@@ -21,13 +21,13 @@ sidebarDepth: 0
 
 ES6 一共有 5 种方法可以遍历对象的属性。
 
-方式 | 不可枚举属性 | 继承属性 | Symbol 属性
---- | --- | --- | ---
-`for...in` | × | √ | ×
-`Object.keys()` | × | × | ×
-`Object.getOwnPropertyNames()` | √ | × | ×
-`Object.getOwnPropertySymbols()` | √ | × | √
-`Reflect.ownKeys()` | √ | √ | √
+| 方式                             | 不可枚举属性 | 继承属性 | Symbol 属性 |
+| -------------------------------- | ------------ | -------- | ----------- |
+| `for...in`                       | ×            | √        | ×           |
+| `Object.keys()`                  | ×            | ×        | ×           |
+| `Object.getOwnPropertyNames()`   | √            | ×        | ×           |
+| `Object.getOwnPropertySymbols()` | √            | ×        | √           |
+| `Reflect.ownKeys()`              | √            | √        | √           |
 
 ### 遍历顺序
 
@@ -36,3 +36,23 @@ ES6 一共有 5 种方法可以遍历对象的属性。
 - 首先遍历所有数值键，按照数值升序排列。
 - 其次遍历所有字符串键，按照加入时间升序排列。
 - 最后遍历所有 Symbol 键，按照加入时间升序排列。
+
+## 对象的方法是特殊的属性
+
+对象只有数据属性和访问器属性，而对象的方法其实是对象的数据属性。
+
+```js
+const obj = {
+    fn: () => {}
+};
+
+Object.getOwnPropertyDescriptor(obj, 'fn')
+
+// {
+//     configurable: true
+//     enumerable: true
+//     value: () => {}
+//     writable: true
+//     __proto__: Object
+// }
+```
