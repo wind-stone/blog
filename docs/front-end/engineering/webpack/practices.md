@@ -31,6 +31,29 @@ module.exports = {
 }
 ```
 
+### vue.config.js 里计算环境变量
+
+你可以在`vue.config.js`文件中计算环境变量。它们仍然需要以`VUE_APP_`前缀开头。这可以用于版本信息:
+
+```js
+process.env.VUE_APP_VERSION = require('./package.json').version
+
+module.exports = {
+  // config
+}
+```
+
+业务代码里：
+
+```js
+sendLog({
+  // ...业务数据
+  version: process.env.VUE_APP_VERSION
+})
+```
+
+在`vue.config.js`文件中计算以`VUE_APP_`前缀开头的环境变量，会被`webpack.DefinePlugin`静态嵌入到客户端侧的包中，因此可以在业务代码里访问到他们。
+
 ## 审查项目的 webpack 配置
 
 `vue-cli-service inspect`命令可以用于审查一个 Vue CLI 项目的 Webpack 配置。
