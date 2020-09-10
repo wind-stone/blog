@@ -130,6 +130,14 @@ module.exports = {
             children: [
                 'practices/'
             ]
+        },
+        {
+            title: '预处理器',
+            collapsable: true,
+            children: [
+                'preprocessor/less',
+                'preprocessor/stylus',
+            ]
         }
     ],
 
