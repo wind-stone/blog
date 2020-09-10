@@ -44,6 +44,29 @@ function trampoline(f) {
 trampoline(runStack(1000000))
 ```
 
+### 事件循环
+
+#### Promise
+
+```js
+setTimeout(()=>console.log("d"), 0)
+var r = new Promise(function(resolve, reject){
+    resolve()
+});
+r.then(() => {
+    var begin = Date.now();
+    while(Date.now() - begin < 1000);
+    console.log("c1")
+    new Promise(function(resolve, reject){
+        resolve()
+    }).then(() => console.log("c2"))
+});
+// 结果：
+// c1
+// c2
+// d
+```
+
 ## 原型/继承
 
 ```js
