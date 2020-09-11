@@ -22,6 +22,46 @@ PS: 本人熟悉 h5 和 Vue.js 开发，不熟悉小程序和 uni-app 开发，�
 
 参考: [白话uni-app 【也是html、vue、小程序的区别】](https://ask.dcloud.net.cn/article/id-35657)
 
+### 原生微信小程序与 uni-app 里组件生命周期的对象关系
+
+#### App 级
+
+原生微信小程序`App.onLaunch`触发之后，开始触发 uni-app 组件的`mounted`和`onLaunch`。
+
+#### Page、Component 级
+
+uni-app 里，不管是页面实例还是组件实例，最终都是使用的原生微信小程序的 Component 构造器来创建实例的。
+
+传给构造器的`PageOrComponentOptions`选项的如下生命周期被调用时，会触发`$vm`上对应的钩子和操作。
+
+- 原生微信小程序的`PageOrComponentOptions.lifetimes.attached`里时会初始化创建该组件对应的 Vue 实例`$vm`，随之调用`$vm.$mount()`方法。
+- 原生微信小程序的`PageOrComponentOptions.lifetimes.ready`里触发`$vm.mounted`和`$vm.onReady`钩子。
+- 原生微信小程序的`PageOrComponentOptions.lifetimes.detached`里调用`$vm.$destroy()`方法。
+
+- 原生微信小程序的`PageOrComponentOptions.pageLifetimes.show`里触发`$vm.onPageShow`钩子。
+- 原生微信小程序的`PageOrComponentOptions.pageLifetimes.hide`里触发`$vm.onPageHide`钩子。
+- 原生微信小程序的`PageOrComponentOptions.pageLifetimes.resize`里触发`$vm.onPageResize`钩子。
+
+##### Page
+
+针对页面组件，在 uni-app 里最终也是使用原生小程序的 Component 构造器来创建页面实例的。
+
+且页面实例的生命周期触发时，会调用`PageOptions.methods.xxx`方法，进而调用了页面实例对应的 Vue 实例的`$vm.xxx`钩子。具体的钩子如下：
+
+- 原生微信小程序的`PageOptions.methods.onShow`里触发`$vm.onShow`
+- 原生微信小程序的`PageOptions.methods.onLoad`里触发`$vm.onLoad`
+- 原生微信小程序的`PageOptions.methods.onHide`里触发`$vm.onHide`
+- 原生微信小程序的`PageOptions.methods.onUnload`里触发`$vm.onUnload`
+- 原生微信小程序的`PageOptions.methods.onPullDownRefresh`里触发`$vm.onPullDownRefresh`
+- 原生微信小程序的`PageOptions.methods.onReachBottom`里触发`$vm.onReachBottom`
+- 原生微信小程序的`PageOptions.methods.onShareAppMessage`里触发`$vm.onShareAppMessage`
+- 原生微信小程序的`PageOptions.methods.onShareTimeline`里触发`$vm.onShareTimeline`
+- 原生微信小程序的`PageOptions.methods.onPageScroll`里触发`$vm.onPageScroll`
+- 原生微信小程序的`PageOptions.methods.onResize`里触发`$vm.onResize`
+- 原生微信小程序的`PageOptions.methods.onTabItemTap`里触发`$vm.onTabItemTap`
+
+PS: 实际上，原生微信小程序里，Page 构造器是 Component 构造器的简化版本。（微信官方文档没有明确这么说，但是官方技术专员在[回答问题时有提到](https://developers.weixin.qq.com/community/develop/doc/000e48667d80001b7ebad1c0d56c00?highLine=component%2520%25E6%259E%2584%25E5%25BB%25BA%25E9%25A1%25B5%25E9%259D%25A2)，在一篇[官方的技术文章](https://developers.weixin.qq.com/community/develop/article/doc/0000a8d54acaf0c962e820a1a5e413)里也有提到）
+
 ## 踩过的坑
 
 ### 父子组件销毁顺序
