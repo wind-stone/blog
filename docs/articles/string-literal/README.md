@@ -6,7 +6,7 @@
 
 那么，如果我们想要在单引号括起来的字符串字面量内包含单引号，或者双引号括起来的字符串字面量内包含双引号，应该怎么做呢？
 
-比如，我们想定义这样一个字符串，`' is a single quote, and " is a double quote.`，该字符串无论是用单引号括起来还是用双引号括起来，都会有问题。
+比如，我们想定义这样一个字符串，`' is a single quote, and " is a double quote.`，该字符串字面量无论是用单引号括起来还是用双引号括起来，都会有语法问题。
 
 ```js
 const strA = "' is a single quote, and " is a double quote."
@@ -15,31 +15,31 @@ const strB = '' is a single quote, and " is a double quote.'
 
 ## 特殊字符及转义序列
 
-针对像单引号和双引号这些特殊用途的字符，或者像换行符这种非打印字符，JavaScript 允许其通过以反斜线`\`开头的转义序列的形式来代表单个字符，可以放在字符串字面量内的任意位置。
+针对像单引号和双引号这些特殊用途的字符，或者像换行符这种非打印字符，JavaScript 允许其在字符串字面量里通过以反斜线`\`开头的转义序列的形式来代表单个字符，比如`\'`代表单个字符`'`，`\n`代表换行符，且转义序列可以放在字符串字面量内的任意位置。
 
-反斜线`\`在 JavaScript 字符串字面量里具有特殊用途，它与其后的字符结合之后，就不再表示该字符的字面含义了。比如`\n`，表示的是换行符。
+如下是一些常见的转义序列。
 
-| 转义序列                 | 所表示的字符                      |
-| ------------------------ | --------------------------------- |
-| `\0`                     | 空字符（注意，不是空字符串）      |
-| `\'`                     | 单引号`'`                         |
-| `\"`                     | 双引号`"`                         |
-| `\\`                     | 反斜线`\`                         |
-| `\n`                     | 换行                              |
-| `\r`                     | 回车                              |
-| `\v`                     | 垂直制表符                        |
-| `\t`                     | 水平制表符                        |
-| `\b`                     | 退格                              |
-| `\f`                     | 换页                              |
-| `\xXX`                   | Latin-1 字符(`x`小写)             |
-| `\uXXXX`                 | Unicode 基本多文种平面里的字符    |
-| `\u{X}` ... `\u{XXXXXX}` | Unicode 所有 Code Point（实验性） |
+| 转义序列                 | 所表示的字符                                   |
+| ------------------------ | ---------------------------------------------- |
+| `\0`                     | 空字符（注意，不是空字符串，空字符的长度是 1） |
+| `\'`                     | 单引号`'`                                      |
+| `\"`                     | 双引号`"`                                      |
+| `\\`                     | 反斜线`\`                                      |
+| `\n`                     | 换行符                                         |
+| `\r`                     | 回车符                                         |
+| `\v`                     | 垂直制表符                                     |
+| `\t`                     | 水平制表符                                     |
+| `\b`                     | 退格符                                         |
+| `\f`                     | 换页符                                         |
+| `\xXX`                   | Latin-1 字符                                   |
+| `\uXXXX`                 | Unicode 基本多文种平面里的字符                 |
+| `\u{X}` ... `\u{XXXXXX}` | Unicode 所有 Code Point（实验性）              |
 
 `\xXX`是指在`\x`后紧跟着两个十六进制数`XX`，代表一个字符，`XX`是字符的 Unicode 码位，取值范围是`00`~`FF`，因此能输出 256 种字符，即[Latin-1 字符](https://zh.wikipedia.org/wiki/ISO/IEC_8859-1)。
 
 `\uXXXX`是指在`\u`后紧跟着四个十六进制数`XXXX`，代表一个字符，`XXXX`是字符的 Unicode 码位，取值范围`0000`~`FFFF`，能输出[Unicode 基本多文种平面](https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%B9%B3%E9%9D%A2%E6%98%A0%E5%B0%84#%E5%9F%BA%E6%9C%AC%E5%A4%9A%E6%96%87%E7%A7%8D%E5%B9%B3%E9%9D%A2)里的字符。
 
-由此可知，我们可以如下这样声明之前的那个字符串:
+因此，借助转义序列，我们可以如下这样声明之前的那个字符串:
 
 ```js
 const str = '\' is a single quote, and \" is a double quote.'
@@ -47,20 +47,24 @@ const str = '\' is a single quote, and \" is a double quote.'
 
 ## JavaScript 是如何计算字符串字面量的
 
-既然我们可以将一些特殊字符以转义序列的形式放置在字符串字面量中，那么 JavaScript 引擎是如何将字符串字面量计算成 JavaScript 字符串的呢？
+如下是 ECMAScript 对字符串字面量的定义。
+
+> A string literal is zero or more Unicode code points enclosed in single or double quotes. Unicode code points may also be represented by an escape sequence. All code points may appear literally in a string literal except for the closing quote code points, U+005C (REVERSE SOLIDUS), U+000D (CARRIAGE RETURN), and U+000A (LINE FEED). Any code points may appear in the form of an escape sequence. **String literals evaluate to ECMAScript String values.** When generating these String values Unicode code points are UTF-16 encoded as defined in 10.1.1. Code points belonging to the Basic Multilingual Plane are encoded as a single code unit element of the string. All other code points are encoded as two code unit elements of the string.
+
+定义里说任何一个字符都可以以转义序列的形式存在于字符串字面量里，且字符串字面量会被计算成字符串类型的值。那么字符串字面量是如何计算成 JavaScript 字符串的呢？
 
 JavaScript 引擎会对代码里定义的每一个字符串字面量进行计算，将字符串字面量里的转义序列转换成其所表示的字符，最终将字符串字面量计算为 JavaScript 字符串。
 
 JavaScript 对字符串字面量里的每个字符的处理，主要分为以下几种情况。
 
-第一种，若字符前没有反斜杠`\`，则该字符即为其本身。
+第一种，非反斜杠`\`、单引号`'`（当字符串字面量用单引号括起来时）、双引号`"`（当字符串字面量用双引号括起来时）、行终止符的源字符，则该源字符将计算为其本身。
 
 ```js
 > 'world'
 < "world"
 ```
 
-第二种，若字符前有反斜杠`\`，且`\`能与该字符（或者其后多个字符）能组合成上表里的转义序列，则将`\`和该字符串转义为其所表示的字符。
+第二种，若字符前有反斜杠`\`，且`\`能与该字符（或者其后多个字符）能组合成上表里的转义序列，则将`\`和该字符串计算为其所表示的字符。
 
 ```js
 > 'hello, \'world\''
@@ -73,11 +77,11 @@ JavaScript 对字符串字面量里的每个字符的处理，主要分为以下
 < "你好"
 ```
 
-以上的第一种和第二种是[ECMA 262 - String Literals](https://tc39.es/ecma262/#sec-literals-string-literals)规范里规定的，每个实现 ECMAScript 的 JavaScript 引擎都得按此实现。
+以上的第一种和第二种是[ECMA 262 - String Literals](https://tc39.es/ecma262/#sec-literals-string-literals)规范里规定的，每个实现 ECMAScript 的 JavaScript 引擎都得按此实现。当然，如上两种情况只是我们日常能碰到的主要情况，实际上在计算字符串字面量时会有更多算法和细节，如有兴趣可查阅[ECMA 262 - String Literals](https://tc39.es/ecma262/#sec-literals-string-literals)规范。
 
 但以下将要说明的第三种和第四种情况，规范里并没有规定如何处理，具体的处理方式还得看 JavaScript 引擎的实现。[从一个 JSON.parse 错误深入研究 JavaScript 的转义字符](https://zhuanlan.zhihu.com/p/31030352)这篇文章分析了 V8 源码，并给出了如下两种情况。
 
-第三种，若字符前有反斜杠`\`，且`\`与该字符（或其后多个字符）不能组合成上表里的转义序列，且该字符不是`u`或者`x`，则将`\`和该字符串转义为该字符本身。
+第三种，若字符前有反斜杠`\`，且`\`与该字符不能组合成上表里的转义序列，且该字符不是`u`或者`x`，则将`\`和该字符计算成该字符本身。
 
 ```js
 > 'hello, \world'
@@ -99,7 +103,7 @@ JavaScript 对字符串字面量里的每个字符的处理，主要分为以下
 
 ## 哪些场景需要考虑字符串字面量的计算
 
-理论上来说，但凡涉及到字符串字面量的地方，都需要考虑字符串字面的计算问题。
+理论上来说，但凡涉及到字符串字面量的地方，都需要考虑字符串字面量的计算。
 
 字符串字面量，是定义在 JavaScript 代码里的字符串类型的固定值。因此只要是定义在 JavaScript 代码里的字符串字面量，都要经过 JavaScript 计算才能成为 JavaScript 字符串。
 
@@ -131,7 +135,7 @@ regB.test(host); // false
 - `regA`的正则对象等价于`/w+.windstone.cc/i`
 - `regB`的正则对象等价于`/\w+\.windstone\.cc/i`
 
-显然，`regB`才是满足要求的正则对象。因此，在使用字符串字面量生成期望的正则对象时，尤其要注意字符串字面量的计算问题。
+显然，`regB`才是满足要求的正则对象。因此，在使用字符串字面量生成期望的正则对象时，尤其要注意字符串字面量的计算。
 
 PS: 常规情况下，尽量避免使用字符串字面量生成正则对象，而应该使用正则表达式字面量。
 
@@ -151,15 +155,15 @@ eval(str)
 
 以上代码里，赋值给常量`word`的`'\\u0077'`，以及`'console.log("'`和`'")'`都是字符串字面量。`'\\u0077'`计算成字符串`\u0077`并赋值给常量`word`，经过`+`运算生成字符串`console.log("\u0077")`并赋给常量`str`。
 
-此时传入`eval()`函数的字符串参数`console.log("\u0077")`成为了一段代码，而其中的`"\u0077"`也就变成了字符串字面量，在`eval()`执行时会将其计算成`w`，因此最终要执行的代码等价于`console.log("w")`，所以最终打印出`w`。
+此时传入`eval()`函数的字符串参数`console.log("\u0077")`成为了一段 JavaScript 代码，而其中的`"\u0077"`也就变成了字符串字面量，在`eval()`执行时会将其计算成`w`，因此最终要执行的代码等价于`console.log("w")`，所以最终打印出`w`。
 
-BTW，类似于`eval()`，使用`Function`构造函数动态创建函数时，也要注意字符串字面量的计算问题。
+BTW，类似于`eval()`，使用`Function`构造函数动态创建函数时，也要注意字符串字面量的计算。
 
 ### JSON.parse
 
-`JSON.parse()`方法可以解析 JSON 文本来构建 JavaScript 值或对象。`JSON.parse()`方法的第一个参数是个字符串，表示将要被解析的 JSON 文本。
+`JSON.parse()`方法可以解析 JSON 文本来创建对应的 JavaScript 值。`JSON.parse()`方法的第一个参数是个字符串，表示将要被解析的 JSON 文本。
 
-当这个字符串参数是由字符串字面量产生的时候，尤其需要注意字符串字面的计算，防止产生无效的 JSON 文本，导致`JSON.parse()`解析失败。
+当这个字符串参数是由字符串字面量产生的时候，尤其需要注意字符串字面量的计算，防止产生无效的 JSON 文本，导致`JSON.parse()`解析失败。
 
 ```js
 const a = '"\n"';
@@ -172,7 +176,7 @@ JSON.parse(a);
 
 字符串字面量`'"\n"'`经过计算之后变成字符串`"↵"`，其中`↵`代表的是单个换行符。
 
-::: warning 严重提示
+::: warning 重要提示
 换行符是不可打印字符，此处的`↵`不是真正的换行符，只是换行符的占位示意，为了方便理解。真正的换行符的 Unicode 码位是`\u000A`，而`↵`的 Unicode 码位是`\u21B5`。因此不要在代码里使用`↵`作为换行符，这是有问题的。
 :::
 
@@ -188,7 +192,7 @@ be placed within the quotation marks except for the code points that must be esc
 
 但是，我们的运行结果显示，无法对`"↵"`这个 JSON `string`解析，这是为什么呢？
 
-问题出在`↵`这个字符上。根据 JSON `string`的定义，当双引号`"`、反斜线`\`和控制字符出现在 JSON `string`里时必须要经过转义，而换行符`↵`恰恰是个未转义的控制字符，这导致`"↵"`不是有效的 JSON `string`，进而在`JSON.parse`时会报错。
+问题出在换行符`↵`上。根据 JSON `string`的定义，当双引号`"`、反斜线`\`和控制字符出现在 JSON `string`里时必须要经过转义，而换行符`↵`恰恰是个未转义的控制字符，这导致`"↵"`不是有效的 JSON `string`，进而在`JSON.parse`时会报错。
 
 ```js
 const a = '"\\n"';
