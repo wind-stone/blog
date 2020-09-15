@@ -6,3 +6,7 @@
 ## 代码风格
 
 - [如何制定企业级代码规范与检查](https://mp.weixin.qq.com/s/qpUlllsMvMH0Gc88QJ66Fg)
+
+## TypeScript
+
+- [细数 TS 中那些奇怪的符号](https://segmentfault.com/a/1190000023943952)

@@ -420,6 +420,7 @@ const Component = Vue.extend({
   - [Non-null assertion operator - TypeScript 2.0](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator)
 - 可选链运算符`?.`
   - 可选链运算符`?.`可以按照运算符之前的属性是否有效，链式读取对象的属性或者使整个对象链返回`undefined`。
+  - 可选链运算符还可以用于函数调用，`let result = obj.customMethod?.();`
   - [可选链操作符 - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E5%8F%AF%E9%80%89%E9%93%BE)
   - [Optional Chaining - TypeScript 3.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#optional-chaining)
 - 空合并运算符`??`
