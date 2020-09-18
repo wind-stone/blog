@@ -142,9 +142,9 @@ if (!Array.isArray) {
 
 ## 实例
 
-### 如何消除一个数组里面重复的元素？
+### 数组去重
 
-- 方法一：`let newArray = new Set(array)`
+- 方法一：`[...new Set(array)]`或`Array.from(new Set(array))`
 
 - 方法二：`indexOf` + `splice`
 
