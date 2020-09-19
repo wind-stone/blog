@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # Nginx
 
 [[toc]]
@@ -23,6 +19,72 @@ brew install nginx
 `nginx`的安装目录为`/usr/local/etc/nginx/`，`nginx.conf`文件就在该目录下。
 
 `nginx`主页的文件在`/usr/local/var/www`目录下。
+
+### 查找 nginx 配置文件路径
+
+若不知道 nginx 的安装目录和配置文件路径，则可以通过以下方式查找（可直接通过方式二查找）。
+
+#### 方式一
+
+```sh
+locate nginx.conf
+/usr/local/etc/nginx/nginx.conf
+/usr/local/etc/nginx/nginx.conf.default
+```
+
+若服务器中存在多个`nginx.conf`文件，我们并不知道实际上调用的是哪个配置文件，因此我们必须找到实际调用的配置文件才能进行修改。
+
+#### 方式二
+
+先查看`nginx`进程状态，获取`nginx`主进程的可执行文件位置，这里是`/usr/sbin/nginx`。
+
+```sh
+ps aux|grep nginx
+root          62  0.0  0.1 120896  2196 ?        Ss   Sep16   0:00 nginx: master process /usr/sbin/nginx
+nginx         63  0.0  0.3 121428  6752 ?        S    Sep16   0:00 nginx: worker process
+root       63707  0.0  0.0  10676  1668 pts/2    S+   20:09   0:00 grep --color nginx
+```
+
+其中`ps`命令是 Process Status 的缩写，`aux`是命令参数，表示列出所有（包括其他用户的）有关`nginx`的进程。
+
+之后，通过命令`/usr/sbin/nginx -t`进行配置检查，即可知道实际调用的配置文件路径及是否调用有效。
+
+```sh
+/usr/sbin/nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+疑问：方式二是不是直接执行`nginx -t`就可以了？！！
+
+### 查看 nginx 监听的端口
+
+先执行`ps aux|grep nginx`命令获取到`nginx master`进程的 PID，再执行`netstat -anp | grep PID`查看`nginx`监听的端口。
+
+```sh
+ps aux|grep nginx
+root          62  0.0  0.1 120896  2196 ?        Ss   Sep16   0:00 nginx: master process /usr/sbin/nginx
+nginx         63  0.0  0.3 121428  6752 ?        S    Sep16   0:00 nginx: worker process
+root       63707  0.0  0.0  10676  1668 pts/2    S+   20:09   0:00 grep --color nginx
+
+netstat -anp|grep 62
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      62/nginx: master pr
+tcp        0      0 0.0.0.0:8888            0.0.0.0:*               LISTEN      62/nginx: master pr
+tcp6       0      0 :::80                   :::*                    LISTEN      62/nginx: master pr
+tcp6       0      0 :::8888                 :::*                    LISTEN      62/nginx: master pr
+unix  3      [ ]         STREAM     CONNECTED     538840891 62/nginx: master pr
+unix  3      [ ]         STREAM     CONNECTED     538840892 62/nginx: master pr
+```
+
+其中`netstat`命令用于显示与 IP、TCP、UDP 和 ICMP 协议相关的统计数据，一般用于检验本机各端口的网络连接情况。
+
+命令参数里，
+
+- `-a`: 显示所有连线中的 Socket。
+- `-n`: 直接使用 IP 地址，而不通过域名服务器。
+- `-p`: 显示正在使用 Socket 的程序识别码和程序名称。
+
+上述示例里，`nginx`监听在`80`和`8888`端口。
 
 ### nginx 基本命令
 
