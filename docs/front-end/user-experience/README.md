@@ -26,7 +26,7 @@
 - 导致容器内使用`position:fixed;`固定定位的元素随着页面一起滚动。
 - （iOS UIWebview 里）容器内溢出的内容（比如弹窗）将被隐藏，效果类似于`overflow: hidden`，google 未找到原因
 
-### 文字不可选中
+### 禁用文字选中
 
 [`user-select`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/user-select)属性控制用户能否选中文本。
 
@@ -37,6 +37,16 @@ div {
     user-select: none;
 }
 ```
+
+### 禁用 iOS 长按图片预览
+
+```css
+* {
+    -webkit-touch-callout: none;
+}
+```
+
+详见：[MDN - -webkit-touch-callout](https://developer.mozilla.org/zh-CN/docs/Web/CSS/-webkit-touch-callout)
 
 ### 点击元素不高亮显示
 
