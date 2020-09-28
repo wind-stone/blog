@@ -11,3 +11,7 @@
 
 - [细数 TS 中那些奇怪的符号](https://segmentfault.com/a/1190000023943952)
 - [TypeScript 中的 Decorator & 元数据反射：从小白到专家（部分 I）](https://zhuanlan.zhihu.com/p/20297283)
+
+## Vue
+
+- [深入理解 Vue3 Reactivity API](https://zhuanlan.zhihu.com/p/146097763)
