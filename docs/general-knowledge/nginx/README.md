@@ -115,6 +115,9 @@ nginx
 # 停止 nginx
 nginx -s stop
 
+# 检查 NGINX 配置是否正确
+nginx -t
+
 # 重启 nginx
 nginx -s reload
 
