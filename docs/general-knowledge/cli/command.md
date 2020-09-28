@@ -178,3 +178,28 @@ grep '[a-z]\{7\}' *.txt
 ```
 
 更好用法和正则表达式等内容，请参考[每天一个linux命令（39）：grep 命令](http://www.cnblogs.com/peida/archive/2012/12/17/2821195.html)
+
+## netstat
+
+`netstat`用于显示与 IP、TCP、UDP 和 ICMP 协议相关的统计数据，一般用于检验本机各端口的网络连接情况。
+
+`netstat`是在内核中访问网络及相关信息的程序，它能提供 TCP 连接，TCP 和 UDP监听，进程内存管理的相关报告。
+
+`netstat`查看端口占用语法格式：
+
+```sh
+# 查看当前所有端口情况
+netstat -tunlp
+
+# -t (tcp) 仅显示tcp相关选项
+# -u (udp)仅显示udp相关选项
+# -n 拒绝显示别名，能显示数字的全部转化为数字
+# -l 仅列出在Listen(监听)的服务状态
+# -p 显示建立相关链接的程序名
+```
+
+可指定特定端口查看：
+
+```sh
+netstat -tunlp | grep 8888
+```
