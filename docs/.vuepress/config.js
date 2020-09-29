@@ -23,7 +23,13 @@ module.exports = {
     themeConfig: {
         sidebarDepth: 2,
         nav: [
-            { text: 'Vue 源码学习', link: '/vue/source-study/' },
+            {
+                text: 'Vue 源码学习',
+                items: [
+                    { text: 'Vue 2.x', link: '/vue/source-study/' },
+                    { text: 'Vue 3.x', link: '/vue3/' }
+                ]
+            },
             { text: 'CSS 规范-翻译', link: '/css-spec/css2.2/9-visual-formatting-model/' },
             {
                 text: 'Front End',
