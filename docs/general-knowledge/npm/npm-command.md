@@ -1,5 +1,7 @@
 # npm 命令
 
+[[toc]]
+
 ## npm config 命令
 
 `npm config`命令是一组设置`npm`配置的命令。通过`npm config -h`可以查看到所有这些命令，详见[官方文档 - npm-config](https://docs.npmjs.com/cli/config)。

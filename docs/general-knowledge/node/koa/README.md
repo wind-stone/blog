@@ -1,8 +1,4 @@
----
-sidebarDepth: 0
----
-
-# KOA
+# Koa
 
 [[toc]]
 
@@ -81,7 +77,7 @@ if (!module.parent) app.listen(3000);
 - 中间件 Generator 函数里`yield next`的实现
 - 中间件 Generator 函数里`yield`另一个中间件的实现
 
-<<< @/docs/back-end/node/koa/1.x-simple-implement.js
+<<< @/docs/general-knowledge/node/koa/1.x-simple-implement.js
 
 ### 2.x 中间件简单实现
 

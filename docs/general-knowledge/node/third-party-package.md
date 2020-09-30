@@ -1,10 +1,8 @@
----
-sidebarDepth: 0
----
-
 # 第三方 NPM 工具
 
-# nvm
+[[toc]]
+
+## nvm
 
 [nvm](https://github.com/creationix/nvm)，即 Node Version Manager，可以管理多个 Node.js 版本。
 

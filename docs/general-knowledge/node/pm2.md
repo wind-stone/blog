@@ -1,10 +1,8 @@
----
-sidebarDepth: 1
----
-
 # PM2
 
 Reference: [PM2 英文官网](https://pm2.io/doc/en/runtime/overview/)
+
+[[toc]]
 
 ## 常用命令
 

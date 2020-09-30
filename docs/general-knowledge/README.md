@@ -6,11 +6,13 @@ sidebarDepth: 0
 
 这里将记录前端的主要知识点，包括：
 
+- CLI
 - Git
-- Server
-- Web Applications
-- Operating System
+- Node
+- NPM
+- Nginx
 - Network
+- 等等
 
 ## 领域内知识
 

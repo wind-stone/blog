@@ -49,7 +49,6 @@ module.exports = {
             },
             { text: '小程序', link: '/mini-program/weixin/' },
             { text: '技术文章', link: '/articles/string-literal/' },
-            { text: 'Back End', link: '/back-end/' },
             { text: 'General Knowledge', link: '/general-knowledge/' },
             { text: 'ES6+', link: '/es6/' },
             { text: '代码片段', link: '/code-snippet/' },

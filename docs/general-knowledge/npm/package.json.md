@@ -1,5 +1,7 @@
 # package.json
 
+[[toc]]
+
 `package.json`文件是 NPM 包的描述文件，NPM 包的所有行为与包描述文件的字段息息相关。
 
 与 CommonJS 包规范相比，NPM 的实现里的包描述文件多了`author`、`bin`、`main`、`devDependencies`四个字段。

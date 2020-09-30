@@ -1,12 +1,8 @@
----
-sidebarDepth: 0
----
-
-# 未分类 #
+# Node
 
 [[toc]]
 
-## process.cwd 与 __dirname 的区别 ##
+## process.cwd 与 __dirname 的区别
 
 假设项目目录如下所示：
 
@@ -16,7 +12,7 @@ test-project
     - path.js
 ```
 
-### 在 test-project 目录下执行 ###
+### 在 test-project 目录下执行
 
 ```sh
 ➜  test-project node src/path.js
@@ -26,7 +22,7 @@ process.cwd():  /Users/wind-stone/github/test-project
 path.resolve("./") /Users/wind-stone/github/test-project
 ```
 
-### 在 src 目录下执行 ###
+### 在 src 目录下执行
 
 ```sh
 ➜  test-project cd src
@@ -37,18 +33,18 @@ process.cwd():  /Users/wind-stone/github/test-project/src
 path.resolve("./") /Users/wind-stone/github/test-project/src
 ```
 
-### 结论 ##
+### 结论
 
 - `__dirname`: 当前执行的 JS 文件所在的文件夹的绝对路径
 - `__filename`: 当前执行的 JS 文件的绝对路径
 - `process.cwd()`: 运行`node xxx.js`时所在的文件夹的绝对路径
 - `path.resolve('./')`: 运行`node xxx.js`时所在的文件夹的绝对路径
 
-#### path.resolve ####
+#### path.resolve
 
 - `path.resolve([...paths])`
-    - `...paths`: `<string>`，路径或路径片段的序列。
-    - 返回: `<string>`
+  - `...paths`: `<string>`，路径或路径片段的序列。
+  - 返回: `<string>`
 
 `path.resolve()`方法将路径或路径片段的序列解析为绝对路径。
 
@@ -62,34 +58,34 @@ path.resolve("./") /Users/wind-stone/github/test-project/src
 
 如果没有传入`path`片段，则`path.resolve()`将返回当前工作目录的绝对路径。
 
-## 事件循环 ##
+## 事件循环
 
-### 观察者 ###
+### 观察者
 
 - I/O 观察者
-    - 文件 I/O 观察者
-    - 网络 I/O 观察者
+  - 文件 I/O 观察者
+  - 网络 I/O 观察者
 - 定时器观察者
-    - `setTimeout`
-    - `setInterval`
+  - `setTimeout`
+  - `setInterval`
 - idle 观察者
-    - `process.nextTick`
+  - `process.nextTick`
 - check 观察者
-    - `setImmediate`
+  - `setImmediate`
 
 事件循环里对观察者的检查顺序为：
 
 idle 观察者 > I/O 观察者 > check 观察者
 
-## Node 定时器 ##
+## Node 定时器
 
 - 同步任务
 - 异步任务
-    - 本轮循环
-        - process.nextTick
-        - Promise
-    - 次轮循环
-        - setTimeout、setInterval
-        - setImmediate
+  - 本轮循环
+    - process.nextTick
+    - Promise
+  - 次轮循环
+    - setTimeout、setInterval
+    - setImmediate
 
 Reference: [Node 定时器详解](http://www.ruanyifeng.com/blog/2018/02/node-event-loop.html)

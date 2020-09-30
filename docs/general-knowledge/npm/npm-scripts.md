@@ -2,6 +2,8 @@
 
 Copy and tran from [npm-scripts](https://www.npmjs.cn/misc/scripts/)
 
+[[toc]]
+
 ## 描述
 
 `npm`支持`package.json`文件里的`scripts`属性的以下脚本：

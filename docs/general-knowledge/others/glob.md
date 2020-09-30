@@ -1,8 +1,4 @@
----
-sidebarDepth: 0
----
-
-# glob 匹配模式 #
+# glob 匹配模式
 
 [[toc]]
 
@@ -10,33 +6,33 @@ sidebarDepth: 0
 
 `glob`命令，是`global`的缩写，起源于贝尔实验室的 Unix 最早期的版本。后来，这项功能以库函数`glob()`的形式提供，被用于`shell`等程序。
 
-## 语法 ##
+## 语法
 
 最常用的通配符是`*`、`?`、`[...]`。
 
-通配符 | 描述 | 示例 | 匹配 | 不匹配
---- | --- | --- | --- | ---
-`*` | 匹配任意数量的字符，包括空字符串 | `Law*`<br>`*Law*` | `Law`，`Laws`，或`Lawyer`<br>`Law`，`GrokLaw`，或`Lawyer` | `GrokLaw`，`La`，`aw`<br>`La`，或`aw`
-`?` | 匹配任何单个字符 | `?at` | `Cat`，`cat`，`Bat`或`bat` | `at`
-`[abc]` | 匹配中括号里的任意单个字符 | `[CB]at` | `Cat`或`Bat` | `cat`或`bat`
-`[a-z]` | 匹配中括号里的字符范围里的单个字符 | `Letter[0-9]` | `Letter0`，`Letter1`，`Letter2`，...，`Letter9` | `Letters`，`Letter`或`Letter10`
+| 通配符  | 描述                               | 示例              | 匹配                                                      | 不匹配                                |
+| ------- | ---------------------------------- | ----------------- | --------------------------------------------------------- | ------------------------------------- |
+| `*`     | 匹配任意数量的字符，包括空字符串   | `Law*`<br>`*Law*` | `Law`，`Laws`，或`Lawyer`<br>`Law`，`GrokLaw`，或`Lawyer` | `GrokLaw`，`La`，`aw`<br>`La`，或`aw` |
+| `?`     | 匹配任何单个字符                   | `?at`             | `Cat`，`cat`，`Bat`或`bat`                                | `at`                                  |
+| `[abc]` | 匹配中括号里的任意单个字符        | `[CB]at`          | `Cat`或`Bat`                                              | `cat`或`bat`                          |
+| `[a-z]` | 匹配中括号里的字符范围里的单个字符 | `Letter[0-9]`     | `Letter0`，`Letter1`，`Letter2`，...，`Letter9`           | `Letters`，`Letter`或`Letter10`       |
 
 上述所有情况里，路径分隔符（Unix 里是`/`，Windows 里是`/`）被不会被匹配。
 
-## Unix ##
+## Unix
 
 在 Linux 和 POSIX 系统里，`*`、`?`与上述定义一样，但`[...]`有两个额外的含义：
 
-通配符 | 描述 | 示例 | 匹配 | 不匹配
---- | --- | --- | --- | ---
-`[!abc]` | 匹配不在中括号里的任意单个字符 | `[!C]at` | `bat`、`Bat`或`cat` | `Cat`
-`[!a-z]` | 匹配不在中括号字符范围里的单个字符 | `Letter[!3-5]` | `Letter1`，`Letter2`，`Letter6`，...，`Letter9`，`Letterx`等 | `Letter3`，`Letter4`或`Letterxx`
+| 通配符   | 描述                               | 示例           | 匹配                                                         | 不匹配                           |
+| -------- | ---------------------------------- | -------------- | ------------------------------------------------------------ | -------------------------------- |
+| `[!abc]` | 匹配不在中括号里的任意单个字符    | `[!C]at`       | `bat`、`Bat`或`cat`                                          | `Cat`                            |
+| `[!a-z]` | 匹配不在中括号字符范围里的单个字符 | `Letter[!3-5]` | `Letter1`，`Letter2`，`Letter6`，...，`Letter9`，`Letterx`等 | `Letter3`，`Letter4`或`Letterxx` |
 
 一些`shell`比如`C shell`和`Bash`支持额外的语法，比如[Brace expansion](https://en.wikipedia.org/wiki/Bash_(Unix_shell)#Brace_expansion)。
 
 `Bash shell`还支持`Extended Globbing`，允许其他模式匹配操作符被用于匹配多个被圆括号（`(`和`)`）包裹的模式，这可以通过设置`extglob`的选项来启用。
 
-## 文件/文件夹匹配 ##
+## 文件/文件夹匹配
 
 在命令行里经常会使用`**`和`*`来匹配文件和文件夹，一些常用的方式为:
 

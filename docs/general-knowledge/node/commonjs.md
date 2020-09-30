@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # CommonJS 规范及实现
 
 [[toc]]

@@ -1,5 +1,7 @@
 # npm
 
+[[toc]]
+
 ## 问题汇总
 
 ### 修改 registry 后 package-lock.json 里的 resolved 没更新

@@ -1,5 +1,4 @@
 module.exports = {
-    // General Knowledge
     '/general-knowledge/': [
         {
             title: 'CLI',
@@ -17,6 +16,31 @@ module.exports = {
                 'git/git-commit-guidelines',
                 'git/gitlab',
                 'git/'
+            ]
+        },
+        {
+            title: 'Node',
+            collapsable: true,
+            children: [
+                'node/',
+                'node/pm2',
+                'node/koa/',
+                'node/server',
+                'node/commonjs',
+                'node/third-party-package'
+            ]
+        },
+        {
+            title: 'NPM',
+            collapsable: true,
+            children: [
+                'npm/',
+                'npm/npm-command',
+                'npm/npmrc',
+                'npm/npm-config',
+                'npm/npm-scripts',
+                'npm/package.json',
+                'npm/package-lock.json',
             ]
         },
         {
@@ -38,19 +62,14 @@ module.exports = {
             ]
         },
         {
-            title: 'Server',
-            collapsable: true,
-            children: [
-                'server/'
-            ]
-        },
-        {
             title: '其他',
             collapsable: true,
             children: [
                 'others/glob',
-                'others/google-cloud'
+                'others/google-cloud',
+                'others/kafka',
+                'others/translation'
             ]
-        }
+        },
     ]
 };
