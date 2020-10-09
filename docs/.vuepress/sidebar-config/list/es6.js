@@ -15,7 +15,8 @@ module.exports = {
                 'iterator/',
                 'generator/',
                 'promise/',
-                'async-await/'
+                'async-await/',
+                'proxy-reflect/'
             ]
         },
         {
