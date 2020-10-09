@@ -27,7 +27,7 @@ ES6 一共有 5 种方法可以遍历对象的属性。
 | `Object.keys()`                  | ×            | ×        | ×           |
 | `Object.getOwnPropertyNames()`   | √            | ×        | ×           |
 | `Object.getOwnPropertySymbols()` | √            | ×        | √           |
-| `Reflect.ownKeys()`              | √            | √        | √           |
+| `Reflect.ownKeys()`              | √            | ×        | √           |
 
 ### 遍历顺序
 
