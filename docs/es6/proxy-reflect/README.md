@@ -2,9 +2,9 @@
 
 ## this 和 receiver
 
-### Proxy 实例的 get() 里的 this 和 receiver
+### Proxy 的 get() 里的 this 和 receiver
 
-Proxy 实例的`get()`方法里的`receiver`总是指向原始的读操作所在的那个对象。
+Proxy 的`get()`方法里的`receiver`总是指向原始的读操作所在的那个对象。
 
 常规情况下，`receiver`即为 Proxy 实例。
 
@@ -26,7 +26,7 @@ proxy.a;
 // receiver === proxy --> true
 ```
 
-而当 Proxy 实例位于读操作所在对象的原型链上时，Proxy 实例的`get()`方法里的`receiver`就会指向读操作所在的对象。
+而当 Proxy 实例位于读操作所在对象的原型链上时，Proxy 的`get()`方法里的`receiver`就会指向读操作所在的对象。
 
 ```js
 const origin = {
@@ -50,9 +50,9 @@ child.a;
 // receiver === child --> true
 ```
 
-### Proxy 实例的 set() 里的 receiver
+### Proxy 的 set() 里的 receiver
 
-类似于`get()`，Proxy 实例的`set()`里的`receiver`指的是原始的写操作所在的那个对象。
+类似于`get()`，Proxy 的`set()`里的`receiver`指的是原始的写操作所在的那个对象。
 
 ```js
 const origin = {
@@ -94,9 +94,9 @@ child.a = 'b';
 // receiver === child --> true
 ```
 
-### Proxy 实例的 get()/set() 里的 this
+### Proxy 的 get()/set() 里的 this
 
-无论`proxy`实例是否位于读/写操作所在对象的原型链上，Proxy 实例的`get`/`set`方法里的`this`，都指向定义`get`/`set`时所在的那个对象。
+无论`proxy`实例是否位于读/写操作所在对象的原型链上，Proxy 的`get`/`set`方法里的`this`，都指向定义`get`/`set`时所在的那个对象。
 
 ```js
 const origin = {
@@ -120,9 +120,9 @@ proxy.a;
 
 `set`同理。在实际应用中，基本上不会在`get`/`set`里使用`this`。
 
-### Proxy 实例 get() 返回的函数内的 this
+### Proxy 的 get() 返回的函数内的 this
 
-Proxy 实例里`get()`方法返回的若是函数的话，则该函数会自动绑定`this`为`proxy`实例，无论这个函数来自于哪里。
+Proxy 里`get()`方法返回的若是函数的话，则该函数会自动绑定`this`为`proxy`实例，无论这个函数来自于哪里。
 
 ```js
 const origin = {

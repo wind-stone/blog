@@ -1,10 +1,12 @@
-# Proxy 与数组方法
+# Proxy 实践
+
+## Proxy 实例上的数组方法
 
 当为数组创建代理时，调用代理上的数组方法时，可能会触发数组下标、`length`等属性的`set`和`get`。
 
 （TODO: 这里会触发的原因应该是 C++ 源码里在实现这些方法时会访问/设置这些属性）
 
-## push
+### push
 
 ```js
 const origin = ['a', 'b'];
@@ -28,7 +30,7 @@ proxy.push('c');
 // set length 3
 ```
 
-## pop
+### pop
 
 ```js
 const origin = ['a', 'b'];
@@ -57,7 +59,7 @@ proxy.pop();
 // set length 1
 ```
 
-## shift
+### shift
 
 ```js
 const origin = ['a', 'b'];
@@ -88,7 +90,7 @@ proxy.shift();
 // set length 1
 ```
 
-## unshift
+### unshift
 
 ```js
 const origin = ['a', 'b'];
@@ -116,7 +118,7 @@ proxy.unshift('c');
 // set length 3
 ```
 
-## splice
+### splice
 
 ```js
 const origin = ['a', 'b'];
@@ -160,7 +162,7 @@ proxy.splice(0, 1, 'c', 'd');
 // set length 3
 ```
 
-## includes/indexOf/lastIndexOf
+### includes/indexOf/lastIndexOf
 
 ```js
 const origin = ['a', 'b'];
@@ -191,3 +193,49 @@ proxy.includes('c')
 `indexOf`和`lastIndexOf`同理，不再赘述。
 
 需要注意的是，调用数组的这三个方法，并不能保证会`get`数组的每一项，若在某一项匹配到，则后续项将不会再`get`。
+
+### map
+
+### forEach
+
+### for of
+
+## Proxy 的 ownKeys() 方法
+
+Proxy 的`ownKeys()`可以拦截：
+
+- `Object.getOwnPropertyNames()`
+- `Object.getOwnPropertySymbols()`
+- `Object.keys()`
+- `for...in`循环
+
+但是这些被拦截的不同的遍历方式在`handler.ownKeys`里统一使用`Reflect.ownKeys()`获取的值还是对应遍历方法原本的结果，这一点比较神奇。
+
+```js
+const origin = {
+    [Symbol('')]: '',
+    a: 'a'
+}
+
+Object.defineProperty(origin, 'b', {
+    value: 'b',
+    enumerable: false
+})
+
+const handler = {
+    ownKeys(target) {
+        return Reflect.ownKeys(target);
+    }
+}
+
+const proxy = new Proxy(origin, handler)
+
+Reflect.ownKeys(proxy)               // [ 'a', 'b', Symbol() ]
+Object.getOwnPropertyNames(proxy)    // [ 'a', 'b' ]
+Object.getOwnPropertySymbols(proxy)  // [ Symbol() ]
+Object.keys(proxy)                   // [ 'a' ]
+
+for(let i in proxy) {
+    console.log(i)                   // a
+}
+```

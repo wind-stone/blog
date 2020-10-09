@@ -17,7 +17,7 @@ module.exports = {
                 'promise/',
                 'async-await/',
                 'proxy-reflect/',
-                'proxy-reflect/proxy-array'
+                'proxy-reflect/proxy-practice'
             ]
         },
         {
