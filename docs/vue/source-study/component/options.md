@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 合并配置
 
 [[toc]]
@@ -34,7 +30,7 @@ Vue.prototype._init = function (options?: Object) {
 
 ### 根组件
 
-对于根组件来说，会将（经过处理里）`vm.constructor.options`和调用`new Vue(options)`传入的`options`合并。
+对于根组件来说，会将（经过处理的）`vm.constructor.options`和调用`new Vue(options)`传入的`options`合并。
 
 这里我们需要弄明白：第一，`vm.constructor.options`是怎么来的以及有哪些内容；第二，`resolveConstructorOptions`是做什么用的。
 
@@ -335,9 +331,10 @@ export function createComponent (
 
 ## 不同选项的合并策略
 
-组件选项对象里存在着各种选项，而各个选项的合并策略可能是不同的，需要在合并时通过选项的`key`获取到对应的选项策略函数，这些选项策略函数都预制在`strats`对象里，而`strats`对象初始时是空对象，后续会添加`key`及对应的选项策略函数。
+组件选项对象里存在着各种选项，而各个选项的合并策略可能是不同的，需要在合并时通过选项的`key`获取到对应的选项策略函数，这些选项策略函数都预置在`config.optionMergeStrategies`对象里，而`config.optionMergeStrategies`对象初始时是空对象，后续会针对不同选项添加对应的选项策略函数。
 
 ```js
+// src/core/util/options.js
 import config from '../config'
 // ...
 const strats = config.optionMergeStrategies
@@ -374,7 +371,7 @@ export default ({
 - 默认合并策略
 - （开发模式）`el`、`propsData`选项
 
-若是`child`
+BTW，以下涉及的代码主要在`src/core/util/options.js`文件里。
 
 ### data、provide 选项
 
@@ -641,3 +638,29 @@ if (process.env.NODE_ENV !== 'production') {
   }
 }
 ```
+
+### 将 config 挂载在 Vue 上
+
+经过以上的分析，各种选项的策略函数都存在在`config.optionMergeStrategies`对象上，且最终`config`对象会挂载在`Vue`上，以供开发者使用。
+
+```js
+// src/core/global-api/index.js
+import config from '../config'
+// ...
+export function initGlobalAPI (Vue: GlobalAPI) {
+  // config
+  const configDef = {}
+  configDef.get = () => config
+  if (process.env.NODE_ENV !== 'production') {
+    configDef.set = () => {
+      warn(
+        'Do not replace the Vue.config object, set individual fields instead.'
+      )
+    }
+  }
+  Object.defineProperty(Vue, 'config', configDef)
+  // ...
+}
+```
+
+因此，开发者可通过`Vue.config.optionMergeStrategies`来获取或自定义添加选项的合并策略函数了，比如`const mountedMergeFn = Vue.config.optionMergeStrategies.mounted`来获取`mounted`钩子函数的合并策略函数。
