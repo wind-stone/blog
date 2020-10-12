@@ -4,13 +4,13 @@
 
 由于 Vue 2 基于`Object.defineProperty`来实现响应式的局限性，Vue 2 里如下的操作不会触发视图更新：
 
-- 为对象（数组）添加/删除新属性（新元素）
+- 为对象（数组）添加/删除属性（元素）
 - 对数组基于下标的修改、对于`length`修改的监测
 - 对 Map、Set、WeakMap 和 WeakSet 的支持
 
 因此，Vue 2 里使用`Vue.set`（`vm.$set`）和`Vue.delete`（`vm.$delete`）来解决前两个问题。
 
-以`vm.$set`为数组添加新元素为例（对象）：
+以`vm.$set`为数组添加新元素为例：
 
 ```js
 export default {
