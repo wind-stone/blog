@@ -47,6 +47,7 @@ module.exports = {
                 'source-study/observer/dep',
                 'source-study/observer/watcher',
                 'source-study/observer/scheduler',
+                'source-study/observer/array-observe-limit',
             ]
         },
         {
