@@ -427,6 +427,12 @@ const Component = Vue.extend({
   - `let x = foo ?? bar();`，当`foo`为`null`或`undefined`时，`x`兜底取值为`bar()`。
   - [Nullish Coalescing - TypeScript 3.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing)
 
+## 其他语法
+
+- `import q = x.y.z`
+  - 简化命名空间操作的方法，给常用的`x.y.z`起个短的名字`q`
+  - 详见[TypeScript - Namespaces - Aliases](https://www.typescriptlang.org/docs/handbook/namespaces.html#aliases)
+
 ## 工具类型
 
 详情：[Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
