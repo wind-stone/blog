@@ -102,3 +102,47 @@
 ```
 
 当元素是`position: absolute/fixed`时，且包含了自定义组件，若不设置`z-index`为大于`0`的数值，则`opacity`的`transition`对自定义组件不会生效。
+
+## 开发
+
+### 使用 miniprogram-api-typings
+
+安装并配置[miniprogram-api-typings](https://github.com/wechat-miniprogram/api-typings)。配置好之后，`miniprogram-api-typings`里的绝大部分的声明都在`WechatMiniprogram`这个命名空间之下，且`WechatMiniprogram`是个全局的命名空间对象。如下以微信卡券相关方法为例，简单介绍使用方法。
+
+假设项目里将`wx.addCard`封装成 Promise 调用。
+
+```ts
+// 方式一：直接获取命令空间下的声明 WechatMiniprogram.xxx
+const addCard = (card: WechatMiniprogram.AddCardRequestInfo): Promise<WechatMiniprogram.AddCardResponseInfo> => {
+    return new Promise((resolve, reject) => {
+        wx.addCard({
+            cardList: [card],
+            success(res) {
+                resolve(res.cardList[0]);
+            },
+            fail() {
+                reject();
+            },
+        });
+    });
+};
+```
+
+```ts
+// 方式二：采用命名空间的别名（推荐）
+import AddCardRequestInfo = WechatMiniprogram.AddCardRequestInfo;
+
+const addCard = (card: AddCardRequestInfo): Promise<AddCardResponseInfo> => {
+    return new Promise((resolve, reject) => {
+        wx.addCard({
+            cardList: [card],
+            success(res) {
+                resolve(res.cardList[0]);
+            },
+            fail() {
+                reject();
+            },
+        });
+    });
+};
+```
