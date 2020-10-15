@@ -211,6 +211,7 @@ module.exports = {
             collapsable: true,
             children: [
                 'log/error-handler',
+                'log/custom-error',
                 'log/image-log',
                 'log/console/',
                 'log/debug/'
