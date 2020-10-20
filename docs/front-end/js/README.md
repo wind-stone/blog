@@ -22,3 +22,52 @@ Reference:
 
 - [原生JavaScript插件编写指南](http://geocld.github.io/2016/03/10/javascript_plugin/)
 - [如何定义一个高逼格的原生JS插件](https://www.jianshu.com/p/e65c246beac1)
+
+## Completion Record
+
+关于 Completion Record，可以学习 Winter 的这篇文章：[JavaScript执行（四）：try里面放return，finally还会执行吗？](https://time.geekbang.org/column/article/83860)
+
+![控制语句与 break 、continue 、return 、throw 结合](./images/completion-record.png)
+
+“穿透”就是指不在当前这一层处理，向外逐层寻找可以“消费”的那一层，直到最后都没找到就报错，比如：`function`里面有`while`，`while`里面有`switch`，`switch`里面又有`continue`，按图表来看，`switch-continue`应该是穿透，向上层寻找消费，碰到`while-contine`，那就是消费，再如`switch`里面是`return`，`switch-return`穿透，向上层`whlie-return`穿透，最后`function-return`是消费。
+
+### try..catch..finally
+
+```js
+function foo(){
+  try{
+    return 0;
+  } catch(err) {
+
+  } finally {
+    console.log("a")
+  }
+}
+
+console.log(foo());
+
+// 结果
+// a
+// 0
+```
+
+即使`try`语句块里存在`return`，`finally`里的语句也会执行，且`finally`里的`return`会覆盖`try`里的`return`。
+
+```js
+function foo(){
+  try{
+    return 0;
+  } catch(err) {
+
+  } finally {
+    console.log("a")
+    return 1;
+  }
+}
+
+console.log(foo());
+
+// 结果
+// a
+// 1
+```
