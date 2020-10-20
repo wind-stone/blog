@@ -186,7 +186,7 @@ export function defineReactive (
         // 以便该属性值自身变化时，通知订阅者
         dep.depend()
         if (childOb) {
-          // 2、子属性的依赖收集（仅当该属性值为对象时）：
+          // 2、子属性的依赖收集（仅当该属性值为对象或数组时）：
           //   - 该属性值对应的观察对象的属性 dep 将当前 Dep.target 作为订阅者
           //   - 当前 Dep.target 将该属性值对应的观察对象的属性 dep 作为依赖
           // 以便该属性值动态增加/删除 属性/元素 的时候通知 watcher
