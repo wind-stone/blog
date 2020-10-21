@@ -8,7 +8,14 @@ sidebarDepth: 1
 
 ## 属性间顺序
 
-国外著名的 Web 前端专家 Andy Ford 推荐过一种按照类型分组排序的方式，他把 CSS 属性分为 7 大类：
+常规情况下，属性的排序方式有这么几种方式：
+
+- 随机
+- 按字母序
+- 按属性类型
+- 按属性长度
+
+国外著名的 Web 前端专家 Andy Ford 推荐过一种按照属性类型分组排序的方式，他把 CSS 属性分为 7 大类：
 
 - 显示与浮动（`Diplay`&`Flow`）
 - 定位（`Positioning`）
@@ -18,7 +25,9 @@ sidebarDepth: 1
 - 背景（`Backgrounds`）
 - 其他样式（`Opacity、Cursors、Generated Content`）
 
-这种按照样式类型分组排列的方式不仅把功能相似的属性归类到一起，并且按照样式功能的重要性从上到下进行了排序。可以把影响元素页面布局的样式（如 `float`、`margin`、`padding`、`height`、`width`等）排到前面，而把不影响布局的样式（如`background`、`color`、`font`等）放到后面。这种主次分明的排列方式，极大地提高了代码的可维护性。
+这种按照样式类型分组排列的方式不仅把功能相似的属性归类到一起，并且按照样式功能的重要性从上到下进行了排序。可以把影响元素页面布局的样式（如 `float`、`margin`、`padding`、`height`、`width`等）排到前面，而把不影响布局的样式（如`background`、`color`、`font`等）放到后面。这种主次分明的排列方式，极大地提高了代码的可维护性。可参考文档[Order of the Day: CSS Properties](http://www.dang-jian.com/bestpractice/best-practice-6-7.html)，BTW，原文链接已经失效了，这一篇应该是有人之前复制过来的。
+
+PS：个人认为，应该将 定位 放置在 显示与浮动 之前。
 
 ```css
 .example {
@@ -37,6 +46,7 @@ sidebarDepth: 1
     z-index: ;
 
     /* 尺寸 */
+    box-sizing: ;
     width: ;
     min-width: ;
     max-width: ;
@@ -115,6 +125,18 @@ sidebarDepth: 1
     quotes: ;
 }
 ```
+
+### 浏览器厂商前缀
+
+```css
+.not-a-square {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+```
+
+始终将无前缀的标注属性放置在最后，因为浏览器厂商一开始在实现带前缀的属性时可能跟标准不一致，详见[Ordering CSS3 Properties](https://css-tricks.com/ordering-css3-properties/)
 
 ## 属性内顺序
 
