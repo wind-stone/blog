@@ -46,47 +46,34 @@ ES6 模块之中，顶层的`this`指向`undefined`，即不应该在顶层代�
 
 ## export 命令
 
-`export`命令规定模块对外的接口，只有以下三种写法：
+`export`命令规定模块对外的接口，只有以下几种写法：
 
 ```js
-// 变量
-// 写法一
-export var m = 1;
+// 写法一，直接在声明型语句前添加 export 关键字
+export var m = 1; // var
+export let n = 2; // let
+export const o = 3; // const
+export function fn() { // function，包括 async 和 generator
+  // ...
+}
+export class Example { // class
 
-// 写法二
+}
+
+// 写法二，独立使用 export 声明
 var m = 1;
-export {m};
-
-// 写法三
-var n = 1;
-export {n as m};
+const n = 2;
+let o = 3;
+export {
+  m,
+  n as n1,
+  o
+};
 ```
 
-```js
-// 函数
-// 写法一
-export function f() {};
+### export 变量的动态绑定
 
-// 写法二-1
-var f = function () {};
-export {f};
-
-// 写法二-2
-function f() {};
-export {f};
-
-// 写法三-1
-var f = function () {};
-export {f as fn};
-
-// 写法三-2
-function f() {};
-export {f as fn};
-```
-
-### 输出接口的动态绑定
-
-`export`语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部`实时`的值。
+`export`语句导出变量时，变量的值是动态绑定的，即通过该变量，可以取到模块内部`实时`的值。
 
 ```js
 // a.mjs
@@ -107,6 +94,30 @@ setInterval(function () {
 ```
 
 执行`node --experimental-modules b.mjs`，会发现每隔 1s 打印出的`a`的值都会加一。这一点与 CommonJS 规范完全不同，CommonJS 模块输出的是值的缓存，不存在动态更新。
+
+### export default 的静态绑定
+
+```js
+// a.mjs
+let a = 1;
+
+export default a;
+
+setInterval(() => {
+    a++;
+}, 1000);
+```
+
+```js
+// b.mjs
+import a from './a';
+
+setInterval(() => {
+    console.log('a', a);
+}, 1000);
+```
+
+与使用`export`直接导出变量不同，使用`export default`导出的是变量的值，以后变量的变化与导出的值就无关了。比如示例里修改变量`a`，不会使得`b`模块中引入的`default`值发生改变。
 
 ### export 命令的位置
 
