@@ -102,3 +102,20 @@ npm dist-tag add <pkg>@<version> [<tag>]
 # 语法
 npm dist-tag rm <pkg> <tag>
 ```
+
+### npm view xxx versions
+
+查看包的历史版本。
+
+```sh
+npm view vue versions
+
+# 结果
+# [ '0.0.0',
+#   '0.6.0',
+#   '0.7.0',
+#   ...
+#   '3.0.1',
+#   '3.0.2',
+#   '3.0.3' ]
+```
