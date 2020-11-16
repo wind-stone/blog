@@ -14,6 +14,10 @@
 
 Reference: [Configuring Rules](http://eslint.cn/docs/user-guide/configuring#configuring-rules)
 
+### 行内方式关闭规则
+
+[ESlint - Disabling Rules with Inline Comments](https://eslint.org/docs/2.13.1/user-guide/configuring#disabling-rules-with-inline-comments)
+
 ## ESLint 插件和配置
 
 ### Vue 相关
