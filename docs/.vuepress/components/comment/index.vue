@@ -2,7 +2,7 @@
     <div class="comment-count">
         <div class="count">
             <span id="busuanzi_container_site_pv">
-                &nbsp;&nbsp;本站总访问量<span id="busuanzi_value_site_pv" />&nbsp;&nbsp;次
+                本站总访问量&nbsp;&nbsp;<span id="busuanzi_value_site_pv" />&nbsp;&nbsp;次
             </span>
         </div>
         <div class="gitalk-container">
