@@ -7,7 +7,7 @@
     "scripts": {
         "start": "npm run dev",
         "dev": "vuepress dev docs",
-        "build": "vuepress build docs",
+        "build": "node ./build/addComponents.js && vuepress build docs && node ./build/delComponents.js",
         "deploy": "sh deploy.sh",
         "lint": "lint-staged"
     },
@@ -24,7 +24,8 @@
         ]
     },
     "dependencies": {
-        "fastclick": "^1.0.6"
+        "fastclick": "^1.0.6",
+        "gitalk": "^1.7.0"
     },
     "devDependencies": {
         "@commitlint/cli": "^8.2.0",
