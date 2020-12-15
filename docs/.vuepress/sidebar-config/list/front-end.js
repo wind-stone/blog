@@ -203,7 +203,8 @@ module.exports = {
                 'browser/browser-requests',
                 'browser/process-thread',
                 'browser/open-page-process',
-                'browser/browser-api'
+                'browser/browser-api',
+                'browser/dev-tools'
             ]
         },
         {
