@@ -8,12 +8,72 @@ sidebarDepth: 0
 
 PS: 以下会列出一些常用的命令及常用的用法，每个命令更加详细的用法可以参考后面的链接。
 
-## 查看端口是否被占用
+## 查看端口的使用情况
+
+### 查看特定端口是否被占用
 
 ```sh
-# 查看 3000 端口是否被占用
+# lsof 列出当前系统打开文件的工具
+# -i 列出符合条件的进程。（4、6、协议、:端口、 @ip ）
+
+# 列出谁在使用某个端口
 lsof -i :3000
+
+# 列出所有 TCP/UDP 网络连接信息
+lsof -i tcp
+lsof -i udp
+
+# 列出谁在使用某个特定的 TCP/UDP 端口
+lsof -i tcp:80
+lsof -i udp:55
 ```
+
+在 Linux 环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接和硬件。所以如传输控制协议 (TCP) 和用户数据报协议 (UDP) 套接字等，系统在后台都为该应用程序分配了一个文件描述符，无论这个文件的本质如何，该文件描述符为应用程序与基础操作系统之间的交互提供了通用接口。因为应用程序打开文件的描述符列表提供了大量关于这个应用程序本身的信息，因此通过lsof工具能够查看这个列表对系统监测以及排错将是很有帮助的。
+
+`lsof`更多的使用方式可参考[每天一个linux命令（51）：lsof命令](https://www.cnblogs.com/peida/archive/2013/02/26/2932972.html)。
+
+### 查看端口使用情况
+
+```sh
+# netstat 查看 TCP、UDP 的端口和进程等相关情况
+# -a (--all) 显示所有连接中的 Socket
+# -t (--tcp) 显示 TCP 的连接状况。
+# -u (--udp) 显示 UDP 的连接状况。
+# -n 拒绝显示别名，能显示数字的全部转化为数字
+# -l 仅列出在Listen(监听)的服务状态
+# -p 显示建立相关链接的程序名
+
+# 查看所有监听中的 TCP、UDP 端口使用情况
+netstat -tunlp
+
+# 结果显示
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      41/sshd
+tcp        0      0 0.0.0.0:8888            0.0.0.0:*               LISTEN      1959/nginx: master
+tcp        0      0 0.0.0.0:8899            0.0.0.0:*               LISTEN      1959/nginx: master
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      1959/nginx: master
+tcp6       0      0 :::22                   :::*                    LISTEN      41/sshd
+tcp6       0      0 :::8888                 :::*                    LISTEN      1959/nginx: master
+tcp6       0      0 :::5200                 :::*                    LISTEN      486/PM2 v4.4.1: God
+tcp6       0      0 :::80                   :::*                    LISTEN      1959/nginx: master
+tcp6       0      0 :::5201                 :::*                    LISTEN      486/PM2 v4.4.1: God
+udp        0      0 172.29.69.56:123        0.0.0.0:*                           38/ntpd
+udp        0      0 10.192.3.167:123        0.0.0.0:*                           38/ntpd
+udp        0      0 127.0.0.1:123           0.0.0.0:*                           38/ntpd
+udp        0      0 0.0.0.0:123             0.0.0.0:*                           38/ntpd
+udp6       0      0 :::123                  :::*                                38/ntpd
+
+
+# 查看 5550 端口使用情况
+netstat -tunlp | grep 5550
+
+# 结果显示
+(Not all processes could be identified, non-owned process info will not be shown, you would have to be root to see it all.)
+tcp6       0      0 :::5550                 :::*                    LISTEN      4551/PM2 v2.8.0: Go
+```
+
+`netstat`更多的使用方式可参考[每天一个linux命令（56）：netstat命令](https://www.cnblogs.com/peida/archive/2013/03/08/2949194.html)。
 
 ## pwd 显示工作目录
 
