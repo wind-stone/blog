@@ -204,7 +204,7 @@ module.exports = {
                 'browser/process-thread',
                 'browser/open-page-process',
                 'browser/browser-api',
-                'browser/dev-tools'
+                'browser/dev-tools/'
             ]
         },
         {
