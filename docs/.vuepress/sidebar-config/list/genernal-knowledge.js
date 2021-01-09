@@ -67,7 +67,7 @@ module.exports = {
             children: [
                 'others/glob',
                 'others/google-cloud',
-                'others/kafka',
+                'others/kafka/',
                 'others/translation'
             ]
         },
