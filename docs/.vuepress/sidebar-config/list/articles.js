@@ -7,6 +7,7 @@ module.exports = {
             children: [
                 'string-literal/',
                 'line-terminator/',
+                'wechat-mini-program-sourcemap/'
             ]
         },
         {
