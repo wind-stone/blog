@@ -84,11 +84,9 @@ Consumer 读消息也是从 Leader 读取，只有被 commit 过的消息才会�
 ## Consumer/Consumer Group
 
 - 每个 Consumer 属于一个特定的 Consumer Group
-- 同一 Topic 的一条消息只能被同一个 Consumer Group 内的一个 Consumer 消费，但多个 Consumer Group 可同时消费这一消息。
-
-疑问：
-
-- 同一 Consumer Group 内的不同 Consumer 做的是完全一样的事情吗？
+- 同一个 Consumer Group 内的不同 Consumer 做的是完全一样的工作，只是消费的 Partition 不一样
+- 同一个 Topic 的一条消息只能被同一个 Consumer Group 内的一个 Consumer 消费，但多个 Consumer Group 可同时消费这一消息
+- 同一个 Consumer Group 内的同一个 Consumer 可以消费一到多个 Partition，但同一个 Partition 不能被同一个 Consumer Group 内的不同 Consumer 同时消费
 
 ## Kafka 生产过程
 
