@@ -28,7 +28,7 @@ at Object.next (https://usr/app-service.js:8534:1715)
 
 ## Source Map
 
-微信小程序为了开发者能够根据打包后的 JS 错误位置定位到源码里的错误位置，提供了 Source Map 支持。在开发者工具里若是开启了“ES6 转 ES5”、“代码压缩”，在上传代码时会生成[Source Map](https://developers.weixin.qq.com/miniprogram/dev/devtools/debug.html#source-map)文件，方便定位错误位置。
+微信小程序为了开发者能够根据打包后的 JS 错误位置定位到源码里的错误位置，提供了 Source Map 支持。在开发者工具里若是开启了“ES6 转 ES5”（或“代码压缩”、“增强编译”），在上传代码时会生成[Source Map](https://developers.weixin.qq.com/miniprogram/dev/devtools/debug.html#source-map)文件，方便定位错误位置。
 
 小程序后台获取的 Source Map 压缩包解压后的结构如下：
 
@@ -74,7 +74,7 @@ at Object.next (https://usr/app-service.js:8534:1715)
 
 ### 生成 Source Map
 
-对于未使用小程序第三方框架而是采用原生的微信小程序语法开发的项目来说，只需要在`project.config.json`里配置开启“ES6 转 ES5”、“代码压缩”，这样在上传体验版时就会生成 Source Map 文件。
+对于未使用小程序第三方框架而是采用原生的微信小程序语法开发的项目来说，只需要在`project.config.json`里配置开启“ES6 转 ES5”（或“代码压缩”、“增强编译”），这样在上传体验版时就会生成 Source Map 文件。
 
 `project.config.json`里相关配置如下：
 
@@ -82,8 +82,10 @@ at Object.next (https://usr/app-service.js:8534:1715)
 {
   "description": "小程序项目配置文件",
   "setting": {
-    "es6": true,
-    "minified": true,
+    // 以下三个配置，至少开启一项，上传代码时才能生成 Source Map
+    "es6": true, // 是否启用 ES6 转 ES5
+    "minified": true, // 上传代码时是否自动压缩
+    "enhance": true, // 是否打开增强编译
     // ...
   }
 }
@@ -159,6 +161,18 @@ originalPositionFor(出错的行，出错的列)
 服务地址：[微信小程序 Source Map 一键解析服务](https://blog.windstone.cc/tools/wechat-mini-program-sourcemap)
 
 ![上传 Source Map 压缩包进行一键解析](./images/upload-zip-parse.png)
+
+### 常见问题说明
+
+经常会有这样、那样的原因导致错误无法解析到源码上，比如:
+
+- 问题一: 解压下载的 Source Map 压缩包，打开其中任意一个 Source Map 文件，文件中的`mappings`字段里全是分号`;`。
+
+这个问题是最普遍的，其原因是在上传小程序项目时，没有开启“ES6 转 ES5”/“代码压缩”/“增强编译”，导致没有生成 Source Map，这也是下载的 Source Map 文件里的`mappings`字段里全是`;`的原因。解决方法是，“ES6 转 ES5”/“代码压缩”/“增强编译”这三个选项至少要开启一个，上传代码时才能生成 Source Map。
+
+- 问题二：`WAServiceMainContext.js`、`WASubContext.js`等文件里的错误无法解析出来。
+
+`WAServiceMainContext.js`、`WASubContext.js`等文件都是微信小程序基础库里的文件，无法解析出来是正常的。Source Map 是我们小程序的业务代码在上传时生成的，自然只能解析出业务代码（`app-service.js`）产生的错误。当然，有时候基础库文件产生的错误，可能也是我们业务代码导致的，我们可以先解析 Source Map 定位到业务代码的错误位置，进而确定是什么原因导致的基础库文件报错。
 
 ## 总结
 
