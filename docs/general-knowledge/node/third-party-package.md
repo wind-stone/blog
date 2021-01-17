@@ -153,6 +153,10 @@ var libs = require('require-all')(__dirname + '/lib');
 
 ## koa 相关
 
+### koa2-connect
+
+[koa2-connect](https://github.com/cyrilluce/koa2-connect)，在 Koa v2 里使用 Express/Connect 的中间件。
+
 ### koa-send、koa-static
 
 [koa-send](https://github.com/koajs/send)，静态文件服务中间件。其核心实现方式是以`fs.createReadStream`读取服务器本地文件返回给客户端。
