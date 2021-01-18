@@ -1,10 +1,14 @@
 # 微信小程序
 
-## 特性
+## 独有特性
 
 ### 分享卡片进入会创建新页面栈
 
 小程序已启动且切换到后台的情况下，再通过分享卡片进入，会新创建新的页面栈，之前的页面栈会销毁。目前没有相关文档记载，但实际情况就是如此。
+
+### WXS
+
+WXS 运行于视图层，与 WXML 是在同一个线程运行，避免了跨线程与逻辑层通信的开销。详见：[如何评价微信新推出的WXS语言？ - 鲁小夫的回答 - 知乎](https://www.zhihu.com/question/64322737/answer/223446446)
 
 ## 生命周期
 
@@ -105,7 +109,16 @@
 
 ## 开发
 
-### 使用 miniprogram-api-typings
+### 反编译
+
+- [解包工具 - mp-unpack](https://github.com/xuedingmiaojun/mp-unpack)
+- [反编译步骤 - 以中银E路通小程序为例10分钟带你学会微信小程序的反编译](https://cloud.tencent.com/developer/article/1545940)
+
+### 小程序上传打包产物
+
+- 
+
+### miniprogram-api-typings
 
 安装并配置[miniprogram-api-typings](https://github.com/wechat-miniprogram/api-typings)。配置好之后，`miniprogram-api-typings`里的绝大部分的声明都在`WechatMiniprogram`这个命名空间之下，且`WechatMiniprogram`是个全局的命名空间对象。如下以微信卡券相关方法为例，简单介绍使用方法。
 
@@ -146,3 +159,7 @@ const addCard = (card: AddCardRequestInfo): Promise<AddCardResponseInfo> => {
     });
 };
 ```
+
+### miniprogram-api-promise
+
+[miniprogram-api-promise](https://github.com/wechat-miniprogram/miniprogram-api-promise)，扩展微信小程序的 API，以支持 Promise 形式调用。
