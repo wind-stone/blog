@@ -341,3 +341,67 @@ console.log(a)
 ### 简单实现源码
 
 <<< @/docs/es6/promise/implement.js
+
+## 应用
+
+### 单例 Promise
+
+Copy From [高级异步模式 - Promise 单例](https://mp.weixin.qq.com/s/WOPY0OCJX8upEcMHm6F5Xw)
+
+有些时候我们在进行某种操作之前需要先进行初始化，初始化完成之后才能进行操作。比如在查询数据库之前，需要先连接到数据库。此时，若是并行执行多个查询，可能会多次连接数据库，导致出现问题。
+
+```js
+class DbClient {
+  private isConnected: boolean;
+
+  constructor() {
+    this.isConnected = false;
+  }
+
+  private async connect() {
+    if (this.isConnected) {
+      return;
+    }
+
+    await connectToDatabase(); // stub
+    this.isConnected = true;
+  }
+
+  public async getRecord(recordId: string) {
+    await this.connect();
+    return getRecordFromDatabase(recordId); // stub
+  }
+}
+
+// 并发查询
+const db = new DbClient();
+const [record1, record2] = await Promise.all([
+  db.getRecord('record1'),
+  db.getRecord('record2'),
+]);
+```
+
+使用单例 Promise 可以解决这个问题。
+
+```js
+class DbClient {
+  private connectionPromise: Promise<void> | null;
+
+  constructor() {
+    this.connectionPromise = null;
+  }
+
+  private async connect() {
+    if (!this.connectionPromise) {
+      this.connectionPromise = connectToDatabase(); // stub
+    }
+
+    return this.connectionPromise;
+  }
+
+  public async getRecord(recordId: string) {
+    await this.connect();
+    return getRecordFromDatabase(recordId); // stub
+  }
+}
+```
