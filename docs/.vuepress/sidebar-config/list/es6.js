@@ -14,10 +14,17 @@ module.exports = {
                 'module/',
                 'iterator/',
                 'generator/',
-                'promise/',
                 'async-await/',
                 'proxy-reflect/',
                 'proxy-reflect/proxy-practice'
+            ]
+        },
+        {
+            title: 'Promise',
+            collapsable: false,
+            children: [
+                'promise/',
+                'promise/promise-skills'
             ]
         },
         {
