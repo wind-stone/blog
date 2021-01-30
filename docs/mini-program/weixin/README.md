@@ -60,9 +60,40 @@ WXS 运行于视图层，与 WXML 是在同一个线程运行，避免了跨线�
 
 ## 疑难杂症
 
+### 如何隐藏 scroll-view 滚动条
+
 - [微信小程序如何隐藏scroll-view滚动条](https://developers.weixin.qq.com/community/develop/doc/00006473cf08f8c29da606b2d56c00)
 
 以`scroll-view`为横向滚动为例，该方式是给`scroll-view`增加一个父元素，父元素的高度固定，并设置`overflow: hidden`；`scroll-view`作为子元素，其高度超过父元素高度，以便将滚动条置于父元素高度之外。注意，若是直接给`scroll-view`增加`padding-bottom`不能将滚动条置于最底部，可尝试给`scroll-view`的子元素添加`padding-bottom`。
+
+此外，可尝试设置`scroll-view`的`show-scrollbar`属性为`false`，以隐藏滚动条。
+
+```html
+<scroll-view :enhanced="true" :show-scrollbar="false"></scroll-view>
+```
+
+注意，需要开启`enhanced`属性之后，设置`show-scrollbar`方才有效。
+
+### 禁止页面顶部下拉或底部上滑的弹性效果
+
+若是页面只有一屏，可设置页面配置里的`disableScroll: true`。
+
+若是页面内容较多，需要竖向滚动，可以使用`scroll-view`包裹所有内容，并设置：
+
+```html
+<scroll-view :scroll-y="true" :enhanced="true" :bounces="false">
+    <view><view/>
+    ...
+</scroll-view>
+```
+
+注意，需要开启`enhanced`属性之后，设置`bounces`方才有效。
+
+### 1rpx 圆角边框缺失或不清晰
+
+若使用 1rpx 的边框但不设置圆角，正常情况下都会显示正常；但若是设置了圆角，会出现边框缺失或者不清晰的问题。
+
+解决方案：按 2rpx 或 3rpx 的边宽实现，再 scale 为原来的 1/2 或 1/3，详见[retina-border](https://github.com/wind-stone/retina-border)
 
 ### 子组件上添加样式
 
@@ -115,8 +146,6 @@ WXS 运行于视图层，与 WXML 是在同一个线程运行，避免了跨线�
 - [反编译步骤 - 以中银E路通小程序为例10分钟带你学会微信小程序的反编译](https://cloud.tencent.com/developer/article/1545940)
 
 ### 小程序上传打包产物
-
-- 
 
 ### miniprogram-api-typings
 
