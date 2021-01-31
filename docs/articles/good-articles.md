@@ -12,9 +12,13 @@
 - [细数 TS 中那些奇怪的符号](https://segmentfault.com/a/1190000023943952)
 - [TypeScript 中的 Decorator & 元数据反射：从小白到专家（部分 I）](https://zhuanlan.zhihu.com/p/20297283)
 
-## Vue
+## Vue 生态
 
 - [深入理解 Vue3 Reactivity API](https://zhuanlan.zhihu.com/p/146097763)
+- [如何看待 Web 开发构建工具 Vite？](https://www.zhihu.com/question/394062839/answer/1496127786)
+  - 特性
+    - 不需要打包
+    - 按需编译
 
 ## JavaScript
 
