@@ -62,12 +62,19 @@ module.exports = {
             ]
         },
         {
+            title: '全栈技能',
+            collapsable: true,
+            children: [
+                'full-stack/kafka/',
+                'full-stack/clickhouse'
+            ]
+        },
+        {
             title: '其他',
             collapsable: true,
             children: [
                 'others/glob',
                 'others/google-cloud',
-                'others/kafka/',
                 'others/translation'
             ]
         },
