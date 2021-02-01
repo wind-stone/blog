@@ -157,12 +157,61 @@ PS：个人认为，应该将 定位 放置在 显示与浮动 之前。
 
 简写的顺序如下: bg-color || bg-image || bg-position [ / bg-size]? || bg-repeat || bg-attachment || bg-origin || bg-clip
 
+```css
+<bg-layer> =
+    <bg-image> ||
+    <bg-position> [ / <bg-size> ]? ||
+    <repeat-style> ||
+    <attachment> ||
+    <box> ||
+    <box>
+```
+
+```css
+<final-bg-layer> =
+    <\'background-color'> ||
+    <bg-image> ||
+    <bg-position> [ / <bg-size> ]? ||
+    <repeat-style> ||
+    <attachment> ||
+    <box> ||
+    <box>
+```
+
+> The background property is a shorthand property for setting most background properties at the same place in the style sheet. The number of comma-separated items defines the number of background layers. Given a valid declaration, for each layer the shorthand first sets the corresponding layer of each of background-image, background-position, background-size, background-repeat, background-origin, background-clip and background-attachment to that property’s initial value, then assigns any explicit values specified for this layer in the declaration. Finally background-color is set to the specified color, if any, else set to its initial value.
+>
+> If one `<box>` value is present then it sets both background-origin and background-clip to that value. If two values are present, then the first sets background-origin and the second background-clip.
+>
+> –––– [CSS Backgrounds and Borders Module Level 3 - background](https://www.w3.org/TR/2020/CR-css-backgrounds-3-20201222/#background)
+
 顺序并非固定, 但是要注意:
 
-`background-position`和`background-size`属性，之间需使用/分隔，且`background-position`值在前，`background-size`值在后。
-如果同时使用`background-origin`和`background-clip`属性, `origin`属性值需在`clip`属性值之前, 如果`origin`与`clip`属性值相同, 则可只设置一个值。
+- `background-position`和`background-size`属性，之间需使用`/`分隔，且`background-position`值在前，`background-size`值在后。
+- 如果同时使用`background-origin`和`background-clip`属性, `origin`属性值需在`clip`属性值之前, 如果`origin`与`clip`属性值相同, 则可只设置一个值。
 
 需要注意的是，对于 CSS 预处理器来说，当在缩写里同时使用`background-position`和`background-size`时，中间的`/`会被当成除号对待，待找出解决办法。
+
+### animation
+
+`animation`简写顺序：
+
+```css
+<single-animation> =
+    <time> ||
+    <timing-function> ||
+    <time> ||
+    <single-animation-iteration-count> ||
+    <single-animation-direction> ||
+    <single-animation-fill-mode> ||
+    <single-animation-play-state> ||
+    [ none | <keyframes-name> ]
+```
+
+> Note that order is important within each animation definition: the first value in each `<animation>` that can be parsed as a `<time>` is assigned to the `animation-duration`, and the second value in each `<animation>` that can be parsed as a `<time>` is assigned to `animation-delay`.
+>
+> Note that order is also important within each animation definition for distinguishing `<keyframes-name>` values from other keywords. When parsing, keywords that are valid for properties other than animation-name whose values were not found earlier in the shorthand must be accepted for those properties rather than for animation-name. Furthermore, when serializing, default values of other properties must be output in at least the cases necessary to distinguish an animation-name that could be a value of another property, and may be output in additional cases.
+>
+> –––– [CSS Animations Level 1 - animation](https://www.w3.org/TR/css-animations-1/#animation)
 
 ### 其他
 
