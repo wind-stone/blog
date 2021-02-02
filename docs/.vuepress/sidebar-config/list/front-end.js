@@ -138,6 +138,13 @@ module.exports = {
                 'preprocessor/less',
                 'preprocessor/stylus',
             ]
+        },
+        {
+            title: '技巧和坑',
+            collapsable: true,
+            children: [
+                'skill-pitfall/skill/'
+            ]
         }
     ],
 
