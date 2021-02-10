@@ -145,6 +145,13 @@ module.exports = {
             children: [
                 'skill-pitfall/skill/'
             ]
+        },
+        {
+            title: '工具集合',
+            collapsable: true,
+            children: [
+                'tools/safe-area'
+            ]
         }
     ],
 
