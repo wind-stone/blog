@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+body, p, ul, li, input {margin:0;padding:0;}
+body {font:700 24px/1.5 Arial;}
+ul {list-style-type:none;}
+input {border:0; background:none;}
+#calc {width:300px; background:#000; margin:50px auto; position:relative;}
+#calc p {font:12px/20px Arial; color:#FFF; text-align:right; padding:0 5px;}
+#calc .f-text {width:290px; font:50px/84px Arial; text-align:right; padding:0 5px; background:url(img/inputBg.jpg);}
+#calc ul {background:url(img/bg.jpg); padding:0 0 17px 8px; position:relative; overflow:hidden; zoom:1;}
+#calc li {float:left; width:63px; height:41px; margin:17px 10px 0 0;}
+#calc li a {display:block; width:63px; height:41px; text-align:center; text-decoration:none; color:#FFF; line-height:41px; background:url(img/btn.png);}
+#calc li:hover a {background-position:-63px 0;}
+#calc li.btn-1 a{background-position:0 -41px;}
+#calc li.btn-1:hover a {background-position:-63px -41px;}
+#calc li.btn-2 {position:absolute; height:99px; top:174px;right:0;}
+#calc li.btn-2 a {background-position:0 -164px; height:99px; line-height:99px;}
+#calc li.btn-2:hover a {background-position:-63px -164px;}
+#calc li.btn-3 {width:136px;}
+#calc li.btn-3 a {width:136px; background-position:0 -82px;}
+#calc li.btn-3:hover a {background-position:0 -123px;}
+#formula {position:absolute; width:280px; padding:3px 15px 0 5px; top:20px; text-align:right; font:12px/1.5 Arial;}
+</style>
+
+<script type="text/javascript">
+window.onload = function()
+{
+	var oCalc = document.getElementById("calc"),
+		aA = oCalc.getElementsByTagName("a"),
+		oInput = oCalc.getElementsByTagName("input")[0],
+		oFormula = document.getElementById("formula"),
+		flag = false;
+	
+	for(var i=aA.length-1; i>=0; i--)
+	{
+		/* 这个函数有什么用？？？ */
+		aA[i].onfocus = function()
+		{
+			this.blur();
+		};
+		
+		aA[i].onclick = function()
+		{
+			switch(this.innerHTML)
+			{
+				case "c":
+					oFormula.value = "";
+					oInput.value = 0;
+					break;
+				case "%":
+					count("%");
+					break;
+				case "÷":
+					count("/");
+					break;
+				case "×":
+					count("*");
+					break;
+				case "-":
+					count("-");
+					break;
+				case "+":
+					count("+");
+					break;
+				case "=":
+					/* 修改昂天版中的一个小bug：输入栏里是运算符，不能进行计算 */
+					if(/[\%\/\*\-\+]/.test(oInput.value))
+						break;
+					flag || (oFormula.value += oInput.value);
+					oInput.value = eval(oFormula.value);
+					oInput.value = oInput.value.substr(0,10).replace("NaN",0); 
+					flag = true;
+					break;
+				case ".":
+					if(/[\.\%\/\*\-\+]/.test(oInput.value))
+						break;
+				default:
+					flag && (oFormula.value = "", oInput.value = 0, flag = false);
+					oInput.value.length < 10 && (oInput.value = (oInput.value + this.innerHTML).replace(/^[0\%\/\*\-\+](\d)/,"$1"));
+			}	
+		}	
+	}	
+	
+	function count(a)
+	{
+		if (flag)
+		{
+			oFormula.value = oInput.value + a;
+			oInput.value = a;
+			flag = false;	
+		}else
+		{
+			/[\%\/\*\-\+]/.test(oInput.value) || (oFormula.value += oInput.value);
+			oInput.value = a;
+			/[\%\/\*\-\+]$/.test(oFormula.value) || (oFormula.value += oInput.value);
+			oFormula.value = oFormula.value.slice(-1) == a ? oFormula.value : oFormula.value.replace(/.$/,a);
+		}
+	}	
+		
+}
+</script>
+</head>
+
+<body>
+	<div id="calc">
+    	<p>By - CXL QQ:444905143</p>
+        <input type="text" maxlength="9" class="f-text" readonly="readonly" value="0" />
+        <ul>
+        	<li class="btn-1"><a href="javascript:;">c</a></li>
+            <li class="btn-1"><a href="javascript:;">%</a></li>
+            <li class="btn-1"><a href="javascript:;">÷</a></li>
+            <li class="btn-1"><a href="javascript:;">×</a></li>
+            <li><a href="javascript:;">7</a></li>
+            <li><a href="javascript:;">8</a></li>
+            <li><a href="javascript:;">9</a></li>
+            <li class="btn-1"><a href="javascript:;">-</a></li>
+            <li><a href="javascript:;">4</a></li>
+            <li><a href="javascript:;">5</a></li>
+            <li><a href="javascript:;">6</a></li>
+            <li class="btn-1"><a href="javascript:;">+</a></li>
+            <li><a href="javascript:;">1</a></li>
+            <li><a href="javascript:;">2</a></li>
+            <li><a href="javascript:;">3</a></li>
+            <li class="btn-2"><a href="javascript:;">=</a></li>
+            <li class="btn-3"><a href="javascript:;">0</a></li>
+            <li><a href="javascript:;">.</a></li>
+        </ul>
+        <input type="text" id="formula" readonly="readonly" />
+    </div>
+</body>
+</html>

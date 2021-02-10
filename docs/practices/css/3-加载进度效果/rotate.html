@@ -1,0 +1,150 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        .container {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            margin: 100px auto;
+            border-radius: 50%;
+        }
+        .ring {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: url(ring.png) no-repeat;
+            -webkit-animation: spiner 800ms linear infinite;
+            animation: spiner 800ms linear infinite;
+        }
+        .inner,
+        .outer {
+            position: absolute;
+            left: 13px;
+            top: 13px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+        }
+        .inner {
+            opacity: 1;
+            background-color: #89abdd;
+            -webkit-animation: second-half-hide 1.6s step-end infinite;
+            animation: second-half-hide 1.6s step-end infinite;
+        }
+        .outer {
+            opacity: 0;
+            background-color: #4b86db;
+            -webkit-animation: second-half-show 1.6s step-end infinite;
+            animation: second-half-show 1.6s step-end infinite;
+        }
+        .spiner,
+        .filler,
+        .masker {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+        }
+        .spiner, .masker {
+            top: 0;
+            left: 0;
+            border-radius: 40px 0 0 40px;
+        }
+        .spiner {
+            background-color: #4b86db;
+            transform-origin: right center;
+            -webkit-animation: spiner 800ms linear infinite;
+            animation: spiner 800ms linear infinite;
+        }
+        .filler {
+            top: 0;
+            left: 50%;
+            border-radius: 0 40px 40px 0;
+            background-color: #4b86db;
+            -webkit-animation: second-half-hide 800ms step-end infinite;
+            animation: second-half-hide 800ms step-end infinite;
+        }
+        .masker {
+            background-color: #89abdd;
+            -webkit-animation: second-half-show 800ms step-end infinite;
+            animation: second-half-show 800ms step-end infinite;
+        }
+
+        .outer,
+        .outer .masker {
+            background-color: #4b86db;
+        }
+        .outer .filler,
+        .outer .spiner {
+            background-color: #89abdd;
+        }
+
+        @-webkit-keyframes spiner{
+            0% {
+                transform: rotate(360deg);
+            }
+            100% {
+                transfform: rotate(0deg);
+            }
+        }
+        @keyframes spiner{
+            0% {
+                transform: rotate(360deg);
+            }
+            100% {
+                transfform: rotate(0deg);
+            }
+        }
+        @-webkit-keyframes second-half-hide{
+            0% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+        @keyframes second-half-hide{
+            0% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+        @-webkit-keyframes second-half-show{
+            0% {
+                opacity: 0;
+            }
+            50%, 100% {
+                opacity: 1;
+            }
+        }
+        @keyframes second-half-show{
+            0% {
+                opacity: 0;
+            }
+            50%, 100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ring"></div>
+        <div class="inner">
+            <div class="spiner"></div>
+            <div class="filler"></div>
+            <div class="masker"></div>
+        </div>
+        <div class="outer">
+            <div class="spiner"></div>
+            <div class="filler"></div>
+            <div class="masker"></div>
+        </div>
+    </div>
+</body>
+
+</html>

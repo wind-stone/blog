@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/image-clipping.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css">
+</head>
+<body>
+    
+    <button id="image-clipping">裁剪图片</button>
+    <!-- 遮盖层 -->
+    <div class="overlay"></div>
+
+
+    <script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+    <script type="text/javascript" src="js/jcrop-image-clipping.js"></script>
+    <script type="text/javascript">
+        $("#image-clipping").click(function () {
+            imageClipping({
+                picType: "list-image",
+                "room_type": $(".h-hrt-id").text() || "",
+                type: 1,
+                previewWidth: 318,
+                previewHeight: 214,
+                callback: callbackForClipping
+            })
+        });
+        function callbackForClipping(option) {
+
+            alert("裁剪图片的各项参数\n" + 
+                    "左上角坐标：(" + option.px1 + "," + option.py1 + ")\n" +
+                    "右下角坐标：(" + option.px2 + "," + option.py2 + ")\n" + 
+                    "裁剪成的图片宽高：(" + option.w + "," + option.h + ")\n" );
+            // console.log(option);
+            // var form = new FormData();
+            // // 图片文件
+            // form.append("photo", option.photo);
+            // // 需要裁剪的图片像素
+            // form.append("w", option.w);
+            // form.append("h", option.h);
+            // // 左上角和右下角的坐标
+            // form.append("px1", option.px1);
+            // form.append("py1", option.py1);
+            // form.append("px2", option.px2);
+            // form.append("py2", option.py2);
+            // form.append("room_type", option["room_type"]);
+            // form.append("type", option["type"]);
+            // $.ajax({
+            //     type:"POST",
+            //     url:"/hotel/picupload",
+            //     processData: false,  // 不对数据进行 url 编码处理
+            //     contentType: false,  // 设置此处，不设置content-type， formdata会自动设置
+            //     data: form,
+            //     dataType: "json",
+            //     //成功返回之后调用的函数             
+            //     success: function(data) {
+            //         console.log("图片上传返回的信息！", data);
+            //         if (option.type === 1) {
+            //             $(".h-hrt-listimage").attr({
+            //                 "src": data.data.url,
+            //                 "data-pid": data.data.pid,
+            //                 "data-room-type": data.data["room_type"],
+            //                 "data-type": data.data.type
+            //             });
+            //             $(".h-hrt-listimage-div").show();
+            //         } else {
+            //             var infoimage = '<div class="h-hrt-infoimage-ctn">' +
+            //                                             ' <img class="h-hrt-infoimage" src="' + data.data.url +
+            //                                             '" data-pid="' + data.data.pid +
+            //                                             '" data-room-type="' + data.data["room_type"] +
+            //                                             '" data-type="' + data.data.type +  '">' +
+            //                                             '<div class="h-hrt-infoimage-delete">X</div>'
+            //                                         '</div>';
+            //             $(".h-hrt-infoimages-div").children("div").append($(infoimage));
+            //         }
+            //     },
+            //     error: function () {
+            //         alert("图片上传失败！");
+            //     }
+            // });
+        }
+    </script>
+</body>
+</html>
+
+
+

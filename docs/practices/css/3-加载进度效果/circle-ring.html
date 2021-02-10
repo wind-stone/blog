@@ -1,0 +1,130 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+        .container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 100px auto;
+        }
+        .background,
+        .bottom,
+        .middle,
+        .top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 10px solid rgb(179, 206, 246);
+        }
+        .background {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        .bottom,
+        .middle,
+        .top {
+            width: 50%;
+            height: 100%;
+            border-radius: 50px 0 0 50px;
+            border-right: 0;
+        }
+        .bottom, .middle {
+            border-color: rgb(75, 134, 219);
+        }
+        .top {
+            -webkit-animation: second-half-hide 4s step-end forwards;
+            animation: second-half-hide 4s step-end forwards;
+        }
+        .middle {
+            left: 50%;
+            border: 10px solid rgb(75, 134, 219);
+            border-left: 0;
+            border-radius: 0 50px 50px 0;
+            -webkit-animation: second-half-show 2s step-end both;
+            animation: second-half-show 2s step-end both;
+        }
+        .bottom {
+            -webkit-animation: always-show 3s linear forwards;
+            animation: always-show 3s linear forwards;
+            transform-origin: right center;
+        }
+        .text {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: 700;
+        }
+        @-webkit-keyframes always-show{
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(270deg);
+            }
+        }
+        @keyframes always-show{
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(270deg);
+            }
+        }
+
+        @-webkit-keyframes second-half-show{
+            0% {
+                opacity: 0;
+            }
+            50, 100% {
+                opacity: 1;
+            }
+        }
+        @keyframes second-half-show{
+            0% {
+                opacity: 0;
+            }
+            50, 100% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes second-half-hide{
+            0% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+        @keyframes second-half-hide{
+            0% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="background"></div>
+        <div class="bottom"></div>
+        <div class="middle"></div>
+        <div class="top"></div>
+        <div class="text">75%</div>
+    </div>
+</body>
+
+</html>

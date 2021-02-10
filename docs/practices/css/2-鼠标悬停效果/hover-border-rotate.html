@@ -1,0 +1,68 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+    <style type="text/css">
+        .demo,
+        .img,
+        .mask,
+        .border {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            box-sizing: border-box;
+        }
+        .demo {
+            display: block;
+            position: relative;
+            margin: 100px auto;
+        }
+        .img,
+        .mask ,
+        .border {
+            position: absolute;
+            left: 0;
+            right: 0;
+        }
+        .border {
+            border: 10px solid;
+            border-color: #DF7414  #072256 #072256 #DF7414;
+            transition: all .5s;
+        }
+        .mask {
+            text-align: center;
+            color: rgba(255, 255, 255, 0);
+            background-color: rgba(0, 0, 0, 0);
+            transition: all .5s;
+        }
+        .info {
+            margin-top: 50%;
+            transform: translateY(-50%);
+        }
+        .img {
+            background-image: url(img.jpg);
+            background-size: cover;
+            background-position: 50% 50%;
+        }
+        .demo:hover .border {
+            transform: rotate(180deg);
+        }
+        .demo:hover .mask {
+            background-color: rgba(0,0,0,0.6);
+            color: rgba(255, 255, 255, 1);
+        }
+    </style>
+
+<body>
+</body>
+    <a class="demo">
+        <div class="img"></div>
+        <div class="mask">
+            <div class="info">
+                <h3>Beautiful Day !</h3>
+                <p>Description goes here !</p>
+            </div>
+        </div>
+        <div class="border"></div>
+    </a>
+</html>

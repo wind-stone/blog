@@ -1,0 +1,9 @@
+/**
+ * @file rem 函数
+ * @author: wind-stone<wind-stone@qq.com>
+ * 使用示例：.rem(width, 640); 640为设计稿宽度，可以修改为需要的值
+ */
+
+.rem(@name, @px){
+    @{name}: @px / 640 / 10 * 1rem;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        .breadcrumbs li {
+            float: left;
+            position: relative;
+            list-style-type: none;
+        }
+        .breadcrumbs a {
+            position: relative;
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            text-decoration: none;
+            text-align: center;
+            padding: 0 40px 0 60px;
+            background-color: #3498db;
+            margin-right: 10px;
+        }
+        .breadcrumbs a:after {
+            content: "";
+            position: absolute;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-left: 20px solid #3498db;
+            right: -20px;
+            top: 0;
+            z-index: 1;
+        }
+        .breadcrumbs a:before {
+            content: "";
+            position: absolute;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-left: 20px solid #FFF;
+            left: 0;
+            top: 0;
+        }
+        .breadcrumbs li:first-child a:before {
+            display: none;
+        }
+    </style>
+</head>
+    <body>
+        <ul class="breadcrumbs">
+            <li><a href="">one</a></li>
+            <li><a href="">two</a></li>
+            <li><a href="">three</a></li>
+            <li><a href="">four</a></li>
+            <li><a href="">five</a></li>
+        </ul>
+    </body>
+</html>

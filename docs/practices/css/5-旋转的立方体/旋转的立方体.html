@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>测试专用</title>
+<style type="text/css">
+    @keyframes rotaion {
+        from {
+            transform: perspective(400px) rotateX(0deg) rotateY(0deg) rotateZ(45deg) translateZ(-50px);
+        }
+        to {
+            transform: perspective(400px) rotateX(360deg) rotateY(360deg) rotateZ(45deg) translateZ(-50px);
+        }
+    }
+    .ctn {
+        width: 200px;
+        height: 200px;
+        margin: 200px auto;
+    }
+    .cube {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border: 1px solid #000000;
+        transform-style: preserve-3d;
+        transform: perspective(400px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(-50px);
+        transform-origin: 50% 50%;
+        animation: rotaion 5s linear infinite;
+    }
+    .cube > div {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border: 1px solid #000;
+        box-sizing: border-box;
+        font-size: 80px;
+        line-height: 100px;
+        text-align: center;
+        color: #000;
+        opacity: .8;
+        transform-style: preserve-3d;
+    }
+    .cube > .top {
+        transform: rotateX(90deg);
+        transform-origin: top;
+        background-color: red;
+    }
+    .cube > .bottom {
+        top: 100px;
+        transform: rotateX(90deg);
+        transform-origin: top;
+        background-color: orange;
+    }
+    .left {
+        transform: rotateY(-90deg);
+        transform-origin: left;
+        background-color: yellow;
+    }
+    .right {
+        transform: rotateY(-270deg);
+        transform-origin: right;
+        background-color: green;
+    }
+    .front {
+        transform: translateZ(100px);
+        background-color: cyan;
+        z-index: -1;
+    }
+    .back {
+        background-color: blue;
+    }
+</style>
+</head>
+<body>
+<div class="ctn">
+<div class="rotate">
+    <div class="cube">
+        <div class="top">1</div>
+        <div class="bottom">2</div>
+        <div class="left">3</div>
+        <div class="right">4</div>
+        <div class="front">5</div>
+        <div class="back">6</div>
+    </div>
+</div>
+</body>
+</html>
