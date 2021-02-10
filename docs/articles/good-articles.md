@@ -33,3 +33,12 @@
 ### 动画
 
 - [剖析 lottie-web 动画实现原理](https://juejin.cn/post/6914835547588395022)
+
+## 性能
+
+- [前端早读课 - 【第1920期】如何监控网页的卡顿？](https://mp.weixin.qq.com/s/d-v7QgmP9aGnQr2nbpfzjQ)
+- [前端早读课 - 【第1915期】如何监控网页崩溃？](https://mp.weixin.qq.com/s/EscBLM3hAoCrYn9r9zFmng)
+
+## 工程类
+
+- [如何科学修改 node_modules 里的文件](https://mp.weixin.qq.com/s/Cb8iBibs6GjiOY-qWFz6mw)
