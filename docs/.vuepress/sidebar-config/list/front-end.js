@@ -367,6 +367,13 @@ module.exports = {
             ]
         },
         {
+            title: 'Axios',
+            collapsable: true,
+            children: [
+                'axios/'
+            ]
+        },
+        {
             title: 'ESLint',
             collapsable: true,
             children: [
