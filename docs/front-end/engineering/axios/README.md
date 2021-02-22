@@ -192,7 +192,193 @@ Axios.prototype.request = function request(config) {
 
 ### 适配器的实现
 
+Axios 既支持在浏览器里使用，也支持在 Node.js 里使用，在浏览器里会使用`XMLHttpRequest`发起 HTTP 请求，在 Node.js 里会使用`http`模块发起 HTTP 请求。此处不再详述发起 HTTP 请求的过程。
+
+### 取消请求
+
+Axios 提供了取消请求的方式，使用方式见[Cancellation](https://github.com/wind-stone/axios#cancellation)。Axios 提供的两种取消请求的方式本质上是相同的，我们简单分析下源码。
+
+#### axios.CancelToken
+
+Axios 默认导出的对象上挂载了`CancelToken`构造函数。
+
+```js
+// lib/axios.js
+
+// ...
+var axios = createInstance(defaults);
+// ...
+axios.CancelToken = require('./cancel/CancelToken');
+// ...
+module.exports.default = axios;
+```
+
+`CancelToken`构造函数用于创建取消请求的`cancelToken`，`new CancelToken(fn)`时会传入一个函数`fn`作为参数，`CancelToken`内部会以`cancel`作为参数调用函数`fn`，而调用`cancel`会取消请求，因此将`cancel`暴露出来即是交出了取消请求的控制权。
+
+`cancelToken`对象上存在一个待确定状态的 Promise 实例`promise`，当调用`cancel`函数时，`promise`的状态会改为`fulfilled`，参数为取消的原因`reason`对象，因此只要在发出 HTTP 请求时为`promise`添加状态改变的回调函数，即可在外部调用`cancel`函数时立即取消 HTTP 请求。
+
+```js
+// lib/cancel/CancelToken.js
+
+'use strict';
+
+var Cancel = require('./Cancel');
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+```
+
+#### 创建并传入 cancelToken
+
+在业务代码里，若是想随时取消请求，需要在请求时给请求配置添加`cancelToken`，之后调用`cancel`函数即可取消请求。
+
+方式一：
+
+```js
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
+
+axios.get('/user/12345', {
+  cancelToken: source.token
+}).catch(function (thrown) {
+  if (axios.isCancel(thrown)) {
+    console.log('Request canceled', thrown.message);
+  } else {
+    // handle error
+  }
+});
+
+axios.post('/user/12345', {
+  name: 'new name'
+}, {
+  cancelToken: source.token
+})
+
+// cancel the request (the message parameter is optional)
+source.cancel('Operation canceled by the user.');
+```
+
+方式二：
+
+```js
+const CancelToken = axios.CancelToken;
+let cancel;
+
+axios.get('/user/12345', {
+  cancelToken: new CancelToken(function executor(c) {
+    // An executor function receives a cancel function as a parameter
+    cancel = c;
+  })
+});
+
+// cancel the request
+cancel();
+```
+
+#### 添加 cancelToken.promise 的回调函数
+
+以浏览器端为例，在发出 HTTP 请求之前，会先为`cancelToken.promise`添加`fulfilled`回调函数，该函数执行时会调用`request.abort()`来取消 HTTP 请求。
+
+在 HTTP 请求过程中，一但调用了`cancel`函数，该请求的`cancelToken.promise`的状态将会变为`fulfilled`，`fulfilled`回调函数将执行，进而取消 HTTP 请求。
+
+```js
+// lib/adapters/xhr.js
+
+'use strict';
+
+// ...
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+    // ...
+
+    var request = new XMLHttpRequest();
+
+    // ...
+    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
+    // ...
+
+    if (config.cancelToken) {
+      // 添加 fulfilled 回调函数，取消 HTTP 请求
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (!requestData) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+```
+
 ### 防御 CSRF 攻击
+
+待补充
 
 ## 应用
 
@@ -210,9 +396,9 @@ Axios.prototype.request = function request(config) {
      - 响应码`validateStatus`时为`false`
 
 ```js
-import Axios from 'axios';
+import axios from 'axios';
 
-const instance = Axios.create();
+const instance = axios.create();
 instance.defaults.timeout = 2500;
 
 // 请求拦截器里抛错
@@ -244,8 +430,15 @@ axios.post('/hello-world').then(() => {}).catch((error) => {
         // console.log('error', Object.getOwnPropertyDescriptors(error))
         console.log('error.request', error.request)
 
-        if (error.code === 'ECONNABORTED') { // 判断超时
-
+        // 超时和取消请求的 code 都是 ECONNABORTED
+        if (error.code === 'ECONNABORTED') {
+            // 注意，这种判断方式来自于 Axios 源码，一旦源码有修改，该判断方式可能不正确
+            // 若是项目里不存在取消请求的情况，可直接通过 error.code === 'ECONNABORTED' 判断是超时
+            if (error.message.indexOf('timeout') > -1) {
+                // 超时
+            } else {
+                // 取消请求
+            }
         }
     } else {
         // 1. 请求未发出
