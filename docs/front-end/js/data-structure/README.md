@@ -50,6 +50,22 @@ test();
 
 Undefined 跟 Null 有一定的表意差别，Null 表示的是：“定义了但是为空”。所以，在实际编程时，我们一般不会把变量赋值为`undefined`，这样可以保证所有值为`undefined`的变量，都是从未赋值的自然状态。
 
+#### 判断变量是否已定义
+
+一般情况下，若想判断变量是否已定义会使用`undefined`来判断，但是使用姿势可能不对。
+
+```js
+// 不推荐（函数内的 undefined 可能被改写）
+function isUndefined(variable) {
+  return variable === undefined;
+}
+
+// 推荐
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+```
+
 ### null
 
 Null 类型也只有一个值，就是`null`，它的语义表示空值，与`undefined`不同，`null`是 JavaScript 关键字，所以在任何代码中，你都可以放心用`null`关键字来获取`null`值。
