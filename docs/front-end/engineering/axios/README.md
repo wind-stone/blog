@@ -378,13 +378,52 @@ module.exports = function xhrAdapter(config) {
 
 ### 防御 CSRF 攻击
 
-待补充
+Axios 提供了“双重 Cookie 验证”这种方式 CSRF 攻击的方式，关于该方式的详情可参考: [前端安全系列（二）：如何防止CSRF攻击？](https://tech.meituan.com/2018/10/11/fe-security-csrf.html)
 
-## 应用
+简单说就行，一般 CSRF 攻击只能利用被攻击网站的 Cookie，但不能获取。因此在我们发起 Ajax 请求时，Axios 可帮助我们读取 Cookie 里的某个字段并设置到某个请求头里传递给接口。
 
-### 判断请求错误类型
+在请求配置里，我们可以指定要读取的 Cookie 字段的名称以及要设置的请求头的名称。
 
-浏览器里使用 Axios 发出的请求，可能会出错如下几类错误：
+```js
+{
+  // `xsrfCookieName` is the name of the cookie to use as a value for xsrf token
+  xsrfCookieName: 'XSRF-TOKEN', // default
+
+  // `xsrfHeaderName` is the name of the http header that carries the xsrf token value
+  xsrfHeaderName: 'X-XSRF-TOKEN', // default
+}
+```
+
+在浏览器里发送请求时，会读取 Cookie 字段并设置请求头。
+
+```js
+// lib/adapters/xhr.js
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    // ...
+    var requestHeaders = config.headers;
+    var request = new XMLHttpRequest();
+    // ...
+    if (utils.isStandardBrowserEnv()) {
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
+        cookies.read(config.xsrfCookieName) :
+        undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+    // ...
+    request.send(requestData);
+  }
+}
+```
+
+### 错误处理
+
+浏览器里使用 Axios 发出的请求，可能会存在如下几类错误：
 
 1. 请求未发出
      - 请求拦截器里抛错
@@ -394,6 +433,8 @@ module.exports = function xhrAdapter(config) {
 3. 请求已发出，且收到响应
      - 响应拦截器里抛错
      - 响应码`validateStatus`时为`false`
+
+业务代码里需要判断出这些错误，并进行对应的处理。
 
 ```js
 import axios from 'axios';
