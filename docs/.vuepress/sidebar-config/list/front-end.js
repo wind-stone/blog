@@ -13,6 +13,7 @@ module.exports = {
             title: '数据结构',
             collapsable: true,
             children: [
+                'data-structure/',
                 'data-structure/number/',
                 'data-structure/number/js-number-implementation',
                 'data-structure/string/',
@@ -389,24 +390,21 @@ module.exports = {
         }
     ],
 
-    // 奇技淫巧
-    '/front-end/skills/': [
+    // 奇技和坑
+    '/front-end/skill-pitfall/': [
         {
-            title: '奇技淫巧',
+            title: '技巧',
             collapsable: true,
             children: [
-                'android-weixin-auto-open-browser'
+                'skill/',
+                'skill/android-weixin-auto-open-browser'
             ]
-        }
-    ],
-
-    // 踩过的坑
-    '/front-end/pitfall/': [
+        },
         {
-            title: '踩过的坑',
+            title: '坑',
             collapsable: true,
             children: [
-                ''
+                'pitfall/'
             ]
         }
     ],
