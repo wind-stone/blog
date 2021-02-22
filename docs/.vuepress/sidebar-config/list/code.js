@@ -16,6 +16,7 @@ module.exports = {
             children: [
                 'js/',
                 'js/browser/',
+                'js/browser/url',
                 'js/server/',
                 'js/validate/'
             ]
