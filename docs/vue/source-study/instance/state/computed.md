@@ -204,6 +204,38 @@ export default class Watcher {
       ? undefined
       : this.get()
   }
+
+  /**
+   * Evaluate the getter, and re-collect dependencies.
+   */
+  get () {
+    pushTarget(this)
+    let value
+    const vm = this.vm
+    try {
+      // 此处，会收集计算过程中的依赖
+      // 注意，此处会绑定 this 为 vm 实例，且将 vm 实例作为第一个参数
+      value = this.getter.call(vm, vm)
+    } catch (e) {
+      if (this.user) {
+        // 如果是用户创造的 watcher，计算出错的话需要报错
+        handleError(e, vm, `getter for watcher "${this.expression}"`)
+      } else {
+        throw e
+      }
+    } finally {
+      // "touch" every property so they are all tracked as
+      // dependencies for deep watching
+      if (this.deep) {
+        // 此处，如果是深度 watch，将对计算的返回值的所有下属 key-value 收集依赖
+        traverse(value)
+      }
+      popTarget()
+      this.cleanupDeps()
+    }
+    return value
+  }
+
   /**
    * Subscriber interface.
    * Will be called when a dependency changes.
@@ -251,6 +283,28 @@ function createComputedGetter (key) {
   }
 }
 ```
+
+## 计算属性 getter 的参数
+
+```js
+var vm = new Vue({
+  el: '#example',
+  data: {
+    message: 'Hello'
+  },
+  computed: {
+    // 计算属性的 getter
+    reversedMessage: function (vm) {
+      // `this` 指向 vm 实例
+      return this.message.split('').reverse().join('')
+    }
+  }
+})
+```
+
+计算属性的`getter`函数在执行时，会将当前组件实例`vm`作为参数。此外，`getter`里的`this`也是指向`vm`。
+
+我们知道，访问计算属性时，实际上是获取其对应计算属性 Watcher 的`watcher.value`，而获取`watcher.value`时会调用计算属性`getter`并绑定`this`和设置参数，可查看上一节源码里`Watcher`类的`get`方法里的`value = this.getter.call(vm, vm)`。
 
 ## Dep.target 收集计算属性的依赖
 
