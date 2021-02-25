@@ -1,6 +1,36 @@
+---
+sidebarDepth: 0
+---
+
 # DevTools
 
-## Chrome DevTools 的功能简介
+[[toc]]
+
+## Eelements
+
+### 展开所有的子节点
+
+在进行 DOM 节点元素调试的时候，我们需要对每个节点进行展开查看，如果只是逐个点击目标元素下面的子元素展开，耗费时间。可以尝试下面的快捷操作。
+
+```txt
+控制面板 => Elements => 按 option + 点击要展开的元素图标
+```
+
+![展开所有的子节点](./images/show-all-descendant-elements.gif)
+
+## Network
+
+### 查询进行中的请求
+
+网页请求服务器，有时候发起的请求太多，我们想知道哪些请求返回阻塞了。我们可以对请求的网络进行过滤，来定位问题。
+
+```txt
+控制面板 => Network => filter图标 => is:running => 刷新监控的页面
+```
+
+![查询进行中的请求](./images/network-running.gif)
+
+## 功能
 
 ### 命令菜单
 
@@ -33,3 +63,8 @@
 ### 待补充
 
 https://mp.weixin.qq.com/s/5VPjY-IN8RyERMyCwqSGlQ
+
+## 参考文档
+
+- [开发调试的九个技巧【谷歌浏览器】](https://juejin.cn/post/6881439870380834830)
+- [Chrome DevTools中的这些骚操作，你都知道吗？](https://mp.weixin.qq.com/s/5VPjY-IN8RyERMyCwqSGlQ)
