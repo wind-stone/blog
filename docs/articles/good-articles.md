@@ -20,6 +20,10 @@
     - 不需要打包
     - 按需编译
 
+### Vue 使用技巧
+
+- [揭秘 Vue.js 九个性能优化技巧](https://mp.weixin.qq.com/s/iQwTr5T95wPflJMT87ZObg)
+
 ## JavaScript
 
 ### 事件循环
@@ -42,3 +46,7 @@
 ## 工程类
 
 - [如何科学修改 node_modules 里的文件](https://mp.weixin.qq.com/s/Cb8iBibs6GjiOY-qWFz6mw)
+
+### 错误处理和监控
+
+- [完善的前端异常监控解决方案](https://cdc.tencent.com/2018/09/13/frontend-exception-monitor-research/)
