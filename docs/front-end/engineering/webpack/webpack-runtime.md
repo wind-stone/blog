@@ -119,10 +119,11 @@ export default 'C'
 ```js
 (function(modules) { // webpackBootstrap
     // 加载 chunk（包括对应的 modules） 的 JSONP 函数
+    // 注意：针对异步加载的 chunk，该函数会在 chunk 加载完成后执行
     function webpackJsonpCallback(data) {
-        var chunkIds = data[0];       // chunk ID 数组
-        var moreModules = data[1];    // module ID 及 函数的对象
-        var executeModules = data[2]; // 要执行的 modules（这些 modules 已经位于此次加载的 chunk 里）
+        var chunkIds = data[0];       // chunkId 数组
+        var moreModules = data[1];    // moduleId 及 函数的对象，key 是 moduleId，value 是该 module 的函数定义
+        var executeModules = data[2]; // 要执行的 module 列表（这些 module 已经位于此次加载的 chunk 里）
         // add "moreModules" to the modules object,
         // then flag all "chunkIds" as loaded and fire callback
         var moduleId, chunkId, i = 0, resolves = [];
@@ -148,13 +149,14 @@ export default 'C'
         // 若存在老的 window["webpackJsonp"].push 函数，则先执行之
         if(parentJsonpFunction) parentJsonpFunction(data);
 
-        // 针对被请求过并正在等待请求结果的 chunk，触发其 promise 实例的 resolve 函数，告诉请求方 chunk 已经加载完成，可以继续执行
+        // 针对被请求过并正在等待请求结果的 chunk，触发其 promise 实例的 resolve 函数，告诉依赖该 chunk 的地方，该 chunk 已经加载完成，可以继续执行
         while(resolves.length) {
             resolves.shift()();
         }
 
         // add entry modules from loaded chunk to deferred list
         // 将该文件里的入口 module 添加到 deferredModules 里
+        // 若是存在 executeModules，等待 bundle 加载完成后，可以自执行某些 module，不需要等到外部调用 __webpack_require__(module)
         deferredModules.push.apply(deferredModules, executeModules || []);
 
         // 检查并执行入口 modules
@@ -167,12 +169,15 @@ export default 'C'
         for(var i = 0; i < deferredModules.length; i++) {
             var deferredModule = deferredModules[i];
             var fulfilled = true;
+            // deferredModule 的第 0 项是要执行的 module，其后的每一项是该 module 依赖的所有其他 chunk 的 chunkId
             for(var j = 1; j < deferredModule.length; j++) {
+                // depId 是所依赖的 chunkId
                 var depId = deferredModule[j];
                 if(installedChunks[depId] !== 0) fulfilled = false;
             }
             if(fulfilled) {
                 deferredModules.splice(i--, 1);
+                // 调用该 module
                 result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
             }
         }
@@ -180,13 +185,13 @@ export default 'C'
     }
 
     // 已安装的 modules，缓存起来，方便后续直接使用
-    // key 是 module ID，value 是 module 函数
+    // key 是 module ID，value 是 module 对象（包含 module 的执行结果 module.exports）
     var installedModules = {};
 
     // 已加载的 chunks（包括正在加载的），key 是 chunk ID，value 有如下取值
     // - undefined: chunk 未加载
     // - null: chunk 已经 preload/prefetch
-    // - promise 实例: chunk 正在加载
+    // - [ resolve, reject, promise ] 数组: chunk 正在加载
     // - 0: chunk 已经加载
     var installedChunks = {
         // runtime.js 默认是 chunk 0，默认已加载
@@ -226,7 +231,7 @@ export default 'C'
         return module.exports;
     }
 
-    // 异步加载 chunk 的函数，返回 promise 实例
+    // 异步加载 chunk 的函数，返回 promise 实例；需要等待 chunk 加载完成后将 promise 实例置为 fulfilled，才能继续执行
     __webpack_require__.e = function requireEnsure(chunkId) {
         var promises = [];
 
@@ -242,8 +247,10 @@ export default 'C'
             } else {
                 // setup Promise in chunk cache
                 var promise = new Promise(function(resolve, reject) {
+                    // 设置该 chunk 正在加载
                     installedChunkData = installedChunks[chunkId] = [resolve, reject];
                 });
+
                 promises.push(installedChunkData[2] = promise);
 
                 // start chunk loading
@@ -263,16 +270,19 @@ export default 'C'
                     clearTimeout(timeout);
                     var chunk = installedChunks[chunkId];
 
+                    // 注意，此处针对 chunk 加载完成的情况，不会做处理。处理的逻辑位于 chunk 所在 bundle 文件里
+                    // chunk 所在 bundle 加载成功后，会立即执行，执行完成将 installedChunks[chunkId] 置为 0
+
                     // chunk 还未安装
                     if(chunk !== 0) {
-                        // chunk 为 [resolve, reject, promise]，表示 chunk 所在的 bundle 正在加载
+                        // 若是 chunk 仍为 [resolve, reject, promise]，表示 chunk 所在的 bundle 加载失败（包括超时）
                         if(chunk) {
                             var errorType = event && (event.type === 'load' ? 'missing' : event.type);
                             var realSrc = event && event.target && event.target.src;
                             var error = new Error('Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')');
                             error.type = errorType;
                             error.request = realSrc;
-                            // 调用 reject
+                            // 调用 reject，告知该 chunkId 加载失败
                             chunk[1](error);
                         }
                         // 设置 chunk 的状态为未加载
