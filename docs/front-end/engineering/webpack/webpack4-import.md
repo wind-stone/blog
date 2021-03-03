@@ -2,7 +2,7 @@
 sidebarDepth: 0
 ---
 
-# webpack 4: import() and CommonJs
+# Webpack 4: import() and CommonJs
 
 翻译自：[webpack 4: import() and CommonJs](https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655)
 

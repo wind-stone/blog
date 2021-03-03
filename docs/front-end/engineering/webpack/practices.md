@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # Webpack 实践配置
+
+[[toc]]
 
 ## vue-cli 3.0 Webpack 使用相关
 
@@ -21,6 +27,18 @@ module.exports = {
         // 删除 ts 规则上的 cache-loader。
         // BTW，vue-cli 默认会给 .vue/.ts/.tsx 添加 cache-loader
         config.module.rule('ts').uses.delete('cache-loader');
+    },
+
+    configureWebpack: config => {
+        // 设置 devtool
+        if (process.env.NODE_ENV === 'production') {
+            config.devtool = 'source-map';
+            config.output.sourceMapFilename =
+                '../' + process.env.UNI_PLATFORM + '/[name].js.map';
+        }
+
+        // 关闭代码压缩
+        config.optimization.minimize = false;
     },
 
     // 默认情况下 babel-loader 会忽略所有 node_modules 中的文件。如果你想要通过 Babel 显式转译一个依赖，可以在这个选项中列出来。

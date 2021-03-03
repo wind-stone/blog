@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # Tapable
+
+[[toc]]
 
 `tapable`库提供了各式各样的钩子类（`hook classes`），实例化这些钩子类将创建钩子。
 

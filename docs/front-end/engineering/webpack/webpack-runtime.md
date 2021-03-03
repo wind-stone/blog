@@ -1,4 +1,10 @@
-# webpack runtime 简单分析
+---
+sidebarDepth: 0
+---
+
+# Webpack runtime 简单分析
+
+[[toc]]
 
 本章节内容，基于`webpack@4.29.6`，仅分析`target`为`web`的情况。
 

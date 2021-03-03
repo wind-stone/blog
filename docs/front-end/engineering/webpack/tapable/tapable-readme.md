@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # Tapable README.md
+
+[[toc]]
 
 `Tapable`版本: 2.0.0-beta.4，[github 地址](https://github.com/webpack/tapable/tree/master)
 
