@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # uni-app
+
+[[toc]]
 
 ## uni-app 学习记录
 
@@ -61,6 +67,68 @@ uni-app 里，不管是页面实例还是组件实例，最终都是使用的原
 - 原生微信小程序的`PageOptions.methods.onTabItemTap`里触发`$vm.onTabItemTap`
 
 PS: 实际上，原生微信小程序里，Page 构造器是 Component 构造器的简化版本。（微信官方文档没有明确这么说，但是官方技术专员在[回答问题时有提到](https://developers.weixin.qq.com/community/develop/doc/000e48667d80001b7ebad1c0d56c00?highLine=component%2520%25E6%259E%2584%25E5%25BB%25BA%25E9%25A1%25B5%25E9%259D%25A2)，在一篇[官方的技术文章](https://developers.weixin.qq.com/community/develop/article/doc/0000a8d54acaf0c962e820a1a5e413)里也有提到）
+
+### uni-app 之 Webpack 打包
+
+Webpack 打包 uni-app 代码时，会将页面组件作为一个`entry chunk`，加载`entry chunk`之后会立即执行入口`module`；页面组件里引用的自定义组件会作为异步`chunk`；且不管是页面组件的`entry chunk`还是自定义组件的异步`chunk`，都会为`chunk`生成一个单独的文件，即与`comp.wxss`、`comp.json`、`comp.wxml`平级的`comp.js`文件。
+
+常规情况下，Webpack 产生的异步`chunk`只是将`chunk`和`module`添加到全局，但是不会立即调用其中的`module`，而是等待外部主动调用。
+
+但是，小程序里加载自定义组件的`comp.js`文件后，是需要立即执行`Component(options)`之类的代码来初始化组件的。因此，uni-app 在打包时，自定义组件对应的异步`chunk`里添加一段自执行的代码：
+
+```js
+// comp.js
+require('../../../../common/vendor.js');
+
+// 组件的异步 chunk
+(global.webpackJsonp = global.webpackJsonp || []).push([
+    ['pages/comp/comp/index'],
+    {
+        '7dd2': function(e, n, a) {},
+        '9c1f': function(e, n, a) {
+            'use strict';
+            a.r(n);
+            var t = a('41fe'),
+                o = (a('a100'), a('f0c5')),
+                p = Object(o.a)(
+                    t.a,
+                    function() {
+                        var e = this.$createElement;
+                        this._self._c;
+                    },
+                    [],
+                    !1,
+                    null,
+                    '74eb',
+                    null,
+                    !1,
+                    undefined,
+                    undefined
+                );
+            n.default = p.exports;
+        },
+        a100: function(e, n, a) {
+            'use strict';
+            var t = a('7dd2');
+            a.n(t).a;
+        },
+    },
+]);
+
+// 这段是针对小程序增加的自执行的代码，实现的源码可参考：https://github.com/dcloudio/uni-app/blob/f3b901ce37bcb3977efc3c3f04956cce80824f66/packages/webpack-uni-mp-loader/lib/plugin/generate-component.js#L111
+(global['webpackJsonp'] = global['webpackJsonp'] || []).push([
+    ['145'],
+    {
+        a145: function(module, exports, __webpack_require__) {
+            __webpack_require__('543d')['createComponent'](
+                __webpack_require__('9c1f')
+            );
+        },
+    },
+    // 区别在第三个参数，传入的话，会立即执行 module
+    [['a145']],
+]);
+```
 
 ## 踩过的坑
 
