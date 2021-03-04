@@ -2,6 +2,10 @@
 
 [[toc]]
 
+::: 提示
+关于`package.json`里所有字段的使用，可参考官方文档: [NPM - package.json](https://docs.npmjs.com/cli/v7/configuring-npm/package-json)
+:::
+
 `package.json`文件是 NPM 包的描述文件，NPM 包的所有行为与包描述文件的字段息息相关。
 
 与 CommonJS 包规范相比，NPM 的实现里的包描述文件多了`author`、`bin`、`main`、`devDependencies`四个字段。
@@ -161,3 +165,21 @@ node_modules/.bin/vuepress dev
 ## module
 
 `module`字段要指向的应该是一个基于 ES6 模块规范的使用 ES5 语法书写的模块。详见[聊聊 package.json 文件中的 module 字段](https://loveky.github.io/2018/02/26/tree-shaking-and-pkg.module/)
+
+## dependencies
+
+### 使用本地路径
+
+```json
+{
+  "name": "baz",
+  "dependencies": {
+    "bar1": "file:../foo/bar",
+    "bar2": "file:./foo/bar",
+    "bar3": "file:~/foo/bar",
+    "bar4": "file:/foo/bar"
+  }
+}
+```
+
+详见：[NPM - package.json - dependencies - Local Paths](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#local-paths)
