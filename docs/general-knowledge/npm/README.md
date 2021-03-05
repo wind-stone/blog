@@ -1,6 +1,18 @@
+---
+sidebarDepth: 0
+---
+
 # npm
 
 [[toc]]
+
+## tag
+
+[How to use: npm tags](https://dev.to/andywer/how-to-use-npm-tags-4lla)
+
+- NPM 包的`tag`与`git`的`tag`不一样。
+- NPM 的命令里，若是没提供`tag`，则默认使用`latest`，比如`npm install`和`npm publish`
+- NPM 包的`tag`可以是任意的字符串，不过一般会有约定俗成的`tag`，比如`alpha`、`beta`、`next`等
 
 ## 问题汇总
 
