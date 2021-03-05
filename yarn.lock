@@ -3181,10 +3181,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@1.28.5:
-  version "1.28.5"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.28.5.tgz#257cfc45d322df45ef5658665967ee841cd73faf"
-  integrity sha1-JXz8RdMi30XvVlhmWWfuhBzXP68=
+date-fns@2.16.1:
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
+  integrity sha512-sAJVKx/FqrLYHAQeN7VpJrPhagZc9R4ImZIWYRFZaaohR3KzmuK88touwsSwSVT8Qcbd4zoDsnGfX4GFB4imyQ==
 
 date-fns@^1.27.2:
   version "1.30.1"
@@ -4500,14 +4500,14 @@ git-raw-commits@^2.0.0:
     split2 "^2.0.0"
     through2 "^3.0.0"
 
-gitalk@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/gitalk/-/gitalk-1.7.0.tgz#515c8a14f3e3ff459910a1c4e3518b855bdb8328"
-  integrity sha512-QvRSS0XZkLMSW/Z/t8CShAruAUAY4d1OyecA/yFnujvY3ftfwaT1OzTF3cWweB3jBPHlxi2g4GSdnLtUqnnrqw==
+gitalk@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/gitalk/-/gitalk-1.7.2.tgz#26e7ab5702b8be945dc1ede3391c41b3ad343d6a"
+  integrity sha512-7jrUlGDtwdmvaHNVKTzG1qLLqgUdFsMPQLbPVMLVNiECmyg20TvBiRlU7t6xqUBYC/j6YwlOnqwgJuKiDmC8fA==
   dependencies:
     autosize "3.0.21"
     axios "0.19.2"
-    date-fns "1.28.5"
+    date-fns "2.16.1"
     es6-promise "4.1.1"
     github-markdown-css "2.8.0"
     node-polyglot "2.2.2"
