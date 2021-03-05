@@ -1,3 +1,7 @@
+---
+sidebarDepth: 0
+---
+
 # npm-scripts
 
 Copy and tran from [npm-scripts](https://www.npmjs.cn/misc/scripts/)
