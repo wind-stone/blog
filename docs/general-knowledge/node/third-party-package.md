@@ -241,6 +241,16 @@ if (!module.parent) app.listen(3000);
 
 [koa-logger](https://github.com/koajs/logger)，`koa`开发风格的日志中间件。这个中间件应该尽可能靠前放置，以便可以记录下所有的请求和响应。
 
+## library 里常用的工具库
+
+### Inquirer.js
+
+[Inquirer.js](https://github.com/SBoudrias/Inquirer.js)，常用的交互式命令行 UI 集合，主要用于在命令行里让用户以交互式的方式选择/输入所需的数据。
+
+### Commander.js
+
+[Commander.js](https://github.com/tj/commander.js)，完整的 Node.js 命令行解决方案，定义命令、选项，根据用户输入的命令执行操作。使用该库，可以定义一套命令及对应的功能。
+
 ## 其他
 
 ### require-all
