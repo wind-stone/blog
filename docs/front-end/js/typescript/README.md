@@ -427,6 +427,12 @@ const Component = Vue.extend({
   - `let x = foo ?? bar();`，当`foo`为`null`或`undefined`时，`x`兜底取值为`bar()`。
   - [Nullish Coalescing - TypeScript 3.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing)
 
+## 声明文件
+
+在全局变量的声明文件中，是不允许出现 import, export 关键字的。一旦出现了，那么他就会被视为一个 npm 包或 UMD 库，就不再是全局变量的声明文件了。
+
+- [声明文件](https://ts.xcatliu.com/basics/declaration-files.html)
+
 ## 其他语法
 
 - `import q = x.y.z`

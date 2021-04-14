@@ -63,7 +63,8 @@ module.exports = {
             title: 'TypeScript',
             collapsable: true,
             children: [
-                'typescript/'
+                'typescript/',
+                'typescript/practice'
             ]
         }
     ],
