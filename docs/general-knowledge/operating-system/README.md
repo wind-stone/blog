@@ -42,3 +42,29 @@ echo $PATH
 ```
 
 当在任意目录下使用可执行程序时，比如`pwd`，操作系统会在以上 PATH 变量列出的名录里查找`pwd`可执行程序，并最终会在`/bin`里找到。
+
+### 设置环境变量
+
+针对单个用户设置环境变量：
+
+1、打开`.bash_profile`文件
+
+```sh
+vi ~/.bash_profile
+```
+
+2、进行编辑，在文件底部增加下面以这一行。
+
+```sh
+# 语法：
+# 中间用冒号隔开
+# export PATH=$PATH:<PATH 1>:<PATH 2>:<PATH 3>:------:<PATH N>
+
+export PATH=$PATH:/usr/local/mongodb/bin
+```
+
+3、执行命令，让环境配置生效
+
+```sh
+source ~/.bash_profile
+```
