@@ -173,3 +173,11 @@ npm view vue repository.url
 # 以 json 格式显示 vue 的所有信息
 npm view vue --json
 ```
+
+## npm link
+
+`npm link`主要是解决在本地使用/测试未发布的 NPM 包。
+
+- [npm-link](https://docs.npmjs.com/cli/v7/commands/npm-link)
+- [npm link详解](https://champyin.com/2019/08/27/npm-link%E8%AF%A6%E8%A7%A3/)
+- [你所不知道的模块调试技巧 - npm link #17](https://github.com/atian25/blog/issues/17)
