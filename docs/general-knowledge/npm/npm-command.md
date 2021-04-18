@@ -178,6 +178,41 @@ npm view vue --json
 
 `npm link`主要是解决在本地使用/测试未发布的 NPM 包。
 
+第一步，在被依赖的库文件夹下执行:
+
+```sh
+cd my-utils
+
+# 在 my-utils 目录下执行 npm link，会创建一个全局软链将 {prefix}/lib/node_modules/<package> 链接到当前目录，即
+# {prefix}/lib/node_modules/my-utils    -->    my-utils
+npm link
+```
+
+::: tip 提示
+创建软链时，`{prefix}/lib/node_modules/<package>`里的`package`的取值，是取自`my-utils`目录下`package.json`的`name`，而不是`my-utils`目录的目录名称。
+:::
+
+第二步，在项目目录下执行:
+
+```sh
+cd my-project
+
+# 会创建一个软链，将当前目录下的 node_modules/<package> 链接到全局安装目录下的同名目录，即
+# my-project/node_modules/my-utils    -->    {prefix}/lib/node_modules/my-utils
+npm link my-utils
+```
+
+为了方便，可将上面两步简化成一步:
+
+```sh
+cd my-project
+
+# 下面这条命令等价于如下两条命令
+# cd ../my-utils; npm link
+# cd ../my-project; npm link my-utils
+npm link ../my-utils
+```
+
 - [npm-link](https://docs.npmjs.com/cli/v7/commands/npm-link)
 - [npm link详解](https://champyin.com/2019/08/27/npm-link%E8%AF%A6%E8%A7%A3/)
 - [你所不知道的模块调试技巧 - npm link #17](https://github.com/atian25/blog/issues/17)
