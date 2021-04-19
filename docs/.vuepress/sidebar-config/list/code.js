@@ -33,6 +33,7 @@ module.exports = {
             title: '算法',
             collapsable: false,
             children: [
+                'algorithm/binary-search/',
                 'algorithm/sorting-algorithm/bubble-sort/',
                 'algorithm/sorting-algorithm/selection-sort/',
                 'algorithm/sorting-algorithm/insertion-sort/',
