@@ -29,6 +29,29 @@ ps aux | grep PM2
 kill -9 46544
 ```
 
+### PM2 崩溃后重新启动所有进程
+
+PM2 崩溃后会导致原先所有项目进程都消失了，执行`pm2 ls`也看不到任务进程。
+
+PM2 提供了启动脚本，可以将进程列表保存，在 PM2 预期/非预期重启之后，能够恢复之前保存的进程列表。详见: [PM2 官网 - Startup Script Generator](https://pm2.keymetrics.io/docs/usage/startup/)
+
+```sh
+# 获取自动配置的启动脚本
+pm2 startup
+
+# 储存当前进程列表，存储在 ~/.pm2/dump.pm2 文件里
+pm2 save
+
+# 恢复之前（通过 pm2 save）保存的进程
+pm2 resurrect
+```
+
+若是想在每次添加/删除进程后自动执行`pm2 save`，可以打开自动保存功能，详见[十个PM2中冷门但实用的功能](https://segmentfault.com/a/1190000022585703)
+
+```sh
+pm2 set pm2:autodump true
+```
+
 ## 常用命令
 
 ### 安装 PM2
