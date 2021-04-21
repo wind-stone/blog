@@ -4,6 +4,31 @@ Reference: [PM2 英文官网](https://pm2.io/doc/en/runtime/overview/)
 
 [[toc]]
 
+## 实践功能
+
+### 运行不同版本的 Node
+
+```sh
+port=56000 pm2 start ./server/app.js --name mina-admin --interpreter=/opt/nvm/versions/node/v10.15.3/bin/node
+```
+
+添加`interpreter`参数，其值为 Node 版本所在位置
+
+### 杀掉 PM2 守护进程
+
+```sh
+# 查找到
+ps aux | grep PM2
+
+# 输出：
+# web_ser+  7591  0.0  0.0 893708 33096 ?        Ssl  Mar23   0:06 PM2 v2.8.0: God Daemon (/home/web_server/.pm3)
+# web_ser+ 25226  0.0  0.0 112664   972 pts/2    S+   22:02   0:00 grep --color=auto PM2
+# web_ser+ 43392  0.0  0.0 1211696 46544 ?       Ssl  20:40   0:03 PM2 v2.8.0: God Daemon (/home/web_server/.pm2)
+
+# 找到守护进程，kill 掉
+kill -9 46544
+```
+
 ## 常用命令
 
 ### 安装 PM2
