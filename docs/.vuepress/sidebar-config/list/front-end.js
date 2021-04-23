@@ -64,6 +64,7 @@ module.exports = {
             collapsable: true,
             children: [
                 'typescript/',
+                'typescript/declaration-files',
                 'typescript/practice'
             ]
         }
