@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # TypeScript 实践
+
+[[toc]]
 
 ## 数组
 

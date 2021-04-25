@@ -6,7 +6,11 @@ sidebarDepth: 0
 
 [[toc]]
 
-默认情况下，TypeScript 将导入`node_modules/@types`目录下所有包的类型声明文件，即使有些包并没有`import`到我们的源码里。
+## 编译时将包含哪些 ts 文件
+
+- `files`、`include`选项涉及到的文件
+- 默认情况下，TypeScript 将导入`node_modules/@types`目录下所有包的类型声明文件，即使有些包并没有`import`到我们的源码里。
+- 将`import`语句涉及到的包导入
 
 TypeScript 在将`.ts`文件编译为`.js`文件时，只会针对语法层面做转换，而不会添加`polyfills`。比如当将`target`设置为`ES5`时，会将`let`转换成`var`，也会将箭头函数转成常规的函数表达式，但是不会处理`Promise`，`Promise`会保留在最终的产出文件里。因此需要我们在运行时自己添加`polyfills`。
 

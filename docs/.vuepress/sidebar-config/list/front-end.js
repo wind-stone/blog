@@ -64,10 +64,11 @@ module.exports = {
             collapsable: true,
             children: [
                 'typescript/',
-                'typescript/declaration-files',
-                'typescript/complition',
                 'typescript/type-system',
+                'typescript/module',
+                'typescript/declaration-files',
                 'typescript/tsconfig-json',
+                'typescript/complition',
                 'typescript/practice'
             ]
         }

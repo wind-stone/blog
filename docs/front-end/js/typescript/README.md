@@ -1,4 +1,39 @@
+---
+sidebarDepth: 0
+---
+
 # TypeScript 学习笔记
+
+[[toc]]
+
+## TypeScript 系列文章
+
+- 【done】介绍
+  - [A beginner’s guide to TypeScript (with some history of the TypeScript)](https://medium.com/jspoint/typescript-a-beginners-guide-6956fe8bcf9e)
+  - [Writing your first “Hello World” program in TypeScript with ease](https://medium.com/jspoint/typescript-hello-world-program-b0826ee3d87d)
+  - [Understanding the basic “Built-in Data Types” provided by TypeScript](https://medium.com/jspoint/typescript-working-with-types-f1829384851f)
+- 复杂的数据类型
+  - [A simple guide to “function” data type and function declaration syntax in TypeScript](https://medium.com/jspoint/typescript-functions-5a2490f6a1ec)
+  - [A simple guide to “interface” data type in TypeScript](https://medium.com/jspoint/typescript-interfaces-4a2af07c8070)
+  - [Introduction to “class” data type and Object-Oriented Programming paradigm in TypeScript](https://medium.com/jspoint/typescript-classes-65b4712ac9c8)
+  - [Working with Enumerations (Enums) in TypeScript](https://medium.com/jspoint/typescript-enums-af03567d662)
+- 类型系统
+  - [Understanding the TypeScript’s type system and some must-know concepts](https://medium.com/jspoint/typescript-type-system-81fdb84bba75)
+  - [Taking a look at must-know “utility types” provided by TypeScript](https://medium.com/jspoint/typescript-utility-types-4d9bfc37745c)
+  - [Exploring the world of “Generics” (generic data types) in TypeScript](https://medium.com/jspoint/typescript-generics-10e99078cc8)
+  - [A brief introduction to “Data Immutability” in TypeScript](https://medium.com/jspoint/typescript-data-immutability-71dc3e604426)
+  - [Let’s quickly understand how “Polymorphism” works in TypeScript](https://medium.com/jspoint/typescript-polymorphism-d8ea1d690d5c)
+- 新的 ts/js 特性
+  - [A quick introduction to “Promises” and “Async/Await” (with new features)](https://medium.com/jspoint/typescript-promises-and-async-await-b842b55ee3fd)
+  - [Anatomy of TypeScript “Decorators” and their usage patterns](https://medium.com/jspoint/anatomy-of-typescript-decorators-and-their-usage-patterns-487729b34ae6)
+- 【done】模块系统
+  - [A comprehensive guide to “Module System” in TypeScript (with examples)](https://medium.com/jspoint/typescript-module-system-5022cac310f6)
+  - [Employing “Namespaces” in TypeScript to encapsulate your data](https://medium.com/jspoint/typescript-namespaces-f43cd002c08c)
+- 【done】TypeScript 编译
+  - [Understanding TypeScript’s “Compilation Process” & the anatomy of “tsconfig.json” file to configure TypeScript Compiler](https://medium.com/jspoint/typescript-compilation-the-typescript-compiler-4cb15f7244bc)
+  - [A brief introduction to TypeScript’s command-line interface and compiler settings](https://medium.com/jspoint/typescript-compiler-flags-3b1efebedf15)
+  - [A quick introduction to “Type Declaration” files and adding type support to your JavaScript packages](https://medium.com/jspoint/typescript-type-declaration-files-4b29077c43)
+  - [Integrating TypeScript with Webpack](https://medium.com/jspoint/integrating-typescript-with-webpack-4534e840a02b)
 
 ## 核心概念
 
@@ -413,7 +448,9 @@ const Component = Vue.extend({
 })
 ```
 
-## 运算符
+## 操作符
+
+### 运算符
 
 - 非空断言运算符`!`
   - 确定变量值一定不为空时使用，比如`m!.id`，这告诉 TypeScript `m`一定不是`null`或`undefined`
@@ -427,11 +464,10 @@ const Component = Vue.extend({
   - `let x = foo ?? bar();`，当`foo`为`null`或`undefined`时，`x`兜底取值为`bar()`。
   - [Nullish Coalescing - TypeScript 3.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing)
 
-## 声明文件
+### 类型操作符
 
-在全局变量的声明文件中，是不允许出现 import, export 关键字的。一旦出现了，那么他就会被视为一个 npm 包或 UMD 库，就不再是全局变量的声明文件了。
-
-- [声明文件](https://ts.xcatliu.com/basics/declaration-files.html)
+- `typeof`，获取一个标识符（变量/属性）的类型，详见[Typeof Type Operator](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html)
+- `keyof`，获取对象类型的索引`key`的所有类型，详见[Keyof Type Operator](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html)
 
 ## 其他语法
 
@@ -444,3 +480,7 @@ const Component = Vue.extend({
 详情：[Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
 - `Partial<Type>`: Constructs a type with all properties of Type set to optional.
+
+## TypeScript 原理解析
+
+- [TypeScript 源码详细解读(1)总览](https://www.cnblogs.com/xuld/p/12180913.html)
