@@ -108,6 +108,13 @@ module.exports = {
                 'vue-series/vuex/reset-child-module-state',
                 'vue-series/vuex/register-module',
             ]
+        },
+        {
+            title: '其他',
+            collapsable: false,
+            children: [
+                'vue-series/vue-ssr/'
+            ]
         }
     ]
 };
