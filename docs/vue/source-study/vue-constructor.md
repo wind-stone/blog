@@ -8,7 +8,7 @@ sidebarDepth: 0
 
 每一个组件实例，无论是根组件还是子组件，最终都是通过`new Vue(options)`操作来创建的。核心版的`Vue`构造函数不仅可以应用于 Web 浏览器平台，还可以应用于 Weex 平台，只是不同平台最终获取到的`Vue`构造函数都添加了各自平台的特性。
 
-本系列源码学习的文章都是基于 Web 浏览器平台。Web 浏览器平台最后获取的`Vue`构造函数会经过了多次不同的处理，每次都会添加一些原型方法/属性、静态方法/属性。
+本系列源码学习的文章都是基于 Web 浏览器平台。Web 浏览器平台最后获取的`Vue`构造函数会经过多次不同的处理，每次都会添加一些原型方法/属性、静态方法/属性。
 
 ## 核心版 Vue
 
@@ -23,13 +23,13 @@ sidebarDepth: 0
 
 定义了`Vue`构造函数之后，会执行一系列的`xxxMixin`函数。这些函数主要是往`Vue`构造函数的原型即`Vue.prototype`上添加各种原型方法和属性。
 
-xxxMixin | 原型方法 | 原型属性
---- | --- | ---
-`initMixin` | `Vue.prototype._init` |
-`stateMixin` | `Vue.prototype.$set`<br>`Vue.prototype.$delete`<br>`Vue.prototype.$watch` | `Vue.prototype.$data`<br>`Vue.prototype.$props`
-`eventsMixin` | `Vue.prototype.$on`<br>`Vue.prototype.$once`<br>`Vue.prototype.$off`<br>`Vue.prototype.$emit` |
-`lifecycleMixin` | `Vue.prototype._update`<br>`Vue.prototype.$forceUpdate`<br>`Vue.prototype.$destroy`<br>`Vue.prototype._update` |
-`renderMixin` | `Vue.prototype.$nextTick`<br>`Vue.prototype._render` |
+| xxxMixin         | 原型方法                                                                                                       | 原型属性                                        |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| `initMixin`      | `Vue.prototype._init`                                                                                          |
+| `stateMixin`     | `Vue.prototype.$set`<br>`Vue.prototype.$delete`<br>`Vue.prototype.$watch`                                      | `Vue.prototype.$data`<br>`Vue.prototype.$props` |
+| `eventsMixin`    | `Vue.prototype.$on`<br>`Vue.prototype.$once`<br>`Vue.prototype.$off`<br>`Vue.prototype.$emit`                  |
+| `lifecycleMixin` | `Vue.prototype._update`<br>`Vue.prototype.$forceUpdate`<br>`Vue.prototype.$destroy`<br>`Vue.prototype._update` |
+| `renderMixin`    | `Vue.prototype.$nextTick`<br>`Vue.prototype._render`                                                           |
 
 ```js
 // src/core/instance/index.js
