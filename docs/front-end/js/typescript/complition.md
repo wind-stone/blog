@@ -16,6 +16,62 @@ TypeScript 在将`.ts`文件编译为`.js`文件时，只会针对语法层面�
 
 ## 重难点说明
 
+### 类型去除
+
+TypeScript 在编译时会将类型声明及类型声明的`import`都移除掉，因为类型声明并不会打包到产出文件里。
+
+若是通过`import`引入的成员同时可以是类型和值，需要判断这个成员是否作为“值”被使用了，若是，则编译时需要保留`import`该成员，否则移除`import`语句。
+
+```ts
+// person.ts
+export class Person {
+  name: string;
+}
+```
+
+```ts
+// index.ts
+import { Person } from './person';
+
+const person: Person = {
+    name: 'wind-stone'
+}
+```
+
+`Person`既是值也是类型，若上的代码里，`Person`仅是被作为类型使用，因此编译结果是：
+
+```js
+// index.js
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const person = {
+    name: 'wind-stone'
+};
+```
+
+可以发现，产出文件里并没有`import`语句对应的代码。
+
+若是将`Person`作为类使用:
+
+```ts
+// index.ts
+import { Person } from './person';
+
+const person: Person = {
+    name: 'wind-stone'
+}
+```
+
+则产出文件里会保留`import`语句，并将其编译为对应的模块导入语句。
+
+```js
+// index.js
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const person_1 = require("./person");
+const person = new person_1.Person('wind-stone');
+```
+
 ### 在声明文件里有声明但在运行时里不一定有对应实现
 
 ```ts
