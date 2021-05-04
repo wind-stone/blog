@@ -12,9 +12,9 @@ sidebarDepth: 0
   - [A beginner’s guide to TypeScript (with some history of the TypeScript)](https://medium.com/jspoint/typescript-a-beginners-guide-6956fe8bcf9e)
   - [Writing your first “Hello World” program in TypeScript with ease](https://medium.com/jspoint/typescript-hello-world-program-b0826ee3d87d)
   - [Understanding the basic “Built-in Data Types” provided by TypeScript](https://medium.com/jspoint/typescript-working-with-types-f1829384851f)
-- 复杂的数据类型
-  - 【done】[A simple guide to “function” data type and function declaration syntax in TypeScript](https://medium.com/jspoint/typescript-functions-5a2490f6a1ec)
-  - 【done】[A simple guide to “interface” data type in TypeScript](https://medium.com/jspoint/typescript-interfaces-4a2af07c8070)
+- 【done】复杂的数据类型
+  - [A simple guide to “function” data type and function declaration syntax in TypeScript](https://medium.com/jspoint/typescript-functions-5a2490f6a1ec)
+  - [A simple guide to “interface” data type in TypeScript](https://medium.com/jspoint/typescript-interfaces-4a2af07c8070)
   - [Introduction to “class” data type and Object-Oriented Programming paradigm in TypeScript](https://medium.com/jspoint/typescript-classes-65b4712ac9c8)
   - [Working with Enumerations (Enums) in TypeScript](https://medium.com/jspoint/typescript-enums-af03567d662)
 - 类型系统
