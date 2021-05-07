@@ -467,7 +467,7 @@ const Component = Vue.extend({
 ### 类型操作符
 
 - `typeof`，获取一个标识符（变量/属性）的类型，详见[Typeof Type Operator](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html)
-- `keyof`，获取对象类型的索引`key`的所有类型，详见[Keyof Type Operator](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html)
+- `keyof`，获取接口所有`key`的名称组成一个联合类型（每个成员都是字面量类型），详见[Keyof Type Operator](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html)
 
 ## 其他语法
 
