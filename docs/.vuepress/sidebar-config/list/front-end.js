@@ -64,7 +64,7 @@ module.exports = {
             collapsable: true,
             children: [
                 'typescript/',
-                'typescript/type-system',
+                'typescript/data-type',
                 'typescript/module',
                 'typescript/declaration-files',
                 'typescript/tsconfig-json',
