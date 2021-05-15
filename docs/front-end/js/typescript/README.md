@@ -18,7 +18,7 @@ sidebarDepth: 0
   - [Introduction to “class” data type and Object-Oriented Programming paradigm in TypeScript](https://medium.com/jspoint/typescript-classes-65b4712ac9c8)
   - [Working with Enumerations (Enums) in TypeScript](https://medium.com/jspoint/typescript-enums-af03567d662)
 - 类型系统
-  - [Understanding the TypeScript’s type system and some must-know concepts](https://medium.com/jspoint/typescript-type-system-81fdb84bba75)
+  - 【done】[Understanding the TypeScript’s type system and some must-know concepts](https://medium.com/jspoint/typescript-type-system-81fdb84bba75)
   - [Taking a look at must-know “utility types” provided by TypeScript](https://medium.com/jspoint/typescript-utility-types-4d9bfc37745c)
   - [Exploring the world of “Generics” (generic data types) in TypeScript](https://medium.com/jspoint/typescript-generics-10e99078cc8)
   - [A brief introduction to “Data Immutability” in TypeScript](https://medium.com/jspoint/typescript-data-immutability-71dc3e604426)
