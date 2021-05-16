@@ -40,6 +40,26 @@ TypeScript 内置的基本数据类型有:
 - `Tuple`，比如: `let student: [ string, number, boolean ] = [ 'Ross Geller', 27, true ]`
 - `interface`
 
+### 工具类型
+
+（暂时先放置在这里）
+
+- `Partial<Type>`
+- `Required<Type>`
+- `Readonly<Type>`
+- `Record<U,T>`: 创建一个接口，该接口的`key`是由联合类型`U`的每一个类型映射而来，而`value`的类型为`T`。
+- `Pick<I,U>`
+  - `I`是已存在的接口，`U`是个单元类型，或者由单元类型组合而成的联合类型
+  - 创建一个接口，该接口是`I`的子类型，其包含的`key`由`U`列表挑选而来
+- `Omit<I,U>`
+  - `I`是已存在的接口，`U`是个单元类型，或者由单元类型组合而成的联合类型
+  - 创建一个接口，该接口是`I`的子类型，其包含的`key`会忽略`U`列表里的`key`
+- `Extract<U,T>`
+- `Exclude<U,T>`
+- `NonNullable<U>`
+- `Parameters<F>`
+- `ReturnType<F>`
+
 ## 函数
 
 ### 函数类型的双向推导

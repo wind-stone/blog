@@ -19,7 +19,7 @@ sidebarDepth: 0
   - [Working with Enumerations (Enums) in TypeScript](https://medium.com/jspoint/typescript-enums-af03567d662)
 - 类型系统
   - 【done】[Understanding the TypeScript’s type system and some must-know concepts](https://medium.com/jspoint/typescript-type-system-81fdb84bba75)
-  - [Taking a look at must-know “utility types” provided by TypeScript](https://medium.com/jspoint/typescript-utility-types-4d9bfc37745c)
+  - 【done】[Taking a look at must-know “utility types” provided by TypeScript](https://medium.com/jspoint/typescript-utility-types-4d9bfc37745c)
   - [Exploring the world of “Generics” (generic data types) in TypeScript](https://medium.com/jspoint/typescript-generics-10e99078cc8)
   - [A brief introduction to “Data Immutability” in TypeScript](https://medium.com/jspoint/typescript-data-immutability-71dc3e604426)
   - [Let’s quickly understand how “Polymorphism” works in TypeScript](https://medium.com/jspoint/typescript-polymorphism-d8ea1d690d5c)
