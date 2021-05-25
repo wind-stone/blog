@@ -400,6 +400,13 @@ module.exports = {
                 'webpack/practices',
                 'webpack/tapable/',
             ]
+        },
+        {
+            title: 'Source Map',
+            collapsable: true,
+            children: [
+                'source-map/',
+            ]
         }
     ],
 
