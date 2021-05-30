@@ -6,11 +6,42 @@ sidebarDepth: 0
 
 [[toc]]
 
-`template`字符串经过`parse`之后会生成一颗 AST 树，并返回树的根节点。
+`template`字符串经过`parse`之后会生成一颗 AST Tree，并返回树的根节点。
 
-我们知道，Vue.js 是基于响应式的数据驱动，但是视图里的所有节点不一定全是响应式的，有些不涉及到数据变化的静态节点在每次渲染时最终生成的 DOM 节点都是完全相同的。而`optimize`函数就是对 AST 树做优化：将这些静态节点标记出来，以便在首次渲染之后，针对之后的每一次`patch`过程，都跳过对它们的比对。
+我们知道，Vue.js 是基于响应式的数据驱动，但是视图里的所有节点不一定全是响应式的，有些不涉及到数据变化的静态节点在每次渲染时生成的 DOM 节点都是完全相同的。而`optimize`函数就是对 AST 树做优化：将这些静态根节点标记出来。
 
-TODO: 基于 AST 树生成`render`函数时，是如何处理静态节点和静态元素根节点的？
+这样，在生成`render`函数时就可以对静态根节点做特殊处理，在首次渲染即`render`函数首次执行后，将静态根节点的 VNode 缓存起来，以后再执行`render`函数时，不再为静态根节点生成新的 VNode 对象而是使用缓存的 VNode。同时，在非第一次的`patch`过程中，也将跳过对静态跟节点的`patch`。
+
+```js
+// src/compiler/index.js
+
+// `createCompilerCreator` allows creating compilers that use alternative
+// parser/optimizer/codegen, e.g the SSR optimizing compiler.
+// Here we just export a default compiler using the default parts.
+export const createCompiler = createCompilerCreator(function baseCompile (
+  template: string,
+  options: CompilerOptions
+): CompiledResult {
+  // 解析模板字符串，创建 AST
+  const ast = parse(template.trim(), options)
+
+  // 优化 AST（本节即将讲述的内容）
+  if (options.optimize !== false) {
+    optimize(ast, options)
+  }
+
+  // 基于 AST 生成字符串形式的`render`/`staticRenderFns`
+  const code = generate(ast, options)
+  return {
+    ast,
+    // 字符串形式的 render/staticRenderFns
+    render: code.render,
+    staticRenderFns: code.staticRenderFns
+  }
+})
+```
+
+## optimize 函数
 
 ```js
 /**
@@ -101,6 +132,7 @@ function markStatic (node: ASTNode) {
       for (let i = 1, l = node.ifConditions.length; i < l; i++) {
         const block = node.ifConditions[i].block
         markStatic(block)
+        // TODO: 既然带有 v-if 的元素已经在 isStatic 判断为 node.static = false，这里是不是就没有必要了？
         if (!block.static) {
           node.static = false
         }

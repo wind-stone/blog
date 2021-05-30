@@ -6,7 +6,38 @@ sidebarDepth: 0
 
 [[toc]]
 
-`parse`函数接收`template`和`options`为参数，返回 AST 的根节点。其内部的主要处理是，调用`parseHTML(template, options)`先对`template`字符串进行 HTML 解析，每当解析出不同的 HTML 内容时，`parseHTML`会调用`options`里不同的回调函数，以对解析的内容进行不同的处理，最终产生 AST 抽象语法树，并返回其根节点。
+`parse`函数接收`template`和`options`为参数，返回 AST 的根节点。
+
+```js
+// src/compiler/index.js
+
+// `createCompilerCreator` allows creating compilers that use alternative
+// parser/optimizer/codegen, e.g the SSR optimizing compiler.
+// Here we just export a default compiler using the default parts.
+export const createCompiler = createCompilerCreator(function baseCompile (
+  template: string,
+  options: CompilerOptions
+): CompiledResult {
+  // 解析模板字符串，创建 AST（本节即将讲述的内容）
+  const ast = parse(template.trim(), options)
+
+  // 优化 AST
+  if (options.optimize !== false) {
+    optimize(ast, options)
+  }
+
+  // 基于 AST 生成字符串形式的`render`/`staticRenderFns`
+  const code = generate(ast, options)
+  return {
+    ast,
+    // 字符串形式的 render/staticRenderFns
+    render: code.render,
+    staticRenderFns: code.staticRenderFns
+  }
+})
+```
+
+其内部的主要处理是，调用`parseHTML(template, options)`先对`template`字符串进行 HTML 解析，每当解析出不同的 HTML 内容时，`parseHTML`会调用`options`里不同的回调函数，以对解析的内容进行不同的处理，最终产生 AST 抽象语法树，并返回其根节点。
 
 ## parse 函数结构
 
@@ -316,6 +347,8 @@ function checkForAliasModel () { ... }
       if (currentParent && !element.forbidden) {
         if (element.elseif || element.else) {
           // 处理元素带有 v-else-if/v-else 指令的情况
+          // 需要注意的是，针对带有 v-else-if/v-else 指令的元素，不会作为该元素的父元素的子元素，
+          // 而是放置在该元素对应的带有 v-if 指令的元素的 ifConditions 属性里
           processIfConditions(element, currentParent)
         } else if (element.slotScope) { // scoped slot
           // 将作用域插槽放入父元素的 scopedSlots 里，而不是作为父元素的 child
@@ -433,7 +466,7 @@ const astEl = {
 
   // 以下为存在 v-if/v-else/v-else-if 指令时，独有的属性
   if, // 带 v-if 指令的元素的独有属性，其值为表达式
-  ifConditions: [ // 带 v-if 指令的元素的独有属性
+  ifConditions: [ // 带 v-if 指令的元素的独有属性，其中 vIfEl/vElseIfEl/vElseEl 都是对应的元素节点
     { exp, block: vIfEl }, // v-if
     { exp, block: vElseIfEl }, // （可选）可能存在多个 v-else-if
     { exp, block: vElseEl }  // （可选）v-else
