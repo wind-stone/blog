@@ -73,7 +73,8 @@ module.exports = {
                 'source-study/compile/base-compile',
                 'source-study/compile/parse',
                 'source-study/compile/parse-html',
-                'source-study/compile/optimize'
+                'source-study/compile/optimize',
+                'source-study/compile/codegen'
             ]
         },
         {

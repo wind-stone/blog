@@ -10,7 +10,7 @@ sidebarDepth: 0
 
 我们知道，Vue.js 是基于响应式的数据驱动，但是视图里的所有节点不一定全是响应式的，有些不涉及到数据变化的静态节点在每次渲染时生成的 DOM 节点都是完全相同的。而`optimize`函数就是对 AST 树做优化：将这些静态根节点标记出来。
 
-这样，在生成`render`函数时就可以对静态根节点做特殊处理，在首次渲染即`render`函数首次执行后，将静态根节点的 VNode 缓存起来，以后再执行`render`函数时，不再为静态根节点生成新的 VNode 对象而是使用缓存的 VNode。同时，在非第一次的`patch`过程中，也将跳过对静态跟节点的`patch`。
+这样，在生成`render`函数时就可以对静态根节点做特殊处理，在首次渲染即`render`函数首次执行后，将静态根节点的 VNode 缓存起来，以后再执行`render`函数时，不再为静态根节点生成新的 VNode 对象而是使用缓存的 VNode（详见[生成 render 函数 - genStatic 处理静态根节点](/vue/source-study/compile/codegen.html#genstatic-处理静态根节点)）。同时，在非第一次的`patch`过程中，也将跳过对静态跟节点的`patch`。
 
 ```js
 // src/compiler/index.js
