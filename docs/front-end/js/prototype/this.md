@@ -11,7 +11,48 @@ sidebarDepth: 0
 - 作为普通函数调用
 - 作为方法调用
 - 作为构造函数调用
-- 作为 apply、call 调用
+- 通过`apply`、`call`、`bind`显示绑定`this`进行调用
+- 箭头函数
+
+## 作为普通函数调用
+
+- 在严格模式下声明的函数，`this`会绑定到`undefined`上
+
+```js
+(() => {
+  "use strict"
+  function foo() {
+    console.log(this.name);
+  };
+  var name = "bar";
+  foo();
+})();
+
+// Uncaught TypeError: Cannot read property 'name' of undefined at foo
+```
+
+- 在非严格模式下声明的函数，`this`会绑定到`window`（或`global`）上
+
+```js
+var name = 'bar';
+function foo() {
+  console.log(this.name);
+};
+
+(() => {
+  "use strict"
+  foo(); // bar
+})();
+```
+
+```js
+var name = 'bar';
+function foo() {
+  console.log(this.name);
+}
+
+foo(); // bar
+```
 
 ## new fn() 的过程
 
