@@ -35,3 +35,14 @@ void function(){
 ```
 
 这有效避免了语法问题，同时，语义上`void`运算表示忽略后面表达式的值，变成`undefined`，我们确实不关心 IIFE 的返回值，所以语义也更为合理。
+
+## 应用
+
+### 将函数伪装成 Native 函数
+
+```js
+var fakerAlert = (function () {}).bind(null)
+console.log(fakerAlert.toString())
+// 结果：
+// function () { [native code] }
+```

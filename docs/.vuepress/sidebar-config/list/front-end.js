@@ -10,7 +10,7 @@ module.exports = {
             ]
         },
         {
-            title: '数据结构',
+            title: '数据类型',
             collapsable: true,
             children: [
                 'data-structure/',
@@ -18,6 +18,9 @@ module.exports = {
                 'data-structure/number/floating',
                 'data-structure/string/',
                 'data-structure/object/',
+                'data-structure/array/',
+                'data-structure/function/',
+                'data-structure/date/',
                 'data-structure/reg-exp/',
                 'data-structure/type-conversion',
             ]

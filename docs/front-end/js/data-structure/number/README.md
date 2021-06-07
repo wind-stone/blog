@@ -1,5 +1,10 @@
 # Number
 
+## 系列文章
+
+- `Number`
+  - [JavaScript 关于 IEEE 754 双精度浮点数的实现](/front-end/js/data-structure/js-number-implementation.html)
+
 ## 精度
 
 ### parseInt(0.0000008) === 8
