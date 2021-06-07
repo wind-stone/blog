@@ -1,9 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # Number
 
-## 系列文章
-
-- `Number`
-  - [JavaScript 关于 IEEE 754 双精度浮点数的实现](/front-end/js/data-structure/js-number-implementation.html)
+JavaScript 至今没有真正的整数，我们用的`Number`事实上是双精度浮点数，详见[JavaScript 关于 IEEE 754 双精度浮点数的实现](/front-end/js/data-structure/js-number-implementation.html)。
 
 ## 精度
 
