@@ -20,7 +20,7 @@ JavaScript 是一种弱类型的、动态的语言。
 - 弱类型，意味着你不需要告诉 JavaScript 引擎这个或那个变量是什么数据类型，JavaScript 引擎在运行代码的时候自己会计算出来。
 - 动态，意味着你可以使用同一个变量保存不同类型的数据。
 
-![语言类型图](./img/language-type.png)
+![语言类型图](./images/language-type.png)
 
 ## 变量提升
 
@@ -110,7 +110,7 @@ foo(); // 静态作用域：100；动态作用域：100
 
 以上关于执行上下文、词法环境、作用域链的知识，是理解闭包所有的全部知识点：
 
-每个函数都有一个包含词法环境的执行上下文，它的词法坏境确定了函数内的变量赋值一级对外部环境的引用。对外部环境的引用使得所有的内部函数能访问到外部作用域的所有变量，无论这些内部函数是在它创建时的作用域内调用还是作用域外调用。
+每个函数都有一个包含词法环境的执行上下文，它的词法环境确定了函数内的变量赋值以及对外部环境的引用。对外部环境的引用使得所有的内部函数能访问到外部作用域的所有变量，无论这些内部函数是在它创建时的作用域内调用还是作用域外调用。
 
 看上去函数“记住”了外部环境，但事实上是这个函数有个指向外部环境的引用。
 
@@ -243,19 +243,104 @@ console.log(bar.getName())
 
 JavaScript 的垃圾回收，指的是回收堆空间里的引用类型，而存储在栈里（调用栈的执行上下文）的原始类型，会在执行上下文销毁时直接回收的。
 
+- [JavaScript's Memory Management Explained](https://felixgerschau.com/javascript-memory-management/)，这篇文章很清楚地说明了引用计数和标记清除。
+
+### 引用计数（旧版 IE 4-6）
+
+引用计数可能会导致内存泄露，比如几个对象间的循环引用，即使最后将这几个对象的引用（位于栈内存）都从执行上下文里的移除，但是这些处于堆内存里的对象仍然相互引用。理论上这时候这几个循环引用的对象都是可以回收的，因为外部已经无法访问到他们。但是用引用计数来做垃圾回收时，这几个对象还被引用着导致不能收回。所以，引用计数可能会导致内存泄露。
+
+```js
+let son = {
+  name: 'John',
+};
+
+let dad = {
+  name: 'Johnson',
+}
+
+son.dad = dad;
+dad.son = son;
+
+son = null;
+dad = null;
+```
+
+![循环引用](./images/reference-cycle.png)
+
 ### 标记清除（Mark-and-Sweep）（主流）
 
-> The most popular form of garbage collection for JavaScript is called mark-and-sweep. When a variable comes into context, such as when a variable is declared inside a function, it is flagged as being in context. Variables that are in context, logically, should never have their memory freed, because they may be used as long as execution continues in that context. When a variable goes out of context, it is also fl agged as being out of context. Variables can be flagged in any number of ways. There may be a specific bit that is flipped when a variable is in context, or there may be an “in-context” variable list and an “out-of-context” variable list between which variables are moved. The implementation of the flagging is unimportant; it's really the theory that is key.
+> The most popular form of garbage collection for JavaScript is called mark-and-sweep. When a variable comes into context, such as when a variable is declared inside a function, it is flagged as being in context. Variables that are in context, logically, should never have their memory freed, because they may be used as long as execution continues in that context. When a variable goes out of context, it is also flagged as being out of context. Variables can be flagged in any number of ways. There may be a specific bit that is flipped when a variable is in context, or there may be an “in-context” variable list and an “out-of-context” variable list between which variables are moved. The implementation of the flagging is unimportant; it's really the theory that is key.
 >
 > When the garbage collector runs, it marks all variables stored in memory (once again, in any number of ways). It then clears its mark off of variables that are in context and variables that are referenced by in-context variables. The variables that are marked after that are considered ready for deletion, because they can’t be reached by any in-context variables. The garbage collector then does a memory sweep, destroying each of the marked values and reclaiming the memory associated with them. As of 2008, Internet Explorer, Firefox, Opera, Chrome, and Safari all use mark-and-sweep garbage collection (or variations thereof) in their JavaScript implementations, though the timing of garbage collection differs.
 >
 > -- JavaScript 高级程序设计 第三版 P78 垃圾收集
 
-### 引用计数（旧版 IE 4-6）
+标记清除可以解决循环引用的问题，它将检测对象是否可以从根对象（浏览器里是`window`对象，Node.js 里是`global`对象）触达到，以取代引用计数那种仅仅计算对对象的引用次数。
 
-引用计数可能会导致内存泄露，比如几个对象间的循环引用，但是这几个对象都没有被执行上下文里的任何变量引用，理论上这时候这几个循环引用的对象都是可以回收的，但是用引用计数的话，这几个对象还被引用着导致不能收回。所以，引用计数可能会导致内存泄露。
+标记清除算法将不可触发的对象标记为垃圾，并在之后回收它们。根对象将永不回收。这种方式将解决循环引用问题。
 
 ### 造成内存泄漏的原因
+
+- 全局作用域里定义的全局变量
+
+```js
+user = getUser();
+var secondUser = getUser();
+function getUser() {
+  return 'user';
+}
+```
+
+`user`、`secondUser`和`getUser`都是绑定到全局`window`对象上的全局变量。通过添加严格模式，你可以避免隐式声明`user`这样的全局变量。
+
+- 遗忘的定时器和事件处理函数
+
+```js
+const object = {};
+const intervalId = setInterval(function() {
+  // everything used in here can't be collected
+  // until the interval is cleared
+  doSomething(object);
+}, 2000);
+
+// 当你不再需要定时器时，记得要清理掉
+// clearInterval(intervalId);
+```
+
+这种情况经常发生的 SPA，尽管你已经导航到 SPA 里的另一个路由，定时器仍然会在后台运行。
+
+```js
+const element = document.getElementById('button');
+const onClick = () => alert('hi');
+
+element.addEventListener('click', onClick);
+
+// 事件处理函数，也是如此，如果在离开页面时不移除掉，下次进入该页面会新增一个事件处理函数
+// element.removeEventListener('click', onClick);
+// element.parentNode.removeChild(element);
+```
+
+- 遗忘了 JavaScript 对 DOM 的引用
+
+```js
+const elements = [];
+const element = document.getElementById('button');
+elements.push(element);
+
+function removeAllElements() {
+  elements.forEach((item, index) => {
+    document.body.removeChild(document.getElementById(item.id));
+    // 将 DOM 对象从 JavaScript 数组里移除
+    elements.splice(index, 1);
+  });
+  // 或者这样移除
+  elements.length = 0;
+}
+```
+
+若是将 DOM 对象存储在 JavaScript 对象里，当将 DOM 节点移除时，也要将 DOM 对象从 JavaScript 对象里移除。
+
+以下的这些点都是很久以前的内容，可能已经不太实用。
 
 - 循环引用（ IE9 之前的浏览器里 BOM 和 DOM 中的对象是以 COM 对象的形式出现的，而 COM 对象的垃圾收集机制采用的就是引用计数策略，相关知识参见 JavaScript 高级程序设计 第三版 P78 垃圾收集）
 - 内部函数引用（闭包）
@@ -280,7 +365,7 @@ V8 执行 JavaScript 代码的过程:
 
 若是将 AST 直接全部转换成机器码，则内存占用将过大。因此先将 AST 转换为占用内存更小的字节码，解释执行字节码时，再将字节码逐条编译成机器码执行。且针对活跃的字节码，编译器会将其编译成机器码，加快执行效率（当然也会占用更多内存）。
 
-![v8 的解释器和编译器](./img/v8-ignition-turboFan.png)
+![v8 的解释器和编译器](./images/v8-ignition-turboFan.png)
 
 因此 V8 是综合使用了编译器和解释器来权衡内存占用和执行效率。
 
