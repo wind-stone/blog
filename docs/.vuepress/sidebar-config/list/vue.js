@@ -102,6 +102,14 @@ module.exports = {
             ]
         },
         {
+            title: 'SSR',
+            collapsable: false,
+            children: [
+                'source-study/ssr/',
+                'source-study/ssr/hydrate',
+            ]
+        },
+        {
             title: 'Vuex',
             collapsable: false,
             children: [
@@ -110,12 +118,5 @@ module.exports = {
                 'vue-series/vuex/register-module',
             ]
         },
-        {
-            title: '其他',
-            collapsable: false,
-            children: [
-                'vue-series/vue-ssr/'
-            ]
-        }
     ]
 };
