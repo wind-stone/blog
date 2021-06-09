@@ -26,8 +26,12 @@ var father = new Father();
 FirstSon.prototype = father;
 SecondSon.prototype = father;
 var firstSon = new FirstSon();
-alert(firstSon instanceof SecondSon);  //  true
+
+console.log(firstSon instanceof SecondSon);  // true
+console.log(firstSon instanceof Father);     // true
 ```
+
+这也说明，`instanceof`操作符要检测操作符右边的构造函数是否位于操作符右边对象的原型链上。
 
 ## Object.getPrototypeOf() 和 Function.prototype
 
