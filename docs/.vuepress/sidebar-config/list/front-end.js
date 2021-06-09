@@ -246,7 +246,7 @@ module.exports = {
             title: '网络',
             collapsable: true,
             children: [
-                'network/http',
+                'network/http/',
                 'network/https/'
             ]
         },
