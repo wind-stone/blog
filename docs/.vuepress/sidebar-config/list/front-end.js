@@ -247,7 +247,8 @@ module.exports = {
             collapsable: true,
             children: [
                 'network/http/',
-                'network/https/'
+                'network/https/',
+                'network/http2/',
             ]
         },
         {

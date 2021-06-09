@@ -51,12 +51,6 @@
 
 - [完善的前端异常监控解决方案](https://cdc.tencent.com/2018/09/13/frontend-exception-monitor-research/)
 
-## 安全
-
-### HTTPS
-
-- [图解 HTTPS：Charles 捕获 HTTPS 的原理 #108](https://github.com/youngwind/blog/issues/108)
-
 ### 授权服务
 
 #### Oauth 2.0

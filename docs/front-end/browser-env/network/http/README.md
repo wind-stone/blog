@@ -1,4 +1,10 @@
-# http
+---
+sidebarDepth: 0
+---
+
+# HTTP
+
+[[toc]]
 
 ## 浏览器 http 请求的生命周期
 
