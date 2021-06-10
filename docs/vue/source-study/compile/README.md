@@ -13,7 +13,7 @@ sidebarDepth: 0
 整个编译过程分为如下几步：
 
 - 解析模板字符串，生成 AST
-- 优化 AST
+- 标记 AST Tree 里可优化的节点
 - 基于 AST 生成字符串形式的`render`/`staticRenderFns`
 - 基于字符串形式的`render`/`staticRenderFns`，生成函数形式`render`/`staticRenderFns`
 
@@ -133,7 +133,7 @@ export { compile, compileToFunctions }
 `createCompiler`函数即编译器生成器，是调用创建编译器生成器`createCompilerCreator`函数生成的，调用时会传入`baseCompile`函数，`baseCompile`函数的作用是完成基础编译工作，包括：
 
 - 解析模板字符串，生成 AST
-- 优化 AST
+- 标记 AST Tree 里可优化的节点
 - 基于 AST 生成字符串形式的`render`/`staticRenderFns`
 
 ```js

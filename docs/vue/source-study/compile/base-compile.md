@@ -7,7 +7,7 @@ sidebarDepth: 0
 `compile`函数里所使用的`baseCompile`函数是在调用`createCompilerCreator`函数时传入的。`baseCompile`函数里的逻辑是核心的编译流程，与平台无关，具体包括：
 
 - 解析模板字符串，创建 AST
-- 优化 AST
+- 标记 AST Tree 里可优化的节点
 - 基于 AST 生成字符串形式的`render`/`staticRenderFns`
 
 最后返回对象`{ ast, render, staticRenderFns }`
@@ -30,7 +30,7 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   // 解析模板字符串，创建 AST
   const ast = parse(template.trim(), options)
 
-  // 优化 AST
+  // 标记 AST Tree 里可优化的节点
   if (options.optimize !== false) {
     optimize(ast, options)
   }
@@ -50,7 +50,7 @@ export const createCompiler = createCompilerCreator(function baseCompile (
 
 `parse`函数接收`template`和`options`为参数，返回 AST 的根节点（及 AST Tree），详情请见[解析模板字符串，创建 AST](/vue/source-study/compile/parse.html)
 
-## 优化 AST
+## 标记 AST Tree 里可优化的节点
 
 获取到 AST Tree 之后，需要识别并标记其中的静态子树（比如永远不需要改变的 DOM），一旦我们检测到这些静态子树：
 

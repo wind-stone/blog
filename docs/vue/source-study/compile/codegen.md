@@ -21,7 +21,7 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   // 解析模板字符串，创建 AST
   const ast = parse(template.trim(), options)
 
-  // 优化 AST
+  // 标记 AST Tree 哪些节点可以优化
   if (options.optimize !== false) {
     optimize(ast, options)
   }
@@ -97,7 +97,15 @@ export class CodegenState {
 
 ### genElement 函数
 
-`genElement`函数会针对每个 AST 节点生成代码片段。在正式生成代码片段之前，会针对各种情况（比如是否是静态根节点、是否存在[v-once](https://cn.vuejs.org/v2/api/#v-once)指令等）先进行预处理，等这些预处理完成后会再次调用`genElement`函数生成代码片段。
+`genElement`函数会针对每个 AST 节点生成代码片段。在正式生成代码片段之前，会针对各种情况先进行预处理，这些情况有：
+
+- 静态根节点 && 未经过`genStatic`处理
+- 节点存在[v-once](https://cn.vuejs.org/v2/api/#v-once)指令 && 未经过`genOnce`处理
+- 节点存在`v-for`指令 && 未经过`genFor`处理
+- 节点存在`v-if`指令 && 未经过`genIf`处理
+- 节点是`template`标签 && 该节点不是父组件里的插槽内容 && 该节点不是某个带有`v-pre`指令的节点的子孙节点
+
+等这些预处理完成后会再次调用`genElement`函数并走到最后一个`else`分支里，为原 AST 节点生成代码片段。
 
 ```js
 /**
@@ -112,20 +120,25 @@ export function genElement (el: ASTElement, state: CodegenState): string {
     // el 是静态根节点 && 没经过 genStatic 处理
     return genStatic(el, state)
   } else if (el.once && !el.onceProcessed) {
+    // 节点存在 v-once 指令 && 未经过 genOnce 处理
     return genOnce(el, state)
   } else if (el.for && !el.forProcessed) {
+    // 节点存在 v-for 指令 && 未经过 genFor 处理
     return genFor(el, state)
   } else if (el.if && !el.ifProcessed) {
+    // 节点存在 v-if 指令 && 未经过 genIf 处理
     return genIf(el, state)
   } else if (el.tag === 'template' && !el.slotTarget && !state.pre) {
+    // 节点是 template 标签 && 该节点不是父组件里的插槽内容 && 该节点不是某个带有 v-pre 指令的节点的子孙节点
     return genChildren(el, state) || 'void 0'
   } else if (el.tag === 'slot') {
+    // 节点是（子组件里的） slot 节点
     return genSlot(el, state)
   } else {
     // component or element
     let code
     if (el.component) {
-      // 动态组件
+      // 动态组件，el.component 是组件 is 特性的值
       code = genComponent(el.component, el, state)
     } else {
       let data
@@ -148,6 +161,10 @@ export function genElement (el: ASTElement, state: CodegenState): string {
   }
 }
 ```
+
+`genElement`函数里的最后一个`else`，会为组件或元素生成代码片段。
+
+#### 
 
 #### genStatic 处理静态根节点
 

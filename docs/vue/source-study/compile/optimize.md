@@ -25,7 +25,7 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   // 解析模板字符串，创建 AST
   const ast = parse(template.trim(), options)
 
-  // 优化 AST（本节即将讲述的内容）
+  // 标记 AST Tree 里可优化的节点（本节即将讲述的内容）
   if (options.optimize !== false) {
     optimize(ast, options)
   }
