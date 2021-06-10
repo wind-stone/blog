@@ -510,6 +510,9 @@ const astEl = {
     [属性名]: 属性值
   }),
   styleBinding, // （可选）动态绑定的 style 字符串，其值可能是对象的字符串形式、数组的字符串形式、以及绑定的表达式
+
+  // 节点是静态节点或带有 v-once 的节点 && 该节点是 v-for 节点的子孙节点，这个属性是 optimize 阶段在 markStaticRoots 函数里添加的
+  staticInFor: Boolean,
 }
 ```
 

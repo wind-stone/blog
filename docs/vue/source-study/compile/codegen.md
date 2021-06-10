@@ -97,7 +97,7 @@ export class CodegenState {
 
 ### genElement 函数
 
-`genElement`函数会针对每个 AST 节点生成代码片段。在正式生成代码片段之前，会针对各种情况先进行预处理，这些情况有：
+`genElement`函数会针对每个 AST 节点生成代码片段，所有 AST 节点的代码片段，将组成最终的`render`函数的函数体。在正式生成 AST 节点的代码片段之前，会针对各种情况先进行预处理，这些情况有：
 
 - 静态根节点 && 未经过`genStatic`处理
 - 节点存在[v-once](https://cn.vuejs.org/v2/api/#v-once)指令 && 未经过`genOnce`处理
@@ -141,6 +141,7 @@ export function genElement (el: ASTElement, state: CodegenState): string {
       // 动态组件，el.component 是组件 is 特性的值
       code = genComponent(el.component, el, state)
     } else {
+      // 常规组件/HTML 标签
       let data
       if (!el.plain || (el.pre && state.maybeComponent(el))) {
         data = genData(el, state)
@@ -162,11 +163,219 @@ export function genElement (el: ASTElement, state: CodegenState): string {
 }
 ```
 
-`genElement`函数里的最后一个`else`，会为组件或元素生成代码片段。
+`genElement`函数里的最后一个`else`，是最终为 AST 节点生成代码片段的地方。在这里，也分为两种情况：
 
-#### 
+- 动态组件
+- 常规组件/HTML 标签
 
-#### genStatic 处理静态根节点
+针对动态组件，将使用`genComponent`为其生成`code`。动态组件会使用`is`特性对应的组件名称作为标签名称。
+
+```js
+// src/compiler/codegen/index.js
+/**
+ * 生成动态组件的 code
+ */
+// componentName is el.component, take it as argument to shun flow's pessimistic refinement
+function genComponent (
+  componentName: string,
+  el: ASTElement,
+  state: CodegenState
+): string {
+  const children = el.inlineTemplate ? null : genChildren(el, state, true)
+  return `_c(${componentName},${genData(el, state)}${
+    children ? `,${children}` : ''
+  })`
+}
+```
+
+而常规组件使用组件名称作为标签名称，HTML 标签则直接使用自身的标签名称。
+
+之后，无论是动态组件还是常规组件/HTML 标签，都会调用`genData`函数为该节点生成数据对象，再调用`genChildren`生成该节点的子 VNode。最后，组装成`_c(tag, data, children)`形成最后的`code`。
+
+#### genData
+
+`genData`函数是将 AST 节点上的所有数据转成数据对象的字符串形式。
+
+转换之前，AST 节点的数据结构可参见[创建 AST - AST 所有属性](https://blog.windstone.cc/vue/source-study/compile/parse.html#ast-%E6%89%80%E6%9C%89%E5%B1%9E%E6%80%A7)
+
+转换之后，数据对象的数据结构可见[渲染函数 & JSX - 深入 data 对象](https://cn.vuejs.org/v2/guide/render-function.html?#%E6%B7%B1%E5%85%A5-data-%E5%AF%B9%E8%B1%A1)
+
+```js
+// src/compiler/codegen/index.js
+/**
+ * 生成 createElement(name, data, children) 中的 data 数据
+ *
+ * 返回 data 对象
+ */
+export function genData (el: ASTElement, state: CodegenState): string {
+  let data = '{'
+
+  // directives first.
+  // directives may mutate the el's other properties before they are generated.
+
+  // 生成 directives 数据
+  const dirs = genDirectives(el, state)
+  if (dirs) data += dirs + ','
+
+  // key
+  if (el.key) {
+    data += `key:${el.key},`
+  }
+  // ref
+  if (el.ref) {
+    data += `ref:${el.ref},`
+  }
+  if (el.refInFor) {
+    data += `refInFor:true,`
+  }
+  // pre
+  if (el.pre) {
+    data += `pre:true,`
+  }
+  // record original tag name for components using "is" attribute
+  if (el.component) {
+    data += `tag:"${el.tag}",`
+  }
+  // module data generation functions
+  // 添加 style/staticStyle、class/staticClass 等
+  for (let i = 0; i < state.dataGenFns.length; i++) {
+    data += state.dataGenFns[i](el)
+  }
+  // attributes
+  if (el.attrs) {
+    data += `attrs:${genProps(el.attrs)},`
+  }
+  // DOM props
+  if (el.props) {
+    data += `domProps:${genProps(el.props)},`
+  }
+  // event handlers
+  if (el.events) {
+    data += `${genHandlers(el.events, false)},`
+  }
+  if (el.nativeEvents) {
+    data += `${genHandlers(el.nativeEvents, true)},`
+  }
+  // slot target
+  // only for non-scoped slots
+  // 普通插槽
+  if (el.slotTarget && !el.slotScope) {
+    data += `slot:${el.slotTarget},`
+  }
+  // scoped slots
+  // 该元素拥有的所有的作用域插槽（带模板内容）
+  if (el.scopedSlots) {
+    data += `${genScopedSlots(el, el.scopedSlots, state)},`
+  }
+  // component v-model
+  if (el.model) {
+    data += `model:{value:${
+      el.model.value
+    },callback:${
+      el.model.callback
+    },expression:${
+      el.model.expression
+    }},`
+  }
+  // inline-template
+  if (el.inlineTemplate) {
+    const inlineTemplate = genInlineTemplate(el, state)
+    if (inlineTemplate) {
+      data += `${inlineTemplate},`
+    }
+  }
+  data = data.replace(/,$/, '') + '}'
+  // v-bind dynamic argument wrap
+  // v-bind with dynamic arguments must be applied using the same v-bind object
+  // merge helper so that class/style/mustUseProp attrs are handled correctly.
+  if (el.dynamicAttrs) {
+    data = `_b(${data},"${el.tag}",${genProps(el.dynamicAttrs)})`
+  }
+  // v-bind data wrap
+  if (el.wrapData) {
+    // 将 data 封装一层，封装的逻辑里会处理 v-bind 的数据，最终返回 data 对象
+    // (将 v-bind 指令的数据放在 data.domProps 或 data.attrs 或 data 或 data.on（双向绑定） 上)
+    data = el.wrapData(data)
+  }
+  // v-on data wrap
+  if (el.wrapListeners) {
+    // 将 data 封装一层，封装的逻辑里会处理 v-on 的数据，最终返回 data 对象
+    // (将 v-on 指令里指令名称和回调放到 data.on 上)
+    data = el.wrapListeners(data)
+  }
+  return data
+}
+```
+
+#### genChildren
+
+```js
+// src/compiler/codegen/index.js
+/**
+ * 递归地为节点的所有子节点生成代码片段
+ */
+export function genChildren (
+  el: ASTElement,
+  state: CodegenState,
+  checkSkip?: boolean,
+  altGenElement?: Function,
+  altGenNode?: Function
+): string | void {
+  const children = el.children
+  if (children.length) {
+    const el: any = children[0]
+    // 若父节点只有一个子节点，且该子节点是非 template、非 slot、带有 v-for 的 AST 节点，则进行优化处理
+    // optimize single v-for
+    if (children.length === 1 &&
+      el.for &&
+      el.tag !== 'template' &&
+      el.tag !== 'slot'
+    ) {
+      const normalizationType = checkSkip
+        ? state.maybeComponent(el) ? `,1` : `,0`
+        : ``
+      return `${(altGenElement || genElement)(el, state)}${normalizationType}`
+    }
+    const normalizationType = checkSkip
+      ? getNormalizationType(children, state.maybeComponent)
+      : 0
+
+    // 遍历所有子节点，生成子节点的代码片段
+    const gen = altGenNode || genNode
+    return `[${children.map(c => gen(c, state)).join(',')}]${
+      normalizationType ? `,${normalizationType}` : ''
+    }`
+  }
+}
+```
+
+注意: 在生成子节点的代码片段时，子节点的代码片段字符串后面可能会带另一个`normalizationType`参数，作为`_c`函数的第四个参数。
+
+#### _c
+
+`genElement`函数里，在生成 AST 节点的数据对象字符串及子节点的代码片段后，会使用`_c(tag, data, children)`组装成最终的代码片段。而`_c`函数是在初始化组件实例时加入到`vm`上的，其实际上是对`createElement`函数的封装，在`render`函数运行时，`createElement`会为该 AST 节点生成 VNode 对象。
+
+```js
+// src/core/instance/render.js
+export function initRender (vm: Component) {
+  // ...
+  vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
+  vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
+  // ...
+}
+```
+
+注意，`_c`函数与[渲染函数 & JSX - createElement 参数](https://cn.vuejs.org/v2/guide/render-function.html?#createElement-%E5%8F%82%E6%95%B0)略微不同，不同的地方是传给`createElement`函数的第 5 个参数，该参数表示是否要始终对子节点数组进行规范化处理，针对用户编写的`render`函数该参数为`true`，而对从模板生成的`render`函数该参数为`false`，详见[创建 VNode Tree - 规范化子 VNode](https://blog.windstone.cc/vue/source-study/vdom/vnode-tree-create.html#%E8%A7%84%E8%8C%83%E5%8C%96%E5%AD%90-vnode)。
+
+关于`createElement`函数如何创建 VNode，可查看[创建 VNode Tree](https://blog.windstone.cc/vue/source-study/vdom/vnode-tree-create.html)。
+
+### genElement 函数的预处理
+
+上一节讲述了在调用`genElement`函数为 AST 节点生成代码片段时走到最后一个`else`块的处理逻辑，而在此之前有多个`if`/`else if`的预处理，每个经过`if`/`else-if`块预处理过的 AST 节点，最终都会再次调用`genElement`并走到最后一个`else`块进行处理，不过有的 AST 节点可能会经过多个不同的`if`/`else-if`块的预处理。
+
+这一小节将讲述这些预处理的逻辑。
+
+#### genStatic
 
 在[优化 AST 树](/vue/source-study/compile/optimize.html)一节里，我们讲述了如何识别和标记 AST Tree 中的静态子树。而在生成`render`函数时，也会针对静态子树做特殊处理。
 
@@ -241,12 +450,114 @@ export function renderStatic (
     null,
     this // for render fns generated for functional component templates
   )
-  // 标记该 vnode 节点是静态的
+  // 将 VNode 标记为静态节点，并给个独立无二的 key
   markStatic(tree, `__static__${index}`, false)
   return tree
+}
+
+/**
+ * 将 Vnode 节点 或 Vnode 节点数组里的各个 Vnode 标记为静态节点
+ */
+function markStatic (
+  tree: VNode | Array<VNode>,
+  key: string,
+  isOnce: boolean
+) {
+  if (Array.isArray(tree)) {
+    for (let i = 0; i < tree.length; i++) {
+      if (tree[i] && typeof tree[i] !== 'string') {
+        markStaticNode(tree[i], `${key}_${i}`, isOnce)
+      }
+    }
+  } else {
+    markStaticNode(tree, key, isOnce)
+  }
+}
+
+/**
+ * 将 Vnode 节点标记为静态的
+ */
+function markStaticNode (node, key, isOnce) {
+  node.isStatic = true
+  node.key = key
+  node.isOnce = isOnce
 }
 ```
 
 `renderStatic`函数执行时会根据下标获取到`staticRenderFns`数组里的静态渲染函数并执行生成 VNode 节点，并将该 VNode 节点缓存下来。这样的话，下次再次调用`render`函数导致`_m`函数再次执行时，就会根据传入的下标获取到第一次生成的 VNode 节点，而不必再次执行`staticRenderFns`数组里对应的静态渲染函数了。
 
 这就是在`优化 AST 树`一节里标记 AST Tree 里的静态子树后的第一次具体的优化，这次优化发生的`render`函数生成 VNode 的时候（不包括第一次调用`render`函数）。
+
+#### genOnce
+
+若 AST 节点是带有`v-once`指令的节点，则调用`genOnce`生成代码片段。
+
+```js
+/**
+ * 生成 v-once 节点的 code
+ */
+function genOnce (el: ASTElement, state: CodegenState): string {
+  el.onceProcessed = true
+  if (el.if && !el.ifProcessed) {
+    // 针对存在 v-if 指令且未经过 genIf 处理的节点，先经过 genIf 处理（经过 genIf 处理完之后，会再次调用 genOnce）
+    return genIf(el, state)
+  } else if (el.staticInFor) {
+    // 该节点是静态节点或带有 v-once 的节点，并且是带有 v-for 指令的节点的子孙节点
+    let key = ''
+    let parent = el.parent
+    while (parent) {
+      if (parent.for) {
+        key = parent.key
+        break
+      }
+      parent = parent.parent
+    }
+    if (!key) {
+      // 若该节点是存在 v-for 指令但没有 key 的节点的子孙节点，开发环境给出警告
+      process.env.NODE_ENV !== 'production' && state.warn(
+        `v-once can only be used inside v-for that is keyed. `,
+        el.rawAttrsMap['v-once']
+      )
+      // 忽略 v-once 指令，再次调用 genElement 生成代码片段
+      return genElement(el, state)
+    }
+    // _o 是 markOnce
+    return `_o(${genElement(el, state)},${state.onceId++},${key})`
+  } else {
+    // 当做静态根节点处理
+    return genStatic(el, state)
+  }
+}
+```
+
+`genOnce`函数里会先判断该 AST 节点是否还带有`v-if`指令且未经过`genIf`处理，若是则先调用`genIf`进行处理。
+
+之后，若判断出该节点是带有`v-for`指令的节点的子孙节点，则判断其带有`v-for`指令的祖先节点是否带有`key`。若没有`key`，则忽略`v-once`指令，再次调用`genElement`生成代码片段；否则，再次调用`genElement`生成代码片段，并使用`_o`即`markOnce`函数封装起来，`_o`函数的第一个参数是该 AST 节点的代码片段，第二个参数是自增的`onceId`，第三个参数是`key`。
+
+```js
+// src/core/instance/render-helpers/index.js
+export function installRenderHelpers (target: any) {
+  target._o = markOnce
+  // ...
+}
+```
+
+```js
+// src/core/instance/render-helpers/render-static.js
+/**
+ * Runtime helper for v-once.
+ * Effectively it means marking the node as static with a unique key.
+ */
+function markOnce (
+  tree,
+  index,
+  key
+) {
+  markStatic(tree, ("__once__" + index + (key ? ("_" + key) : "")), true);
+  return tree
+}
+```
+
+`render`函数执行时，`_o`函数即`markOnce`函数也会随之执行，`markOnce`里会将该 AST 节点生成的 VNode 节点标记为静态节点，并分配一个独立无二的`key`，以及标记该 VNode 节点是个带有`v-once`指令的节点。
+
+与`genStatic`对静态根节点处理不能的是，带有`v-once`的 AST 节点在每次`render`执行时，仍然会再次生成 VNode 节点，而不是像静态根节点那样使用缓存的 VNode。
