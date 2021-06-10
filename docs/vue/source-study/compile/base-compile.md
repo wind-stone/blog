@@ -1,8 +1,6 @@
----
-sidebarDepth: 0
----
-
 # 核心编译
+
+[[toc]]
 
 `compile`函数里所使用的`baseCompile`函数是在调用`createCompilerCreator`函数时传入的。`baseCompile`函数里的逻辑是核心的编译流程，与平台无关，具体包括：
 

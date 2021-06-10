@@ -7,6 +7,7 @@
   - slot 的实现
   - `sync`修饰符的实现
 - SSR
+- codegen 整理 && staticRoot 优化
 
 ## 其他
 

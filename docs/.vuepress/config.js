@@ -21,7 +21,7 @@ module.exports = {
     // ...（另有一些选项，可能不需要重置，就没列在此处）
 
     themeConfig: {
-        sidebarDepth: 2,
+        sidebarDepth: 0,
         nav: [
             {
                 text: 'Vue 源码学习',
