@@ -43,6 +43,8 @@ export default {
 
 此时，若是子组件触发了`mounted`事件，则会调用父组件的`childMounted`事件。
 
+这里需要注意的是，子组件标签上的`hook:mounted`事件，最终是挂载在子组件上的，类似于调用`childVm.$on('hook:mounted')`，详见: [事件监听器 - 添加自定义事件](https://blog.windstone.cc/vue/source-study/instance/events.html#%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6)
+
 第 3 种方式:
 
 ```vue

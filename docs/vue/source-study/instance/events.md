@@ -6,7 +6,7 @@ sidebarDepth: 0
 
 [[toc]]
 
-我们通常通过`v-on`指令或其缩写`@`监听元素上的事件。用在普通元素上时，只能监听原生 DOM 事件；用在自定义元素组件上时，也可以监听子组件触发的自定义事件。该节主要分析监听事件是如何与元素关系到一起，以及如何实现的。
+我们通常通过`v-on`指令或其缩写`@`监听元素上的事件。用在普通元素标签上时，只能监听原生 DOM 事件；用在自定义子组件标签上时，也可以监听子组件触发的自定义事件。该节主要分析监听事件是如何与元素关系到一起，以及如何实现的。
 
 ## 模板编译
 
@@ -138,11 +138,24 @@ export function eventsMixin (Vue: Class<Component>) {
 
 发布订阅模式实现的代码里，有一点需要我们注意，就是如何删除单次执行的订阅事件。我们看到，通过`$once`添加的单次执行的订阅事件，会将原始的监听器函数`fn`挂载在封装的监听器函数`on`的`fn`属性上，即`on.fn = fn`，这么做就方便了在用户通过`$off`方法删除单次执行的订阅事件时，能够找到通过`$once`添加的单次执行的订阅事件的监听器`fn`了。
 
+通过在 Vue 原型上添加这几个方法后，就可以通过组件实例`vm`调用这些方法来监听、触发、移除自定义事件了。
+
+注意，这里对自定义事件的监听、触发和移除，都是开发者添加对应的 JavaScript 代码来显式操作的。
+
 ### 添加自定义事件
+
+本小节介绍的自定义事件，不是开发者在 JavaScript 代码里显示添加的，而是开发者在组件标签上添加`@`/`v-on`指令添加的自定义事件，这些自定义事件的触发方式主要有两种：
+
+- 开发者在组件里显式调用`vm.$emit`触发
+- 子组件的生命周期钩子函数被调用时，会隐式调用`vm.$emit('hook:xxx')`触发
+
+而且，添加到组件标签上的自定义事件，最终会挂载在组件实例`vm`上，类似于显式调用了`vm.$on('hook:mounted')`来添加自定义事件。
 
 #### initEvents
 
-组件实例在初始化时，在`_init`方法里会调用`initEvents`，以初始化组件实例上事件相关的属性，比如在上一小节原型方法里的`_events`和`_hasHookEvent`属性。最后调用`updateComponentListeners`将事件监听器添加到`vm._events`上。
+组件实例在初始化时，在`_init`方法里会调用`initEvents`，以初始化组件实例上事件相关的属性，比如在上一小节原型方法里的`vm._events`和`vm._hasHookEvent`属性。最后调用`updateComponentListeners`将组件标签上添加的事件监听器添加到`vm._events`上。
+
+组件标签上的这些自定义事件，是该组件的父组件在父组件模板里声明子组件标签时添加的。
 
 ```js
 // src/core/instance/event.js
@@ -177,11 +190,11 @@ export function createComponent (...) {
 
   // extract listeners, since these needs to be treated as
   // child component listeners instead of DOM listeners
-  // 组件数据对象 data.on 上存储的是组件的自定义事件
+  // 组件数据对象 data.on 上存储的是组件标签上的自定义事件
   const listeners = data.on
   // replace with listeners with .native modifier
   // so it gets processed during parent component patch.
-  // 组件数据对象 data.nativeOn 上存储的是组件的原生事件
+  // 组件数据对象 data.nativeOn 上存储的是组件标签上的原生事件
   data.on = data.nativeOn
 
   const name = Ctor.options.name || tag
@@ -253,7 +266,7 @@ export function updateComponentListeners (
 在调用`updateListeners`时会传入`add`、`remove`参数，这两个参数都是函数，函数内分别是调用了`vm.$on/$once`、`vm.$off`来添加或删除组件的订阅事件。
 
 ::: warning 注意事项
-`add`函数和`remove`函数都是将自定义事件注册在`target`上以及从`target`上移除，而`target`是子组件实例。这也就是说，尽管自定义事件的事件处理方法是父组件的方法，但是最终事件是注册在子组件实例上的。（事件处理方法的`this`已经绑定了父组件实例）
+`add`函数和`remove`函数都是将自定义事件注册在`target`上以及从`target`上移除，而`target`是子组件实例。这也就是说，尽管自定义事件的事件处理方法是父组件的方法，但是最终事件是注册在子组件实例上的。（但是事件处理方法里的`this`已经绑定了父组件实例）
 :::
 
 #### updateListeners
@@ -628,16 +641,16 @@ export default {
 
 组件的自定义事件与原生事件的对比：
 
-类别 | 原生事件 | 组件自定义事件
---- | --- | ---
-实现方式 | 通过`addEventListener`方法添加原生事件处理 | 订阅发布模式
-事件挂载点 | 对应的 DOM Node | 子组件实例
-对事件监听器的处理 | 监听器需要用`withMacroTask`封装一层 | 无处理
-是否可以取消删除单次执行监听器 | 原始监听器返回`null`可以取消删除单次执行监听器 | 不可取消删除
+| 类别                           | 原生事件                                       | 组件自定义事件 |
+| ------------------------------ | ---------------------------------------------- | -------------- |
+| 实现方式                       | 通过`addEventListener`方法添加原生事件处理     | 订阅发布模式   |
+| 事件挂载点                     | 对应的 DOM Node                                | 子组件实例     |
+| 对事件监听器的处理             | 监听器需要用`withMacroTask`封装一层            | 无处理         |
+| 是否可以取消删除单次执行监听器 | 原始监听器返回`null`可以取消删除单次执行监听器 | 不可取消删除   |
 
 HTML 元素和组件的对比：
 
-类别 | HTML 元素 | 组件
---- | --- | ---
-事件类型 | 只能有原生事件 | 既能有原生事件，又能有自定义事件；原生事件是添加到`vnode.elm`元素上
-事件存放处 | `data.on` | 模板编译时，原生事件在`data.nativeOn`里；自定义事件在`data.on`里。但是在创建组件的 VNode 时，`data.on`数据会赋给`listeners`，`data.nativeOn`会赋给`data.on`，即最终组件的`data.on`放的是原生事件
+| 类别       | HTML 元素      | 组件                                                                                                                                                                                             |
+| ---------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 事件类型   | 只能有原生事件 | 既能有原生事件，又能有自定义事件；原生事件是添加到`vnode.elm`元素上                                                                                                                              |
+| 事件存放处 | `data.on`      | 模板编译时，原生事件在`data.nativeOn`里；自定义事件在`data.on`里。但是在创建组件的 VNode 时，`data.on`数据会赋给`listeners`，`data.nativeOn`会赋给`data.on`，即最终组件的`data.on`放的是原生事件 |
