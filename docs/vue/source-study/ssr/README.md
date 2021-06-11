@@ -2,6 +2,19 @@
 
 [[toc]]
 
+## SSR 的优势和劣势
+
+优势：
+
+- 更好的 SEO
+- 更快的内容到达时间 (`time-to-content`)
+
+劣势：
+
+- 只调用`created`及之前的生命周期钩子函数，一些外部扩展库(`external library`)可能需要特殊处理，才能在服务器渲染应用程序中运行。
+- 涉及构建设置和部署的更多要求，需要处于 Node.js server 运行环境。
+- 更多的服务器端负载，比如 CPU
+
 ## 学习记录
 
 ### createBundleRenderer

@@ -106,6 +106,7 @@ module.exports = {
             collapsable: false,
             children: [
                 'source-study/ssr/',
+                'source-study/ssr/vue-server-renderer',
                 'source-study/ssr/hydrate',
             ]
         },
