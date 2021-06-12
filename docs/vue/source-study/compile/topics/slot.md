@@ -447,7 +447,7 @@ function genScopedSlots (
     }
   }
 
-  // 针对每一个作用域插槽生成代码片段，再拼接成一个字符串
+  // 针对每一个作用域插槽生成代码，再拼接成一个字符串
   const generatedSlots = Object.keys(slots)
     .map(key => genScopedSlot(slots[key], state))
     .join(',')
@@ -461,7 +461,7 @@ function genScopedSlots (
 }
 
 /**
- * 获取作用域插槽的代码片段，其格式为：
+ * 获取作用域插槽的代码，其格式为：
  * {
  *   // key: 作用域插槽的 name（或者说是 target）
  *   // fn: 作用域插槽的 render 函数，运行时调用该函数可以获取到作用域插槽节点的 VNode 节点
@@ -489,7 +489,7 @@ function genScopedSlot (
   const slotScope = el.slotScope === emptySlotScopeToken
     ? ``
     : String(el.slotScope)
-  // 生成作用域插槽的 render 函数，render 函数里包含了作用域插槽节点集齐子孙节点的代码片段
+  // 生成作用域插槽的 render 函数，render 函数里包含了作用域插槽节点集齐子孙节点的代码
   const fn = `function(${slotScope}){` +
     `return ${el.tag === 'template'
       ? el.if && isLegacySyntax
@@ -513,13 +513,13 @@ scopedSlots: _u(
   ],
   null, // 可选
   needsForceUpdate, // 可选。父组件更新时，作用域插槽是否需要强制更新
-  contentHashKey，// 可选。作用域插槽代码片段的 hash
+  contentHashKey，// 可选。作用域插槽代码的 hash
 )
 ```
 
 这里的结构即父组件`render`函数的一部分，位于子组件数据对象里。
 
-`_u`函数的第一个参数是个数组，数组的每一项是作用域插槽内容的代码片段对象，该对象的结构为：
+`_u`函数的第一个参数是个数组，数组的每一项是作用域插槽内容的代码对象，该对象的结构为：
 
 ```js
 {
@@ -575,11 +575,11 @@ scopedSlots: {
   作用域插槽 key2: 作用域插槽 render2 函数,
   ...
   $stable, // 父组件更新时，作用域插槽是否需要强制更新
-  $key, // 作用域插槽代码片段的 hash，作为该作用域插槽的唯一标志
+  $key, // 作用域插槽代码的 hash，作为该作用域插槽的唯一标志
 }
 ```
 
-### genSlot 生成插槽标签的代码片段
+### genSlot 生成插槽标签的代码
 
 若 AST 节点是`slot`标签，则在`genElement`里调用`genSlot`生成`slot`标签的代码。
 

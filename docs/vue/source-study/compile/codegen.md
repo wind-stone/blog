@@ -759,4 +759,4 @@ function genIfConditions (
 
 #### genSlot
 
-详见[编译专题 - 插槽 - genSlot 生成插槽标签的代码片段](/vue/source-study/compile/topics/slot.html#genslot-生成插槽标签的代码片段)
+详见[编译专题 - 插槽 - genSlot 生成插槽标签的代码](/vue/source-study/compile/topics/slot.html#genslot-生成插槽标签的代码)
