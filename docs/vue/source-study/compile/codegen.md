@@ -97,7 +97,7 @@ export class CodegenState {
 
 ### genElement 函数
 
-`genElement`函数会针对每个 AST 节点生成代码片段，所有 AST 节点的代码片段，将组成最终的`render`函数的函数体。在正式生成 AST 节点的代码片段之前，会针对各种情况先进行预处理，这些情况有：
+`genElement`函数会针对每个 AST 节点生成代码，所有 AST 节点的代码，将组成最终的`render`函数的函数体。在正式生成 AST 节点的代码之前，会针对各种情况先进行预处理，这些情况有：
 
 - 静态根节点 && 未经过`genStatic`处理
 - 节点存在[v-once](https://cn.vuejs.org/v2/api/#v-once)指令 && 未经过`genOnce`处理
@@ -105,9 +105,10 @@ export class CodegenState {
 - 节点存在`v-if`指令 && 未经过`genIf`处理
 - 节点是`template`标签 && 该节点不是父组件里的插槽内容 && 该节点不是某个带有`v-pre`指令的节点的子孙节点
 
-等这些预处理完成后会再次调用`genElement`函数并走到最后一个`else`分支里，为原 AST 节点生成代码片段。
+等这些预处理完成后会再次调用`genElement`函数并走到最后一个`else`分支里，为原 AST 节点生成代码。
 
 ```js
+// src/compiler/codegen/index.js
 /**
  * 生成 vnode 节点
  */
@@ -163,7 +164,7 @@ export function genElement (el: ASTElement, state: CodegenState): string {
 }
 ```
 
-`genElement`函数里的最后一个`else`，是最终为 AST 节点生成代码片段的地方。在这里，也分为两种情况：
+`genElement`函数里的最后一个`else`，是最终为 AST 节点生成代码的地方。在这里，也分为两种情况：
 
 - 动态组件
 - 常规组件/HTML 标签
@@ -312,7 +313,7 @@ export function genData (el: ASTElement, state: CodegenState): string {
 ```js
 // src/compiler/codegen/index.js
 /**
- * 递归地为节点的所有子节点生成代码片段
+ * 递归地为节点的所有子节点生成代码
  */
 export function genChildren (
   el: ASTElement,
@@ -340,7 +341,7 @@ export function genChildren (
       ? getNormalizationType(children, state.maybeComponent)
       : 0
 
-    // 遍历所有子节点，生成子节点的代码片段
+    // 遍历所有子节点，生成子节点的代码
     const gen = altGenNode || genNode
     return `[${children.map(c => gen(c, state)).join(',')}]${
       normalizationType ? `,${normalizationType}` : ''
@@ -349,11 +350,11 @@ export function genChildren (
 }
 ```
 
-注意: 在生成子节点的代码片段时，子节点的代码片段字符串后面可能会带另一个`normalizationType`参数，作为`_c`函数的第四个参数。
+注意: 在生成子节点的代码时，子节点的代码字符串后面可能会带另一个`normalizationType`参数，作为`_c`函数的第四个参数。
 
 #### _c
 
-`genElement`函数里，在生成 AST 节点的数据对象字符串及子节点的代码片段后，会使用`_c(tag, data, children)`组装成最终的代码片段。而`_c`函数是在初始化组件实例时加入到`vm`上的，其实际上是对`createElement`函数的封装，在`render`函数运行时，`createElement`会为该 AST 节点生成 VNode 对象。
+`genElement`函数里，在生成 AST 节点的数据对象字符串及子节点的代码后，会使用`_c(tag, data, children)`组装成最终的代码。而`_c`函数是在初始化组件实例时加入到`vm`上的，其实际上是对`createElement`函数的封装，在`render`函数运行时，`createElement`会为该 AST 节点生成 VNode 对象。
 
 ```js
 // src/core/instance/render.js
@@ -371,7 +372,7 @@ export function initRender (vm: Component) {
 
 ### genElement 函数的预处理
 
-上一节讲述了在调用`genElement`函数为 AST 节点生成代码片段时走到最后一个`else`块的处理逻辑，而在此之前有多个`if`/`else if`的预处理，每个经过`if`/`else-if`块预处理过的 AST 节点，最终都会再次调用`genElement`并走到最后一个`else`块进行处理，不过有的 AST 节点可能会经过多个不同的`if`/`else-if`块的预处理。
+上一节讲述了在调用`genElement`函数为 AST 节点生成代码时走到最后一个`else`块的处理逻辑，而在此之前有多个`if`/`else if`的预处理，每个经过`if`/`else-if`块预处理过的 AST 节点，最终都会再次调用`genElement`并走到最后一个`else`块进行处理，不过有的 AST 节点可能会经过多个不同的`if`/`else-if`块的预处理。
 
 这一小节将讲述这些预处理的逻辑。
 
@@ -379,7 +380,7 @@ export function initRender (vm: Component) {
 
 在[优化 AST 树](/vue/source-study/compile/optimize.html)一节里，我们讲述了如何识别和标记 AST Tree 中的静态子树。而在生成`render`函数时，也会针对静态子树做特殊处理。
 
-若 AST 节点是静态根节点，则调用`genStatic`生成代码片段。
+若 AST 节点是静态根节点，则调用`genStatic`生成代码。
 
 ```js
 /**
@@ -396,7 +397,7 @@ function genStatic (el: ASTElement, state: CodegenState): string {
   if (el.pre) {
     state.pre = el.pre
   }
-  // 将静态根节点生成的代码片段保存在 staticRenderFns 函数里
+  // 将静态根节点生成的代码保存在 staticRenderFns 函数里
   state.staticRenderFns.push(`with(this){return ${genElement(el, state)}}`)
   state.pre = originalPreState
   return `_m(${
@@ -407,11 +408,11 @@ function genStatic (el: ASTElement, state: CodegenState): string {
 }
 ```
 
-`genStatic`函数里，会先将该 AST 节点标记为已经过静态处理，然后再次调用`genElement`函数获取代码片段，此时在`genElement`函数里发现`el.staticProcessed`为`true`就不会再调用`genStatic`函数。若是没命中其他的`if else`条件（即使命中了也会调用对应的函数进行处理，最后递归调用`genElement`也会再次不命中），会走到最后一个`else`里去生成代码片段。
+`genStatic`函数里，会先将该 AST 节点标记为已经过静态处理，然后再次调用`genElement`函数获取代码，此时在`genElement`函数里发现`el.staticProcessed`为`true`就不会再调用`genStatic`函数。若是没命中其他的`if else`条件（即使命中了也会调用对应的函数进行处理，最后递归调用`genElement`也会再次不命中），会走到最后一个`else`里去生成代码。
 
-获取到代码片段年后，会将代码片段包装起来存放在`staticRenderFns`数组里，方便以后在`render`函数执行时从`staticRenderFns`数组里获取该 AST 节点的静态渲染函数并执行获得对应的 VNode。
+获取到代码年后，会将代码包装起来存放在`staticRenderFns`数组里，方便以后在`render`函数执行时从`staticRenderFns`数组里获取该 AST 节点的静态渲染函数并执行获得对应的 VNode。
 
-最后，`genStatic`函数会返回`_m`包裹的代码片段，这段代码片段会成为`render`函数体的一部分，当`render`函数执行时，`_m`函数也会随之执行。这里可以看到，`_m`的第一个参数就是该 AST 节点对应的静态渲染函数在`staticRenderFns`数组里的下标。
+最后，`genStatic`函数会返回`_m`包裹的代码，这段代码会成为`render`函数体的一部分，当`render`函数执行时，`_m`函数也会随之执行。这里可以看到，`_m`的第一个参数就是该 AST 节点对应的静态渲染函数在`staticRenderFns`数组里的下标。
 
 ```js
 // src/core/instance/render-helpers/index.js
@@ -450,13 +451,14 @@ export function renderStatic (
     null,
     this // for render fns generated for functional component templates
   )
-  // 将 VNode 标记为静态节点，并给个独立无二的 key
+  // 将 VNode 标记为静态的，并给个独立无二的 key
   markStatic(tree, `__static__${index}`, false)
   return tree
 }
 
 /**
- * 将 Vnode 节点 或 Vnode 节点数组里的各个 Vnode 标记为静态节点
+ * 将 Vnode 或 Vnode 数组里的各个 Vnode 标记为静态的
+ * 类似 v-for 的节点会产生 VNode 数组
  */
 function markStatic (
   tree: VNode | Array<VNode>,
@@ -475,7 +477,7 @@ function markStatic (
 }
 
 /**
- * 将 Vnode 节点标记为静态的
+ * 将 Vnode 节点标记为静态的，并标记是否是带有 v-once 指令
  */
 function markStaticNode (node, key, isOnce) {
   node.isStatic = true
@@ -488,9 +490,13 @@ function markStaticNode (node, key, isOnce) {
 
 这就是在`优化 AST 树`一节里标记 AST Tree 里的静态子树后的第一次具体的优化，这次优化发生的`render`函数生成 VNode 的时候（不包括第一次调用`render`函数）。
 
+::: tip
+`genStatic`里会将所有的静态根节点的`render`函数保存在`state.staticRenderFns`数组里，在`generate`函数里会和最终的`render`函数体（字符串形式）一起返回。
+:::
+
 #### genOnce
 
-若 AST 节点是带有`v-once`指令的节点，则调用`genOnce`生成代码片段。
+若 AST 节点是带有`v-once`指令的节点，则调用`genOnce`生成代码。
 
 ```js
 /**
@@ -518,7 +524,7 @@ function genOnce (el: ASTElement, state: CodegenState): string {
         `v-once can only be used inside v-for that is keyed. `,
         el.rawAttrsMap['v-once']
       )
-      // 忽略 v-once 指令，再次调用 genElement 生成代码片段
+      // 忽略 v-once 指令，再次调用 genElement 生成代码
       return genElement(el, state)
     }
     // _o 是 markOnce
@@ -532,7 +538,7 @@ function genOnce (el: ASTElement, state: CodegenState): string {
 
 `genOnce`函数里会先判断该 AST 节点是否还带有`v-if`指令且未经过`genIf`处理，若是则先调用`genIf`进行处理。
 
-之后，若判断出该节点是带有`v-for`指令的节点的子孙节点，则判断其带有`v-for`指令的祖先节点是否带有`key`。若没有`key`，则忽略`v-once`指令，再次调用`genElement`生成代码片段；否则，再次调用`genElement`生成代码片段，并使用`_o`即`markOnce`函数封装起来，`_o`函数的第一个参数是该 AST 节点的代码片段，第二个参数是自增的`onceId`，第三个参数是`key`。
+之后，若判断出该节点是带有`v-for`指令的节点的子孙节点，则判断其带有`v-for`指令的祖先节点是否带有`key`。若没有`key`，则忽略`v-once`指令，再次调用`genElement`生成代码；否则，再次调用`genElement`生成代码，并使用`_o`即`markOnce`函数包裹起来，`_o`函数的第一个参数是该 AST 节点的代码，第二个参数是自增的`onceId`，第三个参数是`key`。
 
 ```js
 // src/core/instance/render-helpers/index.js
@@ -561,3 +567,196 @@ function markOnce (
 `render`函数执行时，`_o`函数即`markOnce`函数也会随之执行，`markOnce`里会将该 AST 节点生成的 VNode 节点标记为静态节点，并分配一个独立无二的`key`，以及标记该 VNode 节点是个带有`v-once`指令的节点。
 
 与`genStatic`对静态根节点处理不能的是，带有`v-once`的 AST 节点在每次`render`执行时，仍然会再次生成 VNode 节点，而不是像静态根节点那样使用缓存的 VNode。
+
+#### genFor
+
+若 AST 节点是带有`v-for`指令的节点，则调用`genFor`生成代码。
+
+```js
+// src/compiler/codegen/index.js
+export function genFor (
+  el: any,
+  state: CodegenState,
+  altGen?: Function,
+  altHelper?: string
+): string {
+  // 以下是存在 v-for 指令时，AST 上独有的属性
+  //   主要用三种形式（in 和 of 都行）：
+  //   1. value in object/array/number
+  //   2. (value, key) in object/array/number
+  //   3. (value, key, index) in object
+  // for,        // 要遍历的数组或对象
+  // alias,      // value
+  // iterator1,  // （可选）key
+  // iterator2,  // （可选）index
+
+  const exp = el.for
+  const alias = el.alias
+  const iterator1 = el.iterator1 ? `,${el.iterator1}` : ''
+  const iterator2 = el.iterator2 ? `,${el.iterator2}` : ''
+
+  if (process.env.NODE_ENV !== 'production' &&
+    state.maybeComponent(el) &&
+    el.tag !== 'slot' &&
+    el.tag !== 'template' &&
+    !el.key
+  ) {
+    // 针对组件上的 v-for 指令，若不存在 key 则警告
+    state.warn(
+      `<${el.tag} v-for="${alias} in ${exp}">: component lists rendered with ` +
+      `v-for should have explicit keys. ` +
+      `See https://vuejs.org/guide/list.html#key for more info.`,
+      el.rawAttrsMap['v-for'],
+      true /* tip */
+    )
+  }
+
+  el.forProcessed = true // avoid recursion
+  // _l 即 renderList，调用后会返回 VNode 数组
+  return `${altHelper || '_l'}((${exp}),` +
+    `function(${alias}${iterator1}${iterator2}){` +
+      `return ${(altGen || genElement)(el, state)}` +
+    '})'
+}
+```
+
+带有`v-for`指令的 AST 节点生成代码是用`_l`即`renderList`函数包裹起来，第一个参数是要遍历的对象/数组，第二个参数是单个节点的`render`函数，在`renderList`函数里会遍历调用`render`函数。
+
+```js
+// src/core/instance/render-helpers/index.js
+export function installRenderHelpers (target: any) {
+  // ...
+  target._l = renderList
+  // ...
+}
+```
+
+`renderList`函数里，会遍历对象或数组，最终生成**VNode 数组**。
+
+```js
+// src/core/instance/render-helpers/render-list.js
+/**
+ * 生成列表的 VNode 数组，比如 v-for
+ * @param {*} val 要遍历的对象或数组
+ * @param {*} render v-for 所在节点的 render 函数，调用后会获取一个 VNode 节点；可传不同参数多次调用获取 VNode 数组
+ * @returns VNode 数组
+ */
+export function renderList (
+  val: any,
+  render: (
+    val: any,
+    keyOrIndex: string | number,
+    index?: number
+  ) => VNode
+): ?Array<VNode> {
+  let ret: ?Array<VNode>, i, l, keys, key
+  if (Array.isArray(val) || typeof val === 'string') {
+    // 数组、字符串
+    ret = new Array(val.length)
+    for (i = 0, l = val.length; i < l; i++) {
+      ret[i] = render(val[i], i)
+    }
+  } else if (typeof val === 'number') {
+    // 数字
+    ret = new Array(val)
+    for (i = 0; i < val; i++) {
+      ret[i] = render(i + 1, i)
+    }
+  } else if (isObject(val)) {
+    // 对象
+    if (hasSymbol && val[Symbol.iterator]) {
+      // 若对象存在遍历器方法，调用遍历器方法获取对象的 key
+      ret = []
+      const iterator: Iterator<any> = val[Symbol.iterator]()
+      let result = iterator.next()
+      while (!result.done) {
+        ret.push(render(result.value, ret.length))
+        result = iterator.next()
+      }
+    } else {
+      keys = Object.keys(val)
+      ret = new Array(keys.length)
+      for (i = 0, l = keys.length; i < l; i++) {
+        key = keys[i]
+        ret[i] = render(val[key], key, i)
+      }
+    }
+  }
+  if (!isDef(ret)) {
+    ret = []
+  }
+  (ret: any)._isVList = true
+  return ret
+}
+```
+
+#### genIf
+
+若 AST 节点带有`v-if`指令，则调用`genIf`生成代码。
+
+BTW，节点的`ifConditions`属性是个数组，数组的第一个元素是带有`v-if`指令的 AST 节点自身，之后的元素存放了对应的`v-else-if`/`v-else`节点。
+
+```js
+// src/compiler/codegen/index.js
+
+// 以下为存在 v-if/v-else/v-else-if 指令时，AST 节点独有的属性
+// if, // 带 v-if 指令的元素的独有属性，其值为表达式
+// ifConditions: [ // 带 v-if 指令的元素的独有属性，其中 vIfEl/vElseIfEl/vElseEl 都是对应的元素节点
+//   { exp, block: vIfEl }, // v-if
+//   { exp, block: vElseIfEl }, // （可选）可能存在多个 v-else-if
+//   { exp, block: vElseEl }  // （可选）v-else
+// ],
+// else: true, // （可选）带 v-else 指令的元素的独有属性
+// elseif, // （可选）带 v-else-if 指令的元素的独有属性，其值为表达式
+export function genIf (
+  el: any,
+  state: CodegenState,
+  altGen?: Function,
+  altEmpty?: string
+): string {
+  el.ifProcessed = true // avoid recursion
+  return genIfConditions(el.ifConditions.slice(), state, altGen, altEmpty)
+}
+
+function genIfConditions (
+  conditions: ASTIfConditions,
+  state: CodegenState,
+  altGen?: Function,
+  altEmpty?: string
+): string {
+  if (!conditions.length) {
+    // _e: createEmptyVNode
+    return altEmpty || '_e()'
+  }
+
+  const condition = conditions.shift()
+  // 判断 condition.exp 是否 falsy，主要是因为 v-else 指令元素的 condition.exp 为 undefined
+  if (condition.exp) {
+    // v-if、v-else-if
+    return `(${condition.exp})?${
+      genTernaryExp(condition.block)
+    }:${
+      // 若前一个条件不成立，则使用剩余的条件递归调用 genIfConditions
+      genIfConditions(conditions, state, altGen, altEmpty)
+    }`
+  } else {
+    // v-else
+    return `${genTernaryExp(condition.block)}`
+  }
+
+  // v-if with v-once should generate code like (a)?_m(0):_m(1)
+  function genTernaryExp (el) {
+    return altGen
+      ? altGen(el, state)
+      : el.once
+        ? genOnce(el, state)
+        : genElement(el, state)
+  }
+}
+```
+
+`genIf`函数返回的代码是一到多个三元操作符表达式的字符串，嵌套的三元操作符表达式的数量取决于`v-else-if`/`v-else`的数量，但是最终只会针对单个 AST 节点生成 VNode。
+
+#### genSlot
+
+详见[编译专题 - 插槽 - genSlot 生成插槽标签的代码片段](/vue/source-study/compile/topics/slot.html#genslot-生成插槽标签的代码片段)

@@ -382,20 +382,28 @@ function checkForAliasModel () { ... }
 const astEl = {
   type: 1, // 节点类型，1 元素节点；2. 带插值的文本节点；3. 静态文本节点/注释节点
   tag, // 元素节点的标签
-  attrsList: attrs, // 元素节点的特性对象数组
-  attrsMap: makeAttrsMap(attrs), // 元素节点的特性对象
+
+
+  attrs: [ // 元素节点的特性数组
+    {
+      name,  // 特性的名称，包含指令和参数
+      value, // 特性的值，不包含单双引号
+      dynamic?,
+      start?,
+      end?
+    },
+    ...
+  ],
+  attrsList: attrs,
+  attrsMap: { // 元素节点的特性对象，attrsMap = makeAttrsMap(attrs)
+    name: value, // 这里的 name 和 value 同 attrs 里的一样
+  },
+
+
   parent, // 节点的父节点
   children: [] // 节点的子节点数组
 
   pre: Boolean, // （可选）若元素节点带有 v-pre 指令，则为 true
-  attrs: [ // 分三类：
-    // 1. value 经过处理的数据绑定 v-bind 特性
-    // 2. 非指令特性（value 为经过 JSON.stringify() 处理的字符串）
-    { name, value }, ...
-    // 3. slot
-    // 若元素 element 是父组件模板里子组件里的分发内容，会有这一项，比如父组件模板里，<child><h1 slot="header"></h1></child>，这里 slotTarget 即为 header，element 为 h1 元素。注意：若是 element 为 template 标签，不会有该项
-    { name: 'slot', value: slotTarget }
-  ],
 
   /**
    * (可选)分两类：
