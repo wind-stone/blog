@@ -358,6 +358,31 @@ function processSlotOutlet (el) {
 }
 ```
 
+```js
+// src/compiler/helpers.js
+/**
+ * 获取 AST 元素上绑定的特性的值；若绑定值不存在，获取静态值
+ */
+export function getBindingAttr (
+  el: ASTElement,
+  name: string,
+  getStatic?: boolean
+): ?string {
+  const dynamicValue =
+    getAndRemoveAttr(el, ':' + name) ||
+    getAndRemoveAttr(el, 'v-bind:' + name)
+  if (dynamicValue != null) {
+    return parseFilters(dynamicValue)
+  } else if (getStatic !== false) {
+    const staticValue = getAndRemoveAttr(el, name)
+    if (staticValue != null) {
+      // 如是静态值的话，或经过 JSON.stringify
+      return JSON.stringify(staticValue)
+    }
+  }
+}
+```
+
 ## 生成 render 函数及运行时阶段
 
 ### 插槽内容数据对象上的 scopedSlots
@@ -606,6 +631,7 @@ export function genElement (el: ASTElement, state: CodegenState): string {
  * 最终拼装成 _t(slotName, children, attrs对象, bind对象)
  */
 function genSlot (el: ASTElement, state: CodegenState): string {
+  // 注意，这里的 el.slotName 若是动态值，则是个字符串；若是静态值，则会经过 JSON.stringify，类似于 "default"
   const slotName = el.slotName || '"default"'
   // children 是 slot 标签内的节点，若该 slot 没有分发内容，则显示默认内容即 children
   const children = genChildren(el, state)
@@ -618,6 +644,8 @@ function genSlot (el: ASTElement, state: CodegenState): string {
         dynamic: attr.dynamic
       })))
     : null
+
+  // 获取 v-bind 指令（没有指令参数）的值
   const bind = el.attrsMap['v-bind']
   if ((attrs || bind) && !children) {
     res += `,null`
@@ -632,7 +660,7 @@ function genSlot (el: ASTElement, state: CodegenState): string {
 }
 ```
 
-`genSlot`函数返回的代码是用`_t`即`renderSlot`函数包裹的字符串，第一个参数是`slot`标签对应的插槽内容的名称，第二个参数是`slot`标签的子节点数组，第三个参数是标签上的`attrs`对象，第四个参数是`bind`对象。
+`genSlot`函数返回的代码是用`_t`即`renderSlot`函数包裹的字符串，第一个参数是`slot`标签对应的插槽内容的名称，第二个参数是`slot`标签的子节点数组（后备内容，当没有提供内容的时候被渲染），第三个参数是标签上的`attrs`对象，第四个参数是`bind`对象。
 
 因此，子组件的`render`函数里的子节点数组里，`slot`标签的表示形式为`_t(slotName, children, attrs对象, bind对象)`。
 
@@ -654,7 +682,7 @@ function installRenderHelpers (target) {
  */
 export function renderSlot (
   name: string,
-  // fallback 是 slot 标签内的节点，若该 slot 没有分发内容，则显示默认内容即 fallback
+  // slot 标签内的子节点，即后备内容，若该 slot 没有分发内容，则显示后备内容
   fallback: ?Array<VNode>,
   props: ?Object,
   bindObject: ?Object
@@ -671,6 +699,7 @@ export function renderSlot (
           this
         )
       }
+      // 将 slot 标签上的特性都合并在一起
       props = extend(extend({}, bindObject), props)
     }
     // 调用作用域插槽的 render 函数生成 VNode 节点
