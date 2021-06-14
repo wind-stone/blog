@@ -35,6 +35,7 @@ module.exports = {
                 'network/http/',
                 'network/https/',
                 'network/http2/',
+                'network/cors/',
                 'network/dns',
             ]
         },
