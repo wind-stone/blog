@@ -25,21 +25,13 @@ module.exports = {
         nav: [
             { text: 'Vue 2.x 源码学习', link: '/vue/source-study/' },
             { text: 'JavaScript', link: '/js/data-types/' },
+            { text: 'ES6+', link: '/es6/' },
             { text: 'CSS', link: '/css/selectors/' },
             { text: '浏览器环境', link: '/browser-env/browser/' },
-            {
-                text: 'Front End',
-                items: [
-                    { text: 'MVVM', link: '/front-end/mvvm/virtual-dom/' },
-                    { text: '工程化', link: '/front-end/engineering/project-init' },
-                    { text: '前端面试题', link: '/front-end/interview/js-interview' }
-                ]
-            },
+            { text: '前端工程化', link: '/front-end-engineering/project/init' },
             { text: '小程序', link: '/mini-program/weixin/' },
+            { text: '全栈技能', link: '/full-stack/' },
             { text: '技术文章', link: '/articles/string-literal/' },
-            { text: 'General Knowledge', link: '/general-knowledge/' },
-            { text: 'ES6+', link: '/es6/' },
-            { text: '代码片段', link: '/code-snippet/' },
             { text: 'GitHub', link: 'https://github.com/wind-stone' },
             { text: '随记', link: '/wander/house/' }
         ],

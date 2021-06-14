@@ -86,6 +86,14 @@ module.exports = {
             ]
         },
         {
+            title: 'CSS 代码片段',
+            collapsable: false,
+            children: [
+                'code-snippet/',
+                'code-snippet/dog-ear'
+            ]
+        },
+        {
             title: '未分类',
             collapsable: false,
             children: [

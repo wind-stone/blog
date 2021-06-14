@@ -60,6 +60,17 @@ module.exports = {
             ]
         },
         {
+            title: 'JS 代码片段',
+            collapsable: false,
+            children: [
+                'code-snippet/',
+                'code-snippet/browser/',
+                'code-snippet/browser/url',
+                'code-snippet/server/',
+                'code-snippet/validate/'
+            ]
+        },
+        {
             title: '未分类内容',
             collapsable: false,
             children: [

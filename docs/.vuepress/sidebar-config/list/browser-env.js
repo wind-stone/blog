@@ -84,6 +84,14 @@ module.exports = {
                 'scroll/click-delay',
                 'scroll/fastclick',
                 'scroll/performance',
+                'scroll/no-bg-scroll'
+            ]
+        },
+        {
+            title: '代码片段',
+            collapsable: false,
+            children: [
+                'code-snippet/rem/',
             ]
         },
         {
