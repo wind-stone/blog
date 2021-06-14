@@ -2,9 +2,10 @@ module.exports = {
     // Vue 源码学习
     '/vue/': [
         {
-            title: 'Vue 应用',
+            title: 'Vue 2.x 源码分析',
             collapsable: false,
             children: [
+                'source-study/',
                 'vue-series/vuejs/',
                 'vue-series/vuejs/scoped-css',
                 'vue-series/vue-router/'
@@ -119,5 +120,32 @@ module.exports = {
                 'vue-series/vuex/register-module',
             ]
         },
+
+        {
+            title: 'Vuex',
+            collapsable: false,
+            children: [
+                'vue-series/vuex/',
+                'vue-series/vuex/reset-child-module-state',
+                'vue-series/vuex/register-module',
+            ]
+        },
+    ],
+
+    '/vue3/': [
+        {
+            title: 'Vue 3.x',
+            collapsable: false,
+            children: [
+                '',
+            ]
+        },
+        {
+            title: 'reactivity 响应式',
+            collapsable: false,
+            children: [
+                'reactivity/use-difference',
+            ]
+        }
     ]
 };

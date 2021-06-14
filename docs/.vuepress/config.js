@@ -21,28 +21,17 @@ module.exports = {
     // ...（另有一些选项，可能不需要重置，就没列在此处）
 
     themeConfig: {
-        sidebarDepth: 0,
+        sidebarDepth: 2,
         nav: [
-            {
-                text: 'Vue 源码学习',
-                items: [
-                    { text: 'Vue 2.x', link: '/vue/source-study/' },
-                    { text: 'Vue 3.x', link: '/vue3/' }
-                ]
-            },
-            { text: 'CSS 规范-翻译', link: '/css-spec/css2.2/9-visual-formatting-model/' },
+            { text: 'Vue 2.x 源码学习', link: '/vue/source-study/' },
+            { text: 'JavaScript', link: '/js/data-types/' },
+            { text: 'CSS', link: '/css/selectors/' },
+            { text: '浏览器环境', link: '/browser-env/browser/' },
             {
                 text: 'Front End',
                 items: [
-                    { text: 'JavaScript', link: '/front-end/js/' },
-                    { text: 'CSS', link: '/front-end/css/topics/position-fixed' },
-                    { text: 'HTML-DOM', link: '/front-end/html-dom/' },
-                    { text: '浏览器环境', link: '/front-end/browser-env/browser/' },
                     { text: 'MVVM', link: '/front-end/mvvm/virtual-dom/' },
-                    { text: '兼容性', link: '/front-end/compatibility/' },
-                    { text: '用户体验', link: '/front-end/user-experience/' },
                     { text: '工程化', link: '/front-end/engineering/project-init' },
-                    { text: '技巧和坑', link: '/front-end/skill-pitfall/skill/' },
                     { text: '前端面试题', link: '/front-end/interview/js-interview' }
                 ]
             },

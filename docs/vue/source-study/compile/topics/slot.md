@@ -640,8 +640,6 @@ function genSlot (el: ASTElement, state: CodegenState): string {
 
 运行时阶段，当子组件生成 VNode 时，会为子组件模板里的所有节点生成 VNode，包括`slot`标签节点。
 
-
-
 ```js
 // src/compiler/codegen/index.js
 function installRenderHelpers (target) {

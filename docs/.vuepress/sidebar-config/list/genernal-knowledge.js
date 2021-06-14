@@ -55,13 +55,6 @@ module.exports = {
             ]
         },
         {
-            title: 'Network',
-            collapsable: true,
-            children: [
-                'network/dns'
-            ]
-        },
-        {
             title: '全栈技能',
             collapsable: true,
             children: [

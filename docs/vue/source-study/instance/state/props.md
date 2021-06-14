@@ -324,7 +324,7 @@ export function validateProp (
 若是定义`prop`的`type`时，`Boolean`为其中之一，则可能有如下情况，则重新设置该`prop`的值。
 
 1. 无值且无默认值的情况：调用组件时未传入`prop`的值 && `prop`定义时未设置默认值，则将`prop`的值置为`false`
-2. 针对[布尔特性](https://windstone.cc/knowledge/html-dom/#%E5%B8%83%E5%B0%94%E7%89%B9%E6%80%A7%EF%BC%88boolean-attributes%EF%BC%89)的情况：调用组件时传入的`prop`的值为空字符串 || `prop`的值为`key`的连字符形式，则可能出现如下情况：
+2. 针对布尔特性的情况：调用组件时传入的`prop`的值为空字符串 || `prop`的值为`key`的连字符形式，则可能出现如下情况：
     - 该`prop`指定的类型里没有`String`，则将`prop`的值置为`true`
     - 该`prop`指定的类型里有`String`，但是`Boolean`类型在`String`之前，则将`prop`的值置为`false`
 
