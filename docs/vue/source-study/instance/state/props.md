@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # props
 
 [[toc]]

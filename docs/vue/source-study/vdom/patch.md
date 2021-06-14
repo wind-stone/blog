@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # patch 函数
 
 [[toc]]

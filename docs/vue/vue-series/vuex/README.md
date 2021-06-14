@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # Vuex 源码学习
 
 [[toc]]

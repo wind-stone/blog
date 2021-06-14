@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 组件继承：Vue.extend
 
 [[toc]]

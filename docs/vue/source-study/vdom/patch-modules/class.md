@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # class 模块
 
 [[toc]]

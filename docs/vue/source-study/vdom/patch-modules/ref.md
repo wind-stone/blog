@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # ref 模块
 
 [[toc]]

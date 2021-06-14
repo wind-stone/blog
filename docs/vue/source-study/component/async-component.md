@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 异步组件
 
 [[toc]]

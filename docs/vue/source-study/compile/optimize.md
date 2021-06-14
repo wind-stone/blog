@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 优化 AST 树
 
 [[toc]]

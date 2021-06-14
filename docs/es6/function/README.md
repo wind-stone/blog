@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 函数
 
 [[toc]]

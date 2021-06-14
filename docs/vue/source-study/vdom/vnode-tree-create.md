@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 创建 VNode Tree
 
 [[toc]]

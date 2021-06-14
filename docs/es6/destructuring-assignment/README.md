@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 解构赋值
 
 [[toc]]

@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 生成 render 函数
 
 [[toc]]

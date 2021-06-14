@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # dom-props 模块
 
 [[toc]]

@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 各类理论
 
 [[toc]]

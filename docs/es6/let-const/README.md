@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # let 和 const
 
 [[toc]]

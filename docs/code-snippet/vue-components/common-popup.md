@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 通用弹窗
 
 [[toc]]

@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # rem 组件
 
 [[toc]]

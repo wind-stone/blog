@@ -120,16 +120,6 @@ module.exports = {
                 'vue-series/vuex/register-module',
             ]
         },
-
-        {
-            title: 'Vuex',
-            collapsable: false,
-            children: [
-                'vue-series/vuex/',
-                'vue-series/vuex/reset-child-module-state',
-                'vue-series/vuex/register-module',
-            ]
-        },
     ],
 
     '/vue3/': [

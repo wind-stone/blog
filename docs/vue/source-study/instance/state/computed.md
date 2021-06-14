@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 计算属性
 
 [[toc]]

@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 编译流程
 
 [[toc]]

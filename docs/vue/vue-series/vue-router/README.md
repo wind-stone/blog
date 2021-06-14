@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # vue-router 原理
 
 [[toc]]

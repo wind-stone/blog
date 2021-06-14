@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # Promise 使用技巧
 
 [[toc]]

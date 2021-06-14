@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 西山锦绣府
 
 ![位置](./img/location.png)

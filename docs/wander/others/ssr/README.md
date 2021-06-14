@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 科学上网
 
 [[toc]]

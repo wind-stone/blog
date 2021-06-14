@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 折角效果
 
 ```html

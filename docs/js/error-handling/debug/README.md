@@ -2,29 +2,23 @@
 
 [[toc]]
 
-## 特定 APP
+## APP 内
 
-### Chrome
+### 微信
 
-#### 远程调试
+[微信下调试H5页面](https://segmentfault.com/a/1190000018407990)
+
+## Chrome 调试
+
+### 远程调试
 
 参考文档：[在安卓设备上使用 Chrome 远程调试功能](http://wiki.jikexueyuan.com/project/chrome-devtools/remote-debugging-on-android.html)
 
 可能遇到的问题及解决方法：
 
-1. 手机设置里，打开“USB 调试”开关后，Chrome 上未显示设备，可尝试以下解决方法：
-    - 使用正规的数据线（最好是原装的）
-    - 重置“开发者选项”
-
-### 微信
-
-#### Android 微信
-
-Android 微信可以通过打开`http://debugx5.qq.com/`，进行一些代理、调试配置。
-
-![Android 微信，代理](./img/android-wechat-proxy.jpeg)
-
-![Android 微信，代理](./img/android-wechat-proxy.jpeg)
+- 手机设置里，打开“USB 调试”开关后，Chrome 上未显示设备，可尝试以下解决方法：
+  - 使用正规的数据线（最好是原装的）
+  - 重置“开发者选项”
 
 ## Charles
 
@@ -33,13 +27,7 @@ Android 微信可以通过打开`http://debugx5.qq.com/`，进行一些代理、
 1. 在 Safari 中访问`http://chls.pro/ssl`，安装证书
 2. （需要抓包 https 时，针对 iOS 11 及以上）打开【设置】>【通用】>【关于本机】>【证书信任设置】，将上一步安装的证书设置为信任
 
-### 解决 Charles 无法正常抓包 iOS 11 中的 Https 请求
-
-[解决Charles无法正常抓包iOS 11中的Https请求](https://www.jianshu.com/p/4005cf4f370d)
-
 ## 浏览器控制台
-
-[[toc]]
 
 ### $ 符号
 
@@ -285,9 +273,8 @@ var func1 = function(x, y, z) {
 
 #### 事件监听 断点调试
 
-Reference:
+## Reference
 
-- [前端早读课【第556期】一探前端开发中的JS调试技巧](https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&mid=2651220284&idx=1&sn=26eab0ec27163e7cb020fd95ac0dfaee&scene=21#wechat_redirect)
 - [前端早读课【第556期】一探前端开发中的JS调试技巧](https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&mid=2651220284&idx=1&sn=26eab0ec27163e7cb020fd95ac0dfaee&scene=21#wechat_redirect)
 - [前端早读课【第1104期】14 个你可能不知道的 JavaScript 调试技巧](https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&mid=2651227260&idx=1&sn=7471c6326c41ab56d9653948ab5803a8&chksm=bd495df88a3ed4eeec595e226eaa075890ff0b33d08ee72f5639868c63b3b8dd65d255f2cf22&scene=21#wechat_redirect)
 - [前端早读课【第1112期】前端 Console 调试小技巧](https://mp.weixin.qq.com/s/0g8X8As0X5FdBdjnWWBQkQ)

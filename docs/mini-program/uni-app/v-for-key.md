@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 列表循环里的 key 不生效
 
 [[toc]]

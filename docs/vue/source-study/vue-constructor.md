@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # Vue 构造函数
 
 [[toc]]

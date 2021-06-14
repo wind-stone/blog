@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 组件的 DOM Tree 是如何插入到父元素上的？
 
 [[toc]]

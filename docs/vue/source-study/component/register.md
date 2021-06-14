@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 组件注册
 
 [[toc]]
