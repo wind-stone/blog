@@ -63,25 +63,33 @@
 
 ## z-index
 
-现在我们来说说什么情况下会产生新的层：
+参考：[深入理解CSS中的层叠上下文和层叠顺序](https://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/)
 
-- 当一个元素位于 HTML 文档的最外层（`html`元素）
-- 当一个元素被设置了`opacity`，`transform`, `filters`, `css-regions`, `paged media`等属性
-- 当一个元素被定位了并且拥有一个`z-index`值（不为`auto`）
+### 层叠上下文
 
-在同一个层内的层叠顺序（越往后越在上面）：
+层叠上下文，`Stacking Context`。
 
-- 层的根元素，处于最下面
-- 设置了`position`为`relative`或者`absolute`的元素，`z-index`<`0`的元素，`z-index`越小，越在下面，相同`z-index`的情况下，按照 HTML 元素的书写顺序排列
-- 层内的默认没有定位的元素，设置了`position`为`relative`或者`absolute`的元素并且没有设置`z-index`、设置了`opacity`，`transforms`，`filters`，`css-regions`，`paged media`等属性的元素（新的层），相同`z-index`的情况下，按照 HTML 元素的书写顺序排列
-- 设置了`position`为`relative`或者`absolute`的元素，`z-index`>`0`的元素，`z-index`越大，越在上面（新的层）
+哪些元素会创建层叠上下文：
 
-Reference
+- 第一类：页面根元素即`html`元素，天然具有层叠上下文
+- 第二类：`z-index`不为`auto`的定位元素（`position`为`relative`/`absolute`/`fixed`）
+- 第三类：存在如下列出的其中一条 CSS3 属性
+  - `z-index`值不为`auto`的`flex`项(父元素`display:flex | inline-flex`)
+  - 元素的`opacity`值不是`1`
+  - 元素的`transform`值不是`none`
+  - 元素`mix-blend-mode`值不是`normal`
+  - 元素的`filter`值不是`none`
+  - 元素的`isolation`值是`isolate`
+  - `will-change`指定的属性值为上面任意一个
+  - 元素的`-webkit-overflow-scrolling`设为`touch`
 
-- [http://www.qianxingzhem.com/post-1667.html](http://www.qianxingzhem.com/post-1667.html)
-- [http://web.jobbole.com/82884/](http://web.jobbole.com/82884/)
+::: tip 提示
+在 CSS 2.1 时代，`z-index`必须与定位元素一起才能创建层叠上下文，但在 CSS3 里，可以与`flex`元素（即具有`display: flex | inline-flex`元素的子元素）一起创建层叠上下文。
+:::
 
-原文里："你只需要给红色的标签增加一个opacity小于1" 应该改成“你只需要给红色的标签外层的div增加一个opacity小于1”
+### 层叠顺序
+
+层叠顺序，`Stacking Order`。
 
 ## vertical-align
 
@@ -143,6 +151,15 @@ CSS 3 里，`width`属性又多了几个关键字取值：
 
 Reference: [张鑫旭 - 理解CSS3 max/min-content及fit-content等width值
 ](https://www.zhangxinxu.com/wordpress/2016/05/css3-width-max-contnet-min-content-fit-content/)
+
+## flex 相关
+
+### flex-basis
+
+- `flex-basis`默认作用在 Content Box 上
+- 只有`flex-basis`为`auto`时，`width`才有可能生效
+
+更多内容，参考[张鑫旭 - Oh My God，CSS flex-basis原来有这么多细节](https://www.zhangxinxu.com/wordpress/2019/12/css-flex-basis/)
 
 ## 属性值的百分比
 
