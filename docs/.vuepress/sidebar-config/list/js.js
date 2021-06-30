@@ -52,6 +52,7 @@ module.exports = {
             children: [
                 'typescript/',
                 'typescript/data-type',
+                'typescript/type-system',
                 'typescript/module',
                 'typescript/declaration-files',
                 'typescript/tsconfig-json',

@@ -36,6 +36,23 @@ TypeScript 内置的基本数据类型有:
 - `Tuple`，比如: `let student: [ string, number, boolean ] = [ 'Ross Geller', 27, true ]`
 - `interface`
 
+### 类型兼容性
+
+|    A\B    | boolean | number | string | symbol | undefined | null  | void  | never | unknown |  any  |
+| :-------: | :-----: | :----: | :----: | :----: | :-------: | :---: | :---: | :---: | :-----: | :---: |
+|  boolean  |    √    |   ×    |   ×    |   ×    |     ×     |   ×   |   ×   |   ×   |    √    |   √   |
+|  number   |    ×    |   √    |   ×    |   ×    |     ×     |   ×   |   ×   |   ×   |    √    |   √   |
+|  string   |    ×    |   ×    |   √    |   ×    |     ×     |   ×   |   ×   |   ×   |    √    |   √   |
+|  symbol   |    ×    |   ×    |   ×    |   √    |     ×     |   ×   |   ×   |   ×   |    √    |   √   |
+| undefined |    ×    |   ×    |   ×    |   ×    |     √     |   ×   |   √   |   ×   |    √    |   √   |
+|   null    |    ×    |   ×    |   ×    |   ×    |     ×     |   √   |   ×   |   ×   |    √    |   √   |
+|   void    |    ×    |   ×    |   ×    |   ×    |     ×     |   ×   |   √   |   ×   |    √    |   √   |
+|   never   |    √    |   √    |   √    |   √    |     √     |   √   |   √   |   √   |    √    |   √   |
+|  unknown  |    ×    |   ×    |   ×    |   ×    |     ×     |   ×   |   ×   |   ×   |    √    |   √   |
+|    any    |    √    |   √    |   √    |   √    |     √     |   √   |   √   |   ×   |    √    |   √   |
+
+第一列表示 A，第一行表示 B。表格里展示的是 A 是否能赋值给 B。
+
 ### 工具类型
 
 （暂时先放置在这里）
