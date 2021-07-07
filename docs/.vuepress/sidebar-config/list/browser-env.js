@@ -26,6 +26,7 @@ module.exports = {
                 'html-dom/events/',
                 'html-dom/image/',
                 'html-dom/image/image-lazy-load',
+                'html-dom/svg/',
             ]
         },
         {
