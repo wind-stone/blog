@@ -61,3 +61,10 @@ document.body.addEventListener('touchstart', function () {});
 - 使用 better-scroll 等滚动工具模拟原生的滚动
 
 当使用`better-scroll`等类似滚动库时，通常会使用`transform`来做滚动动画的过渡，但是在`transform`元素下的`fixed`定位的子元素将以`transform`元素为包含块进行定位，并失去固定效果。因此需要注意不要将`fixed`定位的元素放在滚动元素之下。
+
+## WebKit
+
+### 子元素上存在 transform 时父元素的 border-radius + overflow: hidden 不生效
+
+- [WebKit Bugzilla - overflow: hidden + border radius does not work when transform is added to child](https://bugs.webkit.org/show_bug.cgi?id=98538)
+- [Stack Overflow - Overflow: hidden with border radius not working on Safari](https://stackoverflow.com/questions/49066011/overflow-hidden-with-border-radius-not-working-on-safari)
