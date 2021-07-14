@@ -5,8 +5,9 @@ module.exports = {
             collapsable: false,
             children: [
                 'linux/',
+                'linux/shell',
                 'linux/linux-command',
-                'linux/envionment-variables.md',
+                'linux/environment-variables.md',
                 'linux/glob',
             ]
         },
