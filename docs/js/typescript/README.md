@@ -16,7 +16,7 @@
 - 类型系统
   - 【done】[Understanding the TypeScript’s type system and some must-know concepts](https://medium.com/jspoint/typescript-type-system-81fdb84bba75)
   - 【done】[Taking a look at must-know “utility types” provided by TypeScript](https://medium.com/jspoint/typescript-utility-types-4d9bfc37745c)
-  - [Exploring the world of “Generics” (generic data types) in TypeScript](https://medium.com/jspoint/typescript-generics-10e99078cc8)
+  - 【done】[Exploring the world of “Generics” (generic data types) in TypeScript](https://medium.com/jspoint/typescript-generics-10e99078cc8)
   - [A brief introduction to “Data Immutability” in TypeScript](https://medium.com/jspoint/typescript-data-immutability-71dc3e604426)
   - [Let’s quickly understand how “Polymorphism” works in TypeScript](https://medium.com/jspoint/typescript-polymorphism-d8ea1d690d5c)
 - 新的 ts/js 特性
@@ -459,11 +459,6 @@ const Component = Vue.extend({
 - 空合并运算符`??`
   - `let x = foo ?? bar();`，当`foo`为`null`或`undefined`时，`x`兜底取值为`bar()`。
   - [Nullish Coalescing - TypeScript 3.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing)
-
-### 类型操作符
-
-- `typeof`，获取一个标识符（变量/属性）的类型，详见[Typeof Type Operator](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html)
-- `keyof`，获取接口所有`key`的名称组成一个联合类型（每个成员都是字面量类型），详见[Keyof Type Operator](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html)
 
 ## 其他语法
 

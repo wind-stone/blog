@@ -327,7 +327,8 @@ interface PersonInterface{
 }
 
 // factory function
-// let createPerson = function( ctor: typeof Person, name: string ) {  // 也可以不声明 PersonInterface，直接用 typeof 获取 Person 的类型
+// 也可以不声明 PersonInterface，直接用 typeof 获取 Person 的类型
+// let createPerson = function( ctor: typeof Person, name: string ) {
 let createPerson = function( ctor: PersonInterface, name: string ): Person {
     let [ firstName, lastName ] = ctor.splitName( name, ctor.delimiter );
     return new ctor( firstName, lastName );
@@ -343,6 +344,10 @@ console.log( ross.getFullName() );
 如上代码里，`const ross: Person`这种用法，描述了`Person`的实例一面的类型（`instance side type`），因为它指出了`ross`具有`Person`类公开的那些属性和方法。
 
 而`PersonInterface`接口描述了`Person`的静态一面的类型（`static side type`），因为它声明了`Person`构造函数的类型以及静态属性和方法的类型。
+
+::: tip 提示
+声明类的类型是比较麻烦的，你可以通过`typeof`直接获取类的类型，比如`typeof Person`获取`Person`类的类型。`typeof Person`返回的是个接口，包含了类的静态属性/方法和构造函数。
+:::
 
 ### 作为接口的类
 
