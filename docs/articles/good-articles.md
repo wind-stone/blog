@@ -43,6 +43,11 @@
 - [前端早读课 - 【第1920期】如何监控网页的卡顿？](https://mp.weixin.qq.com/s/d-v7QgmP9aGnQr2nbpfzjQ)
 - [前端早读课 - 【第1915期】如何监控网页崩溃？](https://mp.weixin.qq.com/s/EscBLM3hAoCrYn9r9zFmng)
 
+### GPU 加速
+
+- [【官方】Chrome 硬件加速合成的原理](http://www.chromium.org/developers/design-documents/gpu-accelerated-compositing-in-chrome?spm=taofed.bloginfo.blog.1.68c75ac8ZPJVT1)
+- [【中文翻译】Chrome 硬件加速合成的原理](https://sinaad.github.io/xfe/2016/05/10/gpu-accelerated-compositing-in-chrome/)
+
 ## 工程类
 
 - [如何科学修改 node_modules 里的文件](https://mp.weixin.qq.com/s/Cb8iBibs6GjiOY-qWFz6mw)
