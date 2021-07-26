@@ -120,22 +120,25 @@ module.exports = {
                 'vue-series/vuex/register-module',
             ]
         },
-    ],
-
-    '/vue3/': [
         {
             title: 'Vue 3.x',
             collapsable: false,
             children: [
-                '',
+                '/vue3/',
+                '/vue3/composition-api',
+                '/vue3/reactivity/use-difference'
             ]
         },
-        {
-            title: 'reactivity 响应式',
-            collapsable: false,
-            children: [
-                'reactivity/use-difference',
-            ]
-        }
-    ]
+    ],
+
+    // '/vue3/': [
+
+    //     {
+    //         title: 'reactivity 响应式',
+    //         collapsable: false,
+    //         children: [
+    //             '',
+    //         ]
+    //     }
+    // ]
 };

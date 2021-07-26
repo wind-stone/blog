@@ -80,7 +80,8 @@ module.exports = {
             children: [
                 'unclassified/',
                 'unclassified/functional-programming',
-                'unclassified/pitfall'
+                'unclassified/pitfall',
+                'unclassified/react'
             ]
         },
     ],
