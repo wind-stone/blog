@@ -1,5 +1,43 @@
 # Proxy 实践
 
+## 遍历 Proxy 实例上的属性/属性值的方法
+
+```js
+const origin = {
+    a: 1,
+    b: 2
+};
+const proxy = new Proxy(origin, {
+    get(target, key, receiver) {
+        const result = Reflect.get(target, key, receiver);
+        console.log('get', key, result);
+        return result;
+    },
+    set(target, key, value, receiver) {
+        console.log('set', key, value);
+        return Reflect.set(target, key, value, receiver);
+    },
+    ownKeys(target) {
+        const result = Reflect.ownKeys(target);
+        console.log('ownKeys', result);
+        return result;
+    }
+});
+
+Object.keys(proxy);
+// ownKeys [ 'a', 'b' ]
+
+Object.values(proxy);
+// ownKeys [ 'a', 'b' ]
+// get a 1
+// get b 2
+
+Object.entries(proxy);
+// ownKeys [ 'a', 'b' ]
+// get a 1
+// get b 2
+```
+
 ## Proxy 实例上的数组方法
 
 当为数组创建代理时，调用代理上的数组方法时，可能会触发数组下标、`length`等属性的`set`和`get`。
