@@ -11,7 +11,7 @@ module.exports = {
                 'house/zhonghailichunhushu/',
                 'house/wanxiangyuefu/',
                 'house/xishanjinxiufu/',
-                'house/comparison'
+                'house/comparison',
             ]
         },
         {
@@ -26,6 +26,13 @@ module.exports = {
             collapsable: false,
             children: [
                 'outdoor/',
+            ]
+        },
+        {
+            title: '工具',
+            collapsable: false,
+            children: [
+                'tools'
             ]
         },
         {

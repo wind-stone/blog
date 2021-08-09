@@ -44,32 +44,6 @@ Object.entries(proxy);
 
 （TODO: 这里会触发的原因应该是 C++ 源码里在实现这些方法时会访问/设置这些属性）
 
-### push
-
-```js
-const origin = ['a', 'b'];
-const proxy = new Proxy(origin, {
-    get(target, key, receiver) {
-        const result = Reflect.get(target, key, receiver);
-        console.log('get', key, result);
-        return result;
-    },
-    set(target, key, value, receiver) {
-        console.log('set', key, value);
-        return Reflect.set(target, key, value, receiver);
-    }
-})
-proxy.push('c');
-
-// 结果
-// get push function push() { [native code] }
-// get length 2
-// set 2 c
-// set length 3
-```
-
-### pop
-
 ```js
 const origin = ['a', 'b'];
 const proxy = new Proxy(origin, {
@@ -87,6 +61,23 @@ const proxy = new Proxy(origin, {
         return Reflect.deleteProperty(target, key);
     }
 })
+```
+
+### push
+
+```js
+proxy.push('c');
+
+// 结果
+// get push function push() { [native code] }
+// get length 2
+// set 2 c
+// set length 3
+```
+
+### pop
+
+```js
 proxy.pop();
 
 // 结果
@@ -100,22 +91,6 @@ proxy.pop();
 ### shift
 
 ```js
-const origin = ['a', 'b'];
-const proxy = new Proxy(origin, {
-    get(target, key, receiver) {
-        const result = Reflect.get(target, key, receiver);
-        console.log('get', key, result);
-        return result;
-    },
-    set(target, key, value, receiver) {
-        console.log('set', key, value);
-        return Reflect.set(target, key, value, receiver);
-    },
-    deleteProperty(target, key) {
-        console.log('delete', key);
-        return Reflect.deleteProperty(target, key);
-    }
-})
 proxy.shift();
 
 // 结果
@@ -131,18 +106,6 @@ proxy.shift();
 ### unshift
 
 ```js
-const origin = ['a', 'b'];
-const proxy = new Proxy(origin, {
-    get(target, key, receiver) {
-        const result = Reflect.get(target, key, receiver);
-        console.log('get', key, result);
-        return result;
-    },
-    set(target, key, value, receiver) {
-        console.log('set', key, value);
-        return Reflect.set(target, key, value, receiver);
-    }
-})
 proxy.unshift('c');
 
 // 结果
@@ -159,23 +122,6 @@ proxy.unshift('c');
 ### splice
 
 ```js
-const origin = ['a', 'b'];
-const proxy = new Proxy(origin, {
-    get(target, key, receiver) {
-        const result = Reflect.get(target, key, receiver);
-        console.log('get', key, result);
-        return result;
-    },
-    set(target, key, value, receiver) {
-        console.log('set', key, value);
-        return Reflect.set(target, key, value, receiver);
-    },
-    deleteProperty(target, key) {
-        console.log('delete', key);
-        return Reflect.deleteProperty(target, key);
-    }
-})
-
 proxy.splice(0, 1);
 // 结果
 // get splice function splice() { [native code] }
@@ -186,7 +132,9 @@ proxy.splice(0, 1);
 // set 0 b
 // delete 1
 // set length 1
+```
 
+```js
 proxy.splice(0, 1, 'c', 'd');
 // 结果
 // get splice function splice() { [native code] }

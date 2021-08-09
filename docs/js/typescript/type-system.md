@@ -416,6 +416,10 @@ interface Lodash {
 declare const _: Lodash;
 ```
 
+## 类型声明
+
+[https://juejin.cn/post/6844903749501059085](Typescript 中的 interface 和 type 到底有什么区别)
+
 ## 参考文档
 
 - [Understanding the TypeScript’s type system and some must-know concepts](https://medium.com/jspoint/typescript-type-system-81fdb84bba75)
