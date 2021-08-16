@@ -188,3 +188,14 @@ Converts the first character in the string to an uppercase equivalent.
 ### Uncapitalize
 
 Converts the first character in the string to a lowercase equivalent.
+
+## 类型示例
+
+### 获取数组全部元素的类型
+
+```ts
+const array = ['hello', 'world'] as const
+
+// type a = "hello" | "world"
+type a = typeof array[number]
+```
