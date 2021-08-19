@@ -702,7 +702,7 @@ module.exports = {
       context: () => true,
       target: 'http://localhost:1234'
     },
-    // 默认情况下，当代理时，请求头的 origin 会被保留，若是将 changeOrigin 设为 true，将覆盖整个默认行为
+    // 默认情况下，当代理时请求头的 Origin 会被保留为在浏览器里访问的域名；若是将 changeOrigin 设为 true 将覆盖这个默认行为，改用 target
     proxy: {
       '/api': 'http://localhost:3000',
       changeOrigin: true
