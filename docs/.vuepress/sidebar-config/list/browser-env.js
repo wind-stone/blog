@@ -45,7 +45,8 @@ module.exports = {
             collapsable: false,
             children: [
                 'security/',
-                'security/cross-domain'
+                'security/cross-domain',
+                'security/same-site',
             ]
         },
         {
