@@ -23,6 +23,9 @@ nvm ls
 
 # 使用特定版本
 nvm use xxx
+
+# 设置默认的 Node 版本
+nvm alias default vxx.yy.zz
 ```
 
 ### nrm 管理 NPM registry
