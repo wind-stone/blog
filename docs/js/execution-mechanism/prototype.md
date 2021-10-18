@@ -45,3 +45,38 @@ Object.getPrototypeOf(Sub) === Function.prototype;             // true
 Sub.prototype === superInstance;                           // true
 Sub.prototype === Object.getPrototypeOf(Sub);              // false
 ```
+
+## 继承
+
+### 借用构造函数
+
+### 原型式继承
+
+### 组合继承
+
+```js
+function SuperType(name) {
+    this.name = name;
+    this.colors = ["red", "blue", "green"];
+}
+
+SuperType.prototype.sayName = function () {
+    alert(this.name);
+};
+
+function SubType(name, age) {
+    //继承属性 SuperType.call(this, name);
+    this.age = age;
+}
+
+//继承方法
+SubType.prototype = new SuperType();
+SubType.prototype.constructor = SubType;
+SubType.prototype.sayAge = function () {
+    alert(this.age);
+};
+```
+
+### 寄生式继承
+
+### 寄生组合继承
