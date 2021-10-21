@@ -466,12 +466,6 @@ const Component = Vue.extend({
   - 简化命名空间操作的方法，给常用的`x.y.z`起个短的名字`q`
   - 详见[TypeScript - Namespaces - Aliases](https://www.typescriptlang.org/docs/handbook/namespaces.html#aliases)
 
-## 工具类型
-
-详情：[Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
-
-- `Partial<Type>`: Constructs a type with all properties of Type set to optional.
-
 ## TypeScript 原理解析
 
 - [TypeScript 源码详细解读(1)总览](https://www.cnblogs.com/xuld/p/12180913.html)

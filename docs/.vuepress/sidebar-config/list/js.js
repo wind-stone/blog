@@ -57,10 +57,9 @@ module.exports = {
                 'typescript/declaration-files',
                 'typescript/tsconfig-json',
                 'typescript/complition',
-                'typescript/practice',
-                'typescript/extends',
                 'typescript/generics',
                 'typescript/typescript-grammar',
+                'typescript/utility-types',
             ]
         },
         {
