@@ -43,11 +43,6 @@
 
 其中，`offsetLeft`和 `offsetTop`属性与包含元素有关，包含元素的引用保存在`offsetParent`属性中。`offsetParent`属性不一定与`parentNode`的值相等。例如`td`元素的`offsetParent`是作为其祖先元素的`table`元素，因为`table`是在DOM层次中距`td`最近的一个具有大小的元素。
 
-
----
-sidebarDepth: 1
----
-
 ## 文档/元素位置
 
 ### 文档滚动距离

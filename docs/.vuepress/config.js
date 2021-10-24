@@ -24,7 +24,19 @@ module.exports = {
         sidebarDepth: 2,
         nav: [
             { text: 'Vue 2.x 源码学习', link: '/vue/source-study/' },
-            { text: 'JavaScript', link: '/js/data-types/' },
+            {
+                text: 'JavaScript',
+                items: [
+                    {
+                        text: 'JavaScript',
+                        link: '/js/data-types/',
+                    },
+                    {
+                        text: 'TypeScript',
+                        link: '/typescript/',
+                    }
+                ],
+            },
             { text: 'ES6+', link: '/es6/' },
             { text: 'CSS', link: '/css/selectors/' },
             { text: '浏览器环境', link: '/browser-env/browser/' },
