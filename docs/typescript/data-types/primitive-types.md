@@ -281,3 +281,7 @@ type Collection = void | never | any;
 // type Collection = unknown
 type Collection = void | never | unknown;
 ```
+
+## 参考文档
+
+- [The unknown Type in TypeScript](https://mariusschulz.com/blog/the-unknown-type-in-typescript)

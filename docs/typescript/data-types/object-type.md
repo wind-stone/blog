@@ -1,4 +1,25 @@
-# 接口
+# 对象类型
+
+定义对象类型的三种方式：
+
+```ts
+// 匿名
+let person: { name: string; age: number };
+
+// 接口
+interface Person {
+  name: string;
+  age: number;
+}
+let person: Person;
+
+// type
+type Person = {
+  name: string;
+  age: number;
+};
+let person: Person;
+```
 
 ## 索引签名
 
@@ -192,3 +213,23 @@ let ross: Student = {
 // log values
 console.log( 'ross =>', ross );
 ```
+
+## 注意事项
+
+### 解构赋值内无法添加类型声明
+
+Note that there is currently no way to place type annotations within destructuring patterns. This is because the following syntax already means something different in JavaScript.
+
+目前没有办法在解构赋值里添加类型声明，这是因为如下这种语法在 JavaScript 已经用于属性的重命名。
+
+```ts
+function draw({ shape: Shape, xPos: number = 100 /*...*/ }) {
+    // Cannot find name 'shape'. Did you mean 'Shape'?
+    render(shape);
+
+    // Cannot find name 'xPos'.
+    render(xPos);
+}
+```
+
+在对象的解构赋值里，`shape: Shape`是说将属性`shape`在本地重命名为`Shape`；类似地，`xPos: number`创建了一个名为`number`的变量，其值基于属性`xPos`。

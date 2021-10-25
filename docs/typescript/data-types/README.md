@@ -36,30 +36,7 @@ TypeScript 内置的基本数据类型有:
 - `Tuple`，比如: `let student: [ string, number, boolean ] = [ 'Ross Geller', 27, true ]`
 - `interface`
 
-## 函数
-
-### 函数类型的双向推导
-
-```ts
-// declare a function (using function expression)
-const sum = ( a: number, b: number ): number => a + b;
-```
-
-我们定义`sum`是个函数表达式，该函数表达式接受两个`number`类型的参数且返回类型也是`number`。尽管我们没有显式地声明变量`sum`的类型，但是 TypeScript 可以根据赋值给`sum`的函数表达式推导出来`sum`的类型，即`(a: number, b: number) => number`。
-
-```ts
-// declare a variable of type function
-let sum: ( a: number, b: number ) => number;
-
-// assign a (function) value to `sum`
-sum = ( a: number, b: number ): number => a + b; // redundant
-
-sum = ( a, b ) => a + b;
-```
-
-我们首先声明了变量为函数类型，该函数类型接受两个`number`类型的参数且返回也是`number`类型。
-
-之后，当我们将赋值函数表达式赋值给变量时，可以省略函数表达式的参数类型、返回类型，因为 TypeScript 可以根据变量`sum`的类型，自动推导出来该函数表达式的类型。
+## 联合类型
 
 ## 交叉类型
 
@@ -80,4 +57,30 @@ const student: Person & Student = {
     lastName: 'Stone',
     marks: 90
 }
+```
+
+### key 相同类型不同
+
+交叉类型取的多个类型的并集，但是如果同一个`key`在不同类型里的类型不同，则该`key`为`never`。
+
+```ts
+interface Person {
+    firstName: string;
+    lastName: string;
+    age: number;
+}
+
+interface Student {
+    marks: number;
+    age: string;
+}
+
+let student: Person & Student = {
+    firstName: '',
+    lastName: '',
+    marks: 0,
+    age: (function a() {
+        throw Error()
+    })(),
+};
 ```

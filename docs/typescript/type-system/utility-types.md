@@ -56,6 +56,19 @@ type PartialOptional<Type, Keys extends keyof Type> = {
 }
 ```
 
+## Required
+
+```ts
+/**
+ * Make all properties in T required
+ */
+type Required<T> = {
+    [P in keyof T]-?: T[P];
+};
+```
+
+`-?`操作符是将可能存在的可选项都变成必选项。
+
 ## Readonly
 
 通过将 Type 的所有属性设置为`readonly`，构造出一个新的类型。
@@ -263,35 +276,271 @@ type Omit<Type, Keys extends keyof any> = {
 
 类似于 Pick 的原理实现，区别在于：遍历`我们需要的属性联合`。`我们需要的属性联合`就是`Exclude<keyof Type, Keys>`。因此，遍历就是`[P in Exclude<keyof Type, Keys>`。
 
-## Required
+## Parameters
+
+从函数类型 Type 使用的参数类型，构造出一个元组类型。
+
+### 示例
+
+```ts
+declare function f1(arg: { a: number; b: string }): void;
+
+// type T0 = []
+type T0 = Parameters<() => string>;
+
+// type T1 = [s: string]
+type T1 = Parameters<(s: string) => void>;
+
+// type T2 = [arg: unknown]
+type T2 = Parameters<<T>(arg: T) => T>;
+
+
+// type T3 = [arg: {
+//     a: number;
+//     b: string;
+// }]
+type T3 = Parameters<typeof f1>;
+
+// type T4 = unknown[]
+type T4 = Parameters<any>;
+
+// type T5 = never
+type T5 = Parameters<never>;
+
+// Type 'string' does not satisfy the constraint '(...args: any) => any'.
+// type T6 = never
+type T6 = Parameters<string>;
+
+// Type 'Function' does not satisfy the constraint '(...args: any) => any'.
+// Type 'Function' provides no match for the signature '(...args: any): any'.
+// type T7 = never
+type T7 = Parameters<Function>;
+```
+
+### 实现
+
+```ts
+type Parameters<T extends (...args: any) => any> = T extends (...args: infer P) => any ? P : never;
+
+/**
+ * @example
+ * type Eg = [arg1: string, arg2: number];
+ */
+type Eg = Parameters<(arg1: string, arg2: number) => void>;
+```
+
+Parameters 首先约束参数 T 必须是个函数类型，所以`(...args: any) => any>`替换成`Function`也是可以的。
+
+具体实现就是，判断 T 是否是函数类型，如果是则使用`inter P`让 TypeScript 自己推导出函数的参数类型，并将推导的结果存到类型 P 上，否则就返回`never`。
+
+- `infer`关键词作用是让 TypeScript 自己推导类型，并将推导结果存储在其参数绑定的类型上。比如`infer P` 就是将结果存在类型P上，供使用。
+- `infer`关键词只能在`extends`条件类型上使用，不能在其他地方使用。
+
+## ConstructorParameters
+
+`ConstructorParameters<Type>`，从构造函数类型的构造函数参数里构造出一个元组或者数组类型。这将产生一个有着所有参数类型的元组类型（当 Type 不是函数时，结果是`never`类型）。
+
+### 示例
+
+```ts
+// type T0 = [message?: string]
+type T0 = ConstructorParameters<ErrorConstructor>;
+
+// type T1 = string[]
+type T1 = ConstructorParameters<FunctionConstructor>;
+
+// type T2 = [pattern: string | RegExp, flags?: string]
+type T2 = ConstructorParameters<RegExpConstructor>;
+
+// type T3 = unknown[]
+type T3 = ConstructorParameters<any>;
+
+// Type 'Function' does not satisfy the constraint 'abstract new (...args: any) => any'.
+// Type 'Function' provides no match for the signature 'new (...args: any): any'.
+// type T4 = never
+type T4 = ConstructorParameters<Function>;
+```
+
+### 实现
+
+```ts
+type ConstructorParameters<
+    T extends abstract new (...args: any) => any
+> = T extends abstract new (...args: infer P) => any ? P : never;
+```
+
+首先约束参数 T 为拥有构造函数的类。注意这里有个`abstract`修饰符，等下会说明。实现时，判断 T 是满足约束的类时，利用`infer P`自动推导构造函数的参数类型，并最终返回该类型。
+
+**为什么要对 T 约束为 abstract 抽象类呢？**
 
 ```ts
 /**
- * Make all properties in T required
+ * 定义一个普通类
  */
-type Required<T> = {
-    [P in keyof T]-?: T[P];
-};
+class MyClass {}
+
+/**
+ * 定义一个抽象类
+ */
+abstract class MyAbstractClass {}
+
+// 可以赋值
+const c1: typeof MyClass = MyClass
+// 报错，无法将抽象构造函数类型分配给非抽象构造函数类型
+const c2: typeof MyClass = MyAbstractClass
+
+// 可以赋值
+const c3: typeof MyAbstractClass = MyClass
+// 可以赋值
+const c4: typeof MyAbstractClass = MyAbstractClass
 ```
 
-`-?`操作符是将可能存在的可选项都变成必选项。
+由此看出，如果将类型定义为抽象类（抽象构造函数），则既可以赋值为抽象类，也可以赋值为普通类；而反之则不行。
 
-## Uppercase
+**直接使用类作为类型，和使用typeof 类作为类型，有什么区别呢？**
 
-Converts each character in the string to the uppercase version.
+```ts
+/**
+ * 定义一个类
+ */
+class People {
+  name: number;
+  age: number;
+  constructor() {}
+}
+
+// p1可以正常赋值
+const p1: People = new People();
+
+// 等号后面的People报错，类型“typeof People”缺少类型“People”中的以下属性: name, age
+const p2: People = People;
+
+// p3报错，类型 "People" 中缺少属性 "prototype"，但类型 "typeof People" 中需要该属性
+const p3: typeof People = new People();
+
+// p4可以正常赋值
+const p4: typeof People = People;
+```
+
+结论是这样的：
+
+- 当把类直接作为类型时，该类型约束的是该类型必须是类的实例；即该类型获取的是该类上的实例属性和实例方法（也叫原型方法）；
+- 当把`typeof 类`作为类型时，约束的满足该类的类型；即该类型获取的是该类上的静态属性和方法。
+
+## InstanceType
+
+通过获取一个构造函数类型的实例类型，构造一个新的类型。
+
+### 示例
+
+```ts
+class C {
+  x = 0;
+  y = 0;
+}
+
+// type T0 = C
+type T0 = InstanceType<typeof C>;
+
+// type T1 = any
+type T1 = InstanceType<any>;
+
+// type T2 = never
+type T2 = InstanceType<never>;
+
+// Type 'string' does not satisfy the constraint 'abstract new (...args: any) => any'.
+// type T3 = any
+type T3 = InstanceType<string>;
+
+// Type 'Function' does not satisfy the constraint 'abstract new (...args: any) => any'.
+// Type 'Function' provides no match for the signature 'new (...args: any): any'.
+// type T4 = any
+type T4 = InstanceType<Function>;
+```
+
+### 实现
+
+```ts
+type InstanceType<
+    T extends abstract new (...args: any) => any
+> = T extends abstract new (...args: any) => infer R ? R : any;
+```
+
+## ReturnType
+
+`ReturnType<Type>`，构造一个与函数类型 Type 的返回类型一致的新类型。
+
+### 示例
+
+```ts
+declare function f1(): { a: number; b: string };
+
+// type T0 = string
+type T0 = ReturnType<() => string>;
+
+// type T1 = void
+type T1 = ReturnType<(s: string) => void>;
+
+// type T2 = unknown
+type T2 = ReturnType<<T>() => T>;
+
+// type T3 = number[]
+type T3 = ReturnType<<T extends U, U extends number[]>() => T>;
+
+// type T4 = {
+//     a: number;
+//     b: string;
+// }
+type T4 = ReturnType<typeof f1>;
+
+// type T5 = any
+type T5 = ReturnType<any>;
+
+// type T6 = never
+type T6 = ReturnType<never>;
+
+// Type 'string' does not satisfy the constraint '(...args: any) => any'.
+// type T7 = any
+type T7 = ReturnType<string>;
+
+// Type 'Function' does not satisfy the constraint '(...args: any) => any'.
+// Type 'Function' provides no match for the signature '(...args: any): any'.
+// type T8 = any
+type T8 = ReturnType<Function>;
+```
+
+### 实现
+
+```ts
+type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
+```
+
+## TypeScript Compiler 内部实现的类型
 
 ::: tip 提示
 `Uppercase`、`Lowercase`、`Capitalize`和`Uncapitalize`这几个工具类型内置于编译器里以获得更好的性能，而且无法在 TypeScript 的`.d.ts`里找到。
+
+```ts
+type Uppercase<S extends string> = intrinsic;
+type Lowercase<S extends string> = intrinsic;
+type Capitalize<S extends string> = intrinsic;
+type Uncapitalize<S extends string> = intrinsic;
+```
+
 :::
 
-## Lowercase
+### Uppercase
+
+Converts each character in the string to the uppercase version.
+
+### Lowercase
 
 Converts each character in the string to the lowercase equivalent.
 
-## Capitalize
+### Capitalize
 
 Converts the first character in the string to an uppercase equivalent.
 
-## Uncapitalize
+### Uncapitalize
 
 Converts the first character in the string to a lowercase equivalent.

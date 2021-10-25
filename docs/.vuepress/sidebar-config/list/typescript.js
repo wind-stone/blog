@@ -13,7 +13,7 @@ module.exports = {
             children: [
                 'data-types/',
                 'data-types/primitive-types',
-                'data-types/interface',
+                'data-types/object-type',
                 'data-types/class',
                 'data-types/enum',
                 'data-types/function',

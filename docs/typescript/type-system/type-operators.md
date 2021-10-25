@@ -4,9 +4,15 @@
 
 获取一个标识符（变量/属性等）的类型，详见[Typeof Type Operator](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html)。
 
-## keyof
+## keyof 索引查询
 
-获取类型所有`key`的名称组成一个联合类型（每个成员都是字面量类型），详见[Keyof Type Operator](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html)
+[Keyof Type Operator](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html)。
+
+`keyof`操作符将获取对象类型所有的属性，产生一个由字符串（数字）字面量类型组成的联合类型。
+
+注意，
+
+- `keyof`只能获取`public`的属性，而不能获取到`private`和`protected`的属性。
 
 ### keyof any
 
@@ -58,6 +64,8 @@ type P<T> = [T] extends ['x'] ? 1 : 2;
  */
 type A4 = P<'x' | 'y'>
 ```
+
+## infer
 
 ## 操作符
 

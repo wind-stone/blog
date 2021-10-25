@@ -2,6 +2,51 @@
 
 [[toc]]
 
+## 索引访问
+
+[Indexed Access Types](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html)
+
+我们可以使用一个索引访问类型去查询另一个类型指定属性的类型。
+
+### 索引不存在的属性
+
+```ts
+type Person = { age: number; name: string; alive: boolean };
+// Property 'alve' does not exist on type 'Person'.
+type I1 = Person["alve"];
+```
+
+若是索引不存在的属性，将得到报错。
+
+### 获取数组元素的类型
+
+```ts
+const MyArray = [
+  { name: "Alice", age: 15 },
+  { name: "Bob", age: 23 },
+  { name: "Eve", age: 38 },
+];
+
+// type Person = {
+//     name: string;
+//     age: number;
+// }
+type Person = typeof MyArray[number];
+
+// type Age = number
+type Age = typeof MyArray[number]["age"];
+```
+
+注意，`typeof MyArray[number]`实际上是`(typeof MyArray)[number]`，`typeof MyArray`获取`MyArray`的类型，得到数组类型`{name: string; age: number;}[]`，最后获取数组项的类型。
+
+### T[K]
+
+- `T[K]`，获取 T 中`key`为 K 的类型组成的联合类型，其中 K 是字面量类型或其联合类型。
+- `T[keyof T]`，可以获取到 T 中所有`key`的类型组成的联合类型。
+- `T[keyof K]`，获取到的是 T 中同时存在于 T 和 K 的`key`的类型组成的联合类型。
+
+注意：如果`[]`中的`key`有不存在 T 中的，则该`key`的类型是`any`；因为 TypeScript 也不知道该`key`最终是什么类型，所以是`any`，且也会报错。
+
 ## 类型推导
 
 ## 类型断言
@@ -135,6 +180,86 @@ let p: Person = { firstName: 'Ross', lastName: 'Geller', gender: 'Male' };
 
 TypeScript 允许使用一个变量引用代替子类型（TypeScript 能从字面量值推导出变量的类型，因而隐式地产生子类型），但是不允许直接使用字面量值（否则容易误导）。
 
+## 条件类型
+
+[Conditional Types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html)，条件类型。
+
+条件类型的形式类似于 JavaScript 里的条件表达式：
+
+```ts
+SomeType extends OtherType ? TrueType : FalseType;
+```
+
+当`extends`左边的类型可以赋值给右边的类型时，将返回第一个类型，否则返回第二个类型。
+
+### infer 类型推断
+
+::: tip 提示
+`infer`关键词只能在`extends`条件类型上使用，不能在其他地方使用。
+:::
+
+条件类型使用`infer`关键字给我们提供了一个方法，可以从 TrueType 分支中参与比较的类型里推断出类型。比如，我们可以从 Flatten 里推断出元素类型，而不是手动通过索引访问提取出类型。
+
+```ts
+type Flatten<Type> = Type extends Array<infer Item> ? Item : Type;
+
+// 代替这种写法：
+type Flatten<T> = T extends any[] ? T[number] : T;
+```
+
+这里，我们使用`infer`关键字声明式地引入一个名为`Item`的新的泛型类型变量，而不是在 TrueType 分支里提取出 T 的元素类型。这让我们免于考虑如何挖掘和探查类型里我们感兴趣的结构。
+
+我们可以通过`infer`关键字写出一些有用的帮助类型别名。比如，我们可以从函数类型里提取出返回类型：
+
+```ts
+type GetReturnType<Type> = Type extends (...args: never[]) => infer Return
+  ? Return
+  : never;
+
+// type Num = number
+type Num = GetReturnType<() => number>;
+
+// type Str = string
+type Str = GetReturnType<(x: string) => string>;
+
+// type Bools = boolean[]
+type Bools = GetReturnType<(a: boolean, b: boolean) => boolean[]>;
+```
+
+When inferring from a type with multiple call signatures (such as the type of an overloaded function), inferences are made from the last signature (which, presumably, is the most permissive catch-all case). It is not possible to perform overload resolution based on a list of argument types.
+
+```ts
+declare function stringOrNum(x: string): number;
+declare function stringOrNum(x: number): string;
+declare function stringOrNum(x: string | number): string | number;
+
+// type T1 = string | number
+type T1 = ReturnType<typeof stringOrNum>;
+```
+
+### 可分配的条件类型
+
+若`extends`前面的类型是泛型，且泛型传入的是联合类型时，则此时的条件类型是可分配的：即会依次判断该联合类型的所有子类型是否可以`extends`后面的类型（是一个分发的过程），然后将最终的结果组成新的联合类型。
+
+```ts
+type ToArray<Type> = Type extends any ? Type[] : never;
+
+// type StrArrOrNumArr = string[] | number[]
+type StrArrOrNumArr = ToArray<string | number>;
+```
+
+To avoid that behavior, you can surround each side of the extends keyword with square brackets.
+
+为了阻止这种行为，你可以在`extends`的两侧都加上中括号以形成元组类型：
+
+```ts
+type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never;
+
+// 'StrArrOrNumArr' is no longer a union.
+// type StrArrOrNumArr = (string | number)[]
+type StrArrOrNumArr = ToArrayNonDist<string | number>;
+```
+
 ## 映射类型
 
 [映射类型](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html)，`Mapped Types`。映射类型基于索引签名的语法来构建新的类型。
@@ -255,4 +380,3 @@ type KindlessCircle = RemoveKindField<Circle>;
 ## 参考文档
 
 - [Understanding the TypeScript’s type system and some must-know concepts](https://medium.com/jspoint/typescript-type-system-81fdb84bba75)
-- [The unknown Type in TypeScript](https://mariusschulz.com/blog/the-unknown-type-in-typescript)
