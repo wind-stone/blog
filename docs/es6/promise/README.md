@@ -337,4 +337,4 @@ console.log(a)
 
 ### 简单实现源码
 
-<<< @/docs/es6/promise/implement.js
+@[code js](./implement.js)

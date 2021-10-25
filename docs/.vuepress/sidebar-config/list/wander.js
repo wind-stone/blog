@@ -2,47 +2,42 @@ module.exports = {
     // 随记
     '/wander/': [
         {
-            title: 'House 相关',
-            collapsable: false,
+            text: 'House 相关',
             children: [
-                'house/',
-                'house/tianya-post',
-                'house/beijing/',
-                'house/zhonghailichunhushu/',
-                'house/wanxiangyuefu/',
-                'house/xishanjinxiufu/',
-                'house/comparison',
+                '/wander/house/',
+                '/wander/house/tianya-post',
+                '/wander/house/beijing/',
+                '/wander/house/zhonghailichunhushu/',
+                '/wander/house/wanxiangyuefu/',
+                '/wander/house/xishanjinxiufu/',
+                '/wander/house/comparison',
             ]
         },
         {
-            title: '投资理财',
-            collapsable: false,
+            text: '投资理财',
             children: [
-                'investment/',
+                '/wander/investment/',
             ]
         },
         {
-            title: '户外',
-            collapsable: false,
+            text: '户外',
             children: [
-                'outdoor/',
+                '/wander/outdoor/',
             ]
         },
         {
-            title: '工具',
-            collapsable: false,
+            text: '工具',
             children: [
-                'tools'
+                '/wander/tools'
             ]
         },
         {
-            title: '其他',
-            collapsable: false,
+            text: '其他',
             children: [
                 // 'mac-shortcut-keys',
                 // 'word-pronunciation',
-                'others/theories',
-                'others/ssr/'
+                '/wander/others/theories',
+                '/wander/others/ssr/'
             ]
         }
     ]

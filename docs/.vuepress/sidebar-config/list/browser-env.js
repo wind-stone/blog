@@ -1,110 +1,94 @@
 module.exports = {
     '/browser-env/': [
         {
-            title: '浏览器',
-            collapsable: false,
+            text: '浏览器',
             children: [
-                'browser/',
-                'browser/process-thread',
-                'browser/open-page-process',
-                'browser/event-loop',
-                'browser/performance',
-                'browser/browser-api',
-                'browser/browser-requests',
-                'browser/faq',
-                'browser/dev-tools/'
+                '/browser-env/browser/',
+                '/browser-env/browser/process-thread',
+                '/browser-env/browser/open-page-process',
+                '/browser-env/browser/event-loop',
+                '/browser-env/browser/performance',
+                '/browser-env/browser/browser-api',
+                '/browser-env/browser/browser-requests',
+                '/browser-env/browser/faq',
+                '/browser-env/browser/dev-tools/'
             ]
         },
         {
-            title: 'HTML/DOM',
-            collapsable: false,
+            text: 'HTML/DOM',
             children: [
-                'html-dom/elements/',
-                'html-dom/attributes-properties/attributes',
-                'html-dom/attributes-properties/properties',
-                'html-dom/attributes-properties/differences-between-properties-and-attributes',
-                'html-dom/events/',
-                'html-dom/image/',
-                'html-dom/image/image-lazy-load',
-                'html-dom/svg/',
+                '/browser-env/html-dom/elements/',
+                '/browser-env/html-dom/attributes-properties/attributes',
+                '/browser-env/html-dom/attributes-properties/properties',
+                '/browser-env/html-dom/attributes-properties/differences-between-properties-and-attributes',
+                '/browser-env/html-dom/events/',
+                '/browser-env/html-dom/image/',
+                '/browser-env/html-dom/image/image-lazy-load',
+                '/browser-env/html-dom/svg/',
             ]
         },
         {
-            title: '网络',
-            collapsable: false,
+            text: '网络',
             children: [
-                'network/http/',
-                'network/https/',
-                'network/http2/',
-                'network/cors/',
-                'network/dns',
+                '/browser-env/network/http/',
+                '/browser-env/network/https/',
+                '/browser-env/network/http2/',
+                '/browser-env/network/cors/',
+                '/browser-env/network/dns',
             ]
         },
         {
-            title: '安全',
-            collapsable: false,
+            text: '安全',
             children: [
-                'security/',
-                'security/cross-domain',
-                'security/same-site',
+                '/browser-env/security/',
+                '/browser-env/security/cross-domain',
+                '/browser-env/security/same-site',
             ]
         },
         {
-            title: 'Hybrid',
-            collapsable: false,
+            text: 'Hybrid',
             children: [
-                'hybrid/h52app',
-                'hybrid/jsbridge',
-                'hybrid/universal-links',
+                '/browser-env/hybrid/h52app',
+                '/browser-env/hybrid/jsbridge',
+                '/browser-env/hybrid/universal-links',
             ]
         },
         {
-            title: '浏览器厂商及应用环境',
-            collapsable: false,
+            text: '浏览器厂商及应用环境',
             children: [
-                'vendor-app/wechat/',
-                'vendor-app/wechat/android-weixin-auto-open-browser',
+                '/browser-env/vendor-app/wechat/',
+                '/browser-env/vendor-app/wechat/android-weixin-auto-open-browser',
             ]
         },
         {
-            title: '浏览器兼容性',
-            collapsable: false,
+            text: '浏览器兼容性',
             children: [
-                'compatibility/',
-                'compatibility/video',
-                'compatibility/audio',
-                'compatibility/input-delay/',
-                'compatibility/ios/',
-                'compatibility/ios/safari-script-block-render',
+                '/browser-env/compatibility/',
+                '/browser-env/compatibility/video',
+                '/browser-env/compatibility/audio',
+                '/browser-env/compatibility/input-delay/',
+                '/browser-env/compatibility/ios/',
+                '/browser-env/compatibility/ios/safari-script-block-render',
             ]
         },
         {
-            title: '滚动专题',
-            collapsable: false,
+            text: '滚动专题',
             children: [
-                'scroll/',
-                'scroll/touch-event',
-                'scroll/click-delay',
-                'scroll/fastclick',
-                'scroll/performance',
-                'scroll/no-bg-scroll'
+                '/browser-env/scroll/',
+                '/browser-env/scroll/touch-event',
+                '/browser-env/scroll/click-delay',
+                '/browser-env/scroll/fastclick',
+                '/browser-env/scroll/performance',
+                '/browser-env/scroll/no-bg-scroll'
             ]
         },
         {
-            title: '代码片段',
-            collapsable: false,
+            text: '未分类',
             children: [
-                'code-snippet/rem/',
-            ]
-        },
-        {
-            title: '未分类',
-            collapsable: false,
-            children: [
-                'unclassified/web-components',
-                'unclassified/pwa',
-                'unclassified/file-system',
-                'unclassified/keyboard',
+                '/browser-env/unclassified/web-components',
+                '/browser-env/unclassified/pwa',
+                '/browser-env/unclassified/file-system',
+                '/browser-env/unclassified/keyboard',
             ]
         }
     ],

@@ -108,29 +108,29 @@ CSS 盒模型描述了为文档树里的元素生成的矩形盒子，这些盒�
 
 外边距属性允许取负值，但是具体实现可能会有限制。
 
-Name | `margin-top`, `margin-bottom`
---- | ---
-Value | `<margin-width> | inherit`
-Initial | 0
-Applies to | all elements except elements with table display types other than table-caption, table and inline-table
-Inherited | no
-Percentages | refer to width of containing block
-Media | visual
-Computed value | the percentage as specified or the absolute length
+| Name           | `margin-top`, `margin-bottom`                                                                          |
+| -------------- | ------------------------------------------------------------------------------------------------------ |
+| Value          | `<margin-width> \| inherit`                                                                            |
+| Initial        | 0                                                                                                      |
+| Applies to     | all elements except elements with table display types other than table-caption, table and inline-table |
+| Inherited      | no                                                                                                     |
+| Percentages    | refer to width of containing block                                                                     |
+| Media          | visual                                                                                                 |
+| Computed value | the percentage as specified or the absolute length                                                     |
 
 ::: tip 提示
 `margin-top`和`margin-bottom`在非替换行内元素上不起作用。
 :::
 
-Name | `margin-right`, `margin-left`
---- | ---
-Value | `<margin-width> | inherit`
-Initial | 0
-Applies to | all elements except elements with table display types other than table-caption, table and inline-table
-Inherited | no
-Percentages | refer to width of containing block
-Media | visual
-Computed value | the percentage as specified or the absolute length
+| Name           | `margin-right`, `margin-left`                                                                          |
+| -------------- | ------------------------------------------------------------------------------------------------------ |
+| Value          | `<margin-width> \| inherit`                                                                            |
+| Initial        | 0                                                                                                      |
+| Applies to     | all elements except elements with table display types other than table-caption, table and inline-table |
+| Inherited      | no                                                                                                     |
+| Percentages    | refer to width of containing block                                                                     |
+| Media          | visual                                                                                                 |
+| Computed value | the percentage as specified or the absolute length                                                     |
 
 这些属性分别设置了盒子的上右下左外边距。
 
@@ -138,15 +138,15 @@ Computed value | the percentage as specified or the absolute length
 h1 { margin-top: 2em }
 ```
 
-Name | `margin`
---- | ---
-Value | `<margin-width>{1,4} | inherit`
-Initial | see individual properties
-Applies to | all elements except elements with table display types other than table-caption, table and inline-table
-Inherited | no
-Percentages | refer to width of containing block
-Media | visual
-Computed value | see individual properties
+| Name           | `margin`                                                                                               |
+| -------------- | ------------------------------------------------------------------------------------------------------ |
+| Value          | `<margin-width>{1,4} \| inherit`                                                                       |
+| Initial        | see individual properties                                                                              |
+| Applies to     | all elements except elements with table display types other than table-caption, table and inline-table |
+| Inherited      | no                                                                                                     |
+| Percentages    | refer to width of containing block                                                                     |
+| Media          | visual                                                                                                 |
+| Computed value | see individual properties                                                                              |
 
 `margin`属性是一个简写属性，可以在样式表的同一地方设置`margin-top`、`margin-right`、`margin-bottom`、`margin-left`。
 
@@ -232,7 +232,7 @@ body {
 注意，发生外边距折叠的元素的位置对其他发生外边距折叠的元素的位置没有影响。元素上边框边界的位置仅是用于其子孙元素的布局。
 
 ::: warning 译者注 - 示例 1: 元素的上下外边距折叠
-<margin-collapse-box-self></margin-collapse-box-self>
+<!-- <margin-collapse-box-self></margin-collapse-box-self> -->
 
 ```html
 <div class="ctn">
@@ -255,7 +255,7 @@ body {
 :::
 
 ::: warning 译者注 - 示例 2: 复杂的外边距折叠的情况
-<margin-collapse-complicated></margin-collapse-complicated>
+<!-- <margin-collapse-complicated></margin-collapse-complicated> -->
 
 ```html
 <div class="ctn">
@@ -295,4 +295,3 @@ body {
 :::
 
 ## 8.4 内边距属性
-

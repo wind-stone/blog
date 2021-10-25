@@ -13,7 +13,7 @@
 - 中间件 Generator 函数里`yield next`的实现
 - 中间件 Generator 函数里`yield`另一个中间件的实现
 
-<<< @/docs/front-end-engineering/node/koa/1.x-simple-implement.js
+@[code js](./1.x-simple-implement.js)
 
 ### 2.x 中间件简单实现
 

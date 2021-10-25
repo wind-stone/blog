@@ -26,17 +26,17 @@ PS：请在手机端打开该页面进行体验
 
 ### 示例一：允许蒙层之下的内容滚动
 
-<common-popup-example
+<!-- <common-popup-example
   :forbid-bg-scroll="false"
 >
-</common-popup-example>
+</common-popup-example> -->
 
 ### 示例二：禁止蒙层之下的内容滚动
 
-<common-popup-example
+<!-- <common-popup-example
   :forbid-bg-scroll="true"
 >
-</common-popup-example>
+</common-popup-example> -->
 
 ## 调用
 
@@ -70,8 +70,8 @@ PS：请在手机端打开该页面进行体验
 
 ### 调用示例
 
-<<< @/docs/.vuepress/components/common-popup/example.vue
+@[code vue](components/common-popup/example.vue)
 
 ### 组件源码
 
-<<< @/docs/.vuepress/components/common-popup/index.vue
+@[code vue](components/common-popup/index.vue)

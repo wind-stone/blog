@@ -210,7 +210,7 @@ Reference: [`<a>`标签中download属性无法使用重命名下载文件名怎�
 
 #### vue 组件
 
-<<< @/docs/.vuepress/components/code/download/download-link.vue
+@[code vue](@components/code/download/download-link.vue)
 
 ## script 元素
 

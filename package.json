@@ -7,8 +7,9 @@
     "scripts": {
         "start": "npm run dev",
         "dev": "vuepress dev docs",
-        "build": "node ./build/addComponents.js && vuepress build docs && node ./build/delComponents.js",
-        "deploy": "sh deploy.sh",
+        "build": "vuepress build docs",
+        "deploy": "node ./build/addComponents.js && vuepress build docs && node ./build/delComponents.js",
+        "deploy-github": "sh deploy.sh",
         "lint": "lint-staged"
     },
     "husky": {
@@ -43,6 +44,6 @@
         "sass-loader": "^8.0.0",
         "vconsole": "^3.3.0",
         "vue-eslint-parser": "^6.0.4",
-        "vuepress": "^1.1.0"
+        "vuepress-vite": "^2.0.0-beta.26"
     }
 }

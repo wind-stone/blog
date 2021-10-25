@@ -155,7 +155,7 @@ const currentScript = scripts[scripts.length - 1];
 // ...
 ```
 
-### 为什么要将 JS 文件放文档底部 </body> 之前
+### 为什么要将 JS 文件放文档底部 body 之前
 
 先说结论：JS 文件的加载和执行，会阻塞 JS 文件之后 DOM 节点的解析和渲染，但不会影响其之前 DOM 节点的解析和渲染，因此要将 JS 文件放到页面尽可能底部的地方。
 

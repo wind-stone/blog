@@ -27,7 +27,7 @@ export function renderMixin (Vue: Class<Component>) {
     const { render, _parentVnode } = vm.$options
 
     // reset _rendered flag on slots for duplicate slot check
-    if (process.env.NODE_ENV !== 'production') {
+    if (p rocess.env.NODE_ENV !== 'production') {
       for (const key in vm.$slots) {
         // $flow-disable-line
         vm.$slots[key]._rendered = false
@@ -50,7 +50,7 @@ export function renderMixin (Vue: Class<Component>) {
       // return error render result,
       // or previous vnode to prevent render error causing blank component
       /* istanbul ignore else */
-      if (process.env.NODE_ENV !== 'production') {
+      if (p rocess.env.NODE_ENV !== 'production') {
         if (vm.$options.renderError) {
           try {
             vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
@@ -67,7 +67,7 @@ export function renderMixin (Vue: Class<Component>) {
     }
     // return empty vnode in case the render function errored out
     if (!(vnode instanceof VNode)) {
-      if (process.env.NODE_ENV !== 'production' && Array.isArray(vnode)) {
+      if (p rocess.env.NODE_ENV !== 'production' && Array.isArray(vnode)) {
         warn(
           'Multiple root nodes returned from render function. Render function ' +
           'should return a single root node.',
@@ -158,7 +158,7 @@ export function _createElement (
 ): VNode | Array<VNode> {
   if (isDef(data) && isDef((data: any).__ob__)) {
     // 这里影响显示效果，暂先注释
-    // process.env.NODE_ENV !== 'production' && warn(
+    // p rocess.env.NODE_ENV !== 'production' && warn(
     //   `Avoid using observed data object as vnode data: ${JSON.stringify(data)}\n` +
     //   'Always create fresh vnode data objects in each render!',
     //   context
@@ -178,7 +178,7 @@ export function _createElement (
     return createEmptyVNode()
   }
   // warn against non-primitive key
-  if (process.env.NODE_ENV !== 'production' &&
+  if (p rocess.env.NODE_ENV !== 'production' &&
     isDef(data) && isDef(data.key) && !isPrimitive(data.key)
   ) {
     if (!__WEEX__ || !('@binding' in data.key)) {
@@ -574,7 +574,7 @@ export function createComponent (
   // if at this stage it's not a constructor or an async component factory,
   // reject.
   if (typeof Ctor !== 'function') {
-    if (process.env.NODE_ENV !== 'production') {
+    if (p rocess.env.NODE_ENV !== 'production') {
       warn(`Invalid Component definition: ${String(Ctor)}`, context)
     }
     return

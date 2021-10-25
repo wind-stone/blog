@@ -516,10 +516,10 @@ module.exports = {
     chunkIds: 'size', // 数字 id，基于最小初始的下载大小
     chunkIds: false, // 默认值，不使用内置的算法，可通过 plugin 提供
 
-    // 告知 webpack 将 process.env.NODE_ENV 设置为一个给定字符串，若该值不是 false，则会使用 DefinePlugin
+    // 告知 webpack 将 p rocess.env.NODE_ENV 设置为一个给定字符串，若该值不是 false，则会使用DefinePlugin
     // 默认值取决于 mode；若为 falsy 值，则会回退到 "production"
-    nodeEnv: "any string", // 任意字符串，用于设置 process.env.NODE_ENV 的值
-    nodeEnv: false, // 不修改/设置 process.env.NODE_ENV 的值
+    nodeEnv: 'any string', // 任意字符串，用于设置 p rocess.env.NODE_ENV 的值
+    nodeEnv: false, // 不修改、设置 p rocess.env.NODE_ENV 的值
 
     // 如果模块已经包含在所有父级模块中，告知 webpack 从 chunk 中检测出这些模块，或移除这些模块。
     // 设置为 false 以禁用这项优化

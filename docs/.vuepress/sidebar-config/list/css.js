@@ -1,105 +1,85 @@
 module.exports = {
     '/css/': [
         {
-            title: 'CSS 专题',
-            collapsable: false,
+            text: 'CSS 专题',
             children: [
-                'topics/position-fixed',
-                'topics/flex-image/',
-                'topics/text-wrap-and-ellipsis/'
+                '/css/topics/position-fixed',
+                '/css/topics/flex-image/',
+                '/css/topics/text-wrap-and-ellipsis/'
             ]
         },
         {
-            title: '选择器',
-            collapsable: false,
+            text: '选择器',
             children: [
-                'selectors/'
+                '/css/selectors/'
             ]
         },
         {
-            title: '属性',
-            collapsable: false,
+            text: '属性',
             children: [
-                'properties/',
-                'properties/properties-order'
+                '/css/properties/',
+                '/css/properties/properties-order'
             ]
         },
         {
-            title: '屏幕',
-            collapsable: false,
+            text: '屏幕',
             children: [
-                'screen/'
+                '/css/screen/'
             ]
         },
         {
-            title: '视口',
-            collapsable: false,
+            text: '视口',
             children: [
-                'viewport/a-tale-of-viewports-one',
-                'viewport/a-tale-of-viewports-two'
+                '/css/viewport/a-tale-of-viewports-one',
+                '/css/viewport/a-tale-of-viewports-two'
             ]
         },
         {
-            title: '布局',
-            collapsable: false,
+            text: '布局',
             children: [
-                'layouts/',
-                'layouts/ifc/'
+                '/css/layouts/',
+                '/css/layouts/ifc/'
             ]
         },
         {
-            title: '字体',
-            collapsable: false,
+            text: '字体',
             children: [
-                'font/',
-                'font/css-font-metrics-line-height-and-vertical-align'
+                '/css/font/',
+                '/css/font/css-font-metrics-line-height-and-vertical-align'
             ]
         },
         {
-            title: '实践',
-            collapsable: false,
+            text: '实践',
             children: [
-                'practices/'
+                '/css/practices/'
             ]
         },
         {
-            title: '预处理器',
-            collapsable: false,
+            text: '预处理器',
             children: [
-                'preprocessor/less',
-                'preprocessor/stylus',
+                '/css/preprocessor/less',
+                '/css/preprocessor/stylus',
             ]
         },
         {
-            title: '工具集合',
-            collapsable: false,
+            text: '工具集合',
             children: [
-                'tools/safe-area'
+                '/css/tools/safe-area'
             ]
         },
         {
-            title: 'CSS 2.2 规范',
-            collapsable: false,
+            text: 'CSS 2.2 规范',
             children: [
-                'css-spec/css2.2/8-box-model/',
-                'css-spec/css2.2/9-visual-formatting-model/'
+                '/css/css-spec/css2.2/8-box-model/',
+                '/css/css-spec/css2.2/9-visual-formatting-model/'
             ]
         },
         {
-            title: 'CSS 代码片段',
-            collapsable: false,
+            text: '未分类',
             children: [
-                'code-snippet/',
-                'code-snippet/dog-ear'
-            ]
-        },
-        {
-            title: '未分类',
-            collapsable: false,
-            children: [
-                'unclassified/user-experience',
-                'unclassified/compatibility',
-                'unclassified/skill-pitfall'
+                '/css/unclassified/user-experience',
+                '/css/unclassified/compatibility',
+                '/css/unclassified/skill-pitfall'
             ]
         }
     ],

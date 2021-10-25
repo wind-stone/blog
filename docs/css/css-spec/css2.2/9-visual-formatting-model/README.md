@@ -178,15 +178,15 @@ P 元素包含了一个匿名文本的块（C1），其后是一个块级元素�
 
 ### 9.2.4 display 属性
 
-Name: | display
---- | ---
-Value: | `inline | block | list-item | inline-block | table | inline-table | table-row-group | table-header-group | table-footer-group | table-row | table-column-group | table-column | table-cell | table-caption | none | inherit`
-Initial: | inline
-Applies to: | all elements
-Inherited: | no
-Percentages: | N/A
-Media: | all
-Computed value: | see text
+| Name:           | display                                                                                                                                                                                                                                     |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Value:          | `inline \| block \| list-item \| inline-block \| table \| inline-table \| table-row-group \| table-header-group \| table-footer-group \| table-row \| table-column-group \| table-column \| table-cell \| table-caption \| none \| inherit` |
+| Initial:        | inline                                                                                                                                                                                                                                      |
+| Applies to:     | all elements                                                                                                                                                                                                                                |
+| Inherited:      | no                                                                                                                                                                                                                                          |
+| Percentages:    | N/A                                                                                                                                                                                                                                         |
+| Media:          | all                                                                                                                                                                                                                                         |
+| Computed value: | see text                                                                                                                                                                                                                                    |
 
 该属性有如下的取值及含义。
 
@@ -215,7 +215,7 @@ em  { display: inline }
 
 li  { display: list-item }
 
-img { display: none }      /* Do not display images */
+img { display: none } /* Do not display images */
 :::
 
 ## 9.3 定位方案
@@ -243,15 +243,15 @@ CSS 2.2 的定位方案通过允许它们避免布局影响中的标记把戏的
 
 `position`和`float`属性决定了使用哪种 CSS 2.2 定位算法来计算盒子的位置。
 
-Name: | position
---- | ---
-Value: | `static | relative | absolute | fixed | inherit`
-Initial: | static
-Applies to: | all elements
-Inherited: | no
-Percentages: | N/A
-Media: | visual
-Computed value: | as specified
+| Name:           | position                                             |
+| --------------- | ---------------------------------------------------- |
+| Value:          | `static \| relative \| absolute \| fixed \| inherit` |
+| Initial:        | static                                               |
+| Applies to:     | all elements                                         |
+| Inherited:      | no                                                   |
+| Percentages:    | N/A                                                  |
+| Media:          | visual                                               |
+| Computed value: | as specified                                         |
 
 `position`属性的这些值及其含义如下。
 
@@ -281,51 +281,51 @@ Computed value: | as specified
 
 若元素的`position`属性设置了除`static`之外的值，则这个元素是定位的（`positioned`）。定位的元素生成定位盒子，按照如下四个属性进行布局。
 
-Name: | top
---- | ---
-Value: | `<length> | <percentage> | auto | inherit`
-Initial: | auto
-Applies to: | positioned elements
-Inherited: | no
-Percentages: | refer to height of containing block
-Media: | visual
-Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'.
+| Name:           | top                                                                                                                                |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Value:          | `<length> \| <percentage> \| auto \| inherit`                                                                                      |
+| Initial:        | auto                                                                                                                               |
+| Applies to:     | positioned elements                                                                                                                |
+| Inherited:      | no                                                                                                                                 |
+| Percentages:    | refer to height of containing block                                                                                                |
+| Media:          | visual                                                                                                                             |
+| Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'. |
 
 `top`属性指定了绝对定位盒子的上外边距的上边界，距离包含块盒子的上边界（译者注: 即包含块的上边框的下边界），偏移有多远。对于相对定位的盒子，偏移是相对于盒子自身的上边界（比如，盒子在常规流中有一个位置，然后相对于这个位置，按照这些属性的值进行偏移）。
 
-Name: | right
---- | ---
-Value: | `<length> | <percentage> | auto | inherit`
-Initial: | auto
-Applies to: | positioned elements
-Inherited: | no
-Percentages: | refer to width of containing block
-Media: | visual
-Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'.
+| Name:           | right                                                                                                                              |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Value:          | `<length> \| <percentage> \| auto \| inherit`                                                                                      |
+| Initial:        | auto                                                                                                                               |
+| Applies to:     | positioned elements                                                                                                                |
+| Inherited:      | no                                                                                                                                 |
+| Percentages:    | refer to width of containing block                                                                                                 |
+| Media:          | visual                                                                                                                             |
+| Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'. |
 
 类似于`top`，但是指定了盒子的右外边距的右边界，距离包含块盒子右边界的左边（译者注: 包含块的右边框的左边界），偏移有多远。对于相对定位的盒子，偏移是相对于盒子自身的右边界。
 
-Name: | bottom
---- | ---
-Value: `<length> | <percentage> | auto | inherit`
-Initial: | auto
-Applies to: | positioned elements
-Inherited: | no
-Percentages: | refer to height of containing block
-Media: | visual
-Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'.
+| Name:           | bottom                                                                                                                             |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Value:          | `<length> \| <percentage> \| auto \| inherit`                                                                                      |
+| Initial:        | auto                                                                                                                               |
+| Applies to:     | positioned elements                                                                                                                |
+| Inherited:      | no                                                                                                                                 |
+| Percentages:    | refer to height of containing block                                                                                                |
+| Media:          | visual                                                                                                                             |
+| Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'. |
 
 类似于`top`，但是指定了盒子的下外边距的下边界，距离包含块盒子的底部（译者注: 包含块的下边框的上边界），偏移有多远。对于相对定位的盒子，偏移是相对于盒子自身的下边界。
 
-Name: | left
---- | ---
-Value: `<length> | <percentage> | auto | inherit`
-Initial: | auto
-Applies to: | positioned elements
-Inherited: | no
-Percentages: | refer to width of containing block
-Media: | visual
-Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'.
+| Name:           | left                                                                                                                               |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Value:          | `<length> \| <percentage> \| auto \| inherit`                                                                                      |
+| Initial:        | auto                                                                                                                               |
+| Applies to:     | positioned elements                                                                                                                |
+| Inherited:      | no                                                                                                                                 |
+| Percentages:    | refer to width of containing block                                                                                                 |
+| Media:          | visual                                                                                                                             |
+| Computed value: | if specified as a length, the corresponding absolute length; if specified as a percentage, the specified value; otherwise, 'auto'. |
 
 类似于`top`，但是指定了盒子的左外边距的左边界，距离包含块盒子的左边界的右边（译者注: 包含框的左边框的右边界），距离有多远。对于相对定位的盒子，偏移是相对于盒子自身的左边界。
 
@@ -755,15 +755,15 @@ p {
 
 ### 9.5.1 float 属性
 
-Name: | float
---- | ---
-Value: | left | right | none | inherit
-Initial: | none
-Applies to: | all, but see 9.7
-Inherited: | no
-Percentages: | N/A
-Media: | visual
-Computed value: | as specified
+| Name:           | float                              |
+| --------------- | ---------------------------------- |
+| Value:          | `left \| right \| none \| inherit` |
+| Initial:        | none                               |
+| Applies to:     | all, but see 9.7                   |
+| Inherited:      | no                                 |
+| Percentages:    | N/A                                |
+| Media:          | visual                             |
+| Computed value: | as specified                       |
 
 该属性指定了盒子是应该浮动到左边、右边，还是不浮动。该属性可设置到任意元素上，但是只应用到生成非绝对定位盒子的元素上。该属性的所有取值如下:
 
@@ -814,15 +814,15 @@ But in CSS 2.2, if, within the block formatting context, there is an in-flow neg
 
 ### 9.5.2 控制浮动旁边的流: clear 属性
 
-Name: | clear
---- | ---
-Value: | none | left | right | both | inherit
-Initial: | none
-Applies to: | block-level elements
-Inherited: | no
-Percentages: | N/A
-Media: | visual
-Computed value: | as specified
+| Name:           | clear                |
+| --------------- | -------------------- |
+| Value:          | none                 | left | right | both | inherit |
+| Initial:        | none                 |
+| Applies to:     | block-level elements |
+| Inherited:      | no                   |
+| Percentages:    | N/A                  |
+| Media:          | visual               |
+| Computed value: | as specified         |
 
 该属性表明元素盒子的哪一边不能与之前的浮动盒子相邻。`clear`属性不影响元内部的浮动或其他 BFC 里的浮动。
 
@@ -1016,11 +1016,11 @@ Computed value: | as specified
 4. 否则，若元素是根元素，`display`的值将按下表设置，除了 CSS 2.2 没有定义的一点，即指定值为`list-item`的，其计算值为`block`还是`list-item`。
 5. 否则，`display`的值就为指定的值。
 
-Specified value | Computed value
---- | ---
-`inline-table` | `table`
-`inline`/`table-row-group`/`table-column`/`table-column-grou`/`table-header-group`/`table-footer-group`/`table-row`/`table-cel`/`table-caption`/`inline-block` | `block`
-others | same as specified
+| Specified value                                                                                                                                                | Computed value    |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| `inline-table`                                                                                                                                                 | `table`           |
+| `inline`/`table-row-group`/`table-column`/`table-column-grou`/`table-header-group`/`table-footer-group`/`table-row`/`table-cel`/`table-caption`/`inline-block` | `block`           |
+| others                                                                                                                                                         | same as specified |
 
 ## 9.8 常规流、浮动、绝对定位的对比
 
@@ -1405,15 +1405,15 @@ Conte 6 nts
 
 ### 9.9.1 指定堆叠层级: z-index 属性
 
-Name | z-index
---- | ---
-Value | `auto | <integer> | inherit`
-Initial | auto
-Applies to | positioned elements
-Inherited | no
-Percentages | N/A
-Media | visual
-Computed value | as specified
+| Name           | z-index                        |
+| -------------- | ------------------------------ |
+| Value          | `auto \| <integer> \| inherit` |
+| Initial        | auto                           |
+| Applies to     | positioned elements            |
+| Inherited      | no                             |
+| Percentages    | N/A                            |
+| Media          | visual                         |
+| Computed value | as specified                   |
 
 对于一个定位盒子来说，`z-index`属性指定了:
 
@@ -1510,15 +1510,15 @@ Unicode 标准（[UNICODE](https://www.w3.org/TR/CSS22/refs.html#ref-UNICODE)，
 
 [HTML 4](https://www.w3.org/TR/CSS22/refs.html#ref-HTML4)的规范的 8.2 章节定义了 HTML 元素的双向性行为。[简单样式表](https://www.w3.org/TR/CSS22/sample.html#bidi)里的规则可以完成 HTML 4 里确定的双向性行为。HTML 4 规范也包括了更多关于双向性问题的信息。
 
-Name | direction
---- | ---
-Value | `ltr | rtl | inherit`
-Initial | ltr
-Applies to | all elements, but see prose
-Inherited | yes
-Percentages | N/A
-Media | visual
-Computed value | as specified
+| Name           | direction                   |
+| -------------- | --------------------------- |
+| Value          | `ltr \| rtl \| inherit`     |
+| Initial        | ltr                         |
+| Applies to     | all elements, but see prose |
+| Inherited      | yes                         |
+| Percentages    | N/A                         |
+| Media          | visual                      |
+| Computed value | as specified                |
 
 该属性指定了块元素里书写方向的基础，以及 Unicode 双向性算法的嵌入和覆盖的方向（详见`unicode-bidi`）。并且，它还指定了这些事情:
 
@@ -1539,15 +1539,15 @@ Computed value | as specified
 当为表格列元素指定`direction`属性时，将不会被列里的表格单元元素继承，因为在文档树里，列元素不是表格单元元素的祖先。因此，CSS 不能轻易地控制 HTML 4 里 11.3.2.1 章节里描述的`dir`特性的继承规则。
 :::
 
-Name | unicode-bidi
---- | ---
-Value | `normal | embed | bidi-override | inherit`
-Initial | normal
-Applies to | all elements, but see prose
-Inherited | no
-Percentages | N/A
-Media | visual
-Computed value | as specified
+| Name           | unicode-bidi                                  |
+| -------------- | --------------------------------------------- |
+| Value          | `normal \| embed \| bidi-override \| inherit` |
+| Initial        | normal                                        |
+| Applies to     | all elements, but see prose                   |
+| Inherited      | no                                            |
+| Percentages    | N/A                                           |
+| Media          | visual                                        |
+| Computed value | as specified                                  |
 
 该属性的取值和含义如下:
 

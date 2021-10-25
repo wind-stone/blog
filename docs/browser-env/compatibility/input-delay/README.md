@@ -182,4 +182,4 @@ input 放在视口内好办，但是让用户感知不到 input 的存在，这�
 
 ## html 示例
 
-<<< @/docs/browser-env/compatibility/input-delay/input-hidden.html
+@[code html](./input-hidden.html)

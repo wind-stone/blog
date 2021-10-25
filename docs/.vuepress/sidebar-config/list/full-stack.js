@@ -1,72 +1,65 @@
 module.exports = {
     '/full-stack/': [
         {
-            title: 'Linux',
-            collapsable: false,
+            text: 'Linux',
             children: [
-                'linux/',
-                'linux/shell',
-                'linux/linux-command',
-                'linux/environment-variables.md',
-                'linux/glob',
+                '/full-stack/linux/',
+                '/full-stack/linux/shell',
+                '/full-stack/linux/linux-command',
+                '/full-stack/linux/environment-variables.md',
+                '/full-stack/linux/glob',
             ]
         },
         {
-            title: 'Git',
-            collapsable: false,
+            text: 'Git',
             children: [
-                'git/',
-                'git/git-command',
-                'git/git-commit-guidelines',
-                'git/gitlab',
+                '/full-stack/git/',
+                '/full-stack/git/git-command',
+                '/full-stack/git/git-commit-guidelines',
+                '/full-stack/git/gitlab',
             ]
         },
         {
-            title: 'Nginx',
-            collapsable: false,
+            text: 'Nginx',
             children: [
-                'nginx/',
-                'nginx/practices',
-                'nginx/nginx-conf',
-                'nginx/ngx_http_proxy_module',
-                'nginx/ngx_http_upstream_module'
+                '/full-stack/nginx/',
+                '/full-stack/nginx/practices',
+                '/full-stack/nginx/nginx-conf',
+                '/full-stack/nginx/ngx_http_proxy_module',
+                '/full-stack/nginx/ngx_http_upstream_module'
             ]
         },
         {
-            title: '数据管理',
-            collapsable: false,
+            text: '数据管理',
             children: [
-                'data-management/kafka/',
-                'data-management/clickhouse',
-                'data-management/mongodb',
+                '/full-stack/data-management/kafka/',
+                '/full-stack/data-management/clickhouse',
+                '/full-stack/data-management/mongodb',
             ]
         },
         {
-            title: '后端',
-            collapsable: false,
+            text: '后端',
             children: [
-                'backend/nestjs/',
+                '/full-stack/backend/nestjs/',
             ]
         },
 
         {
-            title: '基础算法',
-            collapsable: false,
+            text: '基础算法',
             children: [
-                'algorithm/binary-search/',
-                'algorithm/sorting-algorithm/bubble-sort/',
-                'algorithm/sorting-algorithm/selection-sort/',
-                'algorithm/sorting-algorithm/insertion-sort/',
-                'algorithm/sorting-algorithm/merge-sort/',
-                'algorithm/sorting-algorithm/quick-sort/'
+                '/full-stack/algorithm/binary-search/',
+                '/full-stack/algorithm/sorting-algorithm/bubble-sort/',
+                '/full-stack/algorithm/sorting-algorithm/selection-sort/',
+                '/full-stack/algorithm/sorting-algorithm/insertion-sort/',
+                '/full-stack/algorithm/sorting-algorithm/merge-sort/',
+                '/full-stack/algorithm/sorting-algorithm/quick-sort/'
             ]
         },
         {
-            title: '其他',
-            collapsable: false,
+            text: '其他',
             children: [
-                'others/google-cloud',
-                'others/translation'
+                '/full-stack/others/google-cloud',
+                '/full-stack/others/translation'
             ]
         },
     ]

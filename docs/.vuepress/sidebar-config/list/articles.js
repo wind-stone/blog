@@ -5,8 +5,8 @@ module.exports = {
             title: '文章列表',
             collapsable: false,
             children: [
-                'string-literal/',
-                'line-terminator/',
+                '/articles/string-literal/',
+                '/articles/line-terminator/',
                 // 'wechat-mini-program-sourcemap/'
             ]
         },
@@ -14,7 +14,7 @@ module.exports = {
             title: '日常阅读文章',
             collapsable: false,
             children: [
-                'good-articles',
+                '/articles/good-articles',
             ]
         }
     ]

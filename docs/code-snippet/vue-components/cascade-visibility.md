@@ -10,38 +10,38 @@
 
 ### 示例及代码
 
-<cascade-visibility-OldA />
+<!-- <cascade-visibility-OldA /> -->
 
 请打开控制台，并点击上方的按钮，并查看报错。
 
 A 组件:
 
-<<< @/docs/.vuepress/components/cascade-visibility/OldA.vue
+@[code vue](@components/cascade-visibility/OldA.vue)
 
 B 组件:
 
-<<< @/docs/.vuepress/components/cascade-visibility/OldB.vue
+@[code vue](@components/cascade-visibility/OldB.vue)
 
 C 组件:
 
-<<< @/docs/.vuepress/components/cascade-visibility/OldC.vue
+@[code vue](@components/cascade-visibility/OldC.vue)
 
 ## 解决方案
 
 以上示例之所以会报错，是因为 B 组件里直接修改了`props`里的`proA`，如果在 B 组件里可以间接地通过`emit`事件让 A 组件来修改`proA`就没问题了。
 
-<cascade-visibility-NewA />
+<!-- <cascade-visibility-NewA /> -->
 
 A 组件(仅修改了引入 NewB 组件):
 
-<<< @/docs/.vuepress/components/cascade-visibility/NewA.vue
+@[code vue](@components/cascade-visibility/NewA.vue)
 
 B 组件（引入 CascadeVisibility.js 组件）:
 
-<<< @/docs/.vuepress/components/cascade-visibility/NewB.vue
+@[code vue](@components/cascade-visibility/NewB.vue)
 
 CascadeVisibility.js:
 
-<<< @/docs/.vuepress/components/cascade-visibility/CascadeVisibility.js
+@[code vue](@components/cascade-visibility/CascadeVisibility.js)
 
 C 组件无需修改。

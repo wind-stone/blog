@@ -27,7 +27,7 @@ module.exports = {
 
     configureWebpack: config => {
         // 设置 devtool
-        if (process.env.NODE_ENV === 'production') {
+        if (p rocess.env.NODE_ENV === 'production') {
             config.devtool = 'source-map';
             config.output.sourceMapFilename =
                 '../' + process.env.UNI_PLATFORM + '/[name].js.map';
@@ -169,11 +169,11 @@ module.exports = {
 
 #### 仅在开发模式下引入 vConsole
 
-通常情况下，我们会在项目入口文件`index.js`里通过`process.env.NODE_ENV`环境变量判断是否要引入 vConsole:
+通常情况下，我们会在项目入口文件`index.js`里通过`p rocess.env.NODE_ENV`环境变量判断是否要引入 vConsole:
 
 ```js
 // 测试vconsole
-if (process.env.NODE_ENV === 'development') {
+if (p rocess.env.NODE_ENV === 'development') {
     const VConsole = require('vconsole');
     new VConsole();
 }
@@ -186,7 +186,7 @@ if (process.env.NODE_ENV === 'development') {
 if (false) { var VConsole; }
 ```
 
-可以看到，`process.env.NODE_ENV === 'development'`被编译成了`false`，且并没有`require('vconsole')`对应的代码，因此在生产环境最终的`bundle`里是不会引入 vConsole 代码的。而且，在打包时将 Webpack 的`optimization.minimize`设置为`true`，则生产环境最终的`bundle`里连`if (false) { var VConsole; }`和注释都会删除掉。
+可以看到，`p rocess.env.NODE_ENV === 'development'`被编译成了`false`，且并没有`require('vconsole')`对应的代码，因此在生产环境最终的`bundle`里是不会引入 vConsole 代码的。而且，在打包时将 Webpack 的`optimization.minimize`设置为`true`，则生产环境最终的`bundle`里连`if (false) { var VConsole; }`和注释都会删除掉。
 
 #### 在开发和测试模式下引入 vConsole
 
@@ -194,7 +194,7 @@ if (false) { var VConsole; }
 
 ```js
 // 测试vconsole
-if (process.env.NODE_ENV === 'development' || process.env.VUE_APP_ENV === 'test') {
+if (p rocess.env.NODE_ENV === 'development' || process.env.VUE_APP_ENV === 'test') {
     const VConsole = require('vconsole');
     new VConsole();
 }
@@ -204,7 +204,7 @@ if (process.env.NODE_ENV === 'development' || process.env.VUE_APP_ENV === 'test'
 
 ::: tip 提示
 
-- 测试环境构建时，`process.env.NODE_ENV`都会设置为`production`，以保证测试环境和生产环境使用的 Webpack 配置尽可能一致。
+- 测试环境构建时，`p rocess.env.NODE_ENV`都会设置为`production`，以保证测试环境和生产环境使用的 Webpack 配置尽可能一致。
 - 以`VUE_APP_`开头的环境变量在构建时会被`webpack.DefinePlugin`静态嵌入到客户端侧的包中，因此可以在应用代码里`console.log(process.env.VUE_APP_ENV)`这样访问它们。
 :::
 
@@ -220,7 +220,7 @@ if ( false || Object({"NODE_ENV":"production","BASE_URL":"//blog.windstone.com/"
 }
 ```
 
-`process.env.NODE_ENV === 'development'`依然被编译成`false`，但是`process.env.VUE_APP_ENV === 'test'`被编译成`Object({"NODE_ENV":"production","BASE_URL":"//blog.windstone.com/"}).VUE_APP_ENV === 'test'`。
+`p rocess.env.NODE_ENV === 'development'`依然被编译成`false`，但是`process.env.VUE_APP_ENV === 'test'`被编译成`Object({"NODE_ENV":"production","BASE_URL":"//blog.windstone.com/"}).VUE_APP_ENV === 'test'`。
 
 更为严重的是，`require('vconsole')`编译成了`__webpack_require__("3a34")`，这意味着，在生产环境的`bundle`里最终包含了 vConsole 的 NPM 包代码，而这根本不是我们想要的。
 
@@ -255,7 +255,7 @@ new Vue({
 `vue.config.js`添加如下代码：
 
 ```js
-const isDevOrTest = process.env.NODE_ENV === 'development' || process.env.VUE_APP_ENV === 'test';
+const isDevOrTest = p rocess.env.NODE_ENV === 'development' || process.env.VUE_APP_ENV === 'test';
 
 module.exports = {
     // ...
@@ -307,7 +307,7 @@ Vue CLI 生成的项目里，`public/index.html`文件是一个会被`html-webpa
         <meta name="format-detection" content="telephone=no" />
         <link rel="icon" href="/favicon.ico" />
         <title><%= htmlWebpackPlugin.options.title %></title>
-        <% if (process.env.NODE_ENV === 'development' || process.env.VUE_APP_ENV === 'test') { %>
+        <% if (p rocess.env.NODE_ENV === 'development' || process.env.VUE_APP_ENV === 'test') { %>
             <script src="https://unpkg.com/vconsole@3.3.4/dist/vconsole.min.js"></script>
             <script>
                 var vConsole = new VConsole();
@@ -319,3 +319,7 @@ Vue CLI 生成的项目里，`public/index.html`文件是一个会被`html-webpa
     </head>
 </html>
 ```
+
+## 说明
+
+因为 VuePress 的`bug`，涉及到 `process` `.env` `.NODE_ENV`的地方，`process`都写成了`p rocess`

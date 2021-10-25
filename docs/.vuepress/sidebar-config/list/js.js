@@ -1,86 +1,54 @@
 module.exports = {
     '/js/': [
         {
-            title: '数据类型',
-            collapsable: false,
+            text: '数据类型',
             children: [
-                'data-types/',
-                'data-types/number/',
-                'data-types/number/floating',
-                'data-types/string/',
-                'data-types/object/',
-                'data-types/array/',
-                'data-types/function/',
-                'data-types/date/',
-                'data-types/reg-exp/',
-                'data-types/type-conversion',
+                '/js/data-types/',
+                '/js/data-types/number/',
+                '/js/data-types/number/floating',
+                '/js/data-types/string/',
+                '/js/data-types/object/',
+                '/js/data-types/array/',
+                '/js/data-types/function/',
+                '/js/data-types/date/',
+                '/js/data-types/reg-exp/',
+                '/js/data-types/type-conversion',
             ]
         },
         {
-            title: '执行机制',
-            collapsable: false,
+            text: '执行机制',
             children: [
-                'execution-mechanism/',
-                'execution-mechanism/execution-context',
-                'execution-mechanism/prototype',
-                'execution-mechanism/this',
-                'execution-mechanism/event-loop'
+                '/js/execution-mechanism/',
+                '/js/execution-mechanism/execution-context',
+                '/js/execution-mechanism/prototype',
+                '/js/execution-mechanism/this',
+                '/js/execution-mechanism/event-loop'
             ]
         },
         {
-            title: '错误处理/日志/调试',
-            collapsable: false,
+            text: '错误处理/日志/调试',
             children: [
-                'error-handling/',
-                'error-handling/try-catch',
-                'error-handling/browser-error-handling',
-                'error-handling/debug/',
-                'error-handling/debug/console/',
-                'error-handling/log',
+                '/js/error-handling/',
+                '/js/error-handling/try-catch',
+                '/js/error-handling/browser-error-handling',
+                '/js/error-handling/debug/',
+                '/js/error-handling/debug/console/',
+                '/js/error-handling/log',
             ]
         },
         {
-            title: '运算符',
-            collapsable: false,
+            text: '运算符',
             children: [
-                'operators/'
+                '/js/operators/'
             ]
         },
         {
-            title: 'TypeScript',
-            collapsable: false,
+            text: '未分类内容',
             children: [
-                'typescript/',
-                'typescript/data-type',
-                'typescript/type-system',
-                'typescript/module',
-                'typescript/declaration-files',
-                'typescript/tsconfig-json',
-                'typescript/complition',
-                'typescript/generics',
-                'typescript/typescript-grammar',
-                'typescript/utility-types',
-            ]
-        },
-        {
-            title: 'JS 代码片段',
-            collapsable: false,
-            children: [
-                'code-snippet/',
-                'code-snippet/browser/',
-                'code-snippet/browser/url',
-                'code-snippet/server/',
-                'code-snippet/validate/'
-            ]
-        },
-        {
-            title: '未分类内容',
-            collapsable: false,
-            children: [
-                'unclassified/',
-                'unclassified/functional-programming',
-                'unclassified/pitfall',
-                'unclassified/react'
+                '/js/unclassified/',
+                '/js/unclassified/functional-programming',
+                '/js/unclassified/pitfall',
+                '/js/unclassified/react'
             ]
         },
     ],

@@ -28,7 +28,7 @@
 
 ### 手动触发 element.click() 无效
 
-<code-scroll-fastclick-bug></code-scroll-fastclick-bug>
+<!-- <code-scroll-fastclick-bug></code-scroll-fastclick-bug> -->
 
 PS：请在手机上观看
 
@@ -36,7 +36,7 @@ PS：请在手机上观看
 
 可能存在这样的需求，点击元素`div1`，在`div1`元素的`click`回调函数里再以代码方式触发另一元素`div2`的`click`事件。
 
-<<< @/docs/.vuepress/components/code/scroll/fastclick-bug.vue
+@[code vue](@components/code/scroll/fastclick-bug.vue)
 
 若是使用了`fastclick`，但`Android`上可以按预期运行（实际上是这个`Android`手机的 Chrome 版本 >= 32，且`meta`里有`width=device-width`，没使用到`fastclick`）。
 

@@ -2,83 +2,75 @@ module.exports = {
     // MVVM
     '/front-end-engineering/': [
         {
-            title: '项目工程',
-            collapsable: false,
+            text: '项目工程',
             children: [
-                'project/init',
-                'project/naming-convention/js-naming',
-                'project/h5-project',
+                '/front-end-engineering/project/init',
+                '/front-end-engineering/project/naming-convention/js-naming',
+                '/front-end-engineering/project/h5-project',
             ]
         },
         {
-            title: 'HTTP Clients',
-            collapsable: false,
+            text: 'HTTP Clients',
             children: [
-                'http-clients/axios'
+                '/front-end-engineering/http-clients/axios'
             ]
         },
         {
-            title: '构建',
-            collapsable: false,
+            text: '构建',
             children: [
-                'build/webpack/',
-                'build/webpack/config',
-                'build/webpack/webpack-runtime',
-                'build/webpack/webpack4-import',
-                'build/webpack/practices',
-                'build/webpack/tapable/',
-                'build/webpack/tapable/tapable-readme',
-                'build/rollup',
-                'build/source-map',
+                '/front-end-engineering/build/webpack/',
+                '/front-end-engineering/build/webpack/config',
+                '/front-end-engineering/build/webpack/webpack-runtime',
+                '/front-end-engineering/build/webpack/webpack4-import',
+                '/front-end-engineering/build/webpack/practices',
+                '/front-end-engineering/build/webpack/tapable/',
+                '/front-end-engineering/build/webpack/tapable/tapable-readme',
+                '/front-end-engineering/build/rollup',
+                '/front-end-engineering/build/source-map',
             ]
         },
         {
-            title: 'MVVM',
-            collapsable: false,
+            text: 'MVVM',
             children: [
-                'mvvm/virtual-dom/'
+                '/front-end-engineering/mvvm/virtual-dom/'
             ]
         },
         {
-            title: 'Node',
-            collapsable: false,
+            text: 'Node',
             children: [
-                'node/',
-                'node/commonjs',
-                'node/koa/',
-                'node/server',
-                'node/pm2',
+                '/front-end-engineering/node/',
+                '/front-end-engineering/node/commonjs',
+                '/front-end-engineering/node/koa/',
+                '/front-end-engineering/node/server',
+                '/front-end-engineering/node/pm2',
             ]
         },
         {
-            title: 'NPM',
-            collapsable: false,
+            text: 'NPM',
             children: [
-                'npm/',
-                'npm/npm-command',
-                'npm/npmrc',
-                'npm/npm-config',
-                'npm/npm-scripts',
-                'npm/package.json',
-                'npm/package-lock.json',
-                'npm/third-party-package'
+                '/front-end-engineering/npm/',
+                '/front-end-engineering/npm/npm-command',
+                '/front-end-engineering/npm/npmrc',
+                '/front-end-engineering/npm/npm-config',
+                '/front-end-engineering/npm/npm-scripts',
+                '/front-end-engineering/npm/package.json',
+                '/front-end-engineering/npm/package-lock.json',
+                '/front-end-engineering/npm/third-party-package'
             ]
         },
         {
-            title: '代码格式化',
-            collapsable: false,
+            text: '代码格式化',
             children: [
-                'code-formatter/eslint/',
-                'code-formatter/eslint/eslint-vscode',
-                'code-formatter/eslint/eslint-vue',
-                'code-formatter/eslint/eslint-prettier'
+                '/front-end-engineering/code-formatter/eslint/',
+                '/front-end-engineering/code-formatter/eslint/eslint-vscode',
+                '/front-end-engineering/code-formatter/eslint/eslint-vue',
+                '/front-end-engineering/code-formatter/eslint/eslint-prettier'
             ]
         },
         {
-            title: '代码编辑器',
-            collapsable: false,
+            text: '代码编辑器',
             children: [
-                'code-editors/vscode',
+                '/front-end-engineering/code-editors/vscode',
             ]
         }
     ]

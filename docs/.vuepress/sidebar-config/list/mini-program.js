@@ -2,18 +2,16 @@ module.exports = {
     // 代码片段
     '/mini-program/': [
         {
-            title: '微信小程序',
-            collapsable: false,
+            text: '微信小程序',
             children: [
-                'weixin/',
+                '/mini-program/weixin/',
             ]
         },
         {
-            title: 'uni-app',
-            collapsable: false,
+            text: 'uni-app',
             children: [
-                'uni-app/',
-                'uni-app/v-for-key',
+                '/mini-program/uni-app/',
+                '/mini-program/uni-app/v-for-key',
             ]
         }
     ]
