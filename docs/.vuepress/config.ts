@@ -67,5 +67,14 @@ export default defineUserConfig<DefaultThemeOptions>({
         sidebar,
         lastUpdated: false,
         contributors: false
-    }
+    },
+
+    plugins: [
+        [
+            '@vuepress/plugin-search',
+            {
+                maxSuggestions: 10
+            },
+        ],
+    ],
 });
