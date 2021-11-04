@@ -66,4 +66,38 @@ db.collectionName.find({
 }).count() // 统计查询结果数量
 ```
 
+## WriteConcern/ReadConcern
+
 ## Replica Set 副本集
+
+## 分片集群
+
+- [Difference between Sharding And Replication on MongoDB](https://dba.stackexchange.com/questions/52632/difference-between-sharding-and-replication-on-mongodb)
+
+分片集群是将数据分成多份（每份数据相互不重复）存储在不同的集群上，类似于 Kafka 的分区。
+
+副本集是为要储存的数据做备份，类似于 Kafka 的副本。
+
+针对大型应用来说，首先会将数据分成相互独立的 n 份，分布式储存在分片集群的 n 个分片上，每个分片上的数据量约为总数据量的 1/n。
+其次，每个分片都是个副本集，会为该分片上的数据做 m 个备份。
+
+## 事务
+
+- 事务里，若是先插入一条数据，再查询这条数据，能查到吗？
+
+能，但是要设置 writeConcern 和 readConcern，
+
+```js
+// 写入时保证大多数节点写入成功
+db.order.insert({"id": "123456789"}, {writeConern: {w: "majority"}})
+
+// 读取时保证这条数据已在大多数节点存在
+db.order.find({"id": "123456789"}).readPref("secondaryPreferred").readConcern("majority")
+```
+
+## 参考文档
+
+- 公司内的“初识MongoDB”
+- 公司内的“MongoDB中的可调一致性”
+- [MongoDB 事务 —— 基础入门篇](https://juejin.cn/post/6844904066049392654)
+- [MongoDB 事务 —— 多文档事务实践篇](https://juejin.cn/post/6844904073573957646)
