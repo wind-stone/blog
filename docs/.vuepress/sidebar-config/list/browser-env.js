@@ -41,6 +41,7 @@ module.exports = {
             text: '安全',
             children: [
                 '/browser-env/security/',
+                '/browser-env/security/chrome-security-policy',
                 '/browser-env/security/cross-domain',
                 '/browser-env/security/same-site',
             ]
