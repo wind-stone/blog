@@ -1,17 +1,19 @@
 <template>
-    <div class="comment-count">
+    <div class="global-config">
         <div class="count">
-            <span id="busuanzi_container_site_pv">
-                本站总访问量&nbsp;&nbsp;<span id="busuanzi_value_site_pv" />&nbsp;&nbsp;次
+            <span
+                v-show="busuanziVisible"
+                id="busuanzi_container_site_pv"
+            >
+                本站总访问量&nbsp;&nbsp;<span
+                    id="busuanzi_value_site_pv"
+                    ref="busuanziRef"
+                />&nbsp;&nbsp;次
             </span>
         </div>
         <div class="gitalk-container">
             <div id="gitalk-container" />
         </div>
-        <script
-            async
-            src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
-        />
     </div>
 </template>
 <script>
@@ -21,7 +23,9 @@ import 'gitalk/dist/gitalk.css';
 export default {
     name: 'Comment',
     data() {
-        return {};
+        return {
+            busuanziVisible: false,
+        };
     },
     mounted() {
         const commentConfig = {
@@ -40,12 +44,29 @@ export default {
         // eslint-disable-next-line no-undef
         const gitalk = new Gitalk(commentConfig);
         gitalk.render('gitalk-container');
+
+
+        this.initBusuanzi();
     },
+
+    methods: {
+        initBusuanzi() {
+            const script = document.createElement('script');
+            script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+            script.onload = () => {
+                setTimeout(() => {
+                    this.busuanziVisible = true;
+                }, 1000);
+            };
+            document.body.appendChild(script);
+        },
+    }
 };
 </script>
 
 <style lang="less" scoped>
 .count {
+    height: 22px;
     margin-top: 50px;
     text-align: center;
 }

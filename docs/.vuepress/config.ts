@@ -3,15 +3,17 @@ import { defineUserConfig } from 'vuepress-vite';
 import type { DefaultThemeOptions } from 'vuepress-vite';
 const sidebar = require('./sidebar-config');
 
+const componentsDir = path.resolve(__dirname, './components');
+
 export default defineUserConfig<DefaultThemeOptions>({
     title: '风动之石的博客',          // 网站的标题
     description: '记录工作，记录生活', // 网站的描述
-    // head: [                         // 额外的需要被注入到当前页面的 HTML <head> 中的标签
-    //     ['link', {
-    //         rel: 'icon',
-    //         href: '/img/long.png'
-    //     }]
-    // ],
+    head: [                         // 额外的需要被注入到当前页面的 HTML <head> 中的标签
+        ['link', {
+            rel: 'icon',
+            href: '/images/logo.png'
+        }]
+    ],
 
     // 开发配置项
     debug: true,                    // 是否启用 Debug 模式
@@ -25,7 +27,7 @@ export default defineUserConfig<DefaultThemeOptions>({
 
         importCode: {
             handleImportPath: (str) =>
-                str.replace(/^@components/, path.resolve(__dirname, './components')),
+                str.replace(/^@components/, componentsDir),
         },
     },
 
@@ -74,6 +76,12 @@ export default defineUserConfig<DefaultThemeOptions>({
             '@vuepress/plugin-search',
             {
                 maxSuggestions: 10
+            },
+        ],
+        [
+            '@vuepress/register-components',
+            {
+                componentsDir,
             },
         ],
     ],
