@@ -1,3 +1,7 @@
+---
+sidebarDepth: 0
+---
+
 # VS Code
 
 [[toc]]
