@@ -1,6 +1,10 @@
-# 原型
+# 原型-prototype
 
 [[toc]]
+
+## 原型关系图
+
+![JavaScript 原型关系图](./images/javascript-prototype-relaitionships.png)
 
 ## 关于 instanceof
 
