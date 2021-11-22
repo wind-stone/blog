@@ -41,3 +41,4 @@ Yarn 的原生 Workspaces 功能，通过消除跨 Workspaces 的依赖包重复
 
 ### wsrun
 
+[wsrun](https://github.com/hfour/wsrun)，用于在 Yarn Workspaces 里运行 NPM 脚本或自定义命令。
