@@ -16,6 +16,13 @@ module.exports = {
             ]
         },
         {
+            text: '风格指南',
+            children: [
+                '/front-end-engineering/style-guide/naming-convention/naming.md',
+                '/front-end-engineering/style-guide/naming-convention/js.md',
+            ]
+        },
+        {
             text: '开发阶段 - Client',
             children: [
                 '/front-end-engineering/client/axios',
