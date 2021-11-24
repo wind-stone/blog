@@ -79,7 +79,6 @@ module.exports = {
                 '/browser-env/scroll/touch-event',
                 '/browser-env/scroll/click-delay',
                 '/browser-env/scroll/fastclick',
-                '/browser-env/scroll/performance',
                 '/browser-env/scroll/no-bg-scroll'
             ]
         },

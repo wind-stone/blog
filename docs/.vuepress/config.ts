@@ -58,7 +58,8 @@ export default defineUserConfig<DefaultThemeOptions>({
                 text: '代码片段/技术文章',
                 children: [
                     { text: '代码片段', link: '/code-snippet/', activeMatch: '^/code-snippet' },
-                    { text: '技术文章', link: '/articles/string-literal/', activeMatch: '^/articles' }
+                    { text: '技术文章', link: '/articles/string-literal/', activeMatch: '^/articles' },
+                    { text: '面试题库', link: '/interview/', activeMatch: '^/interview' }
                 ]
             },
             { text: 'GitHub', link: 'https://github.com/wind-stone' },
