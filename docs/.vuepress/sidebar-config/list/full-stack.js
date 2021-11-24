@@ -43,23 +43,10 @@ module.exports = {
                 '/full-stack/backend/nestjs/',
             ]
         },
-
-        {
-            text: '基础算法',
-            children: [
-                '/full-stack/algorithm/binary-search/',
-                '/full-stack/algorithm/sorting-algorithm/bubble-sort/',
-                '/full-stack/algorithm/sorting-algorithm/selection-sort/',
-                '/full-stack/algorithm/sorting-algorithm/insertion-sort/',
-                '/full-stack/algorithm/sorting-algorithm/merge-sort/',
-                '/full-stack/algorithm/sorting-algorithm/quick-sort/'
-            ]
-        },
         {
             text: '其他',
             children: [
-                '/full-stack/others/google-cloud',
-                '/full-stack/others/translation'
+                '/full-stack/others/google-cloud'
             ]
         },
     ]
