@@ -156,4 +156,6 @@ function throttle(func, wait) {
 
 ## requestAnimationFrame
 
-上面介绍的抖动与节流实现的方式都是借助了定时器`setTimeout`，但是如果页面只需要兼容高版本浏览器或应用在移动端，又或者页面需要追求高精度的效果，那么可以使用浏览器的原生方法`requestAnimationFrame`。
+上面介绍的抖动与节流实现的方式都是借助了定时器`setTimeout`。
+
+若回调函数是关于绘制页面/做动画，或者任何关于重新计算元素位置，都可以优先考虑使用`requestAnimationFrame`。

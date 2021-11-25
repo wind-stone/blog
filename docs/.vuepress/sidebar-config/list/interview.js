@@ -12,6 +12,15 @@ module.exports = {
             ]
         },
 
+
+        {
+            text: 'Node.js 专属面试题',
+            children: [
+                '/interview/nodejs/'
+            ]
+        },
+
+
         // {
         //     text: 'CSS 面试题',
         //     children: [
@@ -40,14 +49,9 @@ module.exports = {
             text: '算法',
             children: [
                 {
-                    text: '二分搜索/查找',
-                    children: [
-                        '/interview/algorithm/binary-search/',
-                    ]
-                },
-                {
                     text: '排序',
                     children: [
+                        '/interview/algorithm/sorting-algorithm/',
                         '/interview/algorithm/sorting-algorithm/bubble-sort/',
                         '/interview/algorithm/sorting-algorithm/selection-sort/',
                         '/interview/algorithm/sorting-algorithm/insertion-sort/',
@@ -58,6 +62,7 @@ module.exports = {
                 {
                     text: '其他',
                     children: [
+                        '/interview/algorithm/others/binary-search/',
                         '/interview/algorithm/others/fibonacci-sequence',
                     ]
                 },
