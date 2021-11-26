@@ -46,6 +46,13 @@ module.exports = {
         // }
 
         {
+            text: '数据结构',
+            children: [
+                '/interview/data-structure/binary-tree'
+            ]
+        },
+
+        {
             text: '算法',
             children: [
                 {
