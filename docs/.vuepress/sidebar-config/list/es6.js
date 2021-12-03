@@ -39,7 +39,23 @@ module.exports = {
         {
             text: 'Polyfill',
             children: [
-                '/es6/polyfill/object/'
+                {
+                    text: 'Array',
+                    children: [
+                        '/es6/polyfill/array/array-prototype-forEach',
+                        '/es6/polyfill/array/array-prototype-reduce',
+                    ]
+                },
+                {
+                    text: 'Object',
+                    children: [
+                        '/es6/polyfill/object/new',
+                        '/es6/polyfill/object/object-create',
+                        '/es6/polyfill/object/object-assign',
+                    ]
+                },
+
+                ''
             ]
         }
     ]
