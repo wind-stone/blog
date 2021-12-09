@@ -6,26 +6,6 @@
 
 `pointer-events: none`，设置元素不成为鼠标事件的`target`。
 
-## 滚动回弹效果
-
-`-webkit-overflow-scrolling: touch`，iOS 上产生滚动回弹效果。
-
-`-webkit-overflow-scrolling`属性控制元素在移动设备上是否使用滚动回弹效果.[MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/-webkit-overflow-scrolling)
-
-取值如下：
-
-- `auto`
-  - Use "regular" scrolling, where the content immediately ceases to scroll when you remove your finger from the touchscreen.
-  - 翻译：使用普通滚动, 当手指从触摸屏上移开，滚动会立即停止。                                                                                                                   |
-- `touch`
-  - Use momentum-based scrolling, where the content continues to scroll for a while after finishing the scroll gesture and removing your finger from the touchscreen. The speed and duration of the continued scrolling is proportional to how vigorous the scroll gesture was. Also creates a new stacking context.
-  - 翻译：使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。同时也会创建一个新的堆栈上下文。 |
-
-需要注意的是，对容器添加了`-webkit-overflow-scrolling: touch`后，可能会存在以下问题：
-
-- 导致容器内使用`position:fixed;`固定定位的元素随着页面一起滚动。
-- （iOS UIWebview 里）容器内溢出的内容（比如弹窗）将被隐藏，效果类似于`overflow: hidden`，google 未找到原因
-
 ## 禁用文字选中
 
 [`user-select`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/user-select)属性控制用户能否选中文本。

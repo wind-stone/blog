@@ -8,11 +8,18 @@ module.exports = {
             ]
         },
         {
+            text: 'h5 开发',
+            children: [
+                '/front-end-engineering/h5-development/',
+                '/front-end-engineering/h5-development/style',
+                '/front-end-engineering/h5-development/utils',
+            ]
+        },
+        {
             text: '初始化阶段',
             children: [
                 '/front-end-engineering/project/repository',
                 '/front-end-engineering/project/init',
-                '/front-end-engineering/project/h5-project',
             ]
         },
         {

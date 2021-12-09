@@ -46,7 +46,6 @@ module.exports = {
         {
             text: 'CSS 代码片段',
             children: [
-                '/code-snippet/css/',
                 '/code-snippet/css/dog-ear'
             ]
         },
