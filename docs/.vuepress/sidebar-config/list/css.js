@@ -64,7 +64,8 @@ module.exports = {
         {
             text: '工具集合',
             children: [
-                '/css/tools/safe-area'
+                '/css/tools/safe-area',
+                '/css/tools/text-ellipsis',
             ]
         },
         {
