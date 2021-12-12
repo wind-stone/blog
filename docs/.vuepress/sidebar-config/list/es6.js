@@ -54,8 +54,12 @@ module.exports = {
                         '/es6/polyfill/object/object-assign',
                     ]
                 },
-
-                ''
+                {
+                    text: 'Promise',
+                    children: [
+                        '/es6/polyfill/promise/promise-allSettled'
+                    ]
+                }
             ]
         }
     ]
