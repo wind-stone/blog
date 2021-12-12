@@ -32,7 +32,6 @@ function countsNodes(root) {
     }
     return 1 + countsNodes(root.left) + countsNodes(root.right);
 }
-
 ```
 
 2、迭代

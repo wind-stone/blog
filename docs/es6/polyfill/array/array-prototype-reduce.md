@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # Array.prototype.reduce
+
+[[toc]]
 
 ```js
 // Production steps of ECMA-262, Edition 5, 15.4.4.21

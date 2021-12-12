@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # new 操作符
+
+[[toc]]
 
 ```js
 function newOperator(Constructor){

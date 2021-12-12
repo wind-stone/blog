@@ -1,4 +1,10 @@
+---
+sidebarDepth: 0
+---
+
 # Object.assign
+
+[[toc]]
 
 ```js
 /**
