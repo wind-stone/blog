@@ -55,7 +55,8 @@ module.exports = {
         {
             text: '数据结构',
             children: [
-                '/interview/data-structure/binary-tree'
+                '/interview/data-structure/binary-tree',
+                '/interview/data-structure/heap/',
             ]
         },
 
