@@ -2,3 +2,5 @@ node_modules
 docs/.vuepress/dist
 .temp
 .cache
+temp.html
+temp.js
