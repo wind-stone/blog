@@ -3,9 +3,20 @@ module.exports = {
         {
             text: 'CSS 专题',
             children: [
+                {
+                    text: 'Flex 布局',
+                    children: [
+                        '/css/topics/flex/',
+                        '/css/topics/flex/flex-image/',
+                    ]
+                },
+                {
+                    text: '文本',
+                    children: [
+                        '/css/topics/text/text-wrap-and-ellipsis/',
+                    ]
+                },
                 '/css/topics/position-fixed',
-                '/css/topics/flex-image/',
-                '/css/topics/text-wrap-and-ellipsis/'
             ]
         },
         {
