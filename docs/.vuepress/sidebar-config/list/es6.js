@@ -57,7 +57,8 @@ module.exports = {
                 {
                     text: 'Promise',
                     children: [
-                        '/es6/polyfill/promise/promise-allSettled'
+                        '/es6/polyfill/promise/promise-allSettled',
+                        '/es6/polyfill/promise/promise-race'
                     ]
                 }
             ]
