@@ -1,7 +1,7 @@
 module.exports = {
     '/css/': [
         {
-            text: 'CSS 专题',
+            text: '专题',
             children: [
                 {
                     text: 'Flex 布局',
@@ -14,6 +14,12 @@ module.exports = {
                     text: '文本',
                     children: [
                         '/css/topics/text/text-wrap-and-ellipsis/',
+                    ]
+                },
+                {
+                    text: '边框',
+                    children: [
+                        '/css/topics/border/border-image',
                     ]
                 },
                 '/css/topics/position-fixed',
