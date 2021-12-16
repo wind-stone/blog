@@ -57,6 +57,15 @@ sidebarDepth: 0
 
 可以发现，尽管我们能用`border-image`+`linear-gradient`实现了边框渐变，但是`border-radius`却失效了。
 
+W3C 的规范里明确指出，`border-image`不受`border-radius`影响。
+
+> A box's backgrounds, but not its border-image, are clipped to the appropriate curve (as determined by ‘background-clip’).
+>
+> [CSS Backgrounds and Borders Module Level 3 - W3C Working Draft 12 June 2010 - 4.4.2. Corner Clipping](https://www.w3.org/TR/2010/WD-css3-background-20100612/)
+>
+> Although border images are not affected by `border-radius`...
+> [CSS Backgrounds and Borders Module Level 3](https://www.w3.org/TR/css-backgrounds-3/#corner-clipping)
+
 ### 实现方式二：background*2
 
 ```less
