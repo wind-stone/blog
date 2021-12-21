@@ -40,6 +40,12 @@ module.exports = {
             text: 'Polyfill',
             children: [
                 {
+                    text: 'String',
+                    children: [
+                        '/es6/polyfill/string/padStart',
+                    ]
+                },
+                {
                     text: 'Array',
                     children: [
                         '/es6/polyfill/array/array-prototype-forEach',
