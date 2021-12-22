@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 样式
 
 [[toc]]

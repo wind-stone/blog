@@ -1,107 +1,99 @@
 module.exports = {
-    // MVVM
-    '/front-end-engineering/': [
+    // 初始化阶段
+    '/front-end-engineering/initialization': [
         {
-            text: '前端工程化',
+            text: '代码仓库初始化',
             children: [
-                '/front-end-engineering/'
+                '/front-end-engineering/initialization/repository/',
             ]
         },
         {
-            text: 'h5 开发',
+            text: '项目初始化',
             children: [
-                '/front-end-engineering/h5-development/',
-                '/front-end-engineering/h5-development/style',
-                '/front-end-engineering/h5-development/utils',
+                '/front-end-engineering/initialization/project/',
             ]
         },
         {
-            text: '初始化阶段',
+            text: '编辑器初始化',
             children: [
-                '/front-end-engineering/project/repository',
-                '/front-end-engineering/project/init',
+                '/front-end-engineering/initialization/code-editors/vscode',
             ]
         },
         {
             text: '风格指南',
             children: [
-                '/front-end-engineering/style-guide/naming-convention/naming.md',
-                '/front-end-engineering/style-guide/naming-convention/js.md',
+                '/front-end-engineering/initialization/style-guide/naming-convention/naming.md',
+                '/front-end-engineering/initialization/style-guide/naming-convention/js.md',
             ]
         },
         {
-            text: '开发阶段 - Client',
+            text: '代码格式化 - ESLint',
             children: [
-                '/front-end-engineering/client/axios',
-                '/front-end-engineering/client/virtual-dom'
+                '/front-end-engineering/initialization/code-formatter/eslint/',
+                '/front-end-engineering/initialization/code-formatter/eslint/eslint-vscode',
+                '/front-end-engineering/initialization/code-formatter/eslint/eslint-vue',
+                '/front-end-engineering/initialization/code-formatter/eslint/eslint-prettier'
+            ]
+        },
+    ],
+
+    // 开发阶段
+    '/front-end-engineering/development': [
+        {
+            text: 'h5 开发',
+            children: [
+                '/front-end-engineering/development/h5/',
+                '/front-end-engineering/development/h5/style',
+                '/front-end-engineering/development/h5/format',
             ]
         },
         {
-            text: '开发阶段 - Serve',
+            text: '后端 - Node',
             children: [
-                {
-                    text: 'Node',
-                    children: [
-                        '/front-end-engineering/server/node/',
-                        '/front-end-engineering/server/node/commonjs',
-                        '/front-end-engineering/server/node/koa/',
-                        '/front-end-engineering/server/node/server',
-                        '/front-end-engineering/server/node/pm2',
-                    ]
-                },
+                '/front-end-engineering/development/server-node/',
+                '/front-end-engineering/development/server-node/commonjs',
+                '/front-end-engineering/development/server-node/koa/',
+                '/front-end-engineering/development/server-node/server',
+                '/front-end-engineering/development/server-node/api',
+                '/front-end-engineering/development/server-node/pm2',
             ]
         },
         {
-            text: '开发阶段 - 辅助工具',
+            text: '工具库',
             children: [
-                {
-                    text: '代码编辑器',
-                    children: [
-                        '/front-end-engineering/development-help-tools/code-editors/vscode',
-                    ]
-                },
-                {
-                    text: '代码格式化 - ESLint',
-                    children: [
-                        '/front-end-engineering/development-help-tools/code-formatter/eslint/',
-                        '/front-end-engineering/development-help-tools/code-formatter/eslint/eslint-vscode',
-                        '/front-end-engineering/development-help-tools/code-formatter/eslint/eslint-vue',
-                        '/front-end-engineering/development-help-tools/code-formatter/eslint/eslint-prettier'
-                    ]
-                },
-                {
-                    text: 'NPM',
-                    children: [
-                        '/front-end-engineering/development-help-tools/npm/',
-                        '/front-end-engineering/development-help-tools/npm/npm-command',
-                        '/front-end-engineering/development-help-tools/npm/npmrc',
-                        '/front-end-engineering/development-help-tools/npm/npm-config',
-                        '/front-end-engineering/development-help-tools/npm/npm-scripts',
-                        '/front-end-engineering/development-help-tools/npm/package.json',
-                        '/front-end-engineering/development-help-tools/npm/package-lock.json',
-                        '/front-end-engineering/development-help-tools/npm/third-party-package'
-                    ]
-                },
+                '/front-end-engineering/development/tools-library/axios',
             ]
         },
         {
-            text: '构建阶段',
+            text: 'NPM',
             children: [
-                {
-                    text: 'Webpack',
-                    children: [
-                        '/front-end-engineering/build-tools/webpack/',
-                        '/front-end-engineering/build-tools/webpack/config',
-                        '/front-end-engineering/build-tools/webpack/webpack-runtime',
-                        '/front-end-engineering/build-tools/webpack/webpack4-import',
-                        '/front-end-engineering/build-tools/webpack/practices',
-                        '/front-end-engineering/build-tools/webpack/tapable/',
-                        '/front-end-engineering/build-tools/webpack/tapable/tapable-readme',
-                    ]
-                },
-                '/front-end-engineering/build-tools/rollup',
-                '/front-end-engineering/build-tools/source-map',
+                '/front-end-engineering/development/npm/',
+                '/front-end-engineering/development/npm/npm-command',
+                '/front-end-engineering/development/npm/npmrc',
+                '/front-end-engineering/development/npm/npm-config',
+                '/front-end-engineering/development/npm/npm-scripts',
+                '/front-end-engineering/development/npm/package.json',
+                '/front-end-engineering/development/npm/package-lock.json',
+                '/front-end-engineering/development/npm/third-party-package'
             ]
-        }
-    ]
+        },
+    ],
+
+    // 构建阶段
+    '/front-end-engineering/build': [
+        {
+            text: 'Webpack',
+            children: [
+                '/front-end-engineering/build/webpack/',
+                '/front-end-engineering/build/webpack/config',
+                '/front-end-engineering/build/webpack/webpack-runtime',
+                '/front-end-engineering/build/webpack/webpack4-import',
+                '/front-end-engineering/build/webpack/practices',
+                '/front-end-engineering/build/webpack/tapable/',
+                '/front-end-engineering/build/webpack/tapable/tapable-readme',
+            ]
+        },
+        '/front-end-engineering/build/rollup',
+        '/front-end-engineering/build/source-map',
+    ],
 };

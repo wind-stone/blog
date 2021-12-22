@@ -1,5 +1,7 @@
 # ESLint - Vue 项目配置
 
+[[toc]]
+
 [`eslint-plugin-vue`](https://github.com/vuejs/eslint-plugin-vue)，是针对 Vue.js 的官方 ESLint 插件。
 
 该插件允许我们使用 ESLint 来检查`.vue`文件里的`<template>`和`<script>`模块。

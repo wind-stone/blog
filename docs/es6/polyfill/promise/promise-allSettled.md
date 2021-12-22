@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # Promise.allSettled
 
 参考实现：[Polyfill for Promise.allSettled](https://95yashsharma.medium.com/polyfill-for-promise-allsettled-965f9f2a003)

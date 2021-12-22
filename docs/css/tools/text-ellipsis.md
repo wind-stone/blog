@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 文字省略
 
 [[toc]]

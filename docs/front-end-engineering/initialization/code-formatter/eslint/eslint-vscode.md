@@ -1,5 +1,7 @@
 # ESLint - VSCode 配置
 
+[[toc]]
+
 ## 安装 ESLint 扩展
 
 在 VSCode Extensions 里，搜索`ESLint`并安装。

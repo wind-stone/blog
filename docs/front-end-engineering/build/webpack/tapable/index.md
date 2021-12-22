@@ -1,4 +1,4 @@
-# Webpack - Tapable
+# Tapable
 
 [[toc]]
 

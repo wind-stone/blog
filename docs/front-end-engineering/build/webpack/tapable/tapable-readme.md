@@ -1,4 +1,4 @@
-# Webpack - Tapable README.md
+# Tapable README.md
 
 [[toc]]
 

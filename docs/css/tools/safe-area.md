@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 安全距离
 
 [[toc]]

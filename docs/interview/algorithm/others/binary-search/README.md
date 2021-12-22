@@ -1,7 +1,3 @@
----
-sidebarDepth: 0
----
-
 # 二分搜索
 
 [[toc]]

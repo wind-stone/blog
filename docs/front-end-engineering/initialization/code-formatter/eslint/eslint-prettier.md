@@ -1,5 +1,7 @@
 # ESLint - 与 Prettier 的集成
 
+[[toc]]
+
 ## Prettier 简介
 
 Prettier 是由 Facebook 公司开发的`opinionated`的代码格式化工具，它移除了代码的原始风格，并确保所有输出的代码遵守一致的风格。

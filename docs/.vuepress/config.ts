@@ -52,7 +52,27 @@ export default defineUserConfig<DefaultThemeOptions>({
                     { text: '小程序', link: '/mini-program/weixin/', activeMatch: '^/mini-program' },
                 ],
             },
-            { text: '前端工程化', link: '/front-end-engineering/project/init' },
+            {
+                text: '前端工程化',
+                children: [
+                    {
+                        text: '初始化阶段',
+                        link: '/front-end-engineering/initialization/project',
+                        activeMatch: '^/front-end-engineering/initialization'
+                    },
+                    {
+                        text: '开发阶段',
+                        link: '/front-end-engineering/development/h5/',
+                        activeMatch: '^/front-end-engineering/development'
+                    },
+                    {
+                        text: '构建阶段',
+                        link: '/front-end-engineering/build/webpack/',
+                        activeMatch: '^/front-end-engineering/build'
+                    },
+
+                ],
+            },
             { text: '全栈技能', link: '/full-stack/' },
             {
                 text: '代码片段/技术文章',
@@ -66,7 +86,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             { text: '随记', link: '/wander/house/' }
         ],
 
-        sidebarDepth: 1,
+        sidebarDepth: 0,
         sidebar,
         lastUpdated: false,
         contributors: false
