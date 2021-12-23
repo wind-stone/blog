@@ -89,7 +89,7 @@ export default defineUserConfig<DefaultThemeOptions>({
         sidebarDepth: 0,
         sidebar,
         lastUpdated: false,
-        contributors: false
+        contributors: false,
     },
 
     plugins: [
@@ -106,4 +106,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             },
         ],
     ],
+
+    templateDev: path.resolve(__dirname, './templates/index.dev.html'),
+    templateSSR: path.resolve(__dirname, './templates/index.ssr.html'),
 });
