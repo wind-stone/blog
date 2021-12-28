@@ -3,9 +3,9 @@ module.exports = {
         {
             text: '浏览器',
             children: [
-                '/browser-env/browser/',
+                '/browser-env/browser/how-browsers-work',
+                '/browser-env/browser/first-paint',
                 '/browser-env/browser/process-thread',
-                '/browser-env/browser/open-page-process',
                 '/browser-env/browser/event-loop',
                 '/browser-env/browser/performance',
                 '/browser-env/browser/browser-api',

@@ -1,9 +1,10 @@
-# 浏览器打开页面全流程
+# 页面渲染：浏览器工作原理（打开页面全流程）
 
 [[toc]]
 
 绝大部分内容复制于：
 
+- [MDN - 渲染页面：浏览器的工作原理](https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work)，**这篇文章非常好，值得反复阅读**
 - [浏览器工作原理与实践 - 04 | 导航流程：从输入URL到页面展示，这中间发生了什么？](https://time.geekbang.org/column/article/117637)
 - [浏览器工作原理与实践 - 05 | 渲染流程（上）：HTML、CSS和JavaScript，是如何变成页面的？](https://time.geekbang.org/column/article/118205)
 - [浏览器工作原理与实践 - 06 | 渲染流程（下）：HTML、CSS和JavaScript，是如何变成页面的？](https://time.geekbang.org/column/article/118826)
