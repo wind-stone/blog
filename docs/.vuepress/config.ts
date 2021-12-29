@@ -48,7 +48,7 @@ export default defineUserConfig<DefaultThemeOptions>({
                 text: 'HTML/CSS/浏览器',
                 children: [
                     { text: 'CSS', link: '/css/selectors/', activeMatch: '^/css' },
-                    { text: '浏览器', link: '/browser-env/browser/', activeMatch: '^/browser-env' },
+                    { text: '浏览器', link: '/browser-env/browser/how-browsers-work', activeMatch: '^/browser-env' },
                     { text: '小程序', link: '/mini-program/weixin/', activeMatch: '^/mini-program' },
                 ],
             },
