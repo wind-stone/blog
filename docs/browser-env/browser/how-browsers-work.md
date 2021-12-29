@@ -1,3 +1,7 @@
+---
+sidebarDepth: 2
+---
+
 # 页面渲染：浏览器工作原理（打开页面全流程）
 
 [[toc]]
@@ -198,6 +202,8 @@ DOM 树中仍然包含了一些不可见的元素，比如`head`标签、`meta`�
 
 - 拥有层叠上下文属性的元素会被提升为单独的一层。具体元素具有哪些层叠上下文属性，可参见[MDN - 层叠上下文](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context)。
 - 需要剪裁（clip）的地方也会被创建为图层，比如元素存在`overflow: auto`且其子元素会超过自身导致的剪裁。
+
+层确实可以提高性能，但是它以内存管理为代价，因此不应作为 WEB 性能优化策略的一部分过度使用。
 
 ### 图层绘制
 
