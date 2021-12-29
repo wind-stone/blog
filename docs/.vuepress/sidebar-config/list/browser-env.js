@@ -7,6 +7,7 @@ module.exports = {
                 '/browser-env/browser/first-paint',
                 '/browser-env/browser/process-thread',
                 '/browser-env/browser/event-loop',
+                '/browser-env/browser/cache',
                 '/browser-env/browser/performance',
                 '/browser-env/browser/browser-api',
                 '/browser-env/browser/browser-requests',
