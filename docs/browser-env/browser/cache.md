@@ -1,13 +1,13 @@
-# 浏览器缓存
+# 缓存机制
 
 [[toc]]
 
-## 浏览器默认过期时间（启发式新鲜度检查）
+## 参考文档
 
-参考：
-
-- [MDN - HTTP caching - Heuristic freshness checking](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#heuristic_freshness_checking)
+- [MDN - HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
 - [RFC 7234: Hypertext Transfer Protocol (HTTP/1.1): 4.2.2.  Calculating Heuristic Freshness](https://datatracker.ietf.org/doc/html/rfc7234#section-4.2.2)
+
+## 浏览器默认过期时间（启发式新鲜度检查）
 
 A 页面 HTML 的响应头：
 
