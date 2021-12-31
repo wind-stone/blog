@@ -2,6 +2,16 @@
 
 [[toc]]
 
+## JavaScript 配置
+
+### 使用 webpack alias
+
+针对非 TypeScript 的 JavaScript 项目，VSCode 的 IntelliSense 无法识别 Webpack 的`alias`，因此无法点击跳转。可在项目根目录下配置`jsconfig.json`来解决这个问题。详见[VSCode - jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig)。
+
+::: tip 提示
+TypeScript 项目可在`tsconfig.json`里进行配置。
+:::
+
 ## 扩展
 
 介绍一些 VS Code 的常用扩展，以及根据个人/团队/项目的需求作出的自定义配置。
