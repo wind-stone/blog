@@ -224,6 +224,8 @@ if ( false || Object({"NODE_ENV":"production","BASE_URL":"//blog.windstone.com/"
 
 更为严重的是，`require('vconsole')`编译成了`__webpack_require__("3a34")`，这意味着，在生产环境的`bundle`里最终包含了 vConsole 的 NPM 包代码，而这根本不是我们想要的。
 
+详见压缩工具的`dead_code`选项，比如[terser - Compress options - dead_code](https://github.com/terser/terser#compress-options)。
+
 ### 解决方案
 
 #### 方案一: JS 里注入 vConsole
