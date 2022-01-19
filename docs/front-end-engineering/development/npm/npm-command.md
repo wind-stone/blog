@@ -103,6 +103,14 @@ npm dist-tag add <pkg>@<version> [<tag>]
 npm dist-tag rm <pkg> <tag>
 ```
 
+### 删除已发布包的指定版本
+
+```sh
+$ npm unpublish [<pkg>][@<version>] --force
+```
+
+详见: [NPM - npm-unpublish](https://docs.npmjs.com/cli/v8/commands/npm-unpublish)
+
 ## npm view
 
 显示包的信息，`npm view`的别名: `npm info`, `npm show`, `npm v`。详见[NPM - npm-view](https://docs.npmjs.com/cli/v7/commands/npm-view)
