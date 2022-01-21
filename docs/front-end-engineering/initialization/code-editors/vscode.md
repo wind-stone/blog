@@ -67,3 +67,11 @@ TODO:
 ```
 
 注意，针对格式化的配置，若是本地存在配置文件（比如`.prettierrc`），Vetur 会优先使用本地配置文件里的配置项，详见[Vetur Formatter Config](https://vuejs.github.io/vetur/formatting.html#settings)。
+
+### 快速收起 node_modules
+
+详见：[一键收起 node_modules 文件夹](https://zhuanlan.zhihu.com/p/176873873)
+
+### 行内显示错误信息
+
+详见: [VSCode 插件 - Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
