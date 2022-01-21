@@ -2,6 +2,14 @@
 
 [[toc]]
 
+## 衡量指标
+
+- FP
+- FCP
+- FMP
+- DCL，`DOMContentLoaded`
+- `load`
+
 ## 加载和执行
 
 ### 优化建议
