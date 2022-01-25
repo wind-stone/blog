@@ -12,7 +12,8 @@ module.exports = {
                 '/browser-env/browser/browser-api',
                 '/browser-env/browser/browser-requests',
                 '/browser-env/browser/faq',
-                '/browser-env/browser/dev-tools/'
+                '/browser-env/browser/dev-tools/',
+                '/browser-env/browser/fingerprint'
             ]
         },
         {
