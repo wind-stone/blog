@@ -1,4 +1,4 @@
-# Webpack - 完整 webpack.config.js 配置
+# 完整 webpack.config.js 配置
 
 [[toc]]
 

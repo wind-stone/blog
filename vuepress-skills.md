@@ -9,6 +9,6 @@
 
 ## bug
 
-- MD 里不能出现`process.env.NODE_ENV`，否则页面渲染不出来
+- MD 里不能出现`process.env.NODE_ENV`，否则页面渲染不出来。因此涉及到`process.env.NODE_ENV`的地方，`process`都写成了`p rocess`
 - MD 里最好不要出现 HTML 标签，比如`</body>`，否则页面渲染不出来
 - MD 里的表格里不要出现`内 | 容`，若出现了需要转义，比如`内 \| 容`

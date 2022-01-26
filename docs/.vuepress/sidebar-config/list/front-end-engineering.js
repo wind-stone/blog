@@ -85,12 +85,24 @@ module.exports = {
             text: 'Webpack',
             children: [
                 '/front-end-engineering/build/webpack/',
-                '/front-end-engineering/build/webpack/config',
                 '/front-end-engineering/build/webpack/webpack-runtime',
+                {
+                    text: 'Webpack 配置',
+                    children: [
+                        '/front-end-engineering/build/webpack/config/whole-config',
+                        '/front-end-engineering/build/webpack/config/practical-config',
+                        '/front-end-engineering/build/webpack/config/config-tools',
+                        '/front-end-engineering/build/webpack/config/dead-code',
+                    ]
+                },
                 '/front-end-engineering/build/webpack/webpack4-import',
-                '/front-end-engineering/build/webpack/practices',
-                '/front-end-engineering/build/webpack/tapable/',
-                '/front-end-engineering/build/webpack/tapable/tapable-readme',
+                {
+                    text: 'Tapable',
+                    children: [
+                        '/front-end-engineering/build/webpack/tapable/',
+                        '/front-end-engineering/build/webpack/tapable/tapable-readme',
+                    ]
+                },
             ]
         },
         '/front-end-engineering/build/rollup',
