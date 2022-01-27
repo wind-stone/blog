@@ -28,12 +28,26 @@ module.exports = {
         {
             text: '错误处理/日志/调试',
             children: [
-                '/js/error-handling/',
-                '/js/error-handling/try-catch',
-                '/js/error-handling/browser-error-handling',
+
                 '/js/error-handling/debug/',
-                '/js/error-handling/debug/console/',
                 '/js/error-handling/log',
+
+                {
+                    text: '错误处理',
+                    children: [
+                        '/js/error-handling/',
+                        '/js/error-handling/try-catch',
+                        '/js/error-handling/browser-error-handling',
+                    ]
+                },
+
+                {
+                    text: '控制台方法',
+                    children: [
+                        '/js/error-handling/debug/console/',
+                        '/js/error-handling/debug/console/console-log-event',
+                    ]
+                },
             ]
         },
         {

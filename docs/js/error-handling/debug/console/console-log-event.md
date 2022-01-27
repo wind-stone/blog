@@ -1,4 +1,4 @@
-# 调试 - console.log(event)
+# console.log(event)
 
 [[toc]]
 
