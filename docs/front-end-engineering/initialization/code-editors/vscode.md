@@ -12,6 +12,43 @@
 TypeScript 项目可在`tsconfig.json`里进行配置。
 :::
 
+### monorepo 架构子应用里 vue 文件内 Vetur 报错
+
+若工程的仓库采用 monorepo 架构，则该工程的目录结构如下所示：
+
+```txt
+├── apps
+│   ├── appA
+│   │   ├── src
+│   │   │   ├── App.vue
+│   │   │   └── main.ts
+│   │   ├── .eslintrc.js
+│   │   ├── package.json
+│   │   ├── README.md
+│   │   └── ...
+│   ├── appB
+│   └── ...
+├── packages
+│   ├── packageA
+│   ├── packageB
+│   └── ...
+├── package.json
+├── README.md
+└── ...
+```
+
+若是使用 VSCode 打开 monorepo 的根目录，则在 appA 子应用里的 Vue 文件内引入（通过 Webpack 配置了别名的）模块时，Vetur 会报错：
+
+```js
+Cannot find module '@/common/log' or its corresponding type declarations.
+```
+
+且无法通过 Command ⌘ 键 + 鼠标左键跳转到引入模块的文件里。
+
+解决办法：直接使用 VSCode 打开 appA 目录，让 appA 目录成为 VSCode 窗口的根路径。
+
+详见: [vscode中vetur插件提示找不到设置了alias的模块](https://segmentfault.com/q/1010000021004226)
+
 ## 扩展
 
 介绍一些 VS Code 的常用扩展，以及根据个人/团队/项目的需求作出的自定义配置。
