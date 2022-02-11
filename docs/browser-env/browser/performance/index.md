@@ -91,3 +91,13 @@ Reference
 
 - 高性能
 - [无线性能优化：页面可见时间与异步加载](http://taobaofed.org/blog/2016/01/20/mobile-wpo-pageshow-async/)
+
+## 性能数据获取
+
+### Performance
+
+[Performance.getEntries()](https://developer.mozilla.org/zh-CN/docs/Web/API/Performance/getEntries)可以获取如下图里的所有数据：
+
+![性能入口数据](./images/performance-entry.png)
+
+详见：[Alloy Team - 初探 performance – 监控网页与程序性能](http://www.alloyteam.com/2015/09/explore-performance/)
