@@ -33,7 +33,7 @@ module.exports = {
             text: '数据管理',
             children: [
                 '/full-stack/data-management/kafka/',
-                '/full-stack/data-management/clickhouse',
+                '/full-stack/data-management/grafana',
                 '/full-stack/data-management/mongodb',
             ]
         },
