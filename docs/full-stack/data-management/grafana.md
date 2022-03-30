@@ -37,6 +37,22 @@ GROUP BY t, name
 ORDER BY t
 ```
 
+### 常用语法
+
+#### CASE
+
+```sql
+SELECT OrderID, Quantity,
+CASE
+    WHEN Quantity > 30 THEN 'The quantity is greater than 30'
+    WHEN Quantity = 30 THEN 'The quantity is 30'
+    ELSE 'The quantity is under 30'
+END AS QuantityText
+FROM OrderDetails;
+```
+
+详见：[SQL CASE Statement](https://www.w3schools.com/sql/sql_case.asp)
+
 ### 常用场景
 
 #### 成功率
