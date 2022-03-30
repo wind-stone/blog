@@ -67,6 +67,7 @@ module.exports = {
         {
             text: 'NPM',
             children: [
+                '/front-end-engineering/development/npm/semantic-version',
                 '/front-end-engineering/development/npm/',
                 '/front-end-engineering/development/npm/npm-command',
                 '/front-end-engineering/development/npm/npmrc',
