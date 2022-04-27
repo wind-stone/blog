@@ -70,7 +70,11 @@ export default defineUserConfig<DefaultThemeOptions>({
                         link: '/front-end-engineering/build/webpack/',
                         activeMatch: '^/front-end-engineering/build'
                     },
-
+                    {
+                        text: '性能和稳定性',
+                        link: '/front-end-engineering/performance-stability/stability',
+                        activeMatch: '^/front-end-engineering/performance-stability'
+                    },
                 ],
             },
             { text: '全栈技能', link: '/full-stack/' },

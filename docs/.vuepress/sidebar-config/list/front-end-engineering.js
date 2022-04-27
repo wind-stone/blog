@@ -109,4 +109,20 @@ module.exports = {
         '/front-end-engineering/build/rollup',
         '/front-end-engineering/build/source-map',
     ],
+
+    // 稳定性
+    '/front-end-engineering/performance-stability': [
+        {
+            text: '稳定性',
+            children: [
+                '/front-end-engineering/performance-stability/stability',
+            ]
+        },
+        {
+            text: '性能',
+            children: [
+                '/front-end-engineering/performance-stability/performance',
+            ]
+        }
+    ]
 };
