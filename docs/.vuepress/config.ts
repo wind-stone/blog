@@ -56,6 +56,11 @@ export default defineUserConfig<DefaultThemeOptions>({
                 text: '前端工程化',
                 children: [
                     {
+                        text: '概述',
+                        link: '/front-end-engineering/',
+                        activeMatch: '^/front-end-engineering/$'
+                    },
+                    {
                         text: '初始化阶段',
                         link: '/front-end-engineering/initialization/project',
                         activeMatch: '^/front-end-engineering/initialization'

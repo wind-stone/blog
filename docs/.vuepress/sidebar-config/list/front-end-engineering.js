@@ -1,4 +1,7 @@
 module.exports = {
+    '/front-end-engineering/': [
+        '/front-end-engineering/'
+    ],
     // 初始化阶段
     '/front-end-engineering/initialization': [
         {
