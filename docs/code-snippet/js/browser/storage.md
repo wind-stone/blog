@@ -1,6 +1,78 @@
-# 简单封装 localStorage/sessionStorage
+# Storage
 
-## 背景
+[[toc]]
+
+## 判断周期内（天/周/月/年）是否还有次数可用
+
+```js
+import Storage from 'store';
+import dayjs from 'dayjs';
+
+/**
+ * 判断周期内是否还有次数可用
+ * @param periodUnit 周期单位，比如 day，week，month，更多可用的单位可见 https://day.js.org/docs/en/manipulate/start-of#list-of-all-available-units
+ * @param key 存储在 Storage 里的 key
+ * @param maxCountInPeriod 周期内的最大次数
+ * @param permanentMaxCount 永久性的最大次数
+ */
+// eslint-disable-next-line max-params
+function isAvailableInPeriod(periodUnit, key, maxCountInPeriod = 1, maxCountInLife = Number.MAX_SAFE_INTEGER) {
+    const { date = 0, count = 0, countInLife = 0 } = Storage.get(key) || {};
+    const now = Date.now();
+    const isNewPeriod = dayjs(now).isAfter(date, periodUnit);
+    const isAvailable = isNewPeriod || count < maxCountInPeriod;
+    const isAvailableInLife = !countInLife ? true : maxCountInLife - countInLife > 0;
+    if (isAvailable && isAvailableInLife) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * 增加周期内的已用次数
+ * @param periodUnit 周期单位
+ * @param key 存储在 Storage 里的 key
+ * @param addedCount 增加的次数
+ */
+function countUpInPeriod(periodUnit, key, addedCount = 1) {
+    const { date = 0, count = 0, countInLife = 0 } = Storage.get(key) || {};
+    const now = Date.now();
+    const isNewPeriod = dayjs(now).isAfter(date, periodUnit);
+    Storage.set(key, {
+        date: now,
+        count: isNewPeriod ? addedCount : count + addedCount,
+        countInLife: !countInLife ? addedCount : countInLife + addedCount,
+    });
+}
+
+export function isAvailableToday(key, maxCount = 1, maxCountInLife = Number.MAX_SAFE_INTEGER) {
+    return isAvailableInPeriod('day', key, maxCount, maxCountInLife);
+}
+
+export function countUpToday(key, addedCount = 1) {
+    return countUpInPeriod('day', key, addedCount);
+}
+
+export function isAvailableInWeek(key, maxCount = 1) {
+    return isAvailableInPeriod('week', key, maxCount);
+}
+
+export function countUpInWeek(key, addedCount = 1) {
+    return countUpInPeriod('day', key, addedCount);
+}
+
+export function isAvailableInMonth(key, maxCount = 1) {
+    return isAvailableInPeriod('month', key, maxCount);
+}
+
+export function countUpInMonth(key, addedCount = 1) {
+    return countUpInPeriod('month', key, addedCount);
+}
+```
+
+## 简单封装 localStorage/sessionStorage
+
+### 背景
 
 ```js
 localStorage.setItem(key, value)
@@ -42,7 +114,7 @@ localStorage.getItem('key')  // '[object Object]'
 localStorage.getItem('keykey')  // null（键名为'keykey'的存储不存在，返回 null）
 ```
 
-## 设计
+### 设计
 
 针对以上这些情况，经过简单封装`localStorage/sessionStorage`，实现存储前后类型保持一致。
 
@@ -55,22 +127,22 @@ const result = store.local.get(key)
 
 存储前后的值如下所示。
 
-value 取值 | result 返回值 | 说明
---- | --- | ---
-String 类型 | String 类型 |
-Number 类型 | Number 类型 |
-Object 类型 | Object 类型 |
-null | null | 将键名从存储中移除，最终返回 null
-undefined | null | 将键名从存储中移除，最终返回 null
-'null' | 'null' |
-'undefined' | 'undefined' |
+| value 取值  | result 返回值 | 说明                              |
+| ----------- | ------------- | --------------------------------- |
+| String 类型 | String 类型   |
+| Number 类型 | Number 类型   |
+| Object 类型 | Object 类型   |
+| null        | null          | 将键名从存储中移除，最终返回 null |
+| undefined   | null          | 将键名从存储中移除，最终返回 null |
+| 'null'      | 'null'        |
+| 'undefined' | 'undefined'   |
 
 需要注意的是，
 
 - 调用`get(key)`时，如果键名不存在，将返回`null`。
 - 调用`set(key, value)`时，如果 value 取值`null`、`undefined`时，会将该键名从存储中移除，因此再调用`get(key)`时，会返回`null`
 
-## 实现
+### 实现
 
 ```js
 const store = {

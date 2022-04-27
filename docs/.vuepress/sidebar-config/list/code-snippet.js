@@ -26,18 +26,6 @@ module.exports = {
                     ]
                 },
 
-                {
-                    text: '浏览器环境',
-                    children: [
-                        '/code-snippet/js/browser/class',
-                        '/code-snippet/js/browser/cookie',
-                        '/code-snippet/js/browser/url',
-                        '/code-snippet/js/browser/load-script',
-                        '/code-snippet/js/browser/storage',
-                        '/code-snippet/js/browser/clipboard',
-                    ]
-                },
-
                 '/code-snippet/js/server/',
                 '/code-snippet/js/validate/'
             ]
