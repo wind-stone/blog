@@ -37,6 +37,24 @@ GROUP BY t, name
 ORDER BY t
 ```
 
+#### domain
+
+假设`url`是页面地址，形如`https://www.baidu.com?a=1&b=2`，如果想要按域名来统计，可以使用`domain`函数获取域名。
+
+```sql
+SELECT
+    $timeSeries as t,
+    domain(url),
+    count() as c
+FROM $table
+WHERE $timeFilter
+AND ...
+GROUP BY
+    t,
+    domain(url)
+ORDER BY t
+```
+
 ### 常用语法
 
 #### CASE
