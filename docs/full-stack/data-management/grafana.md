@@ -55,6 +55,34 @@ GROUP BY
 ORDER BY t
 ```
 
+#### splitByChar
+
+假设`url`是页面地址，形如`https://www.baidu.com?a=1&b=2`，如果想要按**域名 + 协议**来统计，可以使用`splitByChar`函数来分隔`url`。
+
+```sql
+SELECT
+    $timeSeries as t,
+    arrayElement(
+        splitByChar('?', assumeNotNull(url)),
+        1
+    ),
+    count() as c
+FROM $table
+WHERE $timeFilter
+AND ...
+GROUP BY
+    t,
+    arrayElement(
+        splitByChar('?', assumeNotNull(url)),
+        1
+    )
+ORDER BY t
+```
+
+- [splitByChar](https://clickhouse.com/docs/en/sql-reference/functions/splitting-merging-functions/#splitbycharseparator-s)，按字符将字符串分隔为字符串数组
+- [arrayElement](https://clickhouse.com/docs/en/sql-reference/functions/array-functions/#arrayelementarr-n-operator-arrn)，按索引获取数据项
+- [assumeNotNull](https://clickhouse.com/docs/en/sql-reference/functions/functions-for-nulls/#assumenotnull)，一定要加这个，确保`url`不为`null`
+
 ### 常用语法
 
 #### CASE
