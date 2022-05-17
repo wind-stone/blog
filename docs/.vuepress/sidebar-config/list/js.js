@@ -57,6 +57,12 @@ module.exports = {
             ]
         },
         {
+            text: 'WebAssemply',
+            children: [
+                '/js/web-assembly/',
+            ]
+        },
+        {
             text: '未分类内容',
             children: [
                 '/js/unclassified/',
