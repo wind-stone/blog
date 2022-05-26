@@ -4,17 +4,49 @@
 
 ## 常用命令
 
+- `mongod`是 MongoDB 系统的守护进程。
+- `mongo`：mongo is an interactive JavaScript shell interface to MongoDB, which provides a powerful interface for system administrators as well as a way for developers to test queries and operations directly with the database. mongo also provides a fully functional JavaScript environment for use with a MongoDB.
+- `mongos`: For a sharded cluster, the mongos instances provide the interface between the client applications and the sharded cluster. The mongos instances route queries and write operations to the shards. From the perspective of the application, a mongos instance behaves identically to any other MongoDB instance.
+
+详见：<https://www.mongodb.com/docs/v4.4/reference/program/mongod/>
+
 ### 启动
 
 ```sh
 cd /usr/local/mongodb/bin
 
+# 以配置文件启动 MongoDB
 ./mongod --config mongod.conf
 ```
 
+```conf
+systemLog:
+    destination: file
+    path: "/usr/local/mongodb/mongod.log"
+    logAppend: true
+storage:
+    dbPath: "/Users/wind-stone/data/db"
+    journal:
+        enabled: true
+processManagement:
+    fork: true
+net:
+    bindIp: 127.0.0.1
+    port: 28019
+```
+
+配置文件详情请见：<https://www.mongodb.com/docs/v4.4/reference/configuration-options/>
+
 ## mongo shell
 
-### 连接数据库
+### 连接本地数据库
+
+```sh
+# 访问指定端口的数据库实例
+mongo --port 28019
+```
+
+### 连接远程数据库
 
 ```sh
 cd /usr/local/mongodb/bin
