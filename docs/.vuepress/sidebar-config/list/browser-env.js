@@ -30,6 +30,13 @@ module.exports = {
             ]
         },
         {
+            text: '事件',
+            children: [
+                '/browser-env/events/',
+                '/browser-env/events/blur/',
+            ]
+        },
+        {
             text: '网络',
             children: [
                 '/browser-env/network/http/',
