@@ -113,6 +113,16 @@ module.exports = {
         '/front-end-engineering/build/source-map',
     ],
 
+    // 发布阶段
+    '/front-end-engineering/publish': [
+        {
+            text: 'ChangLog',
+            children: [
+                '/front-end-engineering/publish/changelog',
+            ]
+        },
+    ],
+
     // 稳定性
     '/front-end-engineering/performance-stability': [
         {

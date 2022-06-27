@@ -76,6 +76,11 @@ export default defineUserConfig<DefaultThemeOptions>({
                         activeMatch: '^/front-end-engineering/build'
                     },
                     {
+                        text: '发布阶段',
+                        link: '/front-end-engineering/publish/changelog',
+                        activeMatch: '^/front-end-engineering/publish'
+                    },
+                    {
                         text: '性能和稳定性',
                         link: '/front-end-engineering/performance-stability/stability',
                         activeMatch: '^/front-end-engineering/performance-stability'
