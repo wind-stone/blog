@@ -10,6 +10,10 @@
 - NPM 的命令里，若是没提供`tag`，则默认使用`latest`，比如`npm install`和`npm publish`
 - NPM 包的`tag`可以是任意的字符串，不过一般会有约定俗成的`tag`，比如`alpha`、`beta`、`next`等
 
+## npm 包管理原理
+
+- [一文弄懂 npm & yarn 包管理机制](https://jishuin.proginn.com/p/763bfbd655cc)
+
 ## 问题汇总
 
 ### 修改 registry 后 package-lock.json 里的 resolved 没更新

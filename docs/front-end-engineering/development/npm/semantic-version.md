@@ -59,6 +59,7 @@
 
 - [NPM - About semantic versioning](https://docs.npmjs.com/about-semantic-versioning)
 - [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)
+- [NPM 语音化版本计算](https://semver.npmjs.com/)
 
 ## 发版规范
 
