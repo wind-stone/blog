@@ -60,6 +60,7 @@ module.exports = {
             text: 'WebAssemply',
             children: [
                 '/js/web-assembly/',
+                '/js/web-assembly/vmp'
             ]
         },
         {
