@@ -1,6 +1,51 @@
-# 异步队列
+# scheduler
 
 [[toc]]
+
+`scheduler`（调度器）的作用是，将所有 Watcher 的重新计算放入一个异步队列里，并调用`nextTick(flushSchedulerQueue)`在下一个 Tick 里对 Watcher 进行重新计算。
+
+这样做的好处是：（主线程里）多次触发同一个 Watcher，最终 Watcher 只会执行一次。
+
+```vue
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      a: 1,
+      b: 2,
+      c: 3,
+    };
+  },
+  mounted() {
+    this.$watch(
+      function () {
+        return this.a + this.b;
+      },
+      (newValue) => {
+        this.c = newValue;
+      }
+    );
+  },
+  methods: {
+    change() {
+      this.a = 'a';
+      this.$nextTick(() => {
+        console.log("c", this.c); // c ab
+      });
+      this.b = "b";
+      this.$nextTick(() => {
+        console.log("c", this.c); // c ab
+      });
+    },
+  },
+};
+</script>
+```
+
+比如上述代码里，执行`change`方法后，修改`a`和`b`都会导致同一个 Watcher 重新计算。修改`a`导致的 Watcher 的重新计算会被加入异步队列里，而修改`b`导致的 Watcher 的重新计算不会被加入异步队列里，因此两次打印`c`的结果都是`ab`。
+
+此外，在异步队列执行时，还会按 Watcher 的`id`进行排序，具体好处在本文后面详细介绍。
 
 ## 同步计算 VS 异步队列
 
