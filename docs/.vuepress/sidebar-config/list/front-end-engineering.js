@@ -81,6 +81,12 @@ module.exports = {
                 '/front-end-engineering/development/npm/third-party-package'
             ]
         },
+        {
+            text: 'pnpm',
+            children: [
+                '/front-end-engineering/development/pnpm/',
+            ]
+        },
     ],
 
     // 构建阶段
