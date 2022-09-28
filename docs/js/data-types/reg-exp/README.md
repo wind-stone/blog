@@ -104,6 +104,19 @@ function format(num) {
 }
 ```
 
+### 千分位表示法（带小数）
+
+先将整数部分提取出来，再将提取出来的整数用千分位表示，小数部分保持不变。
+
+```js
+const reg = /\B(?=(?:\d{3})+$)/g
+function thousandsFormat(decimalsStr) {
+    return decimalsStr.replace(/\d+/, (num) => {
+        return num.replace(reg, ',')
+    })
+};
+```
+
 ### 去掉小数点后面多余的 0
 
 ```js
