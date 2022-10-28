@@ -48,6 +48,7 @@ module.exports = {
                 '/front-end-engineering/development/h5/',
                 '/front-end-engineering/development/h5/style',
                 '/front-end-engineering/development/h5/format',
+                '/front-end-engineering/development/h5/local-mock',
             ]
         },
         {
