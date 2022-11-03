@@ -22,3 +22,21 @@
   - [滚动回弹效果](/browser-env/scroll/#css-相关)
   - [隐藏滚动条](/browser-env/scroll/#滚动条隐藏但可滚动)
   - [锚点定位滚动动画](/browser-env/scroll/#锚点切换时-流畅的滚动)
+
+## 尺寸适配
+
+使用 postcss 的插件[postcss-plugin-px2rem](https://github.com/pigcan/postcss-plugin-px2rem)，可以将代码里的`px`处理成`rem`。比如：
+
+```css
+body {
+  padding: 0 20px;
+}
+
+/* 经过 postcss-plugin-px2rem 处理后 */
+body {
+  padding: 0 0.2rem;
+}
+```
+
+默认是`1rem = 100px`，所以需要设置`document.documentElement.style.fontSize`为`100 * 实际屏幕宽度 / 设计稿宽度`，设置方式可参考：
+[rem 组件](/code-snippet/browser-env/rem/)。
