@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import NewB from './NewB';
+import NewB from './NewB.vue';
 export default {
     name: 'NewA',
     components: {

@@ -2,6 +2,8 @@
 
 前置知识：大概了解`v-model`的实现方式。
 
+注意：仅适用于 Vue 2.x，目前示例是基于 VuePress 1.x 及是使用 Vue 3 了所以运行不了。
+
 ## 背景
 
 有时候我们可能会出现级联使用`v-model`的情况，比如 A 组件里通过`v-model="proA"`控制 B 组件的可见性，B 组件再通过`v-model="proA"`将属性`proA`传入 C 组件，控制 C 组件的可见性。
@@ -10,38 +12,38 @@
 
 ### 示例及代码
 
-<!-- <cascade-visibility-OldA /> -->
+<!-- <code-snippet-vue-components-cascade-visibility-OldA></code-snippet-vue-components-cascade-visibility-OldA> -->
 
 请打开控制台，并点击上方的按钮，并查看报错。
 
 A 组件:
 
-@[code vue](@components/cascade-visibility/OldA.vue)
+@[code vue](@components/code-snippet/vue-components/cascade-visibility/OldA.vue)
 
 B 组件:
 
-@[code vue](@components/cascade-visibility/OldB.vue)
+@[code vue](@components/code-snippet/vue-components/cascade-visibility/OldB.vue)
 
 C 组件:
 
-@[code vue](@components/cascade-visibility/OldC.vue)
+@[code vue](@components/code-snippet/vue-components/cascade-visibility/OldC.vue)
 
 ## 解决方案
 
 以上示例之所以会报错，是因为 B 组件里直接修改了`props`里的`proA`，如果在 B 组件里可以间接地通过`emit`事件让 A 组件来修改`proA`就没问题了。
 
-<!-- <cascade-visibility-NewA /> -->
+<!-- <code-snippet-vue-components-cascade-visibility-NewA></code-snippet-vue-components-cascade-visibility-NewA> -->
 
 A 组件(仅修改了引入 NewB 组件):
 
-@[code vue](@components/cascade-visibility/NewA.vue)
+@[code vue](@components/code-snippet/vue-components/cascade-visibility/NewA.vue)
 
 B 组件（引入 CascadeVisibility.js 组件）:
 
-@[code vue](@components/cascade-visibility/NewB.vue)
+@[code vue](@components/code-snippet/vue-components/cascade-visibility/NewB.vue)
 
 CascadeVisibility.js:
 
-@[code vue](@components/cascade-visibility/CascadeVisibility.js)
+@[code js](@components/code-snippet/vue-components/cascade-visibility/cascade-visibility.js)
 
 C 组件无需修改。

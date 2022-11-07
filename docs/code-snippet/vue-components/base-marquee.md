@@ -8,7 +8,7 @@
 
 ## 示例
 
-<!-- <base-marquee-example></base-marquee-example> -->
+<code-snippet-vue-components-base-marquee-example></code-snippet-vue-components-base-marquee-example>
 
 ## 调用
 
@@ -23,4 +23,4 @@
 
 ### 组件源码
 
-@[code vue](@components/base-marquee/index.vue)
+@[code vue](@components/code-snippet/vue-components/base-marquee/index.vue)

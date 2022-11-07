@@ -70,8 +70,8 @@ PS：请在手机端打开该页面进行体验
 
 ### 调用示例
 
-@[code vue](components/common-popup/example.vue)
+@[code vue](@components/code-snippet/vue-components/common-popup/example.vue)
 
 ### 组件源码
 
-@[code vue](components/common-popup/index.vue)
+@[code vue](@components/code-snippet/vue-components/common-popup/index.vue)

@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import CascadeVisibility from './CascadeVisibility';
-import OldC from './OldC';
+import CascadeVisibility from './cascade-visibility';
+import OldC from './OldC.vue';
 
 export default {
     name: 'OldB',

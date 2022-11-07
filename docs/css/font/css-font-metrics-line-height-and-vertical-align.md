@@ -42,7 +42,7 @@ p { font-size: 100px }
 
 实验结果：
 
-<!-- <code-font-different-fon-family></code-font-different-fon-family> -->
+<css-font-different-fon-family></css-font-different-fon-family>
 
 即使我们意识到这种行为，但是为什么`font-size: 100px`没创建出`100px`的高度呢？我已经测量了每个`span`元素最终的高度值: Helvetica，`115px`； Gruppo，`97px`以及 Catamaran，`164px`。
 

@@ -7,12 +7,6 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'MarginCollapseBoxSelf'
-};
-</script>
-
 <style lang="less" scoped>
 * {
     margin: 0;

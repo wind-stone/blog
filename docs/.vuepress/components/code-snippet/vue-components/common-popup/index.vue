@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { contains } from '../common/js/util';
+import { contains } from '../../common/js/util';
 
 const CLOSE = 'close';
 export default {

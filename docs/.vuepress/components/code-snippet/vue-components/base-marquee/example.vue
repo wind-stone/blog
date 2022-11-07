@@ -1,6 +1,5 @@
 <template>
-    <base-marquee-index>
-        <!-- 请确保此处的 slot 内容是个 v-for 循环的标签，且必须存在 key -->
+    <BaseMarquee>
         <div
             v-for="i in 10"
             :key="i"
@@ -8,12 +7,16 @@
         >
             {{ new Array(10).fill(i).join(' ') }}
         </div>
-    </base-marquee-index>
+    </BaseMarquee>
 </template>
 
 <script>
+import BaseMarquee from './index.vue';
 export default {
-    name: 'SimpleMarqueeExample'
+    name: 'SimpleMarqueeExample',
+    components: {
+        BaseMarquee
+    }
 };
 </script>
 

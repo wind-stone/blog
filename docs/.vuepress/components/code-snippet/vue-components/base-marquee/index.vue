@@ -16,7 +16,6 @@
 
 <script>
 export default {
-    name: 'BaseMarquee',
     data() {
         return {
             timer: null,
@@ -33,11 +32,13 @@ export default {
     },
     methods: {
         initSize() {
-            this.liHeight = this.$refs.marqueeList.firstChild.offsetHeight || 0;
+            this.liHeight = this.$refs.marqueeList.firstElementChild.offsetHeight || 0;
             this.$refs.baseMarquee.style.height = this.liHeight + 'px';
         },
         setMarqueeUlMarginTop(height) {
-            this.$refs.marqueeList.style.marginTop = -height + 'px';
+            if (this.$refs.marqueeList) {
+                this.$refs.marqueeList.style.marginTop = -height + 'px';
+            }
         },
         showMarquee() {
             this.transition = true;
@@ -48,7 +49,7 @@ export default {
             setTimeout(() => {
                 // 放在异步操作里，防止闪跳（第一条滚动后，先闪现第三条，再稳定在第二条上）
                 const marqueeList = this.$refs.marqueeList;
-                marqueeList.appendChild(marqueeList.firstChild);
+                marqueeList.appendChild(marqueeList.firstElementChild);
                 this.setMarqueeUlMarginTop(0);
             }, 0);
         }
@@ -56,7 +57,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .base-marquee {
     width: 100%;
     padding: 0 15px;

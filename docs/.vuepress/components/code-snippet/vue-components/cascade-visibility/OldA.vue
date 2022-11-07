@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import OldB from './OldB';
+import OldB from './OldB.vue';
 export default {
     name: 'OldA',
     components: {

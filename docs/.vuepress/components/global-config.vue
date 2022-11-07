@@ -21,7 +21,6 @@ import Gitalk from 'gitalk';
 import 'gitalk/dist/gitalk.css';
 
 export default {
-    name: 'Comment',
     data() {
         return {
             busuanziVisible: false,

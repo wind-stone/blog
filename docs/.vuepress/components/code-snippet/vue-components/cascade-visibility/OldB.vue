@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import OldC from './OldC';
+import OldC from './OldC.vue';
 const EVENT_TOGGLE = 'toggle';
 
 export default {

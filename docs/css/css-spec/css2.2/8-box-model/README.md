@@ -231,8 +231,9 @@ body {
 
 注意，发生外边距折叠的元素的位置对其他发生外边距折叠的元素的位置没有影响。元素上边框边界的位置仅是用于其子孙元素的布局。
 
+
 ::: warning 译者注 - 示例 1: 元素的上下外边距折叠
-<!-- <margin-collapse-box-self></margin-collapse-box-self> -->
+<css-css-spec-margin-collapse-box-self></css-css-spec-margin-collapse-box-self>
 
 ```html
 <div class="ctn">
@@ -255,7 +256,7 @@ body {
 :::
 
 ::: warning 译者注 - 示例 2: 复杂的外边距折叠的情况
-<!-- <margin-collapse-complicated></margin-collapse-complicated> -->
+<css-css-spec-margin-collapse-complicated></css-css-spec-margin-collapse-complicated>
 
 ```html
 <div class="ctn">
