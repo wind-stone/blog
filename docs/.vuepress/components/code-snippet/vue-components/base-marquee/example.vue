@@ -1,5 +1,6 @@
 <template>
-    <BaseMarquee>
+    <BaseMarquee class="base-marquee">
+        <!-- 请确保此处的 slot 内容是个 v-for 循环的标签，且必须存在 key -->
         <div
             v-for="i in 10"
             :key="i"
@@ -21,6 +22,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.base-marquee {
+    height: 30px;
+    border-radius: 15px;
+}
 .marquee-item {
     line-height: 30px;
 }

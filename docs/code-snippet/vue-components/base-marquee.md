@@ -12,12 +12,7 @@
 
 ## 调用
 
-```html
-<base-marquee>
-    <!-- 请确保此处的 slot 内容是个 v-for 循环的标签，且必须存在 key -->
-    <div v-for="i in 10" :key="i" class="marquee-item">{{ new Array(10).fill(i).join(' ') }}</div>
-</base-marquee>
-```
+@[code vue](@components/code-snippet/vue-components/base-marquee/example.vue)
 
 ## 代码
 
