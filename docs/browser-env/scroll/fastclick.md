@@ -28,7 +28,7 @@
 
 ### 手动触发 element.click() 无效
 
-<!-- <code-scroll-fastclick-bug></code-scroll-fastclick-bug> -->
+<browser-env-scroll-fastclick-bug></browser-env-scroll-fastclick-bug>
 
 PS：请在手机上观看
 
