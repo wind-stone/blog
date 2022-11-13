@@ -3,7 +3,7 @@
         <button @click="show">
             打开弹窗
         </button>
-        <common-popup-index
+        <CommonPopup
             v-model="isShow"
             :forbid-bg-scroll="forbidBgScroll"
             scroll-area-selector=".scroll-area"
@@ -23,13 +23,17 @@
                     </li>
                 </ul>
             </div>
-        </common-popup-index>
+        </CommonPopup>
     </div>
 </template>
 
 <script>
+import CommonPopup from './index.vue';
 export default {
     name: 'CommonPopupExample',
+    components: {
+        CommonPopup
+    },
     props: {
         forbidBgScroll: {
             type: Boolean,

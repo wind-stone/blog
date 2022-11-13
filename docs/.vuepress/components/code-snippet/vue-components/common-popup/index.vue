@@ -1,6 +1,6 @@
 <template>
     <div
-        v-show="visible"
+        v-show="modelValue"
         ref="mask"
         class="common-popup-mask"
     >
@@ -18,15 +18,11 @@
 <script>
 import { contains } from '../../common/js/util';
 
-const CLOSE = 'close';
+const CLOSE = 'update:modelValue';
 export default {
     name: 'CommonPopup',
-    model: {
-        prop: 'visible',
-        event: CLOSE
-    },
     props: {
-        visible: {
+        modelValue: {
             type: Boolean,
             required: false,
             default: false
