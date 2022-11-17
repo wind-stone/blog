@@ -55,6 +55,22 @@ GROUP BY
 ORDER BY t
 ```
 
+#### extractURLParameter
+
+提取 url 里的参数。比如如下示例就是按 url 上的 source 值进行分组。
+
+```sql
+SELECT
+    $timeSeries as t,
+    extractURLParameter(url, 'source') as source,
+    count()
+FROM $table
+WHERE $timeFilter
+  AND ...
+GROUP BY t, source
+ORDER BY t
+```
+
 #### splitByChar
 
 假设`url`是页面地址，形如`https://www.baidu.com?a=1&b=2`，如果想要按**域名 + 协议**来统计，可以使用`splitByChar`函数来分隔`url`。
