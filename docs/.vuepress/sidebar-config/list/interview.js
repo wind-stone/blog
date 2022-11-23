@@ -9,13 +9,6 @@ module.exports = {
                         '/interview/javascript/performance-optimization/debounce-throttle/',
                     ]
                 },
-
-                {
-                    text: '工具函数',
-                    children: [
-                        '/interview/javascript/utils/format',
-                    ]
-                },
             ]
         },
 

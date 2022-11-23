@@ -11,6 +11,7 @@ module.exports = {
                         '/code-snippet/js/utils/version',
                         '/code-snippet/js/utils/event-emitter',
                         '/code-snippet/js/utils/queen-next',
+                        '/code-snippet/js/utils/format',
                     ]
                 },
 
