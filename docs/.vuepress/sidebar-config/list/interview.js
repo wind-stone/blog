@@ -4,6 +4,12 @@ module.exports = {
             text: 'JS 面试题',
             children: [
                 {
+                    text: '闭包',
+                    children: [
+                        '/interview/javascript/closure/update-closure',
+                    ]
+                },
+                {
                     text: '性能优化',
                     children: [
                         '/interview/javascript/performance-optimization/debounce-throttle/',
