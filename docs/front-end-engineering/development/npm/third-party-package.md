@@ -273,3 +273,8 @@ var controllers = require('require-all')({
 ### etag
 
 [etag](https://github.com/jshttp/etag)，创建简单的 ETags。
+
+## depcheck
+
+[depcheck](https://github.com/depcheck/depcheck)
+，分析项目里的依赖，查看每个依赖是否使用到，缺少哪些依赖。
