@@ -492,6 +492,27 @@ function find(arr, item) {
 
 Reference: [颜海镜 - 深拷贝的终极探索](https://yanhaijing.com/javascript/2018/10/10/clone-deep/)
 
+### MessageChannel 深拷贝
+
+```js
+function messageChannelDeepClone(obj) {
+  return new Promise(resolve => {
+    const { port1, port2 } = new MessageChannel()
+    port2.onmessage = ev => resolve(ev.data)
+    port1.postMessage(obj)
+  })
+}
+
+// 测试：
+const obj = { a: 1, b: { c: 2 } }
+obj.b.d = obj.b
+
+// 注意该方法是异步的，可以处理 undefined 和循环引用对象
+messageChannelDeepClone(obj).then(data => {
+  console.log('深拷贝数据：', data)
+})
+```
+
 ### 社区解决方案
 
 [klona](https://github.com/lukeed/klona)，A tiny (240B to 501B) and fast utility to "deep clone" Objects, Arrays, Dates, RegExps, and more!
