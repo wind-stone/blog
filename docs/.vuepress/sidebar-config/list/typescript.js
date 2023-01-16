@@ -23,9 +23,15 @@ module.exports = {
             children: [
                 '/typescript/type-system/',
                 '/typescript/type-system/generics',
-                '/typescript/type-system/type-operators',
                 '/typescript/type-system/property-modifiers',
                 '/typescript/type-system/utility-types',
+            ]
+        },
+        {
+            text: '类型操作',
+            children: [
+                '/typescript/type-manipulation/',
+                '/typescript/type-manipulation/type-operators',
             ]
         },
         {
