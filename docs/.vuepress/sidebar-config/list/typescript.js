@@ -3,7 +3,8 @@ module.exports = {
         {
             text: 'TypeScript',
             children: [
-                '/typescript/'
+                '/typescript/',
+                '/typescript/type-manipulation/type-challenges',
             ]
         },
         {
