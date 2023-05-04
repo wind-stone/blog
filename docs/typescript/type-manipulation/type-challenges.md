@@ -1,5 +1,8 @@
 # TypeScript 类型体操
 
+- [github - type-challenges](https://github.com/type-challenges/type-challenges)
+- 具体答案可参考: [TypeScript 类型体操姿势合集<通关总结>--刷完](https://juejin.cn/post/6999280101556748295)
+
 ## 简单
 
 ### 实现 Pick
@@ -59,6 +62,8 @@ type FirstElement = EmptyArray[0] // Tuple type '[]' of length '0' has no elemen
 
 ```ts
 type MyExclude<T, U> = T extends U ? never : T
+
+type Result = MyExclude<'a' | 'b' | 'c', 'a'> // 'b' | 'c'
 ```
 
 知识点：[Distributive Conditional Types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributive-conditional-types)，即在`X extends Y`的条件类型语句中，若`X`是联合类型，则会将联合类型的每一个成员代入进行独立计算，再将结果组合成联合类型。
@@ -107,7 +112,9 @@ type Concat<T extends any[], U extends any[]> = [...T, ...U]
 [898・Includes](https://github.com/type-challenges/type-challenges/blob/main/questions/00898-easy-includes/README.zh-CN.md)
 
 ```ts
-type IEqual<T,U> = (<X>()=>X extends T ? 1:2) extends (<X>()=>X extends U ? 1 : 2) ? true :false
+type IEqual<T,U> =
+  (<X>()=>X extends T ? 1 : 2) extends
+  (<X>()=>X extends U ? 1 : 2) ? true :false
 
 type Includes<T extends readonly any[], U> = T extends [infer V, ...infer R]
   ? IEqual<V, U> extends true
@@ -136,3 +143,57 @@ type Unshift<T extends any[], U> = [U, ...T];
 ### Parameters
 
 [3312・Parameters](https://github.com/type-challenges/type-challenges/blob/main/questions/03312-easy-parameters/README.md)
+
+```ts
+const foo = (arg1: string, arg2: number): void => {};
+
+// 实现
+type MyParameters<T extends (...args: any[]) => any> = T extends (...args: infer Args extends any[]) => any
+  ? Args
+  : never
+
+type FunctionParamsType = MyParameters<typeof foo> // [arg1: string, arg2: number]
+```
+
+## 中等
+
+### Get Return Type
+
+[2・Get Return Type](https://github.com/type-challenges/type-challenges/blob/main/questions/00002-medium-return-type/README.md)
+
+```ts
+const fn = (v: boolean) => {
+    if (v)
+        return 1;
+    else
+        return 2;
+};
+
+// 实现
+type MyReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
+
+type a = MyReturnType<typeof fn> // should be "1 | 2"
+```
+
+### Omit
+
+[3・Omit](https://github.com/type-challenges/type-challenges/blob/main/questions/00003-medium-omit/README.md)
+
+```ts
+interface Todo {
+    title: string;
+    description: string;
+    completed: boolean;
+}
+
+// 实现
+type MyOmit<T, K extends keyof T> = {
+    [key in Exclude<keyof T, K>]: T[key]
+}
+
+type TodoPreview = MyOmit<Todo, 'description' | 'title'>
+
+const todo: TodoPreview = {
+    completed: false,
+};
+```
