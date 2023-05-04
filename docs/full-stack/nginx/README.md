@@ -178,3 +178,7 @@ upstream backend {
 Nginx 服务端会按照设定的时间间隔`interval`主动向后端服务器发出检查请求，来验证后端服务器的可用状态。若某个服务器返回失败超过设定的次数，Nginx 就会将该服务器标记为异常，在此次`interval`期间将不再分发流量到该服务器，而是分发到其他服务器上。经过`interval`间隔之后，Nginx 会再次发出检查请求，若此时服务器可用，Nginx 将会标记该服务器为正常，进而继续向该服务器分发流量。
 
 使用这种方式，一般需要后端服务器为 Nginx 提供一个低消耗的接口，用于检查该服务器状态。
+
+## Nginx 错误码
+
+- 499，[What Is a 499 Status Code?](https://www.webfx.com/web-development/glossary/http-status-codes/what-is-a-499-status-code/)
