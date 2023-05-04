@@ -115,6 +115,17 @@ FROM OrderDetails;
 
 详见：[SQL CASE Statement](https://www.w3schools.com/sql/sql_case.asp)
 
+##### 秒开率
+
+```sql
+SELECT
+    sum(case when fmp <= 1000 then 1 else 0 end) / count() as `秒开率`
+FROM $table
+WHERE
+    ...
+    AND event_name = 'fmp'
+```
+
 ### 常用场景
 
 #### 成功率
