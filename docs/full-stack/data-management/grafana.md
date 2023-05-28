@@ -2,6 +2,28 @@
 
 [[toc]]
 
+## SQL 语法
+
+### 连接查询
+
+- INNER JOIN
+
+![INNER JOIN](https://cdn.liaoxuefeng.com/files/attachments/1246892164662976/l)
+
+- LEFT OUTER JOIN
+
+![LEFT OUTER JOIN](https://cdn.liaoxuefeng.com/files/attachments/1246893588481376/l)
+
+- RIGHT OUTER JOIN
+
+![RIGHT OUTER JOIN](https://cdn.liaoxuefeng.com/files/attachments/1246893609222688/l)
+
+- FULL OUTER JOIN
+
+![FULL OUTER JOIN](https://cdn.liaoxuefeng.com/files/attachments/1246893632359424/l)
+
+详见：[连接查询](https://www.liaoxuefeng.com/wiki/1177760294764384/1179610888796448)
+
 ## ClickHouse 监控配置
 
 ### 常用函数
