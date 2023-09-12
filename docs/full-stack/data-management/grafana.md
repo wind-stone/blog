@@ -307,3 +307,33 @@ ANY LEFT JOIN (
 配置了该`query`后，得到的一条在`0%`上下波动的曲线，此时就可以配置当曲线值低于`10%`的时候触发报警。报警条件里，只需要最后一个点的值低于`-0.1`。
 
 ![报警条件](./images/alert-condition.png)
+
+#### 最近两小时新出现的 JS 错误影响的用户数
+
+```sql
+SELECT
+    t,
+    key,
+    sum(value)
+FROM
+(
+    SELECT
+        -- 第三步：在聚合后，选择 server_timestamp 最小的
+        min(server_timestamp) as t,
+        msg as key,
+        count(DISTINCT device_id) as value
+    FROM $table
+    WHERE
+        -- 第一步：筛选最近 7 天的所有 JS 错误
+        server_timestamp >= toUnixTimestamp(now()) * 1000 - 7 * 24 * 60 * 60 * 1000
+        AND server_timestamp < toUnixTimestamp(now()) * 1000
+        AND 项目
+    -- 第二步：按 JS 错误内容聚合
+    GROUP BY key
+    -- 第四步：过滤 JS 错误出现的最小 server_timestamp 是在 2 个小时内（这意味着在最近一周里，JS 错误第一次出现是在 2 小时内）
+    HAVING (IF(min(server_timestamp) > toUnixTimestamp(now()) * 1000 - 2 * 60 * 60 * 1000, 1, 0)) >= 1
+)
+GROUP BY
+    t,
+    key
+```
