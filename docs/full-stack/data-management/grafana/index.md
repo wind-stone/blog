@@ -318,7 +318,7 @@ SELECT
 FROM
 (
     SELECT
-        -- 第三步：在聚合后，选择 server_timestamp 最小的
+        -- 第四步：使用 min 聚合函数，选择 server_timestamp 最小的那条数据
         min(server_timestamp) as t,
         msg as key,
         count(DISTINCT device_id) as value
@@ -330,7 +330,8 @@ FROM
         AND 项目
     -- 第二步：按 JS 错误内容聚合
     GROUP BY key
-    -- 第四步：过滤 JS 错误出现的最小 server_timestamp 是在 2 个小时内（这意味着在最近一周里，JS 错误第一次出现是在 2 小时内）
+    -- 第三步：在聚合后的数据里，筛选出“JS 错误出现的最小 server_timestamp 是在 2 个小时内（这意味着在最近一周里，JS 错误第一次出现是在 2 小时内）”的数据
+    -- 说明：在 SQL 中增加 HAVING 子句原因是，WHERE 关键字无法与聚合函数一起使用。HAVING 子句可以让我们筛选分组后的各组数据。
     HAVING (IF(min(server_timestamp) > toUnixTimestamp(now()) * 1000 - 2 * 60 * 60 * 1000, 1, 0)) >= 1
 )
 GROUP BY
