@@ -123,7 +123,7 @@ ORDER BY t
 
 ### 常用语法
 
-#### CASE
+#### CASE WHEN
 
 ```sql
 SELECT OrderID, Quantity,
@@ -141,11 +141,33 @@ FROM OrderDetails;
 
 ```sql
 SELECT
-    sum(case when fmp <= 1000 then 1 else 0 end) / count() as `秒开率`
+    sum(
+        CASE
+            WHEN fmp <= 1000 THEN 1
+            ELSE 0
+        END
+    ) / count() as `秒开率`
 FROM $table
 WHERE
     ...
     AND event_name = 'fmp'
+```
+
+#### WITH
+
+##### 触达率
+
+```sql
+WITH
+    sumIf(1 / final_sample, event_name = 'fmp') as fmp_event,
+    sumIf(1 / final_sample, event_name = 'CREATED') as created_event
+SELECT
+    $timeSeries as t,
+    if(created_event = 0, 0, fmp_event / created_event) as `页面触达率`
+FROM 表名
+WHERE 查询条件
+GROUP BY t
+ORDER BY t
 ```
 
 ### 常用场景
