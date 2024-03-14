@@ -28,38 +28,9 @@
 
 ### 常用函数
 
-#### concat
+#### URL 操作
 
-```sql
-SELECT
-    $timeSeries as t,
-    sum(`count`),
-    concat('字符串第一部分', first, '，字符串第二部分', extra2)
-FROM $table
-WHERE
-    `timestamp` >= toDateTime($from)
-    AND `timestamp` < toDateTime($to)
-    AND dt >= toDate($from)
-    AND dt <= toDate($to)
-GROUP BY t, concat('字符串第一部分', first, '，字符串第二部分', extra2)
-ORDER BY t
-```
-
-#### JSONExtractString
-
-```sql
-SELECT
-    $timeSeries as t,
-    JSONExtractString(person, 'name') as name,
-    count() AS c
-FROM $table
-WHERE $timeFilter
-AND ...
-GROUP BY t, name
-ORDER BY t
-```
-
-#### domain
+##### domain
 
 假设`url`是页面地址，形如`https://www.baidu.com?a=1&b=2`，如果想要按域名来统计，可以使用`domain`函数获取域名。
 
@@ -77,7 +48,7 @@ GROUP BY
 ORDER BY t
 ```
 
-#### extractURLParameter
+##### extractURLParameter
 
 提取 url 里的参数。比如如下示例就是按 url 上的 source 值进行分组。
 
@@ -93,7 +64,42 @@ GROUP BY t, source
 ORDER BY t
 ```
 
-#### splitByChar
+#### JSON 操作
+
+##### JSONExtractString
+
+```sql
+SELECT
+    $timeSeries as t,
+    JSONExtractString(person, 'name') as name,
+    count() AS c
+FROM $table
+WHERE $timeFilter
+AND ...
+GROUP BY t, name
+ORDER BY t
+```
+
+#### 字符串方法
+
+##### concat
+
+```sql
+SELECT
+    $timeSeries as t,
+    sum(`count`),
+    concat('字符串第一部分', first, '，字符串第二部分', extra2)
+FROM $table
+WHERE
+    `timestamp` >= toDateTime($from)
+    AND `timestamp` < toDateTime($to)
+    AND dt >= toDate($from)
+    AND dt <= toDate($to)
+GROUP BY t, concat('字符串第一部分', first, '，字符串第二部分', extra2)
+ORDER BY t
+```
+
+##### splitByChar
 
 假设`url`是页面地址，形如`https://www.baidu.com?a=1&b=2`，如果想要按**域名 + 协议**来统计，可以使用`splitByChar`函数来分隔`url`。
 
@@ -120,6 +126,24 @@ ORDER BY t
 - [splitByChar](https://clickhouse.com/docs/en/sql-reference/functions/splitting-merging-functions/#splitbycharseparator-s)，按字符将字符串分隔为字符串数组
 - [arrayElement](https://clickhouse.com/docs/en/sql-reference/functions/array-functions/#arrayelementarr-n-operator-arrn)，按索引获取数据项
 - [assumeNotNull](https://clickhouse.com/docs/en/sql-reference/functions/functions-for-nulls/#assumenotnull)，一定要加这个，确保`url`不为`null`
+
+##### countSubstrings
+
+统计字符串里存在特定子串的数量。比如如下示例里，统计 url 上存在至少 3 个 ? 字符的数量
+
+```sql
+SELECT
+    $timeSeries as t,
+    url,
+    count() as cc
+FROM $table
+WHERE
+    countSubstrings(url, '?') >= 3
+GROUP BY
+    t,
+    url
+ORDER BY t
+```
 
 ### 常用语法
 
