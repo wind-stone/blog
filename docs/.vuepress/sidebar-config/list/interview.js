@@ -1,12 +1,30 @@
 module.exports = {
     '/interview': [
         {
+            text: '面试题目',
+            children: [
+                '/interview/browser/',
+                '/interview/css/',
+                '/interview/algorithm/interview/',
+                '/interview/nodejs/'
+            ]
+        },
+        {
             text: 'JS 面试题',
             children: [
                 {
-                    text: '闭包',
+                    text: '前端基础',
                     children: [
-                        '/interview/javascript/closure/update-closure',
+                        '/interview/javascript/foundation/data-type',
+                        '/interview/javascript/foundation/execution-context',
+                        '/interview/javascript/foundation/execution-mechanism',
+                    ]
+                },
+                {
+                    text: '前端编码',
+                    children: [
+                        '/interview/javascript/coding/basic-api-usage/',
+                        '/interview/javascript/coding/program-design/',
                     ]
                 },
                 {
@@ -17,40 +35,6 @@ module.exports = {
                 },
             ]
         },
-
-
-        {
-            text: 'Node.js 专属面试题',
-            children: [
-                '/interview/nodejs/'
-            ]
-        },
-
-
-        // {
-        //     text: 'CSS 面试题',
-        //     children: [
-        //         {
-        //             text: '工具函数',
-        //             children: [
-        //                 '/interview/js/utils/data-type',
-        //             ]
-        //         },
-        //     ]
-        // },
-
-        // {
-        //     text: 'HMLT/DOM 面试题',
-        //     children: [
-        //         {
-        //             text: '工具函数',
-        //             children: [
-        //                 '/interview/js/utils/data-type',
-        //             ]
-        //         },
-        //     ]
-        // }
-
         {
             text: '数据结构',
             children: [
@@ -58,7 +42,6 @@ module.exports = {
                 '/interview/data-structure/heap/',
             ]
         },
-
         {
             text: '算法',
             children: [

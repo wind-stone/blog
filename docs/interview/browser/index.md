@@ -1,26 +1,8 @@
 # 浏览器
 
-## 事件代理
-
-简单实现一个事件代理:
-
-```js
-function delegate(agent,type,selctor,fn) {
-  // agent.addEventListener(type,fn) 如果是这样 fn 中的 this 会指向 agent
-  agent.addEventListener(type,function(e){
-      let target = e.target;         // target指向实际点击的最里层的元素
-      let ctarget = e.currentTarget; // ctarget会永远指向agent
-
-      while(target != ctarget){
-          if(target.matches(selctor)){
-            // 改变 this 的指向
-            fn.call(target, e);
-            return;
-          }
-          target = target.parentNode;
-      }
-  }, false)
-}
-```
-
-参考: [JavaScript事件委托原理及实现 #65](https://github.com/caistrong/Blog/issues/65)
+- DOM
+  - [【初级】事件代理](/interview/browser/dom/event-delegation)
+  - [【中级】ul 翻转](/interview/browser/dom/flip-ul)
+  - [【高级】回答问题，说明属性（DOM Property）和特性（HTML Attribute）的区别与联系](/interview/browser/dom/the-difference-between-dom-property-and-html-attribute)
+- [【中级】输入 url 到页面展现发生了什么：主要考察网络和渲染](/interview/browser/the-process-of-input-an-url)
+- [【中级】HTML 里外链 CSS、JS 文件放置位置和原因](/interview/browser/the-reason-for-the-position-of-css-and-js-in-html)
