@@ -1,36 +1,12 @@
-# Grafana
+# ClickHouse
 
 [[toc]]
 
-## SQL 语法
+## 常用函数
 
-### 连接查询
+### URL 操作
 
-- INNER JOIN
-
-![INNER JOIN](./images/inner-join.png)
-
-- LEFT OUTER JOIN
-
-![LEFT OUTER JOIN](./images/left-outer-join.png)
-
-- RIGHT OUTER JOIN
-
-![RIGHT OUTER JOIN](./images/right-outer-join.png)
-
-- FULL OUTER JOIN
-
-![FULL OUTER JOIN](./images/full-outer-join.png)
-
-详见：[连接查询](https://www.liaoxuefeng.com/wiki/1177760294764384/1179610888796448)
-
-## ClickHouse 监控配置
-
-### 常用函数
-
-#### URL 操作
-
-##### domain
+#### domain
 
 假设`url`是页面地址，形如`https://www.baidu.com?a=1&b=2`，如果想要按域名来统计，可以使用`domain`函数获取域名。
 
@@ -48,7 +24,7 @@ GROUP BY
 ORDER BY t
 ```
 
-##### extractURLParameter
+#### extractURLParameter
 
 提取 url 里的参数。比如如下示例就是按 url 上的 source 值进行分组。
 
@@ -64,9 +40,9 @@ GROUP BY t, source
 ORDER BY t
 ```
 
-#### JSON 操作
+### JSON 操作
 
-##### JSONExtractString
+#### JSONExtractString
 
 ```sql
 SELECT
@@ -80,9 +56,9 @@ GROUP BY t, name
 ORDER BY t
 ```
 
-#### 字符串方法
+### 字符串方法
 
-##### concat
+#### concat
 
 ```sql
 SELECT
@@ -99,7 +75,7 @@ GROUP BY t, concat('字符串第一部分', first, '，字符串第二部分', e
 ORDER BY t
 ```
 
-##### splitByChar
+#### splitByChar
 
 假设`url`是页面地址，形如`https://www.baidu.com?a=1&b=2`，如果想要按**域名 + 协议**来统计，可以使用`splitByChar`函数来分隔`url`。
 
@@ -127,7 +103,7 @@ ORDER BY t
 - [arrayElement](https://clickhouse.com/docs/en/sql-reference/functions/array-functions/#arrayelementarr-n-operator-arrn)，按索引获取数据项
 - [assumeNotNull](https://clickhouse.com/docs/en/sql-reference/functions/functions-for-nulls/#assumenotnull)，一定要加这个，确保`url`不为`null`
 
-##### countSubstrings
+#### countSubstrings
 
 统计字符串里存在特定子串的数量。比如如下示例里，统计 url 上存在至少 3 个 ? 字符的数量
 
@@ -145,9 +121,9 @@ GROUP BY
 ORDER BY t
 ```
 
-### 常用语法
+## 常用语法
 
-#### CASE WHEN
+### CASE WHEN
 
 ```sql
 SELECT OrderID, Quantity,
@@ -161,7 +137,7 @@ FROM OrderDetails;
 
 详见：[SQL CASE Statement](https://www.w3schools.com/sql/sql_case.asp)
 
-##### 秒开率
+#### 秒开率
 
 ```sql
 SELECT
@@ -177,9 +153,9 @@ WHERE
     AND event_name = 'fmp'
 ```
 
-#### WITH
+### WITH
 
-##### 触达率
+#### 触达率
 
 ```sql
 WITH
@@ -194,9 +170,9 @@ GROUP BY t
 ORDER BY t
 ```
 
-### 常用场景
+## 常用场景
 
-#### 成功率
+### 成功率
 
 ```sql
 SELECT
@@ -229,7 +205,7 @@ ANY LEFT JOIN (
 ) as b USING t
 ```
 
-#### 今日昨日对比
+### 今日昨日对比
 
 今日的`query`配置好之后，复制一份新的`query`，在新的`query`的`Functions`配置上添加`timeShift: 1d`
 
@@ -272,7 +248,7 @@ ANY LEFT JOIN (
 ) as yesterdayAll USING t
 ```
 
-#### 今日昨日成功率报警
+### 今日昨日成功率报警
 
 有时候，我们不仅想看到`今日成功率`和`昨日成功率`这两条曲线的对比，还想配置报警。比如，当`今日成功率`比`昨日成功率`低 10% 时，触发报警。
 
@@ -354,7 +330,7 @@ ANY LEFT JOIN (
 
 ![报警条件](./images/alert-condition.png)
 
-#### 最近两小时新出现的 JS 错误影响的用户数
+### 最近两小时新出现的 JS 错误影响的用户数
 
 ```sql
 SELECT
@@ -383,4 +359,102 @@ FROM
 GROUP BY
     t,
     key
+```
+
+## 坑
+
+### 公司的 Grafana 里使用 ClickHouse 时不支持 JOIN 子查询有别名
+
+```sql
+-- 有问题的 SQL，尽快 Grafana 里能查出数据，但是数据显示（分组）不对
+SELECT
+    t,
+    sum(error_table.cc / pv_table.cc) * 100 as `错误率`
+FROM
+    (
+        SELECT
+            (intDiv(server_timestamp / 1000, 60) * 60) * 1000 as t,
+            url,
+            error,
+            count(1) as cc
+        FROM
+            JS 异常的表
+        WHERE
+            server_timestamp / 1000 >= toDateTime($from)
+            AND server_timestamp / 1000 < toDateTime($to)
+        GROUP BY
+            t,
+            url,
+            error
+        ORDER BY t
+    ) as error_table GLOBAL ANY LEFT JOIN (
+        SELECT
+            (intDiv(server_timestamp / 1000, 60) * 60) * 1000 as t,
+            url,
+            count(1) as cc
+        FROM
+            PV 的表
+        WHERE
+            server_timestamp >= $from * 1000
+            AND server_timestamp < $to * 1000
+        GROUP BY
+            t,
+            url
+        ORDER BY t
+    ) as pv_table USING (t, url)
+GROUP BY
+    t,
+    url
+ORDER BY
+    t
+```
+
+要改成：
+
+```sql
+-- 说明：
+-- 1. 把 JOIN 的两个表的别名移除
+-- 2. 最后一行添加 settings joined_subquery_requires_alias = 0
+-- 3. 三处 SELECT 里的修改，如下注释所示
+SELECT
+    t,
+    sum(error_cc / pv_cc) * 100 as `错误率` -- 修改 1
+FROM
+    (
+        SELECT
+            (intDiv(server_timestamp / 1000, 60) * 60) * 1000 as t,
+            url,
+            error,
+            count(1) as errer_cc -- 修改 2
+        FROM
+            JS 异常的表
+        WHERE
+            server_timestamp / 1000 >= toDateTime($from)
+            AND server_timestamp / 1000 < toDateTime($to)
+        GROUP BY
+            t,
+            url,
+            error
+        ORDER BY t
+    ) GLOBAL ANY LEFT JOIN (
+        SELECT
+            (intDiv(server_timestamp / 1000, 60) * 60) * 1000 as t,
+            url,
+            count(1) as pv_cc -- 修改 3
+        FROM
+            PV 的表
+        WHERE
+            server_timestamp >= $from * 1000
+            AND server_timestamp < $to * 1000
+        GROUP BY
+            t,
+            url
+        ORDER BY t
+    ) USING (t, url)
+GROUP BY
+    t,
+    url
+ORDER BY
+    t
+settings joined_subquery_requires_alias = 0
 ```
