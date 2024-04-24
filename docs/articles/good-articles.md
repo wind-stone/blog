@@ -23,6 +23,11 @@
     - 不需要打包
     - 按需编译
 
+### WebRTC
+
+- [Google WebRTC 指南](https://webrtc.org/getting-started/overview?hl=zh-cn)
+- [WebRTC入门指南 —— 实现一个完整的点对点视频通话（信令服务器+客户端）](https://juejin.cn/post/7071994793710075911)
+
 #### Vue 使用技巧
 
 - [揭秘 Vue.js 九个性能优化技巧](https://mp.weixin.qq.com/s/iQwTr5T95wPflJMT87ZObg)
