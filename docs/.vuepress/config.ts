@@ -87,7 +87,36 @@ export default defineUserConfig<DefaultThemeOptions>({
                     },
                 ],
             },
-            { text: '全栈技能', link: '/full-stack/' },
+            {
+                text: '全栈技能',
+                children: [
+                    {
+                        text: '设计模式',
+                        link: '/full-stack/design-patterns/singleton-pattern'
+                    },
+                    {
+                        text: '操作系统与命令行',
+                        link: '/full-stack/operating-system/linux/'
+                    },
+
+                    {
+                        text: '数据管理',
+                        link: '/full-stack/data-management/kafka/'
+                    },
+                    {
+                        text: '后端开发',
+                        link: '/full-stack/backend/nestjs/'
+                    },
+                    {
+                        text: '全栈开发的软件使用',
+                        link: '/full-stack/software/nginx/'
+                    },
+                    {
+                        text: '其他',
+                        link: '/full-stack/others/google-cloud'
+                    },
+                ]
+            },
             {
                 text: '代码片段/技术文章',
                 children: [
