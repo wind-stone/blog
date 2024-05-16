@@ -79,6 +79,49 @@ function debounce(func, wait) {
 - 若在该次定时器`wait`时间内，没有再次调用`debounced`函数，则`lastArgs`为`undefined`，不再次调用`func`
 - 若在该次定时器`wait`时间内，再次调用了`debounced`函数，则`lastArgs`会有新值，`trailingEdge`内会再次调用`func`（`trailing`为`true`的情况下）
 
+简单说就是，针对如下的代码，`leading`和`trailing`都设置成`true`，如果在第`0ms`和第`500ms`分别点击一次按钮，`i`会打印两次，第一次在`0ms`附近，第二次在`2500ms`附近。
+
+```html
+<script>
+import { debounce } from 'lodash'
+
+let i = 0;
+let j = 0;
+let firstClickTimeStamp = 0;
+
+const fn = debounce(() => {
+    console.log(`第 ${++i} 次打印，距离第一次点击时间：${Date.now() - firstClickTimeStamp}ms`);
+}, 2000, {
+    leading: true,
+    trailing: true
+})
+
+testFn () {
+
+    if (!firstClickTimeStamp) {
+         firstClickTimeStamp = Date.now();
+    }
+    console.log(`第 ${++j} 次点击，距离第一次点击时间：${Date.now() - firstClickTimeStamp}ms`);
+    fn();
+}
+
+
+testFn(); // 模拟第一次点击
+
+setTimeout(() => {
+    testFn() // 模拟第二次点击
+}, 500)
+
+// 打印结果
+// 第 1 次点击，距离第一次点击时间：0ms
+// 第 1 次打印，距离第一次点击时间：7ms
+// 第 2 次点击，距离第一次点击时间：508ms
+// 第 2 次打印，距离第一次点击时间：2511ms
+</script>
+
+<button onclick="testFn">测试按钮</button>
+```
+
 ## 节流
 
 节流（`throttle`），只允许回调函数在`wait`时间内最多执行一次。
