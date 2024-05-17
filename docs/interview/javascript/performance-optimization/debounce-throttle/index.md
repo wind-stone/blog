@@ -132,22 +132,24 @@ setTimeout(() => {
 
 ```js
 function throttle(func, wait) {
-    var timeout,
-        startTime = new Date();
+    let timeout;
+    let startTime = new Date();
 
     return function throttled() {
-        var context = this,
-            args = arguments,
-            now = new Date();
+        const context = this;
+        const args = arguments,
+        const now = new Date();
 
         clearTimeout(timeout);
+        const timeSinceLastCall = now - startTime; // 自动上次调用 func 以来的时间
+
         // 如果达到了规定的触发时间间隔，触发 handler
-        if (now - startTime >= wait) {
-            func.apply(context,args);
+        if (timeSinceLastCall >= wait) {
+            func.apply(context, args);
             startTime = now;
         } else {
-            // 没达到触发间隔，重新设定定时器
-            timeout = setTimeout(func, wait);
+            // 没达到触发间隔，重新设定定时器，等到距离上次调用 func 达到 wait 时间后再调用
+            timeout = setTimeout(func, wait - timeSinceLastCall);
         }
     };
 };
