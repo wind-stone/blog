@@ -14,7 +14,8 @@ module.exports = {
             title: '日常阅读文章',
             collapsable: false,
             children: [
-                '/articles/good-articles',
+                '/articles/good-articles/',
+                '/articles/good-articles/javascript',
             ]
         }
     ]
