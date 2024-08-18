@@ -35,7 +35,8 @@ module.exports = {
                 '/front-end-engineering/initialization/code-formatter/eslint/',
                 '/front-end-engineering/initialization/code-formatter/eslint/eslint-vscode',
                 '/front-end-engineering/initialization/code-formatter/eslint/eslint-vue',
-                '/front-end-engineering/initialization/code-formatter/eslint/eslint-prettier'
+                '/front-end-engineering/initialization/code-formatter/eslint/eslint-prettier',
+                '/front-end-engineering/initialization/code-formatter/eslint/how-to-write-a-custom-eslint-rule'
             ]
         },
     ],
