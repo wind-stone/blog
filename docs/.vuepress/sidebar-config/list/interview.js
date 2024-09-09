@@ -36,6 +36,12 @@ module.exports = {
             ]
         },
         {
+            text: '专题',
+            children: [
+                '/interview/topic/large-file-upload',
+            ]
+        },
+        {
             text: '数据结构',
             children: [
                 '/interview/data-structure/binary-tree',
