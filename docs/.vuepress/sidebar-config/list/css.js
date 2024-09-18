@@ -1,6 +1,17 @@
 module.exports = {
     '/css/': [
         {
+            text: 'CSS 技能',
+            children: [
+                {
+                    text: '布局',
+                    children: [
+                        '/css/skills/layout/line-boxes-truncation-style',
+                    ]
+                }
+            ]
+        },
+        {
             text: '专题',
             children: [
                 {
