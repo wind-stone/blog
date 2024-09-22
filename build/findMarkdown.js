@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function findMarkdown(dir, callback) {
+export default function findMarkdown(dir, callback) {
     fs.readdir(dir, function (err, files) {
         if (err) throw err;
 
@@ -21,5 +21,3 @@ function findMarkdown(dir, callback) {
         });
     });
 }
-
-module.exports = findMarkdown;
