@@ -1,2 +1,0 @@
-# eslint 默认忽略 .xx 的文件和文件夹，此处启用校验
-!/docs/.vuepress

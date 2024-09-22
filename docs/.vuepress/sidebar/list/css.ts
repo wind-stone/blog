@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/css/': [
         {
             text: 'CSS 技能',
@@ -6,7 +6,8 @@ module.exports = {
                 {
                     text: '布局',
                     children: [
-                        '/css/skills/layout/line-boxes-truncation-style',
+                        '/css/skills/line-boxes-truncation-style',
+                        '/css/skills/dog-ear',
                     ]
                 }
             ]

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // ES6
     '/es6/': [
         {

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // Vue 源码学习
     '/vue/': [
         {

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // 技术文章
     '/articles/': [
         {

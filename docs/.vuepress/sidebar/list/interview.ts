@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/interview': [
         {
             text: '面试题目',

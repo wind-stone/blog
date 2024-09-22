@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/code-snippet': [
         {
             text: 'JS 代码片段',

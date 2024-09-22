@@ -1,155 +1,110 @@
 import path from 'path';
-import { defineUserConfig } from 'vuepress-vite';
-import type { DefaultThemeOptions } from 'vuepress-vite';
-const sidebar = require('./sidebar-config');
+import { defaultTheme } from '@vuepress/theme-default';
+import { defineUserConfig } from 'vuepress';
+import { viteBundler } from '@vuepress/bundler-vite';
+import { searchPlugin } from '@vuepress/plugin-search';
+import { watermarkPlugin } from '@vuepress/plugin-watermark';
+import { photoSwipePlugin } from '@vuepress/plugin-photo-swipe';
+import { copyrightPlugin } from '@vuepress/plugin-copyright';
+import { copyCodePlugin } from '@vuepress/plugin-copy-code';
+import { markdownImagePlugin } from '@vuepress/plugin-markdown-image'
+import { registerComponentsPlugin } from '@vuepress/plugin-register-components';
+import navbar from './navbar';
+import sidebar from './sidebar';
 
 const componentsDir = path.resolve(__dirname, './components');
 
-export default defineUserConfig<DefaultThemeOptions>({
-    title: '风动之石的博客',          // 网站的标题
-    description: '记录工作，记录生活', // 网站的描述
-    head: [                         // 额外的需要被注入到当前页面的 HTML <head> 中的标签
-        ['link', {
-            rel: 'icon',
-            href: '/images/logo.png'
-        }]
-    ],
+export default defineUserConfig({
+  title: '风动之石的博客',          // 网站的标题
+  description: '记录工作，记录生活', // 网站的描述
+  head: [                         // 额外的需要被注入到当前页面的 HTML <head> 中的标签
+    ['link', {
+      rel: 'icon',
+      href: '/images/logo.png'
+    }]
+  ],
 
-    // 开发配置项
-    debug: true,                    // 是否启用 Debug 模式
-    open: true,                     // 是否在开发服务器启动后打开浏览器
+  theme: defaultTheme({
+    hostname: 'https://blog.windstone.cc',
+    logo: '/images/logo.png',
+    navbar,
+    sidebarDepth: 0,
+    sidebar,
+    lastUpdated: false,
+    contributors: false,
+  }),
 
-    // markdown 配置
-    markdown: {
-        toc: {                      // 控制 [[TOC]] 默认行为
-            level: [2, 3, 4, 5]     // 决定哪些级别的标题会被显示在目录中，默认值为 [2, 3]
-        },
+  // 开发配置项
+  debug: true,                    // 是否启用 Debug 模式
+  open: true,                     // 是否在开发服务器启动后打开浏览器
 
-        importCode: {
-            handleImportPath: (str) =>
-                str.replace(/^@components/, componentsDir),
-        },
+  // markdown 配置
+  markdown: {
+    toc: {                      // 控制 [[TOC]] 默认行为
+      level: [2, 3, 4, 5]     // 决定哪些级别的标题会被显示在目录中，默认值为 [2, 3]
     },
 
-    // 主题配置
-    themeConfig: {
-        logo: '/images/logo.png',
-        navbar: [
-            { text: 'Vue 2.x 源码学习', link: '/vue/source-study/' },
-            {
-                text: 'JavaScript',
-                children: [
-                    { text: 'JavaScript', link: '/js/data-types/', activeMatch: '^/js' },
-                    { text: 'ES6+', link: '/es6/', activeMatch: '^/es6' },
-                    { text: 'TypeScript', link: '/typescript/', activeMatch: '^/typescript' }
-                ],
-            },
-            {
-                text: 'HTML/CSS/浏览器',
-                children: [
-                    { text: 'CSS', link: '/css/selectors/', activeMatch: '^/css' },
-                    { text: '浏览器', link: '/browser-env/browser/how-browsers-work', activeMatch: '^/browser-env' },
-                    { text: '小程序', link: '/mini-program/weixin/', activeMatch: '^/mini-program' },
-                ],
-            },
-            {
-                text: '前端工程化',
-                children: [
-                    {
-                        text: '概述',
-                        link: '/front-end-engineering/',
-                        activeMatch: '^/front-end-engineering/$'
-                    },
-                    {
-                        text: '初始化阶段',
-                        link: '/front-end-engineering/initialization/project',
-                        activeMatch: '^/front-end-engineering/initialization'
-                    },
-                    {
-                        text: '开发阶段',
-                        link: '/front-end-engineering/development/h5/',
-                        activeMatch: '^/front-end-engineering/development'
-                    },
-                    {
-                        text: '构建阶段',
-                        link: '/front-end-engineering/build/webpack/',
-                        activeMatch: '^/front-end-engineering/build'
-                    },
-                    {
-                        text: '发布阶段',
-                        link: '/front-end-engineering/publish/changelog',
-                        activeMatch: '^/front-end-engineering/publish'
-                    },
-                    {
-                        text: '性能和稳定性',
-                        link: '/front-end-engineering/performance-stability/stability',
-                        activeMatch: '^/front-end-engineering/performance-stability'
-                    },
-                ],
-            },
-            {
-                text: '全栈技能',
-                children: [
-                    {
-                        text: '设计模式',
-                        link: '/full-stack/design-patterns/singleton-pattern'
-                    },
-                    {
-                        text: '操作系统与命令行',
-                        link: '/full-stack/operating-system/linux/'
-                    },
-
-                    {
-                        text: '数据管理',
-                        link: '/full-stack/data-management/kafka/'
-                    },
-                    {
-                        text: '后端开发',
-                        link: '/full-stack/backend/nestjs/'
-                    },
-                    {
-                        text: '全栈开发的软件使用',
-                        link: '/full-stack/software/nginx/'
-                    },
-                    {
-                        text: '其他',
-                        link: '/full-stack/others/google-cloud'
-                    },
-                ]
-            },
-            {
-                text: '代码片段/技术文章',
-                children: [
-                    { text: '代码片段', link: '/code-snippet/', activeMatch: '^/code-snippet' },
-                    { text: '技术文章', link: '/articles/string-literal/', activeMatch: '^/articles' },
-                    { text: '面试题库', link: '/interview/', activeMatch: '^/interview' }
-                ]
-            },
-            { text: 'GitHub', link: 'https://github.com/wind-stone' },
-            { text: '随记', link: '/wander/house/' }
-        ],
-
-        sidebarDepth: 0,
-        sidebar,
-        lastUpdated: false,
-        contributors: false,
+    importCode: {
+      handleImportPath: (str) => str.replace(/^@components/, componentsDir),
     },
+  },
 
-    plugins: [
-        [
-            '@vuepress/plugin-search',
-            {
-                maxSuggestions: 10
-            },
-        ],
-        [
-            '@vuepress/register-components',
-            {
-                componentsDir,
-            },
-        ],
-    ],
 
-    templateDev: path.resolve(__dirname, './templates/index.dev.html'),
-    templateSSR: path.resolve(__dirname, './templates/index.ssr.html'),
-});
+  plugins: [
+    // 为你的文档网站提供本地搜索能力。https://ecosystem.vuejs.press/zh/plugins/search/search.html
+    searchPlugin({
+      // 配置项
+      maxSuggestions: 10
+    }),
+
+    // 根据组件文件或目录自动注册 Vue 组件。https://ecosystem.vuejs.press/zh/plugins/tools/register-components.html
+    registerComponentsPlugin({
+      // 配置项
+      componentsDir
+    }),
+
+    // 水印，https://ecosystem.vuejs.press/zh/plugins/features/watermark.html
+    watermarkPlugin({
+      enabled: true,
+      watermarkOptions: {
+        content: '风动之石的博客',
+        globalAlpha: 0.1
+      }
+    }),
+
+    // 此插件会使页面正文内的图片在点击时进入浏览模式浏览，https://ecosystem.vuejs.press/zh/plugins/features/photo-swipe.html
+    photoSwipePlugin({
+      // 选项
+    }),
+
+    // 此插件可以在访问者从你的站点复制内容时，自动追加版权信息，也可以禁止站点的复制或者选择。
+    // https://ecosystem.vuejs.press/zh/plugins/features/copyright.html
+    copyrightPlugin({
+      global: true,
+      author: '风动之石',
+      triggerLength: 10
+    }),
+
+    // 此插件会自动在 PC 设备上为每个代码块右上角添加复制按钮。https://ecosystem.vuejs.press/zh/plugins/features/copy-code.html
+    copyCodePlugin({
+      // options
+    }),
+
+    // 向你的 Markdown 图像添加附加功能。https://ecosystem.vuejs.press/zh/plugins/markdown/markdown-image.html
+    markdownImagePlugin({
+      // 启用 figure
+      figure: true,
+      // 启用图片懒加载
+      lazyload: true,
+      // 启用图片标记
+      mark: false,
+      // 启用图片大小
+      size: true,
+    }),
+  ],
+
+  templateDev: path.resolve(__dirname, './templates/index.dev.html'),
+  templateBuild: path.resolve(__dirname, './templates/index.build.html'),
+
+  bundler: viteBundler(),
+})

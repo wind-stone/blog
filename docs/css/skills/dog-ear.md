@@ -34,6 +34,8 @@
 }
 ```
 
+<css-skills-dog-ear-first-solution></css-skills-dog-ear-first-solution>
+
 说明：这是最差的实现方式，在以下场景中会暴露出明显的缺陷
 
 - 当折角元素之下的背景不是纯色，而是一副图案、一层纹理、一张照片、一副渐变或其他任何一种背景图像时
@@ -52,6 +54,9 @@
                 linear-gradient(-135deg, transparent 20px, #58a 0);
 }
 ```
+
+<css-skills-dog-ear-second-solution></css-skills-dog-ear-second-solution>
+
 
 说明：这是较好的一种实现方式，但也有缺陷：
 
@@ -88,6 +93,8 @@
 }
 ```
 
+<css-skills-dog-ear-third-solution-2d></css-skills-dog-ear-third-solution-2d>
+
 或者使用 3D 转换
 
 ```css
@@ -115,7 +122,10 @@
 
     border-bottom-left-radius: inherit;
     box-shadow: -.2em .2em .3em -.1em rgba(0, 0, 0, .15);
+}
 ```
+
+<css-skills-dog-ear-third-solution-3d></css-skills-dog-ear-third-solution-3d>
 
 说明：
 
@@ -143,6 +153,8 @@
     background: linear-gradient(to left bottom, transparent 50%, #47728f 0);
 }
 ```
+
+<css-skills-dog-ear-fourth-solution></css-skills-dog-ear-fourth-solution>
 
 说明：这是最好的实现方式，优点是：
 

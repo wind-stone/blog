@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/js/': [
         {
             text: '数据类型',

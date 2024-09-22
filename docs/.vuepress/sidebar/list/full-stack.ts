@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // 设计模式
     '/full-stack/design-patterns/': [
         {

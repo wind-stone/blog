@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // 代码片段
     '/mini-program/': [
         {

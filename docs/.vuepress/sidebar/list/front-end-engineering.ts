@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/front-end-engineering/': [
         '/front-end-engineering/'
     ],

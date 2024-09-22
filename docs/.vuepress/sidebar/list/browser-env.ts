@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/browser-env/': [
         {
             text: '浏览器',
