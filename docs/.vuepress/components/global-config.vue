@@ -1,72 +1,57 @@
 <template>
-    <div class="global-config">
-        <div class="count">
-            <span
-                v-show="busuanziVisible"
-                id="busuanzi_container_site_pv"
-            >
-                本站总访问量&nbsp;&nbsp;<span
-                    id="busuanzi_value_site_pv"
-                    ref="busuanziRef"
-                />&nbsp;&nbsp;次
-            </span>
-        </div>
-        <div class="gitalk-container">
-            <div id="gitalk-container" />
-        </div>
+  <div class="global-config">
+    <div class="count">
+      <span
+        v-show="busuanziVisible"
+        id="busuanzi_container_site_pv"
+      >
+        本站总访问量&nbsp;&nbsp;<span
+          id="busuanzi_value_site_pv"
+          ref="busuanziRef"
+        />&nbsp;&nbsp;次
+      </span>
     </div>
+    <Giscus
+      id="comments"
+      repo="wind-stone/blog"
+      repo-id="MDEwOlJlcG9zaXRvcnk4MzIwNDgwMw=="
+      category="Announcements"
+      category-id="DIC_kwDOBPWaw84Ciupj"
+      mapping="pathname"
+      strict="0"
+      reactions-enabled="1"
+      emit-metadata="0"
+      input-position="bottom"
+      theme="preferred_color_scheme"
+      lang="zh-CN"
+    />
+  </div>
 </template>
-<script>
-import Gitalk from 'gitalk';
-import 'gitalk/dist/gitalk.css';
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+import Giscus from '@giscus/vue';
+const busuanziVisible = ref(false);
 
-export default {
-    data() {
-        return {
-            busuanziVisible: false,
-        };
-    },
-    mounted() {
-        const commentConfig = {
-            clientID: '4c157770ee33d9d0779d',
-            clientSecret: '14cca8b8e3183cb40972871e85a4d1dcd68c5d63',
-            repo: 'blog',
-            owner: 'wind-stone',
-            // 这里接受一个数组，可以添加多个管理员
-            admin: ['wind-stone'],
-            // id 用于当前页面的唯一标识，一般来讲 pathname 足够了，
-
-            // 但是如果你的 pathname 超过 50 个字符，GitHub 将不会成功创建 issue，此情况可以考虑给每个页面生成 hash 值的方法.
-            id: location.pathname,
-            distractionFreeMode: false,
-        };
-        // eslint-disable-next-line no-undef
-        const gitalk = new Gitalk(commentConfig);
-        gitalk.render('gitalk-container');
-
-
-        this.initBusuanzi();
-    },
-
-    methods: {
-        initBusuanzi() {
-            const script = document.createElement('script');
-            script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
-            script.onload = () => {
-                setTimeout(() => {
-                    this.busuanziVisible = true;
-                }, 1000);
-            };
-            document.body.appendChild(script);
-        },
-    }
+const initBusuanzi = () => {
+    const script = document.createElement('script');
+    script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+    script.onload = () => {
+        setTimeout(() => {
+            busuanziVisible.value = true;
+        }, 1000);
+    };
+    document.body.appendChild(script);
 };
+
+onMounted(() => {
+    initBusuanzi();
+});
 </script>
 
 <style lang="less" scoped>
 .count {
     height: 22px;
-    margin-top: 50px;
+    margin: 50px;
     text-align: center;
 }
 </style>

@@ -47,11 +47,12 @@
         "vuepress": "^2.0.0-rc.7"
     },
     "dependencies": {
+        "@giscus/vue": "^3.0.0",
         "fastclick": "^1.0.6",
         "gitalk": "^1.8.0"
     },
     "engines": {
         "node": ">=20.17.0",
-        "pnpm": ">=8.5.1"
+        "pnpm": ">=7.33.5"
     }
 }
