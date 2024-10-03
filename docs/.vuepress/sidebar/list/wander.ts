@@ -16,7 +16,7 @@ export default {
         {
             text: '投资理财',
             children: [
-                '/wander/investment/',
+                '/wander/investment/stocks',
             ]
         },
         {
