@@ -1,8 +1,12 @@
 # Number
 
+[[toc]]
+
 JavaScript 至今没有真正的整数，我们用的`Number`事实上是双精度浮点数，详见[JavaScript 关于 IEEE 754 双精度浮点数的实现](/js/data-types/js-number-implementation.html)。
 
-## 精度
+## 精度问题
+
+精度问题，可以先看[JavaScript 关于 IEEE 754 双精度浮点数的实现](./floating.md)了解浮点数的实现。
 
 ### parseInt(0.0000008) === 8
 
@@ -19,6 +23,22 @@ console.log(Math.abs(0.1 + 0.2 - 0.3) <= Number.EPSILON);
 ```
 
 检查等式左右两边差的绝对值是否小于最小精度，才是正确的比较浮点数的方法。
+
+### toFixed 的结果不精确
+
+```js
+2.55.toFixed(1) // 2.5
+1.45.toFixed(1) // 1.4
+1.55.toFixed(1) // 1.6
+```
+
+其原因是，这些数字在存储后再取出得出的数值与原先有偏差，这种偏差导致在`toFixed`时结果不精确。
+
+```js
+2.55.toPrecision(32) // 2.5499999999999998223643160599750
+1.45.toPrecision(32) // 1.4499999999999999555910790149937
+1.55.toPrecision(32) // 1.5500000000000000444089209850063
+```
 
 ## 关于 3.toString()
 
