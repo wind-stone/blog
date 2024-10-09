@@ -2,102 +2,111 @@ export default {
     '/browser-env/': [
         {
             text: '浏览器',
+            prefix: '/browser-env/browser',
             children: [
-                '/browser-env/browser/how-browsers-work',
-                '/browser-env/browser/first-paint',
-                '/browser-env/browser/process-thread',
-                '/browser-env/browser/event-loop',
-                '/browser-env/browser/cache',
-                '/browser-env/browser/performance/',
-                '/browser-env/browser/browser-api',
-                '/browser-env/browser/browser-requests',
-                '/browser-env/browser/faq',
-                '/browser-env/browser/dev-tools/',
-                '/browser-env/browser/fingerprint'
+                'how-browsers-work',
+                'first-paint',
+                'process-thread',
+                'event-loop',
+                'cache',
+                'performance/',
+                'browser-api',
+                'browser-requests',
+                'faq',
+                'dev-tools/',
+                'fingerprint'
             ]
         },
         {
             text: 'HTML/DOM',
+            prefix: '/browser-env/html-dom',
             children: [
-                '/browser-env/html-dom/elements/',
-                '/browser-env/html-dom/attributes-properties/attributes',
-                '/browser-env/html-dom/attributes-properties/properties',
-                '/browser-env/html-dom/attributes-properties/differences-between-properties-and-attributes',
-                '/browser-env/html-dom/events/',
-                '/browser-env/html-dom/image/',
-                '/browser-env/html-dom/image/image-lazy-load',
-                '/browser-env/html-dom/svg/',
+                'elements/',
+                'attributes-properties/attributes',
+                'attributes-properties/properties',
+                'attributes-properties/differences-between-properties-and-attributes',
+                'image/',
+                'image/image-lazy-load',
+                'svg/',
             ]
         },
         {
             text: '事件',
+            prefix: '/browser-env/events',
             children: [
-                '/browser-env/events/',
-                '/browser-env/events/blur/',
+                '',
+                'blur',
             ]
         },
         {
             text: '网络',
+            prefix: '/browser-env/network',
             children: [
-                '/browser-env/network/http/',
-                '/browser-env/network/https/',
-                '/browser-env/network/http2/',
-                '/browser-env/network/cors/',
-                '/browser-env/network/dns',
+                'http/',
+                'https/',
+                'http2/',
+                'cors/',
+                'dns',
             ]
         },
         {
             text: '安全',
+            prefix: '/browser-env/security',
             children: [
-                '/browser-env/security/',
-                '/browser-env/security/chrome-security-policy',
-                '/browser-env/security/cross-domain',
-                '/browser-env/security/same-site',
+                '',
+                'chrome-security-policy',
+                'cross-domain',
+                'same-site',
             ]
         },
         {
             text: 'Hybrid',
+            prefix: '/browser-env/hybrid',
             children: [
-                '/browser-env/hybrid/h52app',
-                '/browser-env/hybrid/jsbridge',
-                '/browser-env/hybrid/universal-links',
+                'h52app',
+                'jsbridge',
+                'universal-links',
             ]
         },
         {
             text: '浏览器厂商及应用环境',
+            prefix: '/browser-env/vendor-app',
             children: [
-                '/browser-env/vendor-app/wechat/',
-                '/browser-env/vendor-app/wechat/android-weixin-auto-open-browser',
+                'wechat/',
+                'wechat/android-weixin-auto-open-browser',
             ]
         },
         {
             text: '浏览器兼容性',
+            prefix: '/browser-env/compatibility',
             children: [
-                '/browser-env/compatibility/',
-                '/browser-env/compatibility/video',
-                '/browser-env/compatibility/audio',
-                '/browser-env/compatibility/input-delay/',
-                '/browser-env/compatibility/ios/',
-                '/browser-env/compatibility/ios/safari-script-block-render',
+                '',
+                'video',
+                'audio',
+                'input-delay/',
+                'ios/',
+                'ios/safari-script-block-render',
             ]
         },
         {
             text: '滚动专题',
+            prefix: '/browser-env/scroll',
             children: [
-                '/browser-env/scroll/',
-                '/browser-env/scroll/touch-event',
-                '/browser-env/scroll/click-delay',
-                '/browser-env/scroll/fastclick',
-                '/browser-env/scroll/no-bg-scroll'
+                '',
+                'touch-event',
+                'click-delay',
+                'fastclick',
+                'no-bg-scroll'
             ]
         },
         {
             text: '未分类',
+            prefix: '/browser-env/unclassified',
             children: [
-                '/browser-env/unclassified/web-components',
-                '/browser-env/unclassified/pwa',
-                '/browser-env/unclassified/file-system',
-                '/browser-env/unclassified/keyboard',
+                'web-components',
+                'pwa',
+                'file-system',
+                'keyboard',
             ]
         }
     ],

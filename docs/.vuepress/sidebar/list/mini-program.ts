@@ -3,15 +3,17 @@ export default {
     '/mini-program/': [
         {
             text: '微信小程序',
+            prefix: '/mini-program/weixin',
             children: [
-                '/mini-program/weixin/',
+                '',
             ]
         },
         {
             text: 'uni-app',
+            prefix: '/mini-program/uni-app',
             children: [
-                '/mini-program/uni-app/',
-                '/mini-program/uni-app/v-for-key',
+                '',
+                'v-for-key',
             ]
         }
     ]

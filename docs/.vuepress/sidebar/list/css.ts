@@ -5,36 +5,39 @@ export default {
             children: [
                 {
                     text: '布局',
+                    prefix: '/css/skills',
                     children: [
-                        '/css/skills/line-boxes-truncation-style',
-                        '/css/skills/dog-ear',
+                        'line-boxes-truncation-style',
+                        'dog-ear',
                     ]
                 }
             ]
         },
         {
             text: '专题',
+            prefix: '/css/topics',
             children: [
                 {
                     text: 'Flex 布局',
+                    prefix: 'flex/',
                     children: [
-                        '/css/topics/flex/',
-                        '/css/topics/flex/flex-image/',
+                        '',
+                        'flex-image/',
                     ]
                 },
                 {
                     text: '文本',
                     children: [
-                        '/css/topics/text/text-wrap-and-ellipsis/',
+                        'text/text-wrap-and-ellipsis/',
                     ]
                 },
                 {
                     text: '边框',
                     children: [
-                        '/css/topics/border/border-image',
+                        'border/border-image',
                     ]
                 },
-                '/css/topics/position-fixed',
+                'position-fixed',
             ]
         },
         {
@@ -45,9 +48,10 @@ export default {
         },
         {
             text: '属性',
+            prefix: '/css/properties',
             children: [
-                '/css/properties/',
-                '/css/properties/properties-order'
+                '',
+                'properties-order'
             ]
         },
         {
@@ -58,58 +62,66 @@ export default {
         },
         {
             text: '视口',
+            prefix: '/css/viewport',
             children: [
-                '/css/viewport/a-tale-of-viewports-one',
-                '/css/viewport/a-tale-of-viewports-two'
+                'a-tale-of-viewports-one',
+                'a-tale-of-viewports-two'
             ]
         },
         {
             text: '布局',
+            prefix: '/css/layouts',
             children: [
-                '/css/layouts/',
-                '/css/layouts/ifc/'
+                '',
+                'ifc/'
             ]
         },
         {
             text: '字体',
+            prefix: '/css/font',
             children: [
-                '/css/font/',
-                '/css/font/css-font-metrics-line-height-and-vertical-align'
+                '',
+                'css-font-metrics-line-height-and-vertical-align'
             ]
         },
         {
             text: '实践',
+            prefix: '/css/practices',
             children: [
-                '/css/practices/'
+                ''
             ]
         },
         {
             text: '预处理器',
+            prefix: '/css/preprocessor',
             children: [
-                '/css/preprocessor/less',
-                '/css/preprocessor/stylus',
+                'less',
+                'stylus',
             ]
         },
         {
             text: '工具集合',
+            prefix: '/css/tools',
             children: [
-                '/css/tools/safe-area',
-                '/css/tools/text-ellipsis',
+                'safe-area',
+                'text-ellipsis',
             ]
         },
         {
             text: 'CSS 2.2 规范',
+            prefix: '/css/css-spec',
             children: [
-                '/css/css-spec/css2.2/8-box-model/',
-                '/css/css-spec/css2.2/9-visual-formatting-model/'
+                'css2.2/8-box-model/',
+                'css2.2/9-visual-formatting-model/'
             ]
         },
         {
             text: '未分类',
+            prefix: '/css/unclassified',
             children: [
-                '/css/unclassified/user-experience',
-                '/css/unclassified/compatibility',
-                '/css/unclassified/skill-pitfall'
+                'user-experience',
+                'compatibility',
+                'skill-pitfall'
             ]
         }
     ],

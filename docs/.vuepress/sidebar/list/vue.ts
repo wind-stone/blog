@@ -3,120 +3,143 @@ export default {
     '/vue/': [
         {
             text: 'Vue 2.x 源码分析',
+            prefix: '',
             children: [
                 '/vue/source-study/',
-                '/vue/vue-series/vuejs/',
-                '/vue/vue-series/vuejs/scoped-css',
-                '/vue/vue-series/vue-router/'
             ]
         },
         {
             text: '实例化',
+            prefix: '/vue/source-study',
             children: [
-                '/vue/source-study/vue-constructor',
-                '/vue/source-study/instance/create',
-                '/vue/source-study/instance/state/',
-                '/vue/source-study/instance/state/props',
-                '/vue/source-study/instance/state/methods',
-                '/vue/source-study/instance/state/data',
-                '/vue/source-study/instance/state/computed',
-                '/vue/source-study/instance/state/watch',
-                '/vue/source-study/instance/directives',
-                '/vue/source-study/instance/events'
+                'vue-constructor',
+                'instance/create',
+                'instance/state/',
+                'instance/state/props',
+                'instance/state/methods',
+                'instance/state/data',
+                'instance/state/computed',
+                'instance/state/watch',
+                'instance/directives',
+                'instance/events'
             ]
         },
         {
             text: '组件化',
+            prefix: '/vue/source-study/component',
             children: [
-                '/vue/source-study/component/register',
-                '/vue/source-study/component/options',
-                '/vue/source-study/component/async-component',
-                '/vue/source-study/component/functional-component',
-                '/vue/source-study/component/extend'
+                'register',
+                'options',
+                'async-component',
+                'functional-component',
+                'extend'
             ]
         },
         {
             text: '响应式原理',
+            prefix: '/vue/source-study/observer',
             children: [
-                '/vue/source-study/observer/',
-                '/vue/source-study/observer/dep-collection',
-                '/vue/source-study/observer/notify-update',
-                '/vue/source-study/observer/dep',
-                '/vue/source-study/observer/watcher',
-                '/vue/source-study/observer/scheduler',
-                '/vue/source-study/observer/array-observe-limit',
+                '',
+                'dep-collection',
+                'notify-update',
+                'dep',
+                'watcher',
+                'scheduler',
+                'array-observe-limit',
             ]
         },
         {
-            text: 'Virtual Dom',
+            text: 'Virtual Dom',
+            prefix: '/vue/source-study/vdom',
             children: [
-                '/vue/source-study/vdom/',
-                '/vue/source-study/vdom/vnode-tree-create',
-                '/vue/source-study/vdom/patch',
-                '/vue/source-study/vdom/patch-vnode',
-                '/vue/source-study/vdom/child-component-create',
-                '/vue/source-study/vdom/patch-modules/',
-                '/vue/source-study/vdom/patch-fn',
-                '/vue/source-study/vdom/topics/dom-binding'
+                '',
+                'vnode-tree-create',
+                'patch',
+                'patch-vnode',
+                'child-component-create',
+                'patch-modules/',
+                'patch-fn',
+                'topics/dom-binding'
             ]
         },
         {
             text: '编译',
+            prefix: '/vue/source-study/compile',
             children: [
-                '/vue/source-study/compile/',
-                '/vue/source-study/compile/compile-process',
-                '/vue/source-study/compile/base-compile',
-                '/vue/source-study/compile/parse',
-                '/vue/source-study/compile/parse-html',
-                '/vue/source-study/compile/optimize',
-                '/vue/source-study/compile/codegen'
+                '',
+                'compile-process',
+                'base-compile',
+                'parse',
+                'parse-html',
+                'optimize',
+                'codegen'
             ]
         },
         {
             text: '编译专题',
+            prefix: '/vue/source-study/compile/topics',
             children: [
-                '/vue/source-study/compile/topics/event',
-                '/vue/source-study/compile/topics/v-model',
-                '/vue/source-study/compile/topics/slot'
+                'event',
+                'v-model',
+                'slot'
             ]
         },
         {
             text: '全局 API',
+            prefix: '/vue/source-study/global-api',
             children: [
-                '/vue/source-study/global-api/use'
+                'use'
             ]
         },
         {
             text: 'Util',
+            prefix: '/vue/source-study/util',
             children: [
-                '/vue/source-study/util/next-tick',
-                '/vue/source-study/util/lifecycle-hook-event',
+                'next-tick',
+                'lifecycle-hook-event',
             ]
         },
         {
             text: 'SSR',
+            prefix: '/vue/source-study/ssr',
             children: [
-                '/vue/source-study/ssr/',
-                '/vue/source-study/ssr/vue-server-renderer',
-                '/vue/source-study/ssr/hydrate',
+                '',
+                'vue-server-renderer',
+                'hydrate',
             ]
         },
         {
-            text: 'Vuex',
+            text: 'Vuex',
+            prefix: '/vue/vue-series/vuex',
             children: [
-                '/vue/vue-series/vuex/',
-                '/vue/vue-series/vuex/reset-child-module-state',
-                '/vue/vue-series/vuex/register-module',
+                '',
+                'reset-child-module-state',
+                'register-module',
+            ]
+        },
+        {
+            text: 'vue-router',
+            prefix: '/vue/vue-series/vue-router/',
+            children: [
+                '',
+            ]
+        },
+        {
+            text: '其他',
+            prefix: '/vue/vue-series/vuejs',
+            children: [
+                'scoped-css',
             ]
         },
 
         // 等待以后分离出去
         {
             text: 'Vue 3.x',
+            prefix: '/vue3',
             children: [
-                '/vue3/',
-                '/vue3/composition-api',
-                '/vue3/reactivity/use-difference'
+                '',
+                'composition-api',
+                'reactivity/use-difference'
             ]
         },
     ],

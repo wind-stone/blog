@@ -24,19 +24,21 @@ export default {
         },
         {
             text: '风格指南',
+            prefix: '/front-end-engineering/initialization/style-guide',
             children: [
-                '/front-end-engineering/initialization/style-guide/naming-convention/naming.md',
-                '/front-end-engineering/initialization/style-guide/naming-convention/js.md',
+                'naming-convention/naming.md',
+                'naming-convention/js.md',
             ]
         },
         {
             text: '代码格式化 - ESLint',
+            prefix: '/front-end-engineering/initialization/code-formatter/eslint',
             children: [
-                '/front-end-engineering/initialization/code-formatter/eslint/',
-                '/front-end-engineering/initialization/code-formatter/eslint/eslint-vscode',
-                '/front-end-engineering/initialization/code-formatter/eslint/eslint-vue',
-                '/front-end-engineering/initialization/code-formatter/eslint/eslint-prettier',
-                '/front-end-engineering/initialization/code-formatter/eslint/how-to-write-a-custom-eslint-rule'
+                '',
+                'eslint-vscode',
+                'eslint-vue',
+                'eslint-prettier',
+                'how-to-write-a-custom-eslint-rule'
             ]
         },
     ],
@@ -45,47 +47,52 @@ export default {
     '/front-end-engineering/development': [
         {
             text: 'h5 开发',
+            prefix: '/front-end-engineering/development/h5',
             children: [
-                '/front-end-engineering/development/h5/',
-                '/front-end-engineering/development/h5/style',
-                '/front-end-engineering/development/h5/local-mock',
+                '',
+                'style',
+                'local-mock',
             ]
         },
         {
             text: '后端 - Node',
+            prefix: '/front-end-engineering/development/server-node',
             children: [
-                '/front-end-engineering/development/server-node/',
-                '/front-end-engineering/development/server-node/commonjs',
-                '/front-end-engineering/development/server-node/koa/',
-                '/front-end-engineering/development/server-node/server',
-                '/front-end-engineering/development/server-node/api',
-                '/front-end-engineering/development/server-node/pm2',
+                '',
+                'commonjs',
+                'koa/',
+                'server',
+                'api',
+                'pm2',
             ]
         },
         {
             text: '工具库',
+            prefix: '/front-end-engineering/development/tools-library',
             children: [
-                '/front-end-engineering/development/tools-library/axios',
+                'axios',
             ]
         },
         {
             text: 'NPM',
+            prefix: '/front-end-engineering/development/npm',
             children: [
-                '/front-end-engineering/development/npm/semantic-version',
-                '/front-end-engineering/development/npm/',
-                '/front-end-engineering/development/npm/npm-command',
-                '/front-end-engineering/development/npm/npmrc',
-                '/front-end-engineering/development/npm/npm-config',
-                '/front-end-engineering/development/npm/npm-scripts',
-                '/front-end-engineering/development/npm/package.json',
-                '/front-end-engineering/development/npm/package-lock.json',
-                '/front-end-engineering/development/npm/third-party-package'
+                'semantic-version',
+                '',
+                'npm-command',
+                'npmrc',
+                'npm-config',
+                'npm-scripts',
+                'package.json',
+                'package-lock.json',
+                'third-party-package'
             ]
         },
         {
             text: 'pnpm',
+            prefix: '/front-end-engineering/development/pnpm',
             children: [
-                '/front-end-engineering/development/pnpm/',
+                '',
             ]
         },
     ],
@@ -94,24 +101,27 @@ export default {
     '/front-end-engineering/build': [
         {
             text: 'Webpack',
+            prefix: '/front-end-engineering',
             children: [
-                '/front-end-engineering/build/webpack/',
-                '/front-end-engineering/build/webpack/webpack-runtime',
+                'build/webpack/',
+                'build/webpack/webpack-runtime',
                 {
                     text: 'Webpack 配置',
+                    prefix: 'build/webpack/config',
                     children: [
-                        '/front-end-engineering/build/webpack/config/whole-config',
-                        '/front-end-engineering/build/webpack/config/practical-config',
-                        '/front-end-engineering/build/webpack/config/config-tools',
-                        '/front-end-engineering/build/webpack/config/dead-code',
+                        'whole-config',
+                        'practical-config',
+                        'config-tools',
+                        'dead-code',
                     ]
                 },
-                '/front-end-engineering/build/webpack/webpack4-import',
+                'build/webpack/webpack4-import',
                 {
                     text: 'Tapable',
+                    prefix: 'build/webpack/tapable',
                     children: [
-                        '/front-end-engineering/build/webpack/tapable/',
-                        '/front-end-engineering/build/webpack/tapable/tapable-readme',
+                        '',
+                        'tapable-readme',
                     ]
                 },
             ]

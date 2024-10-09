@@ -3,20 +3,22 @@ export default {
     '/wander/': [
         {
             text: 'House 相关',
+            prefix: '/wander/house',
             children: [
-                '/wander/house/',
-                '/wander/house/tianya-post',
-                '/wander/house/beijing/',
-                '/wander/house/zhonghailichunhushu/',
-                '/wander/house/wanxiangyuefu/',
-                '/wander/house/xishanjinxiufu/',
-                '/wander/house/comparison',
+                '',
+                'tianya-post',
+                'beijing/',
+                'zhonghailichunhushu/',
+                'wanxiangyuefu/',
+                'xishanjinxiufu/',
+                'comparison',
             ]
         },
         {
             text: '投资理财',
+            prefix: '/wander/investment',
             children: [
-                '/wander/investment/stocks',
+                'stocks',
             ]
         },
         {
@@ -33,11 +35,12 @@ export default {
         },
         {
             text: '其他',
+            prefix: '/wander/others',
             children: [
-                // 'mac-shortcut-keys',
-                // 'word-pronunciation',
-                '/wander/others/theories',
-                '/wander/others/ssr/'
+                'mac-shortcut-keys',
+                'word-pronunciation',
+                'theories',
+                'ssr/'
             ]
         }
     ]

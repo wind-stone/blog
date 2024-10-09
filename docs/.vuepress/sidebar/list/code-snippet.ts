@@ -5,37 +5,32 @@ export default {
             children: [
                 {
                     text: '工具函数',
+                    prefix: '/code-snippet/js/utils',
                     children: [
-                        '/code-snippet/js/utils/data-type',
-                        '/code-snippet/js/utils/env',
-                        '/code-snippet/js/utils/version',
-                        '/code-snippet/js/utils/event-emitter',
-                        '/code-snippet/js/utils/queen-next',
-                        '/code-snippet/js/utils/format',
+                        'data-type',
+                        'env',
+                        'version',
+                        'event-emitter',
+                        'queen-next',
+                        'format',
                     ]
                 },
 
                 {
                     text: '浏览器环境',
+                    prefix: '/code-snippet/js/browser',
                     children: [
-                        '/code-snippet/js/browser/class',
-                        '/code-snippet/js/browser/cookie',
-                        '/code-snippet/js/browser/url',
-                        '/code-snippet/js/browser/load-script',
-                        '/code-snippet/js/browser/storage',
-                        '/code-snippet/js/browser/clipboard',
+                        'class',
+                        'cookie',
+                        'url',
+                        'load-script',
+                        'storage',
+                        'clipboard',
                     ]
                 },
 
                 '/code-snippet/js/server/',
                 '/code-snippet/js/validate/'
-            ]
-        },
-
-        {
-            text: 'CSS 代码片段',
-            children: [
-                '/code-snippet/css/dog-ear'
             ]
         },
 
@@ -48,10 +43,10 @@ export default {
 
         {
             text: 'Vue 2.x 组件',
+            prefix: '/code-snippet/vue-components',
             children: [
-                '/code-snippet/vue-components/base-marquee',
-                '/code-snippet/vue-components/cascade-visibility',
-                '/code-snippet/vue-components/common-popup',
+                'base-marquee',
+                'common-popup',
             ]
         },
     ]

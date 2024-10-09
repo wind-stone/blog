@@ -2,71 +2,81 @@ export default {
     '/interview': [
         {
             text: '面试题目',
+            prefix: '/interview',
             children: [
-                '/interview/browser/',
-                '/interview/css/',
-                '/interview/algorithm/interview/',
-                '/interview/nodejs/'
+                'browser/',
+                'css/',
+                'algorithm/interview/',
+                'nodejs/'
             ]
         },
         {
             text: 'JS 面试题',
+            prefix: '/interview/javascript',
             children: [
                 {
                     text: '前端基础',
+                    prefix: 'foundation',
                     children: [
-                        '/interview/javascript/foundation/data-type',
-                        '/interview/javascript/foundation/execution-context',
-                        '/interview/javascript/foundation/execution-mechanism',
+                        'data-type/',
+                        'execution-context/',
+                        'execution-mechanism/',
                     ]
                 },
                 {
                     text: '前端编码',
+                    prefix: 'coding',
                     children: [
-                        '/interview/javascript/coding/basic-api-usage/',
-                        '/interview/javascript/coding/program-design/',
+                        'basic-api-usage/',
+                        'program-design/',
                     ]
                 },
                 {
                     text: '性能优化',
+                    prefix: 'performance-optimization',
                     children: [
-                        '/interview/javascript/performance-optimization/debounce-throttle/',
+                        'debounce-throttle/',
                     ]
                 },
             ]
         },
         {
             text: '专题',
+            prefix: '/interview/topic',
             children: [
-                '/interview/topic/large-file-upload',
+                'large-file-upload',
             ]
         },
         {
             text: '数据结构',
+            prefix: '/interview/data-structure',
             children: [
-                '/interview/data-structure/binary-tree',
-                '/interview/data-structure/heap/',
+                'binary-tree',
+                'heap/',
             ]
         },
         {
             text: '算法',
+            prefix: '/interview/algorithm',
             children: [
                 {
                     text: '排序',
+                    prefix: 'sorting-algorithm',
                     children: [
-                        '/interview/algorithm/sorting-algorithm/',
-                        '/interview/algorithm/sorting-algorithm/bubble-sort/',
-                        '/interview/algorithm/sorting-algorithm/selection-sort/',
-                        '/interview/algorithm/sorting-algorithm/insertion-sort/',
-                        '/interview/algorithm/sorting-algorithm/merge-sort/',
-                        '/interview/algorithm/sorting-algorithm/quick-sort/'
+                        '',
+                        'bubble-sort/',
+                        'selection-sort/',
+                        'insertion-sort/',
+                        'merge-sort/',
+                        'quick-sort/'
                     ]
                 },
                 {
                     text: '其他',
+                    prefix: 'others',
                     children: [
-                        '/interview/algorithm/others/binary-search/',
-                        '/interview/algorithm/others/fibonacci-sequence',
+                        'binary-search/',
+                        'fibonacci-sequence',
                     ]
                 },
             ]

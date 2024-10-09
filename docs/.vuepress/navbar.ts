@@ -26,7 +26,7 @@ export default [
             },
             {
                 text: '初始化阶段',
-                link: '/front-end-engineering/initialization/project',
+                link: '/front-end-engineering/initialization/project/',
                 activeMatch: '^/front-end-engineering/initialization'
             },
             {

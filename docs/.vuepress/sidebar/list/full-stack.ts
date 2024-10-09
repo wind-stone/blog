@@ -19,10 +19,10 @@ export default {
         },
         {
             text: '数据查询与展示',
+            prefix: '/full-stack/data-management/data-observability',
             children: [
-                '/full-stack/data-management/data-observability/sql',
-                '/full-stack/data-management/data-observability/grafana',
-                '/full-stack/data-management/data-observability/clickhouse',
+                'sql',
+                'clickhouse',
             ]
         },
         {
@@ -37,21 +37,23 @@ export default {
     '/full-stack/operating-system': [
         {
             text: 'Linux',
+            prefix: '/full-stack/operating-system/linux',
             children: [
-                '/full-stack/operating-system/linux/',
-                '/full-stack/operating-system/linux/shell',
-                '/full-stack/operating-system/linux/linux-command',
-                '/full-stack/operating-system/linux/environment-variables.md',
-                '/full-stack/operating-system/linux/glob',
+                '',
+                'shell',
+                'linux-command',
+                'environment-variables.md',
+                'glob',
             ]
         },
         {
             text: 'Git',
+            prefix: '/full-stack/operating-system/git',
             children: [
-                '/full-stack/operating-system/git/',
-                '/full-stack/operating-system/git/git-command',
-                '/full-stack/operating-system/git/git-commit-guidelines',
-                '/full-stack/operating-system/git/gitlab',
+                '',
+                'git-command',
+                'git-commit-guidelines',
+                'gitlab',
             ]
         },
         {
@@ -66,12 +68,13 @@ export default {
     '/full-stack/software': [
         {
             text: 'Nginx',
+            prefix: '/full-stack/software/nginx',
             children: [
-                '/full-stack/software/nginx/',
-                '/full-stack/software/nginx/practices',
-                '/full-stack/software/nginx/nginx-conf',
-                '/full-stack/software/nginx/ngx_http_proxy_module',
-                '/full-stack/software/nginx/ngx_http_upstream_module'
+                '',
+                'practices',
+                'nginx-conf',
+                'ngx_http_proxy_module',
+                'ngx_http_upstream_module'
             ]
         },
     ],

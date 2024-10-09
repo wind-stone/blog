@@ -2,57 +2,64 @@ export default {
     '/typescript/': [
         {
             text: 'TypeScript',
+            prefix: '/typescript',
             children: [
-                '/typescript/',
-                '/typescript/type-manipulation/type-challenges',
+                '',
+                'type-manipulation/type-challenges',
             ]
         },
         {
             text: '数据类型',
+            prefix: '/typescript/data-types',
             children: [
-                '/typescript/data-types/',
-                '/typescript/data-types/primitive-types',
-                '/typescript/data-types/object-type',
-                '/typescript/data-types/class',
-                '/typescript/data-types/enum',
-                '/typescript/data-types/function',
-                '/typescript/data-types/array'
+                '',
+                'primitive-types',
+                'object-type',
+                'class',
+                'enum',
+                'function',
+                'array'
             ]
         },
         {
             text: '类型系统',
+            prefix: '/typescript/type-system',
             children: [
-                '/typescript/type-system/',
-                '/typescript/type-system/generics',
-                '/typescript/type-system/property-modifiers',
-                '/typescript/type-system/utility-types',
+                '',
+                'generics',
+                'property-modifiers',
+                'utility-types',
             ]
         },
         {
             text: '类型操作',
+            prefix: '/typescript/type-manipulation',
             children: [
-                '/typescript/type-manipulation/',
-                '/typescript/type-manipulation/type-operators',
+                '',
+                'type-operators',
             ]
         },
         {
             text: '模块系统',
+            prefix: '/typescript/module-system',
             children: [
-                '/typescript/module-system/'
+                ''
             ]
         },
         {
             text: 'TypeScript 编译',
+            prefix: '/typescript/typescript-compilation',
             children: [
-                '/typescript/typescript-compilation/'
+                ''
             ]
         },
         {
             text: 'TypeScript 使用',
+            prefix: '/typescript/usage',
             children: [
-                '/typescript/usage/declaration-files',
-                '/typescript/usage/tsconfig-json',
-                '/typescript/usage/publish',
+                'declaration-files',
+                'tsconfig-json',
+                'publish',
             ]
         },
 
