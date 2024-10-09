@@ -1,5 +1,4 @@
 import path from 'path';
-import { defaultTheme } from '@vuepress/theme-default';
 import { defineUserConfig } from 'vuepress';
 import { viteBundler } from '@vuepress/bundler-vite';
 import { searchPlugin } from '@vuepress/plugin-search';
@@ -9,6 +8,7 @@ import { copyrightPlugin } from '@vuepress/plugin-copyright';
 import { copyCodePlugin } from '@vuepress/plugin-copy-code';
 import { markdownImagePlugin } from '@vuepress/plugin-markdown-image'
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components';
+import { hopeTheme } from "vuepress-theme-hope";
 import navbar from './navbar';
 import sidebar from './sidebar';
 
@@ -24,11 +24,10 @@ export default defineUserConfig({
     }]
   ],
 
-  theme: defaultTheme({
+  theme: hopeTheme({
     hostname: 'https://blog.windstone.cc',
     logo: '/images/logo.png',
     navbar,
-    sidebarDepth: 0,
     sidebar,
     lastUpdated: false,
     contributors: false,
