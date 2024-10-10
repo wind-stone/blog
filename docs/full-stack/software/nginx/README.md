@@ -144,7 +144,7 @@ Context: any
 
 将另一个文件或匹配特定`mask`的文件包含到配置里。被包含的文件应该由语法正确的指令和块组成。示例:
 
-```conf
+```nginx
 include mime.types;
 include vhosts/*.conf;
 ```
@@ -161,7 +161,7 @@ Nginx 在代理请求过程中会自动地监测每个后端服务器对请求�
 
 被动检查模式是 Nginx 内置的功能，可以直接通过参数设置来开启。
 
-```conf
+```nginx
 upstream backend {
     server backend1.example.com;
     server backend2.example.com max_fails=3 fail_timeout=30s;

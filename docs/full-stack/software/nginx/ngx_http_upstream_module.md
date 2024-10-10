@@ -6,7 +6,7 @@
 
 ## 配置示例
 
-```conf
+```nginx
 upstream backend {
     server backend1.example.com       weight=5;
     server backend2.example.com:8080;
@@ -25,7 +25,7 @@ server {
 
 作为商业付费功能的一部分，带有周期性健康检查的动态配置组也是可用的:
 
-```conf
+```nginx
 resolver 10.0.0.1;
 
 upstream dynamic {
@@ -63,7 +63,7 @@ Context: `http`
 
 定义一组服务器。这些服务器可以监听不同的端口。此外，还可以混合定义监听 TCP 和 UNIX 域套接字的服务器。
 
-```conf
+```nginx
 upstream backend {
     server backend1.example.com weight=5;
     server 127.0.0.1:8080       max_fails=3 fail_timeout=30s;
@@ -154,7 +154,7 @@ IPv6 地址从 1.3.2 和 1.2.2 版本开始支持。
 
 若是某一台服务器需要被暂时移除，则它应该使用`down`参数标记，以保留当前客户端 IP 地址的散列。
 
-```conf
+```nginx
 upstream backend {
     ip_hash;
 

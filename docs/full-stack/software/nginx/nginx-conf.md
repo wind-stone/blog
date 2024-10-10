@@ -4,7 +4,7 @@
 
 ## 配置示例
 
-```conf
+```nginx
 # 全局块
 # ...
 
@@ -42,7 +42,7 @@ http {
 
 全局块，配置影响`nginx`全局的指令。
 
-```conf
+```nginx
 # 全局块
 
 # 配置用户或者组，默认为 nobody nobody
@@ -60,7 +60,7 @@ error_log log/error.log debug;
 
 ### events 块
 
-```conf
+```nginx
 # events 块
 events {
   # 设置网路连接序列化，防止惊群现象发生，默认为 on
@@ -81,7 +81,7 @@ events {
 
 #### http 全局块
 
-```conf
+```nginx
 http {
   # http 全局块
   # ...
@@ -90,7 +90,7 @@ http {
 
 #### server 全局块
 
-```conf
+```nginx
 http {
   server {
     # server 全局块
@@ -146,7 +146,7 @@ Context: `server`, `location`
 
 让我们通过一个例子，说明上述的规则。
 
-```conf
+```nginx
 location = / {
     [ configuration A ]
 }
@@ -176,7 +176,7 @@ location ~* \.(gif|jpg|jpeg)$ {
 
 若是前缀字符串定义的`location`以斜杠字符结尾，且请求被`proxy_pass`/`fastcgi_pass`/`uwsgi_pass`/`scgi_pass`/`memcached_pass`/`grpc_pass`之一处理，则特殊的处理逻辑将被执行: 针对有相同 URI 但没有尾斜杠的请求，将返回一个响应码为 301 的持久化的重定向到带有尾斜杠的相同 URI 的响应。若是不想要这样的效果，可以像如下这样定义一个 URI 与`location`的精确匹配。
 
-```conf
+```nginx
 location /user/ {
     proxy_pass http://user.example.com;
 }
@@ -190,7 +190,7 @@ location = /user {
 
 该模块提供一个简单方法来实现在轮询和客户端 IP 之间的后端服务器负荷平衡。
 
-```conf
+```nginx
 upstream backend {
   ip_hash;
   server   backend1.example.com;
@@ -214,7 +214,7 @@ http {
 
 `ngx_http_index_module`模块处理以斜杠字符`/`结尾的请求。这些请求可以被`ngx_http_autoindex_module`和`ngx_http_random_index_module`模块处理。
 
-```conf
+```nginx
 # 配置示例
 location / {
     index index.$geo.html index.html;
@@ -227,13 +227,13 @@ Context: `http`, `server`, `location`
 
 该指令用来指定用来做默认文档的文件名。`file`文件名里可以包含变量。这些文件会以指定的顺序逐个查找。文件列表的最后一个元素可以是一个绝对路径的文件，比如:
 
-```conf
+```nginx
 index index.$geo.html index.0.html /index.html;
 ```
 
 需要注意，使用`index`文件会因此一个内部重定向，且请求可以在另一个不同的`location`里处理，比如如下的配置:
 
-```conf
+```nginx
 # 精确匹配 /
 location = / {
     index index.html;

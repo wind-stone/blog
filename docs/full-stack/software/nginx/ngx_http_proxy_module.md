@@ -16,13 +16,13 @@ Context: `location`, if in location, limit_except
 
 设置被代理的服务器的协议和地址，以及一个可选的以让`location`映射到的 URI。协议可以指定为`http`或`https`。地址可以指定为域名或 IP 地址，以及一个可选的端口:
 
-```conf
+```nginx
 proxy_pass http://localhost:8000/uri/;
 ```
 
 或一个 UNIX 域的套接字路径，通过在`unix:`之后指定:
 
-```conf
+```nginx
 proxy_pass http://unix:/tmp/backend.socket:/uri/;
 ```
 
@@ -34,7 +34,7 @@ proxy_pass http://unix:/tmp/backend.socket:/uri/;
 
 - 若是`proxy_pass`指定了 URI，则当请求传递给服务器时，匹配了`location`的标准化请求的 URI 部分将被指令里指定的 URI 替代:
 
-```conf
+```nginx
 location /example/ {
   proxy_pass http://127.0.0.1/remote/;
 }
@@ -46,7 +46,7 @@ location /example/ {
 
 - 若是`proxy_pass`没有指定 URI，则当原始请求被处理时，请求的 URI 将以与客户端发送的一样的形式传递给服务器，或当处理改变后的 URI 时，整个标准化的请求 URI 将传递给服务器:
 
-```conf
+```nginx
 location /example/ {
     proxy_pass http://127.0.0.1;
 }
@@ -69,7 +69,7 @@ location /example/ {
 - 当使用正则表达式指定`location`，且在命名的`location`之内。在这些情况下，`proxy_pass`不能带有 URI。
 - 当 URI 在被代理的`location`之内使用`rewrite`指令改变了，并且这个配置还被用于处理请求（`break`）。这种情况下，指令里指定的 URI 将被忽略，且整个改变了的请求 URI 将被传递给服务器。
 
-```conf
+```nginx
 location /name/ {
     rewrite    /name/([^/]+) /users?name=$1 break;
     proxy_pass http://127.0.0.1;
@@ -78,7 +78,7 @@ location /name/ {
 
 - 当`proxy_pass`里使用了变量。这种情况下，如果指令里指定了 URI，则该 URI 将代替原始的请求 URI 传递给服务器。
 
-```conf
+```nginx
 location /name/ {
     proxy_pass http://127.0.0.1$request_uri;
 }
@@ -93,7 +93,7 @@ Syntax: `proxy_set_header field value;`
 
 Default:
 
-```conf
+```nginx
 proxy_set_header Host $proxy_host;
 proxy_set_header Connection close;
 ```
@@ -103,7 +103,7 @@ Context: http, server, location
 
 允许重定义或追加请求头部里的项，并传递给服务器。请求头部里项的值可以是文本、变量，或它们的组合。当且仅当当前层级里没有定义`proxy_set_header`指令时，这些指令将从先前的层级里继承。默认地，只有两项会重新定义:
 
-```conf
+```nginx
 proxy_set_header Host       $proxy_host;
 proxy_set_header Connection close;
 ```
@@ -112,7 +112,7 @@ proxy_set_header Connection close;
 
 可以通过如下方式，传递一个不改变的`Host`请求头部:
 
-```conf
+```nginx
 proxy_set_header Host       $http_host;
 ```
 
@@ -120,13 +120,13 @@ proxy_set_header Host       $http_host;
 
 此外，服务器主域名可以与服务器的端口一起传递:
 
-```conf
+```nginx
 proxy_set_header Host       $host:$proxy_port;
 ```
 
 若是请求头部的某一项是空字符串，则这一项就不会传递给被代理的服务器:
 
-```conf
+```nginx
 proxy_set_header Accept-Encoding "";
 ```
 

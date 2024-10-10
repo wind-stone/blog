@@ -24,7 +24,7 @@
 
 Nginx 的`blog.windstone.cc.conf`配置文件如下：
 
-```conf
+```nginx
 server {
     listen      8080;
 
@@ -86,7 +86,7 @@ server {
 
 当访问`http://blog.windstone.cc/es6/array`时，会经过 Nginx 的如下规则处理。
 
-```conf
+```nginx
     location /es6/ {
         try_files $uri $uri/ /es6/index.html;
         index /es6/index.html;
@@ -103,7 +103,7 @@ server {
 
 当访问`http://localhost:9527/test/hello`时，会经过 Nginx 的如下规则处理。
 
-```conf
+```nginx
     location /test/hello {
         try_files $uri $uri/ /es6/index.html;
         index world.html;
