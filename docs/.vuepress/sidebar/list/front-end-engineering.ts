@@ -140,19 +140,22 @@ export default {
         },
     ],
 
-    // 稳定性
-    '/front-end-engineering/performance-stability': [
+    // 前端稳定性建设
+    '/front-end-engineering/frontend-stability-construction': [
+        '/front-end-engineering/frontend-stability-construction/',
         {
-            text: '稳定性',
+            text: '',
+            prefix: '/front-end-engineering/frontend-stability-construction',
             children: [
-                '/front-end-engineering/performance-stability/stability',
+                'observable-system/',
+                'full-link-monitoring/',
+                'high-availability-architecture/',
+                'performance/',
+                'risk-management/',
+                'processs-mechanism/',
+                'engineering-construction/',
+                'summary'
             ]
         },
-        {
-            text: '性能',
-            children: [
-                '/front-end-engineering/performance-stability/performance',
-            ]
-        }
-    ]
+    ],
 };
