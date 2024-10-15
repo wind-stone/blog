@@ -154,6 +154,13 @@ export default {
                 'risk-management/',
                 'processs-mechanism/',
                 'engineering-construction/',
+                {
+                    text: '',
+                    prefix: 'engineering-construction',
+                    children: [
+                        'automated-testing'
+                    ]
+                },
                 'summary'
             ]
         },

@@ -49,11 +49,6 @@ export default [
                 link: '/front-end-engineering/frontend-stability-construction/',
                 activeMatch: '^/front-end-engineering/frontend-stability-construction'
             },
-            {
-                text: '性能和稳定性',
-                link: '/front-end-engineering/performance-stability/stability',
-                activeMatch: '^/front-end-engineering/performance-stability'
-            },
         ],
     },
     {
