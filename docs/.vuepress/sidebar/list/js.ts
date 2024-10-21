@@ -73,7 +73,6 @@ export default {
                 '',
                 'functional-programming',
                 'pitfall',
-                'react/'
             ]
         },
     ],

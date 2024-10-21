@@ -5,7 +5,8 @@ export default [
         children: [
             { text: 'JavaScript', link: '/js/data-types/', activeMatch: '^/js' },
             { text: 'ES6+', link: '/es6/', activeMatch: '^/es6' },
-            { text: 'TypeScript', link: '/typescript/', activeMatch: '^/typescript' }
+            { text: 'TypeScript', link: '/typescript/', activeMatch: '^/typescript' },
+            { text: 'React', link: '/react/hooks/', activeMatch: '^/react' }
         ],
     },
     {

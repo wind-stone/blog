@@ -11,6 +11,7 @@ import miniProgram from './list/mini-program';
 import typescript from './list/typescript';
 import vue from './list/vue';
 import wander from './list/wander';
+import react from './list/react';
 
 export default {
     ...articles,
@@ -25,5 +26,6 @@ export default {
     ...miniProgram,
     ...typescript,
     ...vue,
-    ...wander
+    ...wander,
+    ...react
 };
