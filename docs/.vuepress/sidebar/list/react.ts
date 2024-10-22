@@ -13,6 +13,7 @@ export default {
             children: [
                 '',
                 'useState',
+                'useReducer',
                 'useEffect',
                 'useMemo',
                 'useRef',

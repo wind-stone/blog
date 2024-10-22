@@ -1,5 +1,7 @@
 # useEffect/useLayoutEffect
 
+若想详细了解，请阅读如下官方文档：
+
 - [React 官方文档 - useEffect](https://zh-hans.react.dev/reference/react/useEffect)
 - [React 官方文档 - useLayoutEffect](https://zh-hans.react.dev/reference/react/useLayoutEffect)
 

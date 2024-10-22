@@ -1,4 +1,4 @@
-# React Hooks 总览
+# 总览
 
 Hook 这个单词的意思是"钩子"。
 
@@ -20,8 +20,9 @@ Hooks 里涉及依赖项的如 `useEffect`、`useMemo`、`useCallback` 等，需
 
 ### 哪些 hooks 会触发组件的重新渲染？
 
-- `useState`里的`setState`
-- `useReducer`里的`dispatch`
+- `useState` 里的 `setState` 调用后
+- `useReducer` 里的 `dispatch` 调用后
+- `useContext` 里返回的 `context` 变化后
 
 ### 哪些 hooks 不会触发组件的重新渲染？
 

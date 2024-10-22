@@ -1,5 +1,7 @@
 # useMemo/useCallback/memo
 
+若想详细了解，请阅读如下官方文档：
+
 - [React 官方文档 - useMemo](https://zh-hans.react.dev/reference/react/useMemo)
 - [React 官方文档 - useCallback](https://zh-hans.react.dev/reference/react/useCallback)
 - [React 官方文档 - memo](https://zh-hans.react.dev/reference/react/memo)
