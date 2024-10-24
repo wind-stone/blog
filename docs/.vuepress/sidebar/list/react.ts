@@ -17,6 +17,7 @@ export default {
                 'useEffect',
                 'useMemo',
                 'useRef',
+                'custom-hooks',
             ]
         },
     ]

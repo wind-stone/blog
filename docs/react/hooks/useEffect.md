@@ -75,3 +75,32 @@ export default function Tooltip({ children, targetRect }) {
   );
 }
 ```
+
+## 关于 useEffectEvent
+
+- [React 官方文档 - experimental_useEffectEvent](https://zh-hans.react.dev/reference/react/experimental_useEffectEvent)
+
+`useEffectEvent` 这个 React Hook 让你可以提取非响应式逻辑到 Effect Event 中。
+
+```js
+import { useEffect, useEffectEvent } from 'react';
+
+export function useChatRoom({ serverUrl, roomId, onReceiveMessage }) {
+  // 尽管 useEffect 使用到了 onReceiveMessage，但是 onReceiveMessage 改变后并不需要重新运行 useEffect 里的 setup 函数
+  // onMessage 被调用时，onReceiveMessage 是最新传入进来的
+  const onMessage = useEffectEvent(onReceiveMessage);
+
+  useEffect(() => {
+    const options = {
+      serverUrl: serverUrl,
+      roomId: roomId
+    };
+    const connection = createConnection(options);
+    connection.connect();
+    connection.on('message', (msg) => {
+      onMessage(msg);
+    });
+    return () => connection.disconnect();
+  }, [roomId, serverUrl]); // ✅ 声明所有依赖
+}
+```

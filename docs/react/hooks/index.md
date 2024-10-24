@@ -27,3 +27,7 @@ Hooks 里涉及依赖项的如 `useEffect`、`useMemo`、`useCallback` 等，需
 ### 哪些 hooks 不会触发组件的重新渲染？
 
 - `useRef`，修改 `ref.current` 不会触发组件的重新渲染
+
+## React Hooks 原理
+
+- [「react进阶」一文吃透react-hooks原理](https://juejin.cn/post/6944863057000529933?searchId=202410161135220DEF57CA5A80F097A5FB)
