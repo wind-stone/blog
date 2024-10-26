@@ -12,6 +12,7 @@ import typescript from './list/typescript';
 import vue from './list/vue';
 import wander from './list/wander';
 import react from './list/react';
+import animationEffects from './list/animation-effects';
 
 export default {
     ...articles,
@@ -27,5 +28,6 @@ export default {
     ...typescript,
     ...vue,
     ...wander,
-    ...react
+    ...react,
+    ...animationEffects
 };
