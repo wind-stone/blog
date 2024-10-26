@@ -101,6 +101,61 @@ export function useChatRoom({ serverUrl, roomId, onReceiveMessage }) {
       onMessage(msg);
     });
     return () => connection.disconnect();
-  }, [roomId, serverUrl]); // ✅ 声明所有依赖
+  }, [roomId, serverUrl]); // ✅ 声明所有依赖，此时不需要依赖 onMessage
 }
+```
+
+## 扩展阅读
+
+### 你可能不需要 Effect
+
+- [React 官方文档 - 你可能不需要 Effect](https://zh-hans.react.dev/learn/you-might-not-need-an-effect)，讲述了各种滥用（或不需要） useEffect 的场景，以及对应的解决方案。
+
+摘要
+
+- 如果你可以在渲染期间计算某些内容，则不需要使用 Effect。
+- 想要缓存昂贵的计算，请使用 useMemo 而不是 useEffect。
+- 想要重置整个组件树的 `state`，请传入不同的 `key`。
+- 想要在 `prop` 变化时重置某些特定的 `state`，请在渲染期间处理。
+- 组件显示时就需要执行的代码应该放在 Effect 中，否则应该放在事件处理函数中。
+- 如果你需要更新多个组件的 `state`，最好在单个事件处理函数中处理。
+- 当你尝试在不同组件中同步 `state` 变量时，请考虑状态提升。
+- 你可以使用 Effect 获取数据，但你需要实现清除逻辑以避免竞态条件。
+
+### 移除 Effect 依赖
+
+- [React 官方文档 - 移除 Effect 依赖](https://zh-hans.react.dev/learn/removing-effect-dependencies#wrapping-an-event-handler-from-the-props)
+
+#### setup 函数里读取当前状态并计算下一个状态导致的问题
+
+下面的代码原意是，接收到一条消息后，更新消息列表。但是因为 `messages` 是响应式的，必须将其作为 `useEffect` 的依赖，这就导致每次接收到一条新消息就更新 `messages` 导致组件重新渲染，进而导致先断开连接再重新连接。
+
+```js
+function ChatRoom({ roomId }) {
+  const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    const connection = createConnection();
+    connection.connect();
+    connection.on('message', (receivedMessage) => {
+      setMessages([...messages, receivedMessage]);
+    });
+    return () => connection.disconnect();
+  }, [roomId, messages]); // ✅ 所有依赖已声明
+  // ...
+```
+
+正确的做法是，在 `setup` 函数里不直接读取 `messages`，而是将 `setMessages([...messages, receivedMessage]` 更改为 `setMessages(msgs => [...msgs, receivedMessage])`，这样就避免了直接读取 `messages`，也就不用将 `messages` 作为依赖了。
+
+```js
+function ChatRoom({ roomId }) {
+  const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    const connection = createConnection();
+    connection.connect();
+    connection.on('message', (receivedMessage) => {
+      setMessages(msgs => [...msgs, receivedMessage]);
+    });
+    return () => connection.disconnect();
+  }, [roomId]); // ✅ 所有依赖已声明
+  // ...
 ```

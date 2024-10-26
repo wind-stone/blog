@@ -13,6 +13,7 @@ export default [
         text: 'HTML/CSS/浏览器',
         children: [
             { text: 'CSS', link: '/css/selectors/', activeMatch: '^/css' },
+            { text: 'CSS/JS 动画效果', link: '/animation-effects/', activeMatch: '^/animation-effects/' },
             { text: '浏览器', link: '/browser-env/browser/how-browsers-work', activeMatch: '^/browser-env' },
             { text: '小程序', link: '/mini-program/weixin/', activeMatch: '^/mini-program' },
         ],
