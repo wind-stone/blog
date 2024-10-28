@@ -1,7 +1,14 @@
 <template>
-    <div class="container">
-        <div v-slide-in v-for="n in 10" :class="['item', `item-${n}`]">{{ n }}</div>
+  <div class="container">
+    <div
+      v-for="n in 10"
+      :key="n"
+      v-slide-in
+      :class="['item', `item-${n}`]"
+    >
+      {{ n }}
     </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -9,7 +16,8 @@ const DISTANCE = 100;
 const DURATION = 500;
 const weakMap = new WeakMap();
 
-const observer = new IntersectionObserver(entries => {
+// VuePress 会在服务端渲染，加个判断
+const observer = typeof IntersectionObserver !== 'undefined' && new IntersectionObserver(entries => {
     for (const entry of entries) {
         const el = entry.target;
         if (entry.isIntersecting) {
@@ -19,12 +27,12 @@ const observer = new IntersectionObserver(entries => {
             observer.unobserve(el);
         }
     }
-})
+});
 
 const isBelowViewport = (el) => {
     const rect = el.getBoundingClientRect();
     return rect.top > window.innerHeight;
-}
+};
 
 /**
  * 自定义指令，平滑上移
@@ -41,14 +49,14 @@ const vSlideIn = {
                 opacity: 0.5
             },
             {
-                transform: `translateY(0px)`,
+                transform: 'translateY(0px)',
                 opacity: 1
             }
         ], {
             duration: DURATION,
             easeing: 'ease-out',
             fill: 'forwards'
-        })
+        });
 
         animation.pause();
         weakMap.set(el, animation);
@@ -57,7 +65,7 @@ const vSlideIn = {
     unmounted(el) {
         observer.unobserve(el);
     },
-}
+};
 </script>
 
 <style lang="less" scoped>
