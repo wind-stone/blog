@@ -1,0 +1,25 @@
+/**
+ * iOS 安全距离
+ *
+ * - 兼容 constant 和 env 两种写法
+ * - 可以给 margin、padding 任意一边加，不限制 Property，比如 padding-bottom、margin-bottom、height 等
+ * - 可以取任一方向的安全距离，比如：上/下/左/右 安全距离
+ */
+.safe-area(@property: padding-bottom; @position: bottom; @offset: 0px) {
+  @supports (bottom: constant(safe-area-inset-bottom)) or (bottom: env(safe-area-inset-bottom)) {
+    & when(@offset = 0) {
+      @{property}: ~'env(safe-area-inset-@{position})';
+      @{property}: ~'constant(safe-area-inset-@{position})';
+    }
+
+    & when(@offset > 0) {
+      @{property}: ~'calc(@{offset} + env(safe-area-inset-@{position}))';
+      @{property}: ~'calc(@{offset} + constant(safe-area-inset-@{position}))';
+    }
+
+    & when(@offset < 0) {
+      @{property}: ~'calc(@{offset} - env(safe-area-inset-@{position}))';
+      @{property}: ~'calc(@{offset} - constant(safe-area-inset-@{position}))';
+    }
+  }
+}

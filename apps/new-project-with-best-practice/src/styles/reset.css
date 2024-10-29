@@ -1,0 +1,94 @@
+@charset "utf-8";
+
+/*显示给用户的高光是他们成功点击的标识，以及暗示了他们点击的元素*/
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* 禁止复制 */
+body {
+  -webkit-overflow-scrolling: touch;
+  word-wrap: break-word;
+  word-break: break-all;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+body,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td,
+img,
+a {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 要注意表单元素并不继承父级 font 的问题 */
+body,
+button,
+input,
+select,
+textarea {
+  font: 14px/1.5 'PingFang SC', 'Source Han Sans SC', 'Noto Sans CJK SC', STHeiti, sans-serif;
+}
+
+/* 表单控件样式一致 */
+button,
+input,
+optgroup,
+option,
+select,
+textarea {
+  font: inherit;
+  outline: 0;
+  border: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: 0 0;
+  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+}
+
+/* 默认不显示下划线，保持页面简洁 */
+a {
+  text-decoration: none;
+  cursor: pointer;
+
+  -webkit-touch-callout: none;
+}
+
+/* 去掉列表前的标识 */
+ul,
+ol {
+  list-style: none;
+}
+
+/* 禁止 IOS 长按出现菜单 */
+img {
+  -webkit-touch-callout: none;
+}

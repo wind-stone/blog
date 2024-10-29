@@ -1,0 +1,58 @@
+// 边框默认颜色，可根据业务特性，修改此默认值
+@defaultBorderColor: #e1e1e1;
+
+/* retina 边框函数基础声明，不包含 border 部分，主要用于在 #retina-border 函数里继承 */
+#retina-border-basic {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left top;
+    box-sizing: border-box;
+    pointer-events: none;
+  }
+  @media (-webkit-min-device-pixel-ratio: 2) {
+    &:before {
+      width: 200%;
+      height: 200%;
+      transform: scale(0.5);
+    }
+  }
+  @media (-webkit-min-device-pixel-ratio: 3) {
+    &:before {
+      width: 300%;
+      height: 300%;
+      transform: scale(1 / 3);
+    }
+  }
+}
+
+/* 设置圆角（如果圆角大于0，则添加圆角的代码） */
+#retina-border-radius(@borderRadius) when (unit(@borderRadius) > 0) {
+  border-radius: @borderRadius;
+  @media (-webkit-min-device-pixel-ratio: 2) {
+    &:before {
+      border-radius: unit(unit(@borderRadius) * 2, px);
+    }
+  }
+  @media (-webkit-min-device-pixel-ratio: 3) {
+    &:before {
+      border-radius: unit(unit(@borderRadius) * 3, px);
+    }
+  }
+}
+
+/* retina 边框函数核心声明 */
+#retina-border(@borderWidth: 1px; @borderStyle: solid; @borderColor: @defaultBorderColor; @borderRadius: 0) {
+  &:extend(#retina-border-basic all);
+  #retina-border-radius(@borderRadius);
+  &:before {
+    border-width: @borderWidth;
+    border-style: @borderStyle;
+    border-color: @borderColor;
+  }
+}

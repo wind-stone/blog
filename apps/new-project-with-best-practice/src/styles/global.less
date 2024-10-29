@@ -1,0 +1,19 @@
+@import './reset.css';
+@import './mixins/index.less';
+
+/* retina-border 全边框/上下左右边框，可直接在元素上添加如下类名 */
+.retina-border-all {
+  #retina-border(1px);
+}
+.retina-border-top {
+  #retina-border(1px 0 0 0);
+}
+.retina-border-right {
+  #retina-border(0 1px 0 0);
+}
+.retina-border-bottom {
+  #retina-border(0 0 1px 0);
+}
+.retina-border-left {
+  #retina-border(0 0 0 1px);
+}
