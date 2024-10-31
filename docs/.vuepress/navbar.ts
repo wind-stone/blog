@@ -22,29 +22,19 @@ export default [
         text: '前端工程化',
         children: [
             {
-                text: '概述',
-                link: '/front-end-engineering/',
-                activeMatch: '^/front-end-engineering/$'
+                text: '开发环境',
+                link: '/front-end-engineering/environment/ide/vscode',
+                activeMatch: '^/front-end-engineering/environment'
             },
             {
-                text: '初始化阶段',
-                link: '/front-end-engineering/initialization/project/',
-                activeMatch: '^/front-end-engineering/initialization'
+                text: '开发流程工具',
+                link: '/front-end-engineering/tools/build/source-map',
+                activeMatch: '^/front-end-engineering/tools'
             },
             {
-                text: '开发阶段',
-                link: '/front-end-engineering/development/h5/',
-                activeMatch: '^/front-end-engineering/development'
-            },
-            {
-                text: '构建阶段',
-                link: '/front-end-engineering/build/webpack/',
-                activeMatch: '^/front-end-engineering/build'
-            },
-            {
-                text: '发布阶段',
-                link: '/front-end-engineering/publish/changelog',
-                activeMatch: '^/front-end-engineering/publish'
+                text: '开发技能',
+                link: '/front-end-engineering/development-skills/h5/',
+                activeMatch: '^/front-end-engineering/development-skills'
             },
             {
                 text: '前端稳定性建设',

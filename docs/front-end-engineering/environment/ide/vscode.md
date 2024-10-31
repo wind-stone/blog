@@ -1,4 +1,4 @@
-# VS Code
+# VSCode
 
 [[toc]]
 
@@ -52,10 +52,6 @@ Cannot find module '@/common/log' or its corresponding type declarations.
 ## 扩展
 
 介绍一些 VS Code 的常用扩展，以及根据个人/团队/项目的需求作出的自定义配置。
-
-### Emmet
-
-TODO:
 
 ### ESLint
 

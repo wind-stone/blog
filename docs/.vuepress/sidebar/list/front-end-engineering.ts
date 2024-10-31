@@ -1,62 +1,159 @@
 export default {
-    '/front-end-engineering/': [
-        '/front-end-engineering/'
-    ],
-    // 初始化阶段
-    '/front-end-engineering/initialization': [
+    // 开发环境
+    '/front-end-engineering/environment': [
         {
-            text: '代码仓库初始化',
+            text: 'IDE',
+            prefix: 'ide',
             children: [
-                '/front-end-engineering/initialization/repository/',
+                'vscode',
+                'code-sandbox'
             ]
         },
         {
-            text: '项目初始化',
+            text: '代码仓库',
+            prefix: 'repository',
             children: [
-                '/front-end-engineering/initialization/project/',
+                'monorepo',
             ]
         },
         {
-            text: '编辑器初始化',
+            text: '包管理工具',
+            prefix: 'package-manager',
             children: [
-                '/front-end-engineering/initialization/code-editors/vscode',
-            ]
-        },
-        {
-            text: '风格指南',
-            prefix: '/front-end-engineering/initialization/style-guide',
-            children: [
-                'naming-convention/naming.md',
-                'naming-convention/js.md',
-            ]
-        },
-        {
-            text: '代码格式化 - ESLint',
-            prefix: '/front-end-engineering/initialization/code-formatter/eslint',
-            children: [
-                '',
-                'eslint-vscode',
-                'eslint-vue',
-                'eslint-prettier',
-                'how-to-write-a-custom-eslint-rule'
+                'semantic-version',
+                {
+                    text: 'npm',
+                    prefix: 'npm',
+                    children: [
+                        '',
+                        'npm-command',
+                        'npmrc',
+                        'npm-config',
+                        'npm-scripts',
+                        'package.json',
+                        'package-lock.json',
+                    ]
+                },
+                {
+                    text: 'pnpm',
+                    prefix: 'pnpm',
+                    children: [
+                        '',
+                    ]
+                },
+                {
+                    text: '第三方包',
+                    prefix: 'third-party-packages',
+                    children: [
+                        '',
+                        {
+                            text: '包环境管理',
+                            prefix: 'package-env-management',
+                            children: [
+                                'nvm',
+                                'nrm',
+                                'npx',
+                                'cross-env'
+                            ]
+                        },
+                        'koa'
+                    ]
+                },
             ]
         },
     ],
 
-    // 开发阶段
-    '/front-end-engineering/development': [
+    // 开发工具
+    '/front-end-engineering/tools': [
         {
-            text: 'h5 开发',
-            prefix: '/front-end-engineering/development/h5',
+            text: '构建工具',
+            prefix: 'build',
+            children: [
+                'source-map',
+                'rollup',
+                {
+                    text: 'Webpack',
+                    prefix: 'webpack',
+                    children: [
+                        '',
+                        'webpack-runtime',
+                        {
+                            text: 'Webpack 配置',
+                            prefix: 'config',
+                            children: [
+                                'whole-config',
+                                'practical-config',
+                                'config-tools',
+                                'dead-code',
+                            ]
+                        },
+                        'webpack4-import',
+                        {
+                            text: 'Tapable',
+                            prefix: 'tapable',
+                            children: [
+                                '',
+                                'tapable-readme',
+                            ]
+                        },
+                    ]
+                },
+            ]
+        },
+        {
+            text: '运行时工具',
+            prefix: 'runtime',
+            children: [
+                'axios'
+            ]
+        },
+        {
+            text: '发布相关工具',
+            children: [
+                'publish/changelog',
+            ]
+        },
+        {
+            text: '风格指南',
+            prefix: 'style-guide',
+            children: [
+                {
+                    text: '命名规范',
+                    prefix: 'naming-conventions',
+                    children: [
+                        'naming-references.md',
+                        'js.md',
+                    ]
+                },
+                {
+                    text: 'ESLint',
+                    prefix: 'code-formatter/eslint',
+                    children: [
+                        '',
+                        'eslint-vscode',
+                        'eslint-vue',
+                        'eslint-prettier',
+                        'how-to-write-a-custom-eslint-rule'
+                    ]
+                },
+            ]
+        }
+    ],
+
+    // 开发阶段
+    '/front-end-engineering/development-skills': [
+        {
+            text: 'H5 开发',
+            prefix: 'h5',
             children: [
                 '',
-                'style',
+                'css-style',
                 'local-mock',
             ]
         },
         {
-            text: '后端 - Node',
-            prefix: '/front-end-engineering/development/server-node',
+            text: 'Node 开发',
+            prefix: 'nodejs',
             children: [
                 '',
                 'commonjs',
@@ -64,78 +161,6 @@ export default {
                 'server',
                 'api',
                 'pm2',
-            ]
-        },
-        {
-            text: '工具库',
-            prefix: '/front-end-engineering/development/tools-library',
-            children: [
-                'axios',
-            ]
-        },
-        {
-            text: 'NPM',
-            prefix: '/front-end-engineering/development/npm',
-            children: [
-                'semantic-version',
-                '',
-                'npm-command',
-                'npmrc',
-                'npm-config',
-                'npm-scripts',
-                'package.json',
-                'package-lock.json',
-                'third-party-package'
-            ]
-        },
-        {
-            text: 'pnpm',
-            prefix: '/front-end-engineering/development/pnpm',
-            children: [
-                '',
-            ]
-        },
-    ],
-
-    // 构建阶段
-    '/front-end-engineering/build': [
-        {
-            text: 'Webpack',
-            prefix: '/front-end-engineering',
-            children: [
-                'build/webpack/',
-                'build/webpack/webpack-runtime',
-                {
-                    text: 'Webpack 配置',
-                    prefix: 'build/webpack/config',
-                    children: [
-                        'whole-config',
-                        'practical-config',
-                        'config-tools',
-                        'dead-code',
-                    ]
-                },
-                'build/webpack/webpack4-import',
-                {
-                    text: 'Tapable',
-                    prefix: 'build/webpack/tapable',
-                    children: [
-                        '',
-                        'tapable-readme',
-                    ]
-                },
-            ]
-        },
-        '/front-end-engineering/build/rollup',
-        '/front-end-engineering/build/source-map',
-    ],
-
-    // 发布阶段
-    '/front-end-engineering/publish': [
-        {
-            text: 'ChangLog',
-            children: [
-                '/front-end-engineering/publish/changelog',
             ]
         },
     ],

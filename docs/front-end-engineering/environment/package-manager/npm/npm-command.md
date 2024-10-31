@@ -1,4 +1,4 @@
-# NPM 命令
+# npm 命令
 
 [[toc]]
 
@@ -106,7 +106,7 @@ npm dist-tag rm <pkg> <tag>
 ### 删除已发布包的指定版本
 
 ```sh
-$ npm unpublish [<pkg>][@<version>] --force
+npm unpublish [<pkg>][@<version>] --force
 ```
 
 详见: [NPM - npm-unpublish](https://docs.npmjs.com/cli/v8/commands/npm-unpublish)
