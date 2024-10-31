@@ -18,6 +18,10 @@
 - [【中级】实现 String.prototype.padStart 方法](/es6/polyfill/string/padStart)
 - [【高级】实现 Promise.race/allSettled方法的polyfill](/interview/javascript/coding/basic-api-usage/polyfill/promise-race-and-allsettled)
 
+## ES6
+
+- [考察 Proxy 应用：以同步的方式实现事件监听](/interview/javascript/coding/basic-api-usage/es6/synchronous-event-listener-with-proxy)
+
 ## 其他
 
 - [【初级】变量命名风格转换](/interview/javascript/coding/basic-api-usage/variable-naming-style)
