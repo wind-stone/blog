@@ -3,6 +3,7 @@ export default {
     '/animation-effects/': [
         '',
         'scroll-elements-fade-up',
-        'complicated-animations-with-animation-delay'
+        'complicated-animations-with-animation-delay',
+        'gradient-shadows'
     ]
 };
