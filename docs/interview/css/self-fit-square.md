@@ -46,3 +46,9 @@ CSS3 中新增了一组相对于可视区域百分比的长度单位`vw`, `vh`, 
   height: 100vw;
 }
 ```
+
+### 解决思路三：aspect-ratio
+
+@[code vue](@components/interview/css/self-fit-square/aspect-radio.vue)
+
+<interview-css-self-fit-square-aspect-radio></interview-css-self-fit-square-aspect-radio>
