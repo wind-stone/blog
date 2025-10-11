@@ -17,7 +17,7 @@ input.value // 1
 
 // 若用户清空输入框并输入 2
 input.getAttribute('value') // 1
-input.value // 1
+input.value // 2
 
 // 问题二，参考答案
 input.type // text

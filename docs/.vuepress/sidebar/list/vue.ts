@@ -4,9 +4,7 @@ export default {
         {
             text: 'Vue 2.x 源码分析',
             prefix: '',
-            children: [
-                '/vue/source-study/',
-            ]
+            children: ['/vue/source-study/'],
         },
         {
             text: '实例化',
@@ -21,19 +19,13 @@ export default {
                 'instance/state/computed',
                 'instance/state/watch',
                 'instance/directives',
-                'instance/events'
-            ]
+                'instance/events',
+            ],
         },
         {
             text: '组件化',
             prefix: '/vue/source-study/component',
-            children: [
-                'register',
-                'options',
-                'async-component',
-                'functional-component',
-                'extend'
-            ]
+            children: ['register', 'options', 'async-component', 'functional-component', 'extend'],
         },
         {
             text: '响应式原理',
@@ -46,7 +38,7 @@ export default {
                 'watcher',
                 'scheduler',
                 'array-observe-limit',
-            ]
+            ],
         },
         {
             text: 'Virtual Dom',
@@ -59,8 +51,8 @@ export default {
                 'child-component-create',
                 'patch-modules/',
                 'patch-fn',
-                'topics/dom-binding'
-            ]
+                'topics/dom-binding',
+            ],
         },
         {
             text: '编译',
@@ -72,75 +64,50 @@ export default {
                 'parse',
                 'parse-html',
                 'optimize',
-                'codegen'
-            ]
+                'codegen',
+            ],
         },
         {
             text: '编译专题',
             prefix: '/vue/source-study/compile/topics',
-            children: [
-                'event',
-                'v-model',
-                'slot'
-            ]
+            children: ['event', 'v-model', 'slot'],
         },
         {
             text: '全局 API',
             prefix: '/vue/source-study/global-api',
-            children: [
-                'use'
-            ]
+            children: ['use'],
         },
         {
             text: 'Util',
             prefix: '/vue/source-study/util',
-            children: [
-                'next-tick',
-                'lifecycle-hook-event',
-            ]
+            children: ['next-tick', 'lifecycle-hook-event'],
         },
         {
             text: 'SSR',
             prefix: '/vue/source-study/ssr',
-            children: [
-                '',
-                'vue-server-renderer',
-                'hydrate',
-            ]
+            children: ['', 'vue-server-renderer', 'hydrate'],
         },
         {
             text: 'Vuex',
             prefix: '/vue/vue-series/vuex',
-            children: [
-                '',
-                'reset-child-module-state',
-                'register-module',
-            ]
+            children: ['', 'reset-child-module-state', 'register-module'],
         },
         {
             text: 'vue-router',
             prefix: '/vue/vue-series/vue-router/',
-            children: [
-                '',
-            ]
+            children: [''],
         },
         {
             text: '其他',
             prefix: '/vue/vue-series/vuejs',
-            children: [
-                'scoped-css',
-            ]
+            children: ['scoped-css'],
         },
 
         // 等待以后分离出去
         {
             text: 'Vue 3.x',
-            prefix: '/vue3',
-            children: [
-                '',
-                'composition-api',
-                'reactivity/use-difference'
-            ]
+            prefix: '/vue/vue3',
+            children: ['', 'composition-api', 'reactivity/use-difference'],
         },
     ],
 };

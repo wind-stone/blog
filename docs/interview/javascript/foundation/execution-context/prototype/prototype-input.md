@@ -11,6 +11,8 @@ a.b();
 
 ```js
 // 输出结果
-a.a() 报“Uncaught TypeError: a.a is not a function”
-a.b() 显示 alert(2)
+a.a() // 报 “Uncaught TypeError: a.a is not a function”
+a.b() // 显示 alert(2)
+
+// 原型链查找顺序：a -> a.__proto__(A.prototype) -> A.prototype.__proto__(Object.prototype)
 ```

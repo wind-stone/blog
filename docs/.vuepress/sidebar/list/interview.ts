@@ -27,6 +27,11 @@ export default {
             ],
         },
         {
+            text: '框架/库',
+            prefix: '/interview/library',
+            children: ['vue'],
+        },
+        {
             text: '专题',
             prefix: '/interview/topic',
             children: ['large-file-upload'],
