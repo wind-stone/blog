@@ -43,7 +43,7 @@ Vue3 的优化
 Vue3 整体体积变小了。
 
 - 移除了一些不常用的 API
-- Tree Shaking。任何一个函数，如`ref`、`reactive`、`computed`等，仅仅在用到的时候才打包，没用到的模块都被摇掉，打包的整体体积变小
+- Tree shaking。任何一个函数，如`ref`、`reactive`、`computed`等，仅仅在用到的时候才打包，没用到的模块都被摇掉，打包的整体体积变小
 
 #### 编译优化
 
