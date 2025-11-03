@@ -5,7 +5,42 @@
 - 页面里有指向 blog 内部文档的链接时，优先使用相对路径/绝对路径，不要使用 URL，详见[VuePress 指南 - Markdown - 链接](https://v2.vuepress.vuejs.org/zh/guide/markdown.html#%E9%93%BE%E6%8E%A5)
 - 行高亮
 - 行号：可在代码块添加标记来启用/禁用行号，默认开启
-- [导入代码块](https://v2.vuepress.vuejs.org/zh/guide/markdown.html#%E5%AF%BC%E5%85%A5%E4%BB%A3%E7%A0%81%E5%9D%97)
+
+### 导入代码块
+
+[导入代码块](https://v2.vuepress.vuejs.org/zh/guide/markdown.html#%E5%AF%BC%E5%85%A5%E4%BB%A3%E7%A0%81%E5%9D%97)
+
+```md
+<!-- 最简单的语法 -->
+@[code](../foo.js)
+
+<!-- 仅导入第 1 行至第 10 行 -->
+@[code{1-10}](../foo.js)
+
+<!-- 指定代码语言 -->
+@[code js](../foo.js)
+
+<!-- 导入 components 下的 Vue 组件 -->
+@[code vue](@components/animation-effects/animation-delay/ball-translate.vue)
+```
+
+### 引入 Vue 组件
+
+在 docs/.vuepress/components/ 目录下放置 .vue 文件，比如
+
+blog/
+├── docs/
+│   └── .vuepress
+│       └── components
+│           └── animation-effects
+│               └── gradient-shadows.vue
+└── README.md
+
+然后在 MD 文件里通过如下方式引入：
+
+```md
+<animation-effects-gradient-shadows />
+```
 
 ## bug
 

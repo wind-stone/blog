@@ -13,6 +13,7 @@ import vue from './list/vue';
 import wander from './list/wander';
 import react from './list/react';
 import animationEffects from './list/animation-effects';
+import webglProgrammingGuide from './list/webgl-programming-guide';
 
 export default {
     ...articles,
@@ -29,5 +30,6 @@ export default {
     ...vue,
     ...wander,
     ...react,
-    ...animationEffects
+    ...animationEffects,
+    ...webglProgrammingGuide,
 };
