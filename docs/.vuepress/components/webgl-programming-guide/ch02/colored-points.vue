@@ -113,6 +113,4 @@ function main() {
 onMounted(() => {
     main();
 });
-
-// Get the rendering context for 2DCG
 </script>
