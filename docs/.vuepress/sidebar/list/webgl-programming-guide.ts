@@ -40,6 +40,18 @@ export default {
                 'rotating-triangle-with-button',
             ],
         },
+        {
+            text: '附录',
+            collapsable: false,
+            prefix: 'appendix/',
+            children: ['matrix'],
+        },
+        {
+            text: 'lib 里的文件',
+            collapsable: false,
+            prefix: 'lib/',
+            children: ['webgl-utils', 'webgl-debug', 'cuon-matrix', 'cuon-utils'],
+        },
         // 'scroll-elements-fade-up',
         // 'complicated-animations-with-animation-delay',
         // 'gradient-shadows',
