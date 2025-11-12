@@ -28,6 +28,18 @@ export default {
                 'rotated-triangle-matrix',
             ],
         },
+        {
+            text: '第 4 章：高级变化与动画基础',
+            collapsable: false,
+            prefix: 'ch04/',
+            children: [
+                'rotated-triangle-matrix4',
+                'rotated-translated-triangle',
+                'rotating-triangle',
+                'rotating-translated-triangle',
+                'rotating-triangle-with-button',
+            ],
+        },
         // 'scroll-elements-fade-up',
         // 'complicated-animations-with-animation-delay',
         // 'gradient-shadows',
