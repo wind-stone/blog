@@ -41,6 +41,21 @@ export default {
             ],
         },
         {
+            text: '第 5 章：颜色与纹理',
+            collapsable: false,
+            prefix: 'ch05/',
+            children: [
+                'multi-attribute-size',
+                'multi-attribute-size-interleaved',
+                'multi-attribute-color',
+                'colored-triangle',
+                'hello-triangle-frag-coord',
+                'textured-quad',
+                'textured-quad-repeat',
+                'multi-texture',
+            ],
+        },
+        {
             text: '附录',
             collapsable: false,
             prefix: 'appendix/',
@@ -52,14 +67,5 @@ export default {
             prefix: 'lib/',
             children: ['webgl-utils', 'webgl-debug', 'cuon-matrix', 'cuon-utils'],
         },
-        // 'scroll-elements-fade-up',
-        // 'complicated-animations-with-animation-delay',
-        // 'gradient-shadows',
-        // {
-        //     text: '文字效果',
-        //     collapsable: false,
-        //     prefix: 'text-effects',
-        //     children: ['overlap-text', 'title-animations'],
-        // },
     ],
 };
