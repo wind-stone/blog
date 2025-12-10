@@ -110,7 +110,7 @@ export class Matrix4 {
         return this;
     }
 
-    // multiply = this.concat;
+    multiply = this.concat;
 
     /**
      * Multiply the three-dimensional vector.
@@ -330,6 +330,7 @@ export class Matrix4 {
     }
 
     /**
+     * 设置正射投影矩阵
      * Set the orthographic projection matrix.
      * @param left The coordinate of the left of clipping plane.
      * @param right The coordinate of the right of clipping plane.

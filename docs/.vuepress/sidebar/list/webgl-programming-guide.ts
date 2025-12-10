@@ -1,7 +1,11 @@
 export default {
-    // CSS/JS 动画效果
+    // WebGL 编程指南
     '/webgl-programming-guide/examples/': [
-        '',
+        {
+            text: 'WebGL 编程指南',
+            collapsable: false,
+            children: ['book'],
+        },
         {
             text: '第 2 章：WebGL 入门',
             collapsable: false,
@@ -53,6 +57,26 @@ export default {
                 'textured-quad',
                 'textured-quad-repeat',
                 'multi-texture',
+            ],
+        },
+        {
+            text: '第 7 章：进入三维世界',
+            collapsable: false,
+            prefix: 'ch07/',
+            children: [
+                'look-at-triangles',
+                'look-at-rotated-triangles',
+                'look-at-rotated-triangles-mv-matrix',
+                'look-at-rotated-triangles-with-keys',
+                'ortho-view',
+                'look-at-rotated-triangles-with-keys-view-volume',
+                'perspective-view',
+                'perspective-view-mvp',
+                'perspective-view-mvp-matrix',
+                'depth-buffer',
+                'z-fighting',
+                'hello-cube',
+                'colored-cube',
             ],
         },
         {
