@@ -13,6 +13,7 @@ export default {
                 'overlap-text',
                 'title-animations'
             ]
-        }
+        },
+        'horizontal-slide-list'
     ]
 };
