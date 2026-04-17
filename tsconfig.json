@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "strict": true,
+        "jsx": "preserve",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "paths": {
+            "@source/*": ["src/*"],
+            "@components/*": ["src/components/*"]
+        }
+    },
+    "include": ["docs/**/*.ts", "docs/**/*.tsx", "docs/**/*.vue", ".vuepress/**/*.ts", ".vuepress/**/*.vue"],
+    "exclude": ["node_modules"]
+}
