@@ -14,6 +14,7 @@ export default {
                 'title-animations'
             ]
         },
-        'horizontal-slide-list'
+        'horizontal-slide-list',
+        'virtual-scroll/',
     ]
 };
