@@ -114,20 +114,21 @@ export default defineUserConfig({
     templateDev: path.resolve(__dirname, './templates/index.dev.html'),
     templateBuild: path.resolve(__dirname, './templates/index.build.html'),
 
-      // 核心配置在这里
-    bundler: viteBundler({
-        viteOptions: {
-            resolve: {
-                alias: {
-                // 配置路径别名，与 tsconfig.json 保持一致
-                '@source': path.resolve(__dirname, '../src'),
-                '@components': path.resolve(__dirname, '../src/components')
-                }
-            },
-            // 优化依赖预构建，确保 TS 文件被正确处理
-            optimizeDeps: {
-                include: ['vue']
-            }
-        }
-    }),
+    bundler: viteBundler(),
+    // 核心配置在这里
+    // bundler: viteBundler({
+    //     viteOptions: {
+    //         resolve: {
+    //             alias: {
+    //             // 配置路径别名，与 tsconfig.json 保持一致
+    //             '@source': path.resolve(__dirname, '../src'),
+    //             '@components': path.resolve(__dirname, '../src/components')
+    //             }
+    //         },
+    //         // 优化依赖预构建，确保 TS 文件被正确处理
+    //         optimizeDeps: {
+    //             include: ['vue']
+    //         }
+    //     }
+    // }),
 });
