@@ -4,9 +4,13 @@
         <!-- 滚动条容器，其高度应该为没有虚拟列表时的实际高度 -->
         <div class="scrollbar-container" :style="{ height: `${itemHeight * list.length}px` }"></div>
         <!-- 实际渲染内容容器 -->
-        <div class="content-container" :data-scrool="scrollTop" :style="{ transform: `translateY(${translateY}px)` }">
-            <div v-for="item in displayedList" :key="item.id" class="item" :style="{ height: `${itemHeight}px` }">
-                {{ item.name }}
+        <div
+            class="content-container"
+            :data-scroll="scrollTop"
+            :style="{ transform: `translate3d(0, ${translateY}px, 0)` }"
+        >
+            <div v-for="item in displayedList" :key="item.id">
+                <slot :item="item"></slot>
             </div>
         </div>
     </div>
@@ -88,13 +92,6 @@ const translateY = computed(() => {
     top: 0;
     left: 0;
     height: 100%;
-    width: 100%;
-}
-
-.item {
-    background-color: yellow;
-    border: 1px solid red;
-    box-sizing: border-box;
     width: 100%;
 }
 </style>
