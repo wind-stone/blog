@@ -1,3 +1,5 @@
+import { text } from 'stream/consumers';
+
 export default {
     // CSS/JS 动画效果
     '/animation-effects/': [
@@ -9,12 +11,16 @@ export default {
             text: '文字效果',
             collapsable: false,
             prefix: 'text-effects',
-            children: [
-                'overlap-text',
-                'title-animations'
-            ]
+            children: ['overlap-text', 'title-animations'],
         },
         'horizontal-slide-list',
         'virtual-scroll/',
-    ]
+
+        {
+            text: '大模型相关',
+            collapsable: false,
+            prefix: 'llm',
+            children: ['sse-printer-effect/'],
+        },
+    ],
 };
