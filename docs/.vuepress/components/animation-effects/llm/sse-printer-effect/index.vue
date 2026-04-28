@@ -77,11 +77,21 @@ const streamResponse = (response: Response) => {
                     return;
                 }
 
+                // 底层 TCP/Stream 是面向字节流的，不保证每次 read() 拿到的数据刚好是完整的一行。比如服务器连续发出两行 SSE 数据：
+                // data: {"char":"你"}\ndata: {"char":"好"}\n
+                // 经过网络传输后，客户端可能分两次读到：
+                // 第一次：data: {"char":"你"}\ndata:
+                // 第二次：{"char":"好"}\n
+                // 所以必须有 buffer 来拼接跨 chunk 的不完整行。
+
+                // TextDecoder 的 stream: true 参数处理的是 UTF-8 多字节字符被截断 的情况。比如汉字 "你" 的 UTF-8 编码是 3 个字节 \xe4\xbd\xa0，如果 chunk 刚好在这 3 个字节中间断开，不带 stream: true 会产出乱码替换字符 �，带了这个参数 decoder 会把不完整的字节序列保留到下一次 decode。
                 const chunk = decoder.decode(value, { stream: true });
                 console.log('[SSE] 收到数据:', JSON.stringify(chunk));
 
                 buffer += chunk;
+
                 const lines = buffer.split('\n');
+                // 将不完整的数据存回 buffer，与下一次的 chunk 拼接成完整的行
                 buffer = lines.pop() || '';
 
                 for (const line of lines) {

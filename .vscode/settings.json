@@ -34,5 +34,6 @@
         "**/Thumbs.db": true,
         "**/CVS": true,
         "**/node_modules": false
-    }
+    },
+    "cSpell.words": ["DEEPSEEK"]
 }
