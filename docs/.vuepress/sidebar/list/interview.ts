@@ -6,6 +6,22 @@ export default {
             children: ['browser/', 'css/', 'algorithm/interview/', 'nodejs/'],
         },
         {
+            text: '大模型',
+            prefix: '/interview/llm',
+            children: [
+                {
+                    text: '理论知识',
+                    prefix: 'knowledge',
+                    children: ['rag/'],
+                },
+                {
+                    text: '前端交互',
+                    prefix: 'frontend',
+                    children: ['stream-response-and-abort', 'multi-devices-context-sync', 'rag-integration'],
+                },
+            ],
+        },
+        {
             text: 'JS 面试题',
             prefix: '/interview/javascript',
             children: [
@@ -48,14 +64,7 @@ export default {
                 {
                     text: '排序',
                     prefix: 'sorting-algorithm',
-                    children: [
-                        '',
-                        'bubble-sort/',
-                        'selection-sort/',
-                        'insertion-sort/',
-                        'merge-sort/',
-                        'quick-sort/',
-                    ],
+                    children: ['', 'bubble-sort/', 'selection-sort/', 'insertion-sort/', 'merge-sort/', 'quick-sort/'],
                 },
                 {
                     text: '其他',

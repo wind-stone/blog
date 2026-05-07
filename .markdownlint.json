@@ -8,9 +8,9 @@
         "siblings_only": true
     },
     "MD033": {
-        "allowed_elements": [
-            "sup",
-            "sub"
-        ]
+        "allowed_elements": ["sup", "sub"]
+    },
+    "MD007": {
+        "indent": 4
     }
 }
