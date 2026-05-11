@@ -1,7 +1,9 @@
-# 【高级】回答问题，说明属性（DOM Property）和特性（HTML Attribute）的区别与联系
+# 属性（DOM Property）和特性（HTML Attribute）
+
+回答问题，说明属性（DOM Property）和特性（HTML Attribute）的区别与联系
 
 ```html
-<input id="input" type="sometype" value="1">
+<input id="input" type="sometype" value="1" />
 ```
 
 针对如上的 HTML，分别说出`type`属性/特性和`value`属性/特性的值，即
@@ -12,16 +14,16 @@
 
 ```js
 // 问题一，参考答案
-input.getAttribute('value') // 1
-input.value // 1
+input.getAttribute('value'); // 1
+input.value; // 1
 
 // 若用户清空输入框并输入 2
-input.getAttribute('value') // 1
-input.value // 2
+input.getAttribute('value'); // 1
+input.value; // 2
 
 // 问题二，参考答案
-input.type // text
-input.getAttribute('type') // sometype
+input.type; // text
+input.getAttribute('type'); // sometype
 ```
 
 B - 能回答对问题一，并能说明`value`的属性与特性的映射关系
