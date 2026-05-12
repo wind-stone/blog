@@ -15,12 +15,5 @@ export default {
         },
         'horizontal-slide-list',
         'virtual-scroll/',
-
-        {
-            text: '大模型相关',
-            collapsable: false,
-            prefix: 'llm',
-            children: ['sse-printer-effect/'],
-        },
     ],
 };

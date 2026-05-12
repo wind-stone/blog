@@ -38,7 +38,7 @@ app.post('/sse', (req, res) => {
     res.on('close', () => cleanup('res.close'));
 
     // 准备文本
-    const text = new Array(20).fill(query).join('');
+    const text = new Array(5).fill(query).join('\n');
     console.log('[SSE] 开始推送, 总字符数:', text.length);
 
     let i = 0;

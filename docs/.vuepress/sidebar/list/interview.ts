@@ -9,7 +9,24 @@ export default {
         {
             text: '大模型-前端交互',
             prefix: '/interview/llm/frontend',
-            children: ['stream-response-and-abort', 'multi-devices-context-sync', 'rag-integration'],
+            children: [
+                'frontend-skills-stack',
+                'stream-response-and-abort',
+                'multi-devices-context-sync',
+                'rag-integration',
+                {
+                    text: '前端实现效果',
+                    collapsable: false,
+                    prefix: 'effects',
+                    children: ['sse-printer-effect/'],
+                },
+                {
+                    text: '前端性能优化',
+                    collapsable: false,
+                    prefix: 'performance',
+                    children: ['fast-rendering'],
+                },
+            ],
         },
 
         // {
@@ -120,6 +137,11 @@ export default {
                             ],
                         },
                     ],
+                },
+                {
+                    text: '数据结构',
+                    prefix: 'data-structure',
+                    children: ['brackets-closed-in-string'],
                 },
                 {
                     text: '执行上下文',

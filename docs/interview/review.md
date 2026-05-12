@@ -72,3 +72,17 @@ XSRF 业务接口不支持跨域访问
 5、Vite 应该打包，**VITE**PRELOAD
 
 6、Electron 打包
+
+## TODO
+
+前端高频面试题
+
+- 深拷贝
+- 并行请求
+- 虚拟列表
+
+### AI 面试题
+
+- SSE 和 websocket 的区别
+- 如果后端每个 chunk 返回的是 markdown 片段，怎么实现边接收边解析边渲染？
+- XSS 防范，大模型生成的 HTML 片段可能被注入恶意脚本，和传统 XSS 有什么区别？你用什么方案？（DOM Purify，但仍需配置白名单）
