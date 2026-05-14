@@ -2,11 +2,11 @@
 
 [[toc]]
 
-![北京各区示意图](./img/beijing-districts.jpg)
+![北京各区示意图](./images/beijing-districts.jpg)
 
 ## 地铁
 
-![北京地铁 2015-2021](./img/beijingditie-2015-2021.jpg)
+![北京地铁 2015-2021](./images/beijingditie-2015-2021.jpg)
 
 ## 可考虑楼盘
 
@@ -20,8 +20,8 @@
 
 发展目标-建设支撑首都中心定位的现代化国际化创新型宜居宜业城区
 
-![海淀分区规划1](./img/haidian-plan1.jpg)
-![海淀分区规划2](./img/haidian-plan2.jpg)
+![海淀分区规划1](./images/haidian-plan1.jpg)
+![海淀分区规划2](./images/haidian-plan2.jpg)
 
 ### 入学政策
 
@@ -53,5 +53,5 @@
 
 发展目标-建设科教引领、文旅融合、宜业宜居的生态城市。
 
-![昌平分区规划1](./img/changping-plan1.jpg)
-![昌平分区规划2](./img/changping-plan2.jpg)
+![昌平分区规划1](./images/changping-plan1.jpg)
+![昌平分区规划2](./images/changping-plan2.jpg)
