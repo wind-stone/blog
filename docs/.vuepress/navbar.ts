@@ -1,38 +1,35 @@
 export default [
     { text: 'Vue 2.x 源码学习', link: '/vue/source-study/' },
     {
-        text: 'JavaScript',
+        text: '前端基础',
         children: [
             { text: 'JavaScript', link: '/js/data-types/', activeMatch: '^/js' },
             { text: 'ES6+', link: '/es6/', activeMatch: '^/es6' },
             { text: 'TypeScript', link: '/typescript/', activeMatch: '^/typescript' },
             { text: 'React', link: '/react/hooks/', activeMatch: '^/react' },
-        ],
-    },
-    {
-        text: 'HTML/CSS/浏览器',
-        children: [
             { text: 'CSS', link: '/css/selectors/', activeMatch: '^/css' },
             { text: 'CSS/JS 动画效果', link: '/animation-effects/', activeMatch: '^/animation-effects/' },
             { text: '浏览器', link: '/browser-env/browser/how-browsers-work', activeMatch: '^/browser-env' },
             { text: '小程序', link: '/mini-program/weixin/', activeMatch: '^/mini-program' },
+            { text: '代码片段', link: '/code-snippet/', activeMatch: '^/code-snippet' },
+            { text: '技术文章', link: '/articles/string-literal/', activeMatch: '^/articles' },
         ],
     },
     {
-        text: '前端工程化',
+        text: '前端工程化/全栈',
         children: [
             {
-                text: '开发环境',
+                text: '前端开发环境',
                 link: '/front-end-engineering/environment/ide/vscode',
                 activeMatch: '^/front-end-engineering/environment',
             },
             {
-                text: '开发流程工具',
+                text: '前端开发流程工具',
                 link: '/front-end-engineering/tools/build/source-map',
                 activeMatch: '^/front-end-engineering/tools',
             },
             {
-                text: '开发技能',
+                text: '前端开发技能',
                 link: '/front-end-engineering/development-skills/h5/',
                 activeMatch: '^/front-end-engineering/development-skills',
             },
@@ -41,11 +38,6 @@ export default [
                 link: '/front-end-engineering/frontend-stability-construction/',
                 activeMatch: '^/front-end-engineering/frontend-stability-construction',
             },
-        ],
-    },
-    {
-        text: '全栈技能',
-        children: [
             {
                 text: '设计模式',
                 link: '/full-stack/design-patterns/singleton-pattern',
@@ -71,13 +63,6 @@ export default [
                 text: '其他',
                 link: '/full-stack/others/google-cloud',
             },
-        ],
-    },
-    {
-        text: '代码片段/技术文章',
-        children: [
-            { text: '代码片段', link: '/code-snippet/', activeMatch: '^/code-snippet' },
-            { text: '技术文章', link: '/articles/string-literal/', activeMatch: '^/articles' },
         ],
     },
     {
@@ -111,6 +96,6 @@ export default [
             },
         ],
     },
+    { text: '随记', link: '/wander/house/' },
     { text: 'GitHub', link: 'https://github.com/wind-stone' },
-    // { text: '随记', link: '/wander/house/' },
 ];

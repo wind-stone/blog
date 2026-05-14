@@ -10,9 +10,15 @@ export default {
             text: '大模型-前端交互',
             prefix: '/interview/llm/frontend',
             children: [
-                'frontend-skills-stack',
+                {
+                    text: '前端技术选型',
+                    collapsable: false,
+                    prefix: 'frontend-skills-stack',
+                    children: ['sse', 'markdown'],
+                },
                 'stream-response-and-abort',
                 'multi-devices-context-sync',
+                'prompt-engineering',
                 'rag-integration',
                 {
                     text: '前端实现效果',
@@ -227,6 +233,31 @@ export default {
     // 数据结构+算法
     '/interview/algorithm': [
         {
+            text: '算法题',
+            prefix: '/interview/algorithm/interview',
+            children: [
+                {
+                    text: '大模型相关',
+                    prefix: 'llm',
+                    children: ['parse-markdown-to-dom'],
+                },
+                {
+                    text: '二分搜索',
+                    prefix: 'binary-search',
+                    children: ['', 'binary-search'],
+                },
+
+                'fibonacci-sequence',
+                'the-all-nodes-of-binary-tree',
+                'the-self-closing-string',
+            ],
+        },
+        {
+            text: 'LeetCode',
+            prefix: '/interview/algorithm/interview/leetcode',
+            children: ['kth-largest-element-in-an-array', 'partition-array-into-three-parts-with-equal-sum'],
+        },
+        {
             text: '数据结构',
             prefix: '/interview/algorithm/data-structure',
             children: ['heap/', 'stack-queue/'],
@@ -241,25 +272,6 @@ export default {
                     children: ['', 'bubble-sort/', 'selection-sort/', 'insertion-sort/', 'merge-sort/', 'quick-sort/'],
                 },
             ],
-        },
-        {
-            text: '算法题',
-            prefix: '/interview/algorithm/interview',
-            children: [
-                {
-                    text: '二分搜索',
-                    prefix: 'binary-search',
-                    children: ['', 'binary-search'],
-                },
-                'fibonacci-sequence',
-                'the-all-nodes-of-binary-tree',
-                'the-self-closing-string',
-            ],
-        },
-        {
-            text: 'LeetCode',
-            prefix: '/interview/algorithm/interview/leetcode',
-            children: ['kth-largest-element-in-an-array', 'partition-array-into-three-parts-with-equal-sum'],
         },
     ],
 };
