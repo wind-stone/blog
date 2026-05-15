@@ -19,6 +19,8 @@ git init
 git add -A
 git commit -m 'deploy'
 
+# 告诉 Git 允许传输 1G 的数据包
+git config http.postBuffer 1073741824
 # 如果发布到 https://<USERNAME>.github.io
 git push -f https://github.com/wind-stone/wind-stone.github.io.git master
 
