@@ -93,7 +93,7 @@ export default {
         {
             text: '性能优化',
             prefix: '/interview/javascript/performance-optimization',
-            children: ['debounce-throttle/'],
+            children: ['devtools/', 'debounce-throttle/'],
         },
         {
             text: 'Node.js',

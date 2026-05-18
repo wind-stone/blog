@@ -4,6 +4,9 @@
 
 - [别再抱怨后端一次性传给你 1w 条数据了，几行代码教会你虚拟滚动！](https://juejin.cn/post/7301911743487590452)，简单版
 - [花三个小时，完全掌握分片渲染和虚拟列表～](https://juejin.cn/post/7121551701731409934?searchId=2025091714474992EE8ABA620737BFC942)，完整版
+- 长列表优化方案，[两行CSS让页面提升了近7倍渲染性能！](https://juejin.cn/post/7168629736838463525)
+    - `content-visibility: auto`
+    - `contain-intrinsic-size`
 
 ## 实现效果
 
