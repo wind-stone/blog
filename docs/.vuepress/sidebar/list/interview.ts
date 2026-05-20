@@ -4,7 +4,15 @@ export default {
         {
             text: '大模型-理论知识',
             prefix: '/interview/llm/knowledge',
-            children: ['rag/'],
+            children: [
+                'rag/',
+                {
+                    text: 'MCP',
+                    collapsable: false,
+                    prefix: 'mcp',
+                    children: ['models-private-function-calling', 'mcp-process'],
+                },
+            ],
         },
         {
             text: '大模型-前端交互',
