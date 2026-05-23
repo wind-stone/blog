@@ -1,15 +1,15 @@
 export default {
-    '/react/': [
+    '/frontend-fundamentals/react/': [
         // {
         //     text: 'React',
-        //     prefix: '/react',
+        //     prefix: '/frontend-fundamentals/react',
         //     children: [
         //         '',
         //     ]
         // },
         {
             text: 'React Hooks',
-            prefix: '/react/hooks',
+            prefix: '/frontend-fundamentals/react/hooks',
             children: [
                 '',
                 'useState',
@@ -19,7 +19,7 @@ export default {
                 'useRef',
                 'useSyncExternalStore',
                 'custom-hooks',
-            ]
+            ],
         },
-    ]
-}
+    ],
+};

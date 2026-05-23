@@ -1,8 +1,8 @@
 export default {
-    '/browser-env/': [
+    '/frontend-fundamentals/browser-env/': [
         {
             text: '浏览器',
-            prefix: '/browser-env/browser',
+            prefix: '/frontend-fundamentals/browser-env/browser',
             children: [
                 'how-browsers-work',
                 'first-paint',
@@ -19,7 +19,7 @@ export default {
         },
         {
             text: 'HTML/DOM',
-            prefix: '/browser-env/html-dom',
+            prefix: '/frontend-fundamentals/browser-env/html-dom',
             children: [
                 'elements/',
                 'attributes-properties/attributes',
@@ -32,49 +32,42 @@ export default {
         },
         {
             text: '事件',
-            prefix: '/browser-env/events',
+            prefix: '/frontend-fundamentals/browser-env/events',
             children: ['', 'blur'],
         },
         {
             text: '网络',
-            prefix: '/browser-env/network',
+            prefix: '/frontend-fundamentals/browser-env/network',
             children: ['http/', 'https/', 'http2/', 'cors/', 'dns'],
         },
         {
             text: '安全',
-            prefix: '/browser-env/security',
+            prefix: '/frontend-fundamentals/browser-env/security',
             children: ['', 'xss', 'csrf', 'chrome-security-policy', 'cross-domain', 'same-site'],
         },
         {
             text: 'Hybrid',
-            prefix: '/browser-env/hybrid',
+            prefix: '/frontend-fundamentals/browser-env/hybrid',
             children: ['h52app', 'jsbridge', 'universal-links'],
         },
         {
             text: '浏览器厂商及应用环境',
-            prefix: '/browser-env/vendor-app',
+            prefix: '/frontend-fundamentals/browser-env/vendor-app',
             children: ['wechat/', 'wechat/android-weixin-auto-open-browser'],
         },
         {
             text: '浏览器兼容性',
-            prefix: '/browser-env/compatibility',
-            children: [
-                '',
-                'video',
-                'audio',
-                'input-delay/',
-                'ios/',
-                'ios/safari-script-block-render',
-            ],
+            prefix: '/frontend-fundamentals/browser-env/compatibility',
+            children: ['', 'video', 'audio', 'input-delay/', 'ios/', 'ios/safari-script-block-render'],
         },
         {
             text: '滚动专题',
-            prefix: '/browser-env/scroll',
+            prefix: '/frontend-fundamentals/browser-env/scroll',
             children: ['', 'touch-event', 'click-delay', 'fastclick', 'no-bg-scroll'],
         },
         {
             text: '未分类',
-            prefix: '/browser-env/unclassified',
+            prefix: '/frontend-fundamentals/browser-env/unclassified',
             children: ['web-components', 'pwa', 'file-system', 'keyboard'],
         },
     ],

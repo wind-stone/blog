@@ -1,9 +1,9 @@
 export default {
     // ES6
-    '/es6/': [
+    '/frontend-fundamentals/es6/': [
         {
             text: 'ES6+',
-            prefix: '/es6',
+            prefix: '/frontend-fundamentals/es6',
             children: [
                 '',
                 'let-const/',
@@ -16,65 +16,50 @@ export default {
                 'generator/',
                 'async-await/',
                 'proxy-reflect/',
-                'proxy-reflect/proxy-practice'
-            ]
+                'proxy-reflect/proxy-practice',
+            ],
         },
         {
             text: 'Promise',
-            prefix: '/es6/promise',
-            children: [
-                '',
-                'promise-skills'
-            ]
+            prefix: '/frontend-fundamentals/es6/promise',
+            children: ['', 'promise-skills'],
         },
         {
             text: 'Babel',
-            prefix: '/es6/babel',
+            prefix: '/frontend-fundamentals/es6/babel',
             children: [
                 '',
                 'babel-v7',
                 '@babel/preset-env',
                 '@babel/plugin-transform-runtime',
                 '@babel/runtime',
-                '@babel/runtime-corejs2'
-            ]
+                '@babel/runtime-corejs2',
+            ],
         },
         {
             text: 'Polyfill',
-            prefix: '/es6/polyfill',
+            prefix: '/frontend-fundamentals/es6/polyfill',
             children: [
                 {
                     text: 'String',
-                    children: [
-                        'string/padStart',
-                    ]
+                    children: ['string/padStart'],
                 },
                 {
                     text: 'Array',
                     prefix: 'array',
-                    children: [
-                        'array-prototype-forEach',
-                        'array-prototype-reduce',
-                    ]
+                    children: ['array-prototype-forEach', 'array-prototype-reduce'],
                 },
                 {
                     text: 'Object',
                     prefix: 'object',
-                    children: [
-                        'new',
-                        'object-create',
-                        'object-assign',
-                    ]
+                    children: ['new', 'object-create', 'object-assign'],
                 },
                 {
                     text: 'Promise',
                     prefix: 'promise',
-                    children: [
-                        'promise-allSettled',
-                        'promise-race'
-                    ]
-                }
-            ]
-        }
-    ]
+                    children: ['promise-allSettled', 'promise-race'],
+                },
+            ],
+        },
+    ],
 };

@@ -2,7 +2,7 @@ import { text } from 'stream/consumers';
 
 export default {
     // CSS/JS 动画效果
-    '/animation-effects/': [
+    '/frontend-fundamentals/animation-effects/': [
         '',
         'scroll-elements-fade-up',
         'complicated-animations-with-animation-delay',

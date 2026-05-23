@@ -1,43 +1,43 @@
 export default {
-    '/typescript/': [
+    '/frontend-fundamentals/typescript/': [
         {
             text: 'TypeScript',
-            prefix: '/typescript',
+            prefix: '/frontend-fundamentals/typescript',
             children: [''],
         },
         {
             text: '练习题目',
-            prefix: '/typescript/practices',
+            prefix: '/frontend-fundamentals/typescript/practices',
             children: ['type-challenges', ''],
         },
         {
             text: '数据类型',
-            prefix: '/typescript/data-types',
+            prefix: '/frontend-fundamentals/typescript/data-types',
             children: ['', 'primitive-types', 'object-type', 'class', 'enum', 'function', 'array'],
         },
         {
             text: '类型系统',
-            prefix: '/typescript/type-system',
+            prefix: '/frontend-fundamentals/typescript/type-system',
             children: ['', 'generics', 'property-modifiers', 'utility-types'],
         },
         {
             text: '类型操作',
-            prefix: '/typescript/type-manipulation',
+            prefix: '/frontend-fundamentals/typescript/type-manipulation',
             children: ['', 'type-operators'],
         },
         {
             text: '模块系统',
-            prefix: '/typescript/module-system',
+            prefix: '/frontend-fundamentals/typescript/module-system',
             children: [''],
         },
         {
             text: 'TypeScript 编译',
-            prefix: '/typescript/typescript-compilation',
+            prefix: '/frontend-fundamentals/typescript/typescript-compilation',
             children: [''],
         },
         {
             text: 'TypeScript 使用',
-            prefix: '/typescript/usage',
+            prefix: '/frontend-fundamentals/typescript/usage',
             children: ['declaration-files', 'tsconfig-json', 'publish'],
         },
     ],

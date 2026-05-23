@@ -3,16 +3,48 @@ export default [
     {
         text: '前端基础',
         children: [
-            { text: 'JavaScript', link: '/js/data-types/', activeMatch: '^/js' },
-            { text: 'ES6+', link: '/es6/', activeMatch: '^/es6' },
-            { text: 'TypeScript', link: '/typescript/', activeMatch: '^/typescript' },
-            { text: 'React', link: '/react/hooks/', activeMatch: '^/react' },
-            { text: 'CSS', link: '/css/selectors/', activeMatch: '^/css' },
-            { text: 'CSS/JS 动画效果', link: '/animation-effects/', activeMatch: '^/animation-effects/' },
-            { text: '浏览器', link: '/browser-env/browser/how-browsers-work', activeMatch: '^/browser-env' },
-            { text: '小程序', link: '/mini-program/weixin/', activeMatch: '^/mini-program' },
-            { text: '代码片段', link: '/code-snippet/', activeMatch: '^/code-snippet' },
-            { text: '技术文章', link: '/articles/string-literal/', activeMatch: '^/articles' },
+            {
+                text: 'JavaScript',
+                link: '/frontend-fundamentals/js/data-types/',
+                activeMatch: '^/frontend-fundamentals/js',
+            },
+            { text: 'ES6+', link: '/frontend-fundamentals/es6/', activeMatch: '^/frontend-fundamentals/es6' },
+            {
+                text: 'TypeScript',
+                link: '/frontend-fundamentals/typescript/',
+                activeMatch: '^/frontend-fundamentals/typescript',
+            },
+            {
+                text: 'React',
+                link: '/frontend-fundamentals/react/hooks/',
+                activeMatch: '^/frontend-fundamentals/react',
+            },
+            { text: 'CSS', link: '/frontend-fundamentals/css/selectors/', activeMatch: '^/frontend-fundamentals/css' },
+            {
+                text: 'CSS/JS 动画效果',
+                link: '/frontend-fundamentals/animation-effects/',
+                activeMatch: '^/frontend-fundamentals/animation-effects/',
+            },
+            {
+                text: '浏览器',
+                link: '/frontend-fundamentals/browser-env/browser/how-browsers-work',
+                activeMatch: '^/frontend-fundamentals/browser-env',
+            },
+            {
+                text: '小程序',
+                link: '/frontend-fundamentals/mini-app/weixin/',
+                activeMatch: '^/frontend-fundamentals/mini-app',
+            },
+            {
+                text: '代码片段',
+                link: '/frontend-fundamentals/code-snippet/',
+                activeMatch: '^/frontend-fundamentals/code-snippet',
+            },
+            {
+                text: '技术文章',
+                link: '/frontend-fundamentals/articles/string-literal/',
+                activeMatch: '^/frontend-fundamentals/articles',
+            },
         ],
     },
     {
