@@ -1,4 +1,4 @@
-# 第三方工具
+# 常用 Node.js 工具包
 
 [[toc]]
 
@@ -34,11 +34,11 @@ var libs = require('require-all')(__dirname + '/lib');
 假设`lib`目录下的文件夹结构为：
 
 - lib
-  - folder1
-    - file1-1.js
-    - file1-2.js
-  - folder2
-    - file2-1.js
+    - folder1
+        - file1-1.js
+        - file1-2.js
+    - folder2
+        - file2-1.js
 
 则通过方式二得到的`libs`为：
 
@@ -81,10 +81,10 @@ var libs = require('require-all')(__dirname + '/lib');
 ```js
 // 方式一：该方式可直接看官网示例，有详细说明
 var controllers = require('require-all')({
-  dirname     :  __dirname + '/controllers',
-  filter      :  /(.+Controller)\.js$/,
-  excludeDirs :  /^\.(git|svn)$/,
-  recursive   : true
+    dirname: __dirname + '/controllers',
+    filter: /(.+Controller)\.js$/,
+    excludeDirs: /^\.(git|svn)$/,
+    recursive: true,
 });
 ```
 

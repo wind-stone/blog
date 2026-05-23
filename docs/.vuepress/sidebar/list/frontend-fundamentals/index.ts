@@ -8,6 +8,7 @@ import BrowserEnv from './browser-env';
 import MiniApp from './mini-app';
 import CodeSnippets from './code-snippet';
 import Articles from './articles';
+import FrontendEngineering from './frontend-engineering';
 
 export default {
     ...JavaScript,
@@ -20,4 +21,5 @@ export default {
     ...MiniApp,
     ...CodeSnippets,
     ...Articles,
+    ...FrontendEngineering,
 };

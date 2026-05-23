@@ -4,9 +4,9 @@
 
 ## 实现阶段
 
-- [CSS 样式，注意事项、功能实现](./style.md)
-- [JS 格式化](./format.md)
-- [元素埋点](/js/error-handling/log.md#元素日志)
+- [CSS 样式，注意事项、功能实现](./css-style.md)
+- [JS 格式化](/frontend-fundamentals/code-snippet/js/utils/format.md)
+- [元素埋点](/frontend-fundamentals/js/error-handling/log.md#元素日志)
 
 ### 金额
 
@@ -21,12 +21,19 @@
 ```js
 import throttle from 'lodash.throttle';
 // 300ms 内只触发一次回调，且第一次点击有效
-ele.addEventListener('click', throttle(() => {
-    // click ..
-}, 300, {
-    leading: true,
-    trailing: false
-}));
+ele.addEventListener(
+    'click',
+    throttle(
+        () => {
+            // click ..
+        },
+        300,
+        {
+            leading: true,
+            trailing: false,
+        }
+    )
+);
 ```
 
 - 防止频繁触发事件回调，使用`lodash.debounce`进行防抖动处理
@@ -51,20 +58,20 @@ window.addEventListener('scroll', debounce(() => {
 ## 业务监控
 
 - 针对业务里的关键路径，需要埋点监控
-  - 监控接口的异常返回，并上报异常数据
-  - 监控 JS Bridge 方法的异常返回，并上报异常信息
-  - 监控已捕获的异常，并上报异常信息
+    - 监控接口的异常返回，并上报异常数据
+    - 监控 JS Bridge 方法的异常返回，并上报异常信息
+    - 监控已捕获的异常，并上报异常信息
 - 调用第三方服务时，需要第三方服务提供对应接口请求曲线，如有必要，在业务里针对第三方服务的结果进行埋点统计异常
 - 若活动入口在另一个活动里且流量主要依赖该入口，需要提前要取另一个活动的实时 PV 数据
 - iOS UIWebView 在页面滑动时会导致计时器暂停
-  - 简单解决方法：计时器开始时记录一个本地时间
+    - 简单解决方法：计时器开始时记录一个本地时间
 
 ## 纯前端实现最佳实践
 
 - 尽量使用`await/async`，少使用 Promise
 - 尽可能使用解构赋值
 - Vue
-  - 使用 composition API，让原先以 UI 组件为单位的组件，改进为用功能为单位的组件
+    - 使用 composition API，让原先以 UI 组件为单位的组件，改进为用功能为单位的组件
 
 ## 性能优化
 

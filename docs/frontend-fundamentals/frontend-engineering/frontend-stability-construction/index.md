@@ -1,4 +1,4 @@
-# 前端稳定性建设
+# 关于前端稳定性建设的系统性思考
 
 如下内容及相关子文章的内容主要复制于 [关于前端稳定性建设的系统性思考](https://www.phppan.com/2024/07/systematic-thinking-on-front-end-stability-construction/)，并添加一些我在日常工作中执行的细节。
 

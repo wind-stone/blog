@@ -45,31 +45,16 @@ export default [
                 link: '/frontend-fundamentals/articles/string-literal/',
                 activeMatch: '^/frontend-fundamentals/articles',
             },
+            {
+                text: '前端工程化',
+                link: '/frontend-fundamentals/frontend-engineering/environment/ide/vscode',
+                activeMatch: '^/frontend-fundamentals/frontend-engineering',
+            },
         ],
     },
     {
-        text: '前端工程化/全栈',
+        text: '全栈',
         children: [
-            {
-                text: '前端开发环境',
-                link: '/front-end-engineering/environment/ide/vscode',
-                activeMatch: '^/front-end-engineering/environment',
-            },
-            {
-                text: '前端开发流程工具',
-                link: '/front-end-engineering/tools/build/source-map',
-                activeMatch: '^/front-end-engineering/tools',
-            },
-            {
-                text: '前端开发技能',
-                link: '/front-end-engineering/development-skills/h5/',
-                activeMatch: '^/front-end-engineering/development-skills',
-            },
-            {
-                text: '前端稳定性建设',
-                link: '/front-end-engineering/frontend-stability-construction/',
-                activeMatch: '^/front-end-engineering/frontend-stability-construction',
-            },
             {
                 text: '设计模式',
                 link: '/full-stack/design-patterns/singleton-pattern',
@@ -119,8 +104,8 @@ export default [
             },
             {
                 text: '前端工程化',
-                link: '/interview/front-end-engineering/package-management/pnpm',
-                activeMatch: '^/interview/front-end-engineering',
+                link: '/interview/frontend-engineering/package-management/pnpm',
+                activeMatch: '^/interview/frontend-engineering',
             },
             {
                 text: '问答/编码',
