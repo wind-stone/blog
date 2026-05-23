@@ -14,6 +14,7 @@ import wander from './list/wander';
 import react from './list/react';
 import animationEffects from './list/animation-effects';
 import webglProgrammingGuide from './list/webgl-programming-guide';
+import llm from './list/llm';
 
 export default {
     ...articles,
@@ -32,4 +33,5 @@ export default {
     ...react,
     ...animationEffects,
     ...webglProgrammingGuide,
+    ...llm,
 };

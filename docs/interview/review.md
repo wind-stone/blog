@@ -86,3 +86,8 @@ XSRF 业务接口不支持跨域访问
 - SSE 和 websocket 的区别
 - 如果后端每个 chunk 返回的是 markdown 片段，怎么实现边接收边解析边渲染？
 - XSS 防范，大模型生成的 HTML 片段可能被注入恶意脚本，和传统 XSS 有什么区别？你用什么方案？（DOM Purify，但仍需配置白名单）
+
+## 简历内容添加
+
+- MCP npm 包开发（获取 prompt）
+- Milvus 数据库

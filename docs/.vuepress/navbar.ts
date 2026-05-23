@@ -65,6 +65,7 @@ export default [
             },
         ],
     },
+    { text: '大模型', link: '/llm/knowledge/rag/', activeMatch: '^/llm' },
     {
         text: '面试',
         children: [
@@ -78,7 +79,7 @@ export default [
                 link: '/interview/javascript/performance-optimization/debounce-throttle/',
                 activeMatch: '^/interview/javascript',
             },
-            { text: '大模型', link: '/interview/llm/knowledge/rag/', activeMatch: '^/interview/llm' },
+
             {
                 text: '数据结构+算法',
                 link: '/interview/algorithm/sorting-algorithm/',
