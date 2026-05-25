@@ -35,5 +35,5 @@
         "**/CVS": true,
         "**/node_modules": false
     },
-    "cSpell.words": ["DEEPSEEK"]
+    "cSpell.words": ["DEEPSEEK", "langchain"]
 }

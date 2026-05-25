@@ -43,5 +43,23 @@ export default {
                 },
             ],
         },
+        {
+            text: 'LangChain',
+            prefix: '/llm/langchain',
+            children: [
+                {
+                    text: '结构化输出',
+                    collapsable: false,
+                    prefix: 'structured-output',
+                    children: [
+                        '',
+                        'provider-strategy-example',
+                        'tool-strategy-example',
+                        'fallback-prompt-parse-example',
+                    ],
+                },
+                'prompt-template/',
+            ],
+        },
     ],
 };
