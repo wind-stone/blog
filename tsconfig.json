@@ -14,6 +14,15 @@
             "@components/*": ["src/components/*"]
         }
     },
-    "include": ["docs/**/*.ts", "docs/**/*.tsx", "docs/**/*.vue", ".vuepress/**/*.ts", ".vuepress/**/*.vue"],
+    "include": [
+        "docs/**/*.ts",
+        "docs/**/*.tsx",
+        "docs/**/*.vue",
+        "docs/.vuepress/**/*.ts",
+        "docs/.vuepress/**/*.vue",
+        ".vuepress/**/*.ts",
+        ".vuepress/**/*.vue",
+        "*.ts"
+    ],
     "exclude": ["node_modules"]
 }

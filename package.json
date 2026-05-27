@@ -18,7 +18,7 @@
     },
     "lint-staged": {
         "*.{js,vue}": [
-            "eslint --fix --flag unstable_ts_config"
+            "eslint --fix"
         ]
     },
     "devDependencies": {
@@ -41,6 +41,7 @@
         "@vuepress/plugin-watermark": "2.0.0-rc.46",
         "@vuepress/theme-default": "^2.0.0-rc.11",
         "eslint": "^9.11.0",
+        "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-vue": "^9.28.0",
         "globals": "^17.5.0",
         "husky": "^9.1.6",

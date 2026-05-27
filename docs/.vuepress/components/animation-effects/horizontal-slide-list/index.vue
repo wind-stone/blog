@@ -1,15 +1,15 @@
 <template>
     <div class="horizontal-slide-list">
         <div
-            class="slide-list-wrap"
             ref="containerDom"
-            @touchstart="handleTouchStart"
-            @touchmove="handleTouchMove"
-            @touchend="handleTouchEnd"
+            class="slide-list-wrap"
             :style="{
                 height: `${containerHeight}px`,
                 transform: `translateX(${containerTranslateX}px)`,
             }"
+            @touchstart="handleTouchStart"
+            @touchmove="handleTouchMove"
+            @touchend="handleTouchEnd"
         >
             <ul class="left-area slide-list">
                 <li
@@ -55,14 +55,12 @@ const props = withDefaults(
     }>(),
     {
         countPerRow: 4,
-    },
+    }
 );
 
 const containerDom = ref<HTMLElement | null>(null); // 包含块 DOM
 const containerMinHeight = 69; // 包含块最小高度，单位 px
-const rows = Math.ceil(
-    (props.list.length - props.countPerRow) / props.countPerRow,
-);
+const rows = Math.ceil((props.list.length - props.countPerRow) / props.countPerRow);
 const containerMaxHeight = containerMinHeight * rows + (rows - 1) * 8; // 包含块最大高度，单位 px；8px 是每行间的间距
 const singleItemWidth = ref(0); // 单个 item 的宽度
 
@@ -90,10 +88,7 @@ const scrollProgress = computed(() => {
 
 // 容器高度根据滚动进度动态变化
 const containerHeight = computed(() => {
-    return (
-        containerMinHeight +
-        (containerMaxHeight - containerMinHeight) * scrollProgress.value
-    );
+    return containerMinHeight + (containerMaxHeight - containerMinHeight) * scrollProgress.value;
 });
 
 // 整体内容的平移距离（负值，向左移动）
@@ -165,10 +160,7 @@ const handleTouchMove = (e: TouchEvent) => {
         e.preventDefault();
 
         const newScrollX = scrollX.value + deltaX;
-        scrollX.value = Math.min(
-            Math.max(newScrollX, 0),
-            maxScrollDistance.value,
-        );
+        scrollX.value = Math.min(Math.max(newScrollX, 0), maxScrollDistance.value);
 
         touchStartX.value = touchX;
         touchStartY.value = touchY;
@@ -216,14 +208,14 @@ const handleTouchEnd = () => {
 onMounted(() => {
     if (containerDom.value) {
         maxScrollDistance.value = containerDom.value.clientWidth;
-        singleItemWidth.value =
-            containerDom.value.clientWidth / props.countPerRow;
+        singleItemWidth.value = containerDom.value.clientWidth / props.countPerRow;
     }
 });
 </script>
 
 <style lang="less" scoped>
-ul, li {
+ul,
+li {
     margin: 0;
     padding: 0;
     list-style: none;

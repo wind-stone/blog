@@ -13,7 +13,7 @@ import { getWebGLContext, initShaders } from '../lib/cuon-utils';
 // Vertex shader program
 var VSHADER_SOURCE =
     // x' = x cosβ - y sinβ
-    // y' = x sinβ + y cosβ　Equation 3.3
+    // y' = x sinβ + y cosβ Equation 3.3
     // z' = z
     'attribute vec4 a_Position;\n' +
     'uniform float u_CosB, u_SinB;\n' +

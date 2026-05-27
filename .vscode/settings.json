@@ -3,6 +3,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     // 保存文件时自动格式化
     "editor.formatOnSave": true,
+    // 保存时自动修复 ESLint warning
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
 
     // 为特定语言模式指定格式化器，确保万无一失
     "[vue]": {
@@ -35,5 +39,15 @@
         "**/CVS": true,
         "**/node_modules": false
     },
-    "cSpell.words": ["DEEPSEEK", "langchain"]
+    "cSpell.words": ["DEEPSEEK", "langchain"],
+
+    // ESLint: 使用 eslint.config.mjs flat config
+    "eslint.useFlatConfig": true,
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "vue"
+    ]
 }

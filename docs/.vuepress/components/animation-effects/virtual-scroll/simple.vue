@@ -3,10 +3,10 @@
       <div class="content-container" :style="{ height: itemHeight * data.length + 'px' }"></div>
       <div class="item-container" :style="{ transform: 'translateY(' + scrollTop + 'px)' }">
           <div
-              class="item"
-              :style="{ height: itemHeight + 'px' }"
               v-for="(item, index) in showData"
               :key="index"
+              class="item"
+              :style="{ height: itemHeight + 'px' }"
           >{{ item }}</div>
       </div>
   </div>

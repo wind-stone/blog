@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <VirtualScroll :list="list" :bufferCount="5" v-slot="{ item }">
+        <VirtualScroll v-slot="{ item }" :list="list" :buffer-count="5">
             <div class="item">{{ item.name }}</div>
         </VirtualScroll>
     </div>

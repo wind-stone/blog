@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <VirtualScroll :list="list" v-slot="{ item }">
+        <VirtualScroll v-slot="{ item }" :list="list">
             <div class="item">{{ item.name }}</div>
         </VirtualScroll>
     </div>

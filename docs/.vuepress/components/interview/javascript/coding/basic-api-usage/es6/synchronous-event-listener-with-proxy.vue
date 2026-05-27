@@ -27,7 +27,7 @@ onMounted(() => {
 
     (async () => {
         const btn = getElement('.sync-button');
-        while(1) {
+        while(true) {
             await btn.waitClick;
             console.log('click!');
         }

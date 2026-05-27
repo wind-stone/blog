@@ -1,16 +1,16 @@
 <template>
     <!-- 组件容器 -->
-    <div class="view-container" ref="viewContainer" @scroll="handleScroll">
+    <div ref="viewContainer" class="view-container" @scroll="handleScroll">
         <!-- 滚动条容器，其高度应该为没有虚拟列表时的实际高度 -->
         <div class="scrollbar-container" :style="{ height: `${scrollBarContainerHeight}px` }"></div>
         <!-- 实际渲染内容容器 -->
         <div
-            class="content-container"
             ref="contentContainer"
+            class="content-container"
             :data-scroll="scrollTop"
             :style="{ transform: `translate3d(0, ${translateY}px, 0)` }"
         >
-            <div v-for="item in displayedList" :key="item.id" :id="item.id" class="item">
+            <div v-for="item in displayedList" :id="item.id" :key="item.id" class="item">
                 <slot :item="item"></slot>
             </div>
         </div>
