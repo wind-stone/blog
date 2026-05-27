@@ -486,6 +486,7 @@ console.log(finalPrompt2);
 ```
 
 疑问：这里使用 SemanticSimilarityExampleSelector 去查找 top 语义相近的示例时，语义比较的输入是什么（除了示例外的拼接好的完整 prompt 吗？）
+解答：根据传入的变量即`inputVariables: ['current_scenario']`中的`current_scenario`去做语义化相似度对比的。
 
 ### FewShotChatTemplatePromptTemplate
 
