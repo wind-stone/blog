@@ -160,7 +160,7 @@ export default {
                 {
                     text: '事件循环',
                     prefix: 'event-loop',
-                    children: ['repeat-invoke-functions-with-times'],
+                    children: ['repeat-invoke-functions-with-times', 'microtask-by-await'],
                 },
                 {
                     text: 'polyfill',
