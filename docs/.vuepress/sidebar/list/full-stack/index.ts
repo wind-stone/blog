@@ -54,8 +54,9 @@ export default {
     // 后端开发
     '/full-stack/backend': [
         {
-            text: '后端',
-            children: ['/full-stack/backend/nestjs/'],
+            text: 'NestJS',
+            prefix: '/full-stack/backend/nestjs',
+            children: ['life-circle', 'ioc-and-di'],
         },
     ],
 
