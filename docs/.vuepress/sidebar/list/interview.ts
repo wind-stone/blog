@@ -209,11 +209,7 @@ export default {
                 'the-self-closing-string',
             ],
         },
-        {
-            text: 'LeetCode',
-            prefix: '/interview/algorithm/interview/leetcode',
-            children: ['kth-largest-element-in-an-array', 'partition-array-into-three-parts-with-equal-sum'],
-        },
+
         {
             text: '数据结构',
             prefix: '/interview/algorithm/data-structure',
@@ -228,6 +224,15 @@ export default {
                     prefix: 'sorting-algorithm',
                     children: ['', 'bubble-sort/', 'selection-sort/', 'insertion-sort/', 'merge-sort/', 'quick-sort/'],
                 },
+            ],
+        },
+        {
+            text: 'LeetCode',
+            prefix: '/interview/algorithm/leetcode',
+            children: [
+                '200-number-of-islands',
+                '215-kth-largest-element-in-an-array',
+                'partition-array-into-three-parts-with-equal-sum',
             ],
         },
     ],
