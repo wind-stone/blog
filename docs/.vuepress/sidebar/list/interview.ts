@@ -230,6 +230,7 @@ export default {
             text: 'LeetCode',
             prefix: '/interview/algorithm/leetcode',
             children: [
+                '74-search-a-2d-matrix',
                 '200-number-of-islands',
                 '215-kth-largest-element-in-an-array',
                 'partition-array-into-three-parts-with-equal-sum',
