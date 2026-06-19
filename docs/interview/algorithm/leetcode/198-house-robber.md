@@ -1,4 +1,4 @@
-# 198. 打家劫舍
+# 198. 打家劫舍[中等]
 
 - 题目：[198. 打家劫舍](https://leetcode.cn/problems/house-robber/description/)
 - 题解：[打家劫舍](https://leetcode.cn/problems/house-robber/solutions/263856/da-jia-jie-she-by-leetcode-solution/)

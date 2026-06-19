@@ -1,4 +1,4 @@
-# 912. 排序数组
+# 912. 排序数组[中等]
 
 - 题目：[912. 排序数组](https://leetcode.cn/problems/sort-an-array/description/)
 - 题解：[最大数-官方题解](https://leetcode.cn/problems/sort-an-array/solutions/178305/pai-xu-shu-zu-by-leetcode-solution/)

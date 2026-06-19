@@ -1,5 +1,7 @@
 # 622. 设计循环队列
 
+- 题目：[622. 设计循环队列](https://leetcode.cn/problems/design-circular-queue/description/)
+
 ## 背景知识介绍-循环队列
 
 循环队列（Circular Queue），又称为环形缓冲（Ring Buffer），是一种**逻辑上首尾相连**的线性数据结构。它通过数组来实现，其核心思想是将数组的最后一个位置与第一个位置连接起来，形成一个环。

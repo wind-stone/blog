@@ -1,4 +1,4 @@
-# 179. 最大数
+# 179. 最大数[中等]
 
 - 题目：[179. 最大数](https://leetcode.cn/problems/largest-number/description/)
 - 题解：[最大数-官方题解](https://leetcode.cn/problems/largest-number/solutions/715680/zui-da-shu-by-leetcode-solution-sid5/)

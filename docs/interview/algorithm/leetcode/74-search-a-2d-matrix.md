@@ -1,4 +1,4 @@
-# 74. 搜索二维矩阵
+# 74. 搜索二维矩阵[中等]
 
 - 题目：[74. 搜索二维矩阵](https://leetcode.cn/problems/search-a-2d-matrix/description/)
 - 题解：[搜索二维矩阵](https://leetcode.cn/problems/search-a-2d-matrix/solutions/688117/sou-suo-er-wei-ju-zhen-by-leetcode-solut-vxui/)

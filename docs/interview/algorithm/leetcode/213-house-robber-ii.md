@@ -1,4 +1,4 @@
-# 213. 打家劫舍 II
+# 213. 打家劫舍 II[中等]
 
 - 题目：[213. 打家劫舍 II](https://leetcode.cn/problems/house-robber-ii/description/)
 - 题解：[打家劫舍 II](https://leetcode.cn/problems/house-robber-ii/solutions/722767/da-jia-jie-she-ii-by-leetcode-solution-bwja/)

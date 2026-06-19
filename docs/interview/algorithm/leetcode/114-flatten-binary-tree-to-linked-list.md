@@ -1,4 +1,4 @@
-# 114. 二叉树展开为链表
+# 114. 二叉树展开为链表[中等]
 
 - 题目：[114. 二叉树展开为链表](https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/description/)
 - 题解：别看题解了，直接看下面的代码吧

@@ -1,9 +1,9 @@
-# 200. 岛屿数量
+# 200. 岛屿数量[中等]
 
 - 题目：[200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/description/)
 - 题解：[岛屿类问题的通用解法、DFS 遍历框架](https://leetcode.cn/problems/number-of-islands/solutions/211211/dao-yu-lei-wen-ti-de-tong-yong-jie-fa-dfs-bian-li-/)
-- 同系列题目
-    - 待补充
+- 系列题目
+    - [695. 岛屿的最大面积](/interview/algorithm/leetcode/695-max-area-of-island.md)
 
 ## AC 代码
 
