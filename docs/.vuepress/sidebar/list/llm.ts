@@ -2,6 +2,25 @@ export default {
     // 大模型
     '/llm': [
         {
+            text: 'claude code',
+            prefix: '/llm/claude-code',
+            children: [
+                'best-practices',
+                {
+                    text: '命令',
+                    collapsable: false,
+                    prefix: 'commands',
+                    children: ['compact'],
+                },
+                {
+                    text: 'Features',
+                    collapsable: false,
+                    prefix: 'features',
+                    children: ['sub-agents'],
+                },
+            ],
+        },
+        {
             text: '大模型-理论知识',
             prefix: '/llm/knowledge',
             children: [
