@@ -38,5 +38,10 @@ export default {
             prefix: '/wander/ai',
             children: [''],
         },
+        {
+            text: '股票',
+            prefix: '/wander/stock',
+            children: ['kuaishou', 'foreign-income-tax/'],
+        },
     ],
 };
